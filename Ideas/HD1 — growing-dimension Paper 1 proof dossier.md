@@ -1,0 +1,358 @@
+---
+type: proof-dossier
+title: HD1 — growing-dimension Paper 1 proof dossier
+status: canonical-proof
+verdict: a dimension-free growing-p Paper 1 theorem, feasible lag operator, loading theorem, and factor-number selector are proved under bounded total energy, fixed finite memory, and explicit uniform geometry; the generic oracle-rate quadratic recentering claim is false without extra symmetry
+last-audited: 2026-08-08
+---
+
+# HD1 — growing-dimension Paper 1 proof dossier
+
+> This is the complete proof dossier for the robust bounded-total-energy growing-dimension theorem. Paper 2 is out of scope. Growing energy/pervasive factors and full moving-centre Bures–Wasserstein geometry are separately marked open in [[OPEN OBLIGATIONS — current research actions]] and are not consumed here. Only claims proved here, proved in a cited canonical dependency with all hypotheses verified, or explicitly assumed as model primitives may enter the final theorem.
+
+## 0. Migration map before canonical edits
+
+### Claims to prove or replace
+
+1. A dimension-free, positive-weight, three-scale G1 theorem on a triangular array of uniformly controlled Hadamard manifolds under bounded total tangent energy and one coherent short-memory condition.
+2. Integrated level and derivative mean-error bounds, with the raw level local-stationarity discrepancy separated from its differentiated counterpart.
+3. A feasible lag-covariance and lag-operator theorem in Hilbert–Schmidt/operator norm, with all mean, frame, cross-fit, local-stationarity, and noise channels typed and bounded.
+4. A final loading-space theorem in the honest eigengap form, followed only then by a signal-strength corollary.
+5. A factor-number theorem based on a proved beyond-rank square; if the unregularised ratio is not justified, replace it by a proved regularised selector.
+
+### Reusable proved inputs
+
+- empirical Sturm score-to-distance reduction for positive weights;
+- the uniform second-order population barycentre expansion and the one-sided scale-family cancellation with
+  \(c=(1,1/2,1/4)\) and \(\lambda=(1/3,-2,8/3)\);
+- the typed ribbon-holonomy inequality;
+- dimension-uniform affine-invariant SPD curvature and H-LIP constants on uniformly bounded tubes;
+- deterministic Davis–Kahan and the rank-one identity \(\|x\otimes y\|_{\mathrm{HS}}=\|x\|\,\|y\|\).
+
+### Suspect current claims
+
+- G1′ currently differentiates kernel weights without paying the possible \(n^{-a}/b\) local-stationarity term.
+- P1-OP is assumed rather than proved.
+- \(\kappa\) is currently called an eigengap while the displayed rate pays \(\kappa^{-2}\); the parent paper instead uses \(\kappa\) for a lag-factor singular value.
+- the existing cross-fitting prose does not by itself prove every conditional cancellation used in the feasible lag moments.
+- Weyl's inequality alone cannot yield the claimed \(O_p(n^{-1})\) eigenvalues beyond rank.
+- the unregularised eigenvalue-ratio selector is not consistent merely from \(\hat\lambda_i=O_p(n^{-1})\) for all \(i>r\).
+
+### Notation repair
+
+Throughout this dossier,
+\[
+s_n:=\max_{1\le h\le h_0}\sigma_r(C_{f,n}(h)),
+\qquad
+\Delta_n:=\lambda_r(\mathbb L_n)-\lambda_{r+1}(\mathbb L_n).
+\]
+The symbol \(\kappa\) is not used for either quantity.
+
+### Direct consumers
+
+G1 and integrated G1/G1′ feed the feasible transported observations and the ribbon bound. P1-OP feeds the deterministic lag-operator assembly. The loading theorem consumes only the explicitly listed rates. The factor-number theorem consumes the stronger row-operator perturbation bound that yields a squared beyond-rank eigenvalue rate.
+
+## 1. Final assumption set
+
+The final theorem uses the following single regime. These are theorem assumptions, not conclusions inferred from fixed-dimensional compactness.
+
+**(HD-G) Uniform geometry.** $M_n$ is a Hadamard manifold of arbitrary dimension $p_n$. On one deterministic expanded tube containing the mean curve, all observations, all three positive barycentres, their Richardson images, connectors, and geodesic polygonal interpolants, the Hessian of one-half squared distance is bounded below by $I$, and the Exp, Log, connector, Richardson, and ruled-surface Jacobi differentials used in Workstream A and in Theorem PF below are bounded through the stated orders by constants independent of $n,p_n$. Bare “Hadamard plus bounded radius” is insufficient: hyperbolic spaces of curvature $-K_n$, $K_n\to\infty$, are a counterexample. For generic manifold sequences these remain explicit primitives. For affine-invariant SPD on fixed absolute generated spectral bands, [[Application map — geometry, symmetry, and rate accelerators]] T-APP-2 now supplies the separate fixed-order, matrix-size-uniform proof in the project norms. This does not supply HD-X total energy or bounded mean length. For $m_n\times m_n$ SPD, $p_n=m_n(m_n+1)/2$.
+
+**(HD-X) Model and total energy.** In the true parallel frame,
+
+\[
+X_{t,n}=\operatorname{Exp}_{\mu_n(u_t)}
+  [\mathcal P^{\mu_n}_{u_0\to u_t}A_nf_{t,n}+\delta_{t,n}],
+\qquad
+Y_{t,n}=A_nf_{t,n}+\varepsilon_{t,n},
+\]
+
+where $A_n^*A_n=I_r$, $r<\infty$ is fixed, and $\|Y_{t,n}\|\le R$ almost surely with $R$ independent of $n,p_n$. This is bounded total tangent energy, not coordinatewise boundedness. It does not by itself bound $\|f_t\|$; no such inference is used.
+
+**(HD-M) Mean law and local stationarity.** The actual and proxy rows are $m_0$-dependent for one fixed $m_0$. The proxy laws have Fréchet mean $\mu_n(u)$, the score/Hessian law has the uniform derivatives in HD-G and Workstream A (A4), and a coupling satisfies $d(X_{t,n},X_t^{(u_t,n)})\le Cn^{-a}$ almost surely. The mean curve has uniformly bounded derivatives through the order used below. A probabilistic tube event is not substituted for the almost-sure radius condition.
+
+**(HD-K) Mean estimator.** Use the nonnegative one-sided scale kernels
+
+\[
+c=(1,1/2,1/4),\qquad \lambda=(1/3,-2,8/3),
+\]
+
+with $K,K'$ vanishing at both support endpoints. Combine the three positive barycentres by the Exp/Log Richardson map. Blend forward and backward estimators on a fixed-width interior overlap, not on a width-$b_n$ layer. Assume $b_n\to0$, $nb_n/\log n\to\infty$, and $n^{-a}=O(b_n)$.
+
+**(HD-L) Lag identification.** The lag count $h_0$ is fixed. For every included lag, idiosyncratic lag covariance and both factor–noise cross covariances vanish. Equivalently,
+
+\[
+\Gamma_n(h)=\mathbb E(Y_{t,n}\otimes Y_{t-h,n})
+=A_nC_{f,n}(h)A_n^*.
+\]
+
+The matrix $Q_n=\sum_{h=1}^{h_0}C_{f,n}(h)C_{f,n}(h)^*$ is positive definite. All finite-array averages use the same edge mask and normalisation in population and sample.
+
+## 2. Mean theorems
+
+Workstream A proves, without a sphere net and uniformly for arbitrary $p_n$,
+
+\[
+r_{\infty,n}:=
+b_n^3+n^{-a}+n^{-1}+\sqrt{\frac{\log n}{nb_n}},
+\qquad
+\sup_u d(\hat\mu_n^{(3)}(u),\mu_n(u))=O_p(r_{\infty,n}),
+\tag{G1-HD}
+\]
+
+and
+
+\[
+\ell_n:=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1},
+\qquad
+\|\log_{\mu_n}\hat\mu_n^{(3)}\|_{L^2}=O_p(\ell_n).
+\tag{G1-HD-L2}
+\]
+
+The same $O_p(\ell_n)$ RMS bound holds on every deterministic coarse grid: if $v_0,\ldots,v_M$ are deterministic, then
+
+\[
+\left\{(M+1)^{-1}\sum_{j=0}^M
+d(\hat\mu_n^{(3)}(v_j),\mu_n(v_j))^2\right\}^{1/2}
+=O_p(\ell_n).
+\tag{GRID}
+\]
+
+The proof is empirical Sturm at each deterministic population barycentre, the weighted Hilbert inequality obtained by splitting an $m_0$-dependent row into $m_0+1$ independent residue classes, and the scale identities $\sum\lambda_jc_j=\sum\lambda_jc_j^2=0$. The latter cancel both the usual second-order term and the nonlinear $m_1^2C$ term. Continuous-$u$ interpolation uses a one-dimensional time grid with $O(\log n)$ entropy; no $S^{p_n-1}$ net occurs.
+
+The corrected derivative theorem is also proved:
+
+\[
+\|\nabla_u\log_{\mu_n}\hat\mu_n^{(3)}\|_{L^2}
+=O_p\left(b_n^3+(nb_n^3)^{-1/2}+\frac{n^{-a}}{b_n}+\frac1{nb_n}\right).
+\tag{G1'-HD}
+\]
+
+Under the explicit $C^1$ weighted score-discrepancy assumption A5-1 of Workstream A, $n^{-a}/b_n$ improves to $n^{-a}$. The random-point Karcher step concentrates Hessian actions on fixed vectors, not the full operator norm. The final loading theorem below does **not** consume G1′; this removes the derivative theorem from its dependency graph while retaining the corrected result for other consumers.
+
+### Theorem PF — feasible polygonal mean and frame
+
+Let $\bar\ell_n$ be a deterministic upper-rate sequence for $\ell_n$, and take
+
+\[
+M_n=\left\lceil\bar\ell_n^{-2/3}\right\rceil,
+\qquad v_j=j/M_n.
+\]
+
+Compute the three-scale estimates at the vertices, interpolate consecutive vertices by their unique geodesics, and parallel-transport along this estimated polygon. Then, after radial endpoint connectors,
+
+\[
+\left\{n^{-1}\sum_t d(\bar\mu_n(u_t),\mu_n(u_t))^2\right\}^{1/2}=O_p(\ell_n),
+\qquad
+\sup_u\|\bar P_n(u)-P_n(u)\|_{\rm op}=O_p(\ell_n).
+\tag{PF}
+\]
+
+**Proof.** Put $e_j=d(\hat\mu(v_j),\mu(v_j))$. GRID gives
+$((M_n+1)^{-1}\sum e_j^2)^{1/2}=O_p(\ell_n)$, hence
+$\max_j e_j\le\sqrt{M_n+1}\,\mathrm{RMS}=O_p(\ell_n^{2/3})=o_p(1)$; this supplies the common tube event. Busemann convexity bounds the distance between geodesic interpolants by the linear interpolation of endpoint errors. The true curve differs from its chord by $O(M_n^{-2})$, so the design-point RMS centre error is $O_p(\ell_n+M_n^{-2})=O_p(\ell_n)$.
+
+For one cell, use the geodesic interpolation homotopy between the true and estimated chords and split its boundary quadrilateral into two ruled geodesic triangles. Uniform Jacobi bounds from HD-G give
+
+\[
+\operatorname{area}_j\le C\{M_n^{-1}(e_j+e_{j+1})+e_j^2+e_{j+1}^2\}.
+\]
+
+The parallel-transport variation formula bounds holonomy by curvature operator norm times this area. Summing, Cauchy–Schwarz gives
+
+\[
+\|P_{\rm estimated\ polygon}-P_{\rm true\ polygon}\|_{\rm op}
+\le C\Lambda\{L_\mu\ell_n+M_n\ell_n^2\}.
+\]
+
+The lens between a $C^2$ true-mean segment and its chord has area $O(M_n^{-3})$; summing adds $O(M_n^{-2})$. Since $M_n\ell_n^2$ and $M_n^{-2}$ are $O(\ell_n^{4/3})$, PF follows. Every transport is compared only after the endpoint/base connectors have made domains and codomains equal. Corners require no derivative of the estimated curve. $\square$
+
+## 3. Signal, lag operator, and factor number
+
+Use the rank-one convention ((x\otimes y)z=\langle y,z\rangle x), and put
+
+\[
+\mathbb L_n=\sum_{h=1}^{h_0}\Gamma_n(h)\Gamma_n(h)^*,
+\quad
+s_n=\max_{h\le h_0}\sigma_r(C_{f,n}(h)),
+\quad
+\Delta_n=\lambda_r(\mathbb L_n)-\lambda_{r+1}(\mathbb L_n).
+\]
+
+Under HD-L,
+
+\[
+\mathbb L_n=A_nQ_nA_n^*,\qquad
+\lambda_{r+1}(\mathbb L_n)=0,\qquad
+\Delta_n=\lambda_{\min}(Q_n)>0.
+\tag{SIG}
+\]
+
+If one included lag is full rank, (Q_n\succeq C_{f,n}(h)C_{f,n}(h)^*), hence
+
+\[
+\Delta_n\ge s_n^2.
+\tag{SIG2}
+\]
+
+One full-rank lag is sufficient, not necessary: complementary rank-deficient lags can make (Q_n) positive definite while (s_n=0).
+
+Let (widehat Y_{t,n}) use the polygonal centre/frame and the endpoint connector of PF. Uniform Log base-point Lipschitz bounds and PF imply the feasible-observation RMS error
+
+\[
+q_n^2:=\max_{h\le h_0}\frac1{N_{n,h}}\sum_t
+\frac{\|\widehat Y_{t,n}-Y_{t,n}\|^2+
+\|\widehat Y_{t-h,n}-Y_{t-h,n}\|^2}{2}
+=O_p(\ell_n^2).
+\tag{OBS}
+\]
+
+The transformed feasible row need not remain (m_0)-dependent: the next comparison is pathwise. Only the oracle row is concentrated.
+
+### Theorem P1-OP-HD — feasible lag operator
+
+In the Hilbert space of Hilbert–Schmidt operators, fixed (m_0,h_0) and (|Y_t|\le R) give
+
+\[
+d_{\rm or,n}:=
+\left\{\sum_{h=1}^{h_0}
+\|\widetilde\Gamma_n(h)-\Gamma_n(h)\|_{\rm HS}^2\right\}^{1/2}
+=O_p(n^{-1/2}).
+\]
+
+Expanding each feasible lag product and applying Cauchy–Schwarz pathwise gives
+
+\[
+d_n:=\left\{\sum_{h=1}^{h_0}
+\|\widehat\Gamma_n(h)-\Gamma_n(h)\|_{\rm op}^2\right\}^{1/2}
+\le d_{\rm or,n}+\sqrt{h_0}(2Rq_n+q_n^2)
+=O_p(n^{-1/2}+\ell_n).
+\tag{P1-ROW}
+\]
+
+Let (A_{2,n}=(\sum_h\|\Gamma_n(h)\|_{\rm op}^2)^{1/2}\le\sqrt{h_0}R^2). Row-operator multiplication yields
+
+\[
+\boxed{
+\|\widehat{\mathbb L}_n-\mathbb L_n\|_{\rm op}
+\le \eta_n:=2A_{2,n}d_n+d_n^2.}
+\tag{P1-OP}
+\]
+
+No cross-fitting is needed for this robust theorem. A leave-block-out implementation may be used, but its deletion error must be added; it is not called zero under generic mixing. The sharper quadratic curved-recentring route is excluded from the final theorem because Workstream B's bounded hyperbolic two-state counterexample shows that cross-fitting alone does not kill the random Hessian term (H(q,X)e).
+
+### Beyond-rank square and factor number
+
+Write the population and empirical row operators as
+$\mathcal G=[\Gamma_1\ \cdots\ \Gamma_{h_0}]$ and
+$\widehat{\mathcal G}=\mathcal G+\mathcal D$. Then
+$\mathbb L=\mathcal G\mathcal G^*$, $\widehat{\mathbb L}=\widehat{\mathcal G}\widehat{\mathcal G}^*$, and $\|\mathcal D\|\le d_n$. Since $\operatorname{rank}\mathcal G=r$, singular-value min–max gives
+
+\[
+\widehat\lambda_{r+1,n}=s_{r+1}(\widehat{\mathcal G})^2\le d_n^2,
+\qquad
+|\widehat\lambda_{j,n}-\lambda_{j,n}|\le\eta_n\quad(j\le r).
+\tag{EV}
+\]
+
+This is the structural square unavailable from Weyl alone.
+
+Let $\tau_n$ be deterministic with
+
+\[
+d_n^2=o_p(\tau_n),\qquad \tau_n=o(\Delta_n),\qquad \eta_n=o_p(\Delta_n).
+\tag{TAU}
+\]
+
+Then the threshold selector
+
+\[
+\widehat r_n^{\rm thr}=\#\{j:\widehat\lambda_{j,n}>\tau_n\}
+\]
+
+is consistent. If additionally
+$\inf_{j<r}\lambda_{j+1,n}/\lambda_{j,n}\ge c_*>0$, the ridged ratio
+
+\[
+\widehat r_n^{\rm ridge}
+=\arg\min_{1\le j\le R_n}
+\frac{\widehat\lambda_{j+1,n}+\tau_n}
+{\widehat\lambda_{j,n}+\tau_n},\qquad r<R_n\le p_n-1,
+\]
+
+is consistent. The common bound $\widehat\lambda_j\le d_n^2$ for every $j>r$ makes this uniform even when $R_n$ grows. The raw unregularised ratio is disproved by
+$\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$: it selects two factors because the later ratio is zero.
+
+## 4. Final loading-space theorem
+
+> **Theorem HD-E (dimension-free growing-$p_n$ Paper 1 theorem — PROVED UNDER EXPLICIT ASSUMPTIONS).** Under HD-G through HD-L, with the feasible polygonal estimator and fixed $r,h_0,m_0$, let $\widehat E_n$ be the leading $r$-dimensional eigenspace of $\widehat{\mathbb L}_n$, transported to the true reference tangent space by the endpoint connector. If $\eta_n=o_p(\Delta_n)$, then for arbitrary $p_n\to\infty$,
+> 
+> \[
+> \boxed{
+> \|\sin\Theta(\widehat E_n,E_n)\|_{\rm op}
+> =O_p\left(\frac{n^{-1/2}+\ell_n}{\Delta_n}\right),
+> \qquad
+> \ell_n=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1}.}
+> \tag{HD-E}
+> \]
+> 
+> If one included factor lag is full rank, the denominator may be weakened to $s_n^2$. The factor number is consistently estimated by the threshold selector under TAU, or by the ridged ratio under TAU and the nonzero-spectrum ratio condition.
+
+**Proof.** G1-HD-L2 and GRID feed Theorem PF. PF and uniform Log stability give OBS. Hilbert–Schmidt finite-memory concentration plus the pathwise feasible expansion give P1-ROW; deterministic row assembly gives P1-OP. Davis–Kahan uses the actual eigengap $\Delta_n$, producing HD-E. SIG2 alone permits the $s_n^{-2}$ weakening. EV and TAU prove the two factor selectors. Every node has been proved above or in the cross-audited A/B dossiers. G1′, cross-fitting, GLO symmetry, a full empirical Hessian operator bound, and the raw ratio are not consumed. $\square$
+
+For $b_n=n^{-\alpha}$, the explicit level rate is
+
+\[
+\ell_n=O\{n^{-3\alpha}+n^{-(1-\alpha)/2}+n^{-a}\}.
+\]
+
+Balancing the first two terms gives $\alpha=1/7$ and $\ell_n=O(n^{-3/7})$ when $a\ge3/7$. The former practical choice $b_n=n^{-1/5}$ remains admissible; it gives $\ell_n=O(n^{-2/5}+n^{-a})$, hence $O_p(n^{-2/5}/\Delta_n)$ when $a\ge2/5$, null eigenvalues $O_p(n^{-4/5})$, and—for strong fixed signal—one may take any ridge/threshold between these two scales. There is no restriction on $p_n$ because all norm, geometry, and memory constants are dimension-uniform.
+
+This is a trace-class/bounded-total-energy theorem. It does not claim a pervasive-factor regime with energy proportional to $p_n$, and it does not attain the parent fixed-centre $n^{-1/2}$ rate on a generic curved moving-centre model. The slower rate is the price of retaining a pathwise robust theorem after the generic quadratic curved-recentring claim was disproved.
+
+## 5. Counterexamples and superseded claims
+
+- **DISPROVED:** level local stationarity implies an (O(n^{-a})) derivative contribution. The sharp flat sign-of-kernel-derivative construction attains (n^{-a}/b_n).
+- **DISPROVED:** a width-(b_n) forward/backward blend preserves (b_n^3) derivative bias. Its (L^2) derivative cost is (b_n^{5/2}); the fixed-width blend replaces it.
+- **DISPROVED:** coordinatewise bounded moments imply dimension-free norm concentration. Independent Rademacher coordinates give (sqrt{p_n/(nb_n)}).
+- **DISPROVED:** unqualified polynomial mixing yields an (n^{-1/2}) Hilbert rate. A bounded regenerative process with (alpha(h)\asymp h^{-\beta}), (0<\beta<1), has sample-mean scale (n^{-\beta/2}).
+- **DISPROVED:** cross-fitting alone makes curved mean recentering quadratic. The random Hessian in Workstream B's hyperbolic Markov example leaves a nonzero first derivative.
+- **DISPROVED:** (kappa^{-2}) is correct when (kappa) denotes the eigengap. Davis–Kahan pays (Delta_n^{-1}); (s_n^{-2}) follows only from SIG2.
+- **DISPROVED:** one full-rank lag is necessary. Complementary deficient lags can identify the full loading space.
+- **DISPROVED:** Weyl implies the beyond-rank square. The row-operator min–max proof is required.
+- **DISPROVED:** the raw eigenvalue-ratio selector follows from the beyond-rank square. The threshold or ridge is required.
+- **SUPERSEDED:** G1′ as a loading-theorem dependency. The proved polygonal construction bypasses it.
+- **SUPERSEDED:** cross-fitting as a prerequisite of the final robust P1-OP. Route R is pathwise and explicitly retains the first-order feasible RMS error.
+
+## 6. Closed dependency ledger
+
+| Load-bearing node | Final status | Direct consumer |
+|---|---|---|
+| positive three-scale weights and fixed-width boundary construction | PROVED | G1-HD |
+| Hilbert score concentration under fixed finite memory | PROVED | G1-HD, GRID |
+| integrated and arbitrary-grid RMS mean rate | PROVED | PF |
+| corrected derivative theorem and $n^{-a}/b_n$ | PROVED; sharp counterexample | optional only |
+| typed polygonal centre/frame theorem | PROVED | OBS |
+| oracle HS lag-row concentration | PROVED | P1-ROW |
+| feasible-versus-oracle Route R | PROVED pathwise | P1-OP |
+| signal/eigengap identity and $\Delta_n\ge s_n^2$ | PROVED under HD-L | HD-E |
+| lag-row/operator assembly | PROVED | HD-E, EV |
+| Davis–Kahan with $\Delta_n^{-1}$ | PROVED | HD-E |
+| beyond-rank square | PROVED | factor number |
+| threshold and ridged selectors | PROVED | factor-number result |
+| raw ratio | DISPROVED | not consumed |
+| generic quadratic curved recentering | DISPROVED | not consumed |
+
+There is no OPEN or CONDITIONAL node in the dependency graph of HD-E. The application-map run subsequently proved: a broader causal Hilbert physical-dependence version of the robust chain; fixed-band higher AIRM differentials; and an oracle \(n^{-1/2}\) branch under exact sample separation, lag-specific GLO, and a negligible non-rigid frame coefficient, with one exact flat as the clean sufficient geometry. These are sharper optional branches and do not alter HD-E. Generic curved frame debiasing and infinite-memory conditional splitting remain open. The growing-energy programme must rederive the mean/frame and lag-row inputs with \(R_n\); it is not a corollary of HD-E. The full BW programme must replace the AIRM/Hadamard geometric inputs; it is not a metric relabelling.
+
+## 7. Parent comparison and verification history
+
+The primary parent paper defines its $\kappa$ as the maximum smallest singular value of an included factor lag, not as an eigengap, and states $\lambda_r\ge\kappa^2$. Its fixed-centre short-memory theorem reports $n^{-1/2}/\kappa^2$, and its Proposition 3 reports $n^{-1/2}$ signal-eigenvalue errors and $n^{-1}$ null eigenvalues. HD-E matches the parent's dimension-free **bounded-total-energy / arbitrary-$p_n$** character and internally proves the lag-row square, but differs by using fixed finite memory, explicit uniform moving-mean geometry, a slower robust moving-centre rate, and a proved threshold/ridged selector. It does not claim the parent's oracle rate or unregularised ratio conclusion.
+
+Independent proof work is retained under `Archived/Proof workstreams` in:
+
+- [[HD1-A — G1 and derivative proof dossier]];
+- [[HD1-B — lag operator signal and factor number proof dossier]];
+- [[HD1-C — hostile counterexamples and assumption audit]].
+
+Workstream A attacked B's G1/G1′ and perforated-design inputs; Workstream B attacked A's random-point differentiation and grid sufficiency; Workstream C attacked both and the main polygonal integration. The repairs incorporated here are the fixed-width blend, $n^{-a}/b_n$, higher-geometry assumptions, arbitrary-grid RMS theorem, typed polygonal area proof, pathwise Route R, signal/eigengap separation, and regularised factor selector.
