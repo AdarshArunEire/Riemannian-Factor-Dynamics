@@ -6,7 +6,7 @@ aliases:
   - G1 resolution
 status: canonical
 verdict: positive-weight G1, integrated G1, and corrected G1′ are proved dimension-free for arbitrary growing p under bounded total energy, fixed finite memory, and explicit uniform geometry; the signed route remains fixed-p unless its operator constants are separately controlled
-last-audited: 2026-08-08
+last-audited: 2026-08-12
 area:
   - geometry
   - time-series
@@ -23,7 +23,7 @@ tags:
 >
 > **Scope.** No claim below is called “unconditional” merely because a geometric side condition disappears. Mixing, smoothness, support, local-stationarity, design, and estimator-specification assumptions remain explicit.
 >
-> **Energy boundary.** The displayed growing-\(p_n\) rates use a dimension-uniform total-energy envelope. If \(R_n\to\infty\), the score benchmark acquires \(R_n(nb_n)^{-1/2}\) and all localisation, bias, and generated-tube constants must be rechecked. That extension is OPEN in [[OPEN OBLIGATIONS — current research actions]].
+> **Energy boundary.** The baseline growing-\(p_n\) rates below use a dimension-uniform total-energy envelope. When \(R_n\to\infty\), the score benchmark acquires \(R_n(nb_n)^{-1/2}\) and the baseline proof cannot be rescaled by inspection. The separate bounded-tail and expanding-domain HE campaigns have now rederived the localisation, bias, frame, row, assembly, signal, and generated-domain chain under their explicit assumptions; see [[Paper 1 — Locally stationary Riemannian factor model]] and [[Analytical reconstruction — proof ledger and rebuilt spec]].
 
 ## 0. Growing-dimension verdict — 2026-08-08 proof run
 
@@ -222,6 +222,10 @@ For a fixed finite-dimensional Hadamard manifold with a compact bounded tube, $d
 
 For a sequence of manifolds, direct dimension-uniform control must be proved or assumed. The geometric primitive SW-G below is one sufficient route.
 
+For full-rank Bures–Wasserstein SPD on one compatible complete generated domain with fixed spectral, polar, Exp, normal-pair, and path-length margins, BW-SIZE-FIXED-MARGIN proves that quantitative producer uniformly in matrix size. In particular, the mixed observation derivative of the squared-distance Hessian produces a dimension-uniform positive-Hessian radius, and the Richardson/blend/chord/ruled maps are controlled by the recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\).
+
+If \(\alpha_n\downarrow0\), the proved replacement is restricted: every population/proxy score pair must have strict slack inside \(\rho_{H,n}=O(\sqrt{\alpha_n})\), the support and score-energy scale is \(O(\sqrt{\alpha_n})\), first local score/Log/Richardson stability stays \(O(1)\), deterministic cubic bias may pay \(O(\alpha_n^{-1})\), and the quadratic Log remainder pays \(O(\alpha_n^{-1/2})\). Grid maxima, generated-object counts, and fractional-normal cell tests remain explicit. Thus the restricted shrinking-margin theorem supplies G1 geometry only under shrinking support; it does not supply a pervasive-energy G1 branch, dependence, localization probability, or signal.
+
 ## 7. H-LIP, non-conjugacy, and the SPD case
 
 On a geodesic tube, let $\gamma(t)=\exp_q(t\log_qx)$, $t\in[0,1]$, and let $J_w$ solve
@@ -295,6 +299,8 @@ flowchart TD
 ```
 
 G1-LP requires dimension-uniform signed-Hessian structure when \(p_n\) grows. [[Application map — geometry, symmetry, and rate accelerators]] T-APP-5 now supplies such a route for deterministic, scalar-plus-uniformly-Hilbert–Schmidt, and controlled block-scalar Hessians; flat/common flats and bounded constant-negative-curvature tubes qualify. Unrestricted full AIRM remains open. G1-PW, its integrated theorem, and corrected G1′ remain dimension-free under the HD1 assumptions. The final robust growing-$p_n$ loading theorem consumes level/grid G1 through a polygonal-frame theorem and does not consume G1′.
+
+FRAME-2P-U consumes two independent instances of the same positive three-scale level/grid machinery: the training path at \(b_n=n^{-1/7}\) and an undersmoothed validation path at \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\). Its new root-\(n\) row comes from the fitted polygon functional derivative and dimension-uniform replacement/Hájek argument, not from a faster G1 rate. The G1 theorem and its robust rate are unchanged.
 
 The growing-$p_n$ positive route is **PROVED UNDER EXPLICIT ASSUMPTIONS** in HD1. The structural signed route and causal Hilbert physical-dependence extension are **PROVED UNDER EXPLICIT ASSUMPTIONS** in the application map. Neither is consumed by the original HD-E statement.
 

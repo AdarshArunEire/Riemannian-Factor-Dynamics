@@ -2,212 +2,136 @@
 type: canonical-research-queue
 title: OPEN OBLIGATIONS — current research actions
 status: active
-last-audited: 2026-08-08
+last-audited: 2026-08-12
 ---
 
 # OPEN OBLIGATIONS — current research actions
 
-> **Only live queue.** Closed proof-run specifications and superseded TODO lists are archived. A task may enter a proved theorem only after its assumptions, producer lemmas, consumer lemmas, counterexamples, and rate substitutions are all explicit. Web references and numerical experiments may support application selection but cannot close a proof obligation.
+> **Only live queue.** Closed proof-run specifications and superseded TODO lists are archived. [[Analytical reconstruction — proof ledger and rebuilt spec]] governs theorem status. Numerical evidence cannot close any item below.
 
-## 0. Current programme state
+## 0. Closed analytical campaigns
 
-Paper 1’s robust arbitrary-\(p_n\), bounded-total-energy theorem is closed under its displayed assumptions. The flat/common-commuting exact-split oracle branch, root-\(n\) parametric-centre order, Hilbert physical-dependence extension, fixed-band AIRM differential calculus, structured signed mean branch, and corrected factor-number selectors are also closed under their explicit packages.
+The campaign closed, under explicit assumptions:
 
-The two primary next programmes are:
+1. the bounded-tail HE mean/frame, variance-sensitive oracle-row, feasible-row, assembly, loading, null-spectrum, and selector chain;
+2. sufficient flat/rigid and curved fixed-gap HE envelope windows;
+3. explicit pervasive and growing-rank HE models, plus analytic counterexamples to coordinatewise control, arbitrary-energy fixed-gap recovery, harmless normalisation, coloured-lag immunity, and unrestricted growing rank;
+4. the fixed-size full-rank local/regularized BW domain, generated-set, differential, polygonal-frame, lag/loading, and selector theorem;
+5. analytic BW failures at rank loss, the PSD boundary, unsafeguarded Richardson images, and moving-eigenvector transfer from the diagonal flat;
+6. a fixed-basis diagonal/root-coordinate HE–BW corollary with an explicit positive-root DGP.
+7. the HE-TRUNC expanding-domain theorem, including unconditional no-clipping transfer, explicit score/product tail integrals, induced mean/frame/row/loading rates, and a sub-Weibull corollary;
+8. BW-SIZE-FIXED-MARGIN: the matrix-size-uniform noncommuting quotient, curvature, transport, Hessian/normal-radius, generated-map, and polygonal-frame geometry under one compatible fixed-margin generated-domain package.
+9. BW-SIZE-SHRINKING-MARGIN on the restricted fractional-normal class: sharp primitive floors, termwise G1/PF/row/gap propagation, a conservative sufficient \(m_n\)-window, a self-similar attainability branch, and exact impossibility boundaries.
+10. FRAME-2P-U: the entirely observable three-colour undersmoothed two-path correction, its dimension-uniform root-\(n\) row theorem under U2P, its finite-dimensional parametric fallback, and the disproof of the same-band score-only and invariant-only routes.
 
-1. **HE — growing energy and pervasive factor signal**;
-2. **BW — moving-centre Bures–Wasserstein covariance dynamics**.
+The following are not open tasks because they are false: a global/rank-changing BW theorem, an unsafeguarded global BW estimator theorem, harmless global normalisation, and a general noncommuting HE–BW corollary from the current assumptions.
 
-They are independent. HE changes statistical scaling and signal balance. BW changes the geometry and estimator calculus. Their intersection is a later corollary, not the starting point.
+## 1. P0 — BW-SIZE-FIXED-MARGIN
 
-## 1. P0 — HE: growing-energy/pervasive-factor theorem
+**Status: PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS — ARCHIVED.**
 
-### Objective
+On fixed absolute spectral bands, fixed full-rank Exp/polar margin, and a declared normal radius, derive in Frobenius/BW operator norms, uniformly in matrix size:
 
-Replace the uniform bound \(\|Y_{t,n}\|\le R\) by a controlled sequence \(R_n\to\infty\), and prove loading consistency in regimes where signal strength can also grow with dimension.
+1. fixed-order derivatives of the horizontal projector and quotient connection;
+2. the O'Neill curvature operator and the derivatives used by connection variation;
+3. parameter derivatives of radial and polygonal parallel transport from the typed variational ODE;
+4. the observation Hessian and its consumed base/observation derivatives;
+5. Richardson, blend, chord, and ruled-surface constants;
+6. base-varying BW tangent-norm equivalences;
+7. a dimension-uniform positive-Hessian/normal-radius theorem on every generated pair.
 
-### Required outputs
+The archived Stage 1 proof avoids \(\|L\|_F\asymp\sqrt m\), produces an explicit recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\), and reaches G1/PF without hiding generic polygon \(N+\mathsf L\), grid \(\sqrt{N+1}r_N\), or PF \(v_\mu,r_N,a_\mu,N\) inputs. The compatible generated domain includes fixed spectral, polar, Exp, normal-pair, and path-length margins and a recurrence-controlled nonempty neighbourhood. This closes fixed-margin geometry only.
 
-#### HE-1 — typed assumption ledger
+## 2. P0 — BW-SIZE-SHRINKING-MARGIN
 
-Separate and minimise the quantities actually consumed by:
+**Status: PROVED UNDER EXPLICIT RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS — SUFFICIENT WINDOWS, NOT GLOBALLY SHARP.**
 
-- mean-score concentration;
-- local empirical Hessian and tube localisation;
-- lag-product concentration;
-- feasible-versus-oracle comparison;
-- frame/holonomy control;
-- lag target and eigengap.
-
-Do not replace all of these by one unnecessarily strong almost-sure norm assumption if moment/product conditions suffice.
-
-#### HE-2 — rederive mean and frame errors
-
-Prove the positive three-scale mean, grid, and polygonal-frame results with displayed \(R_n\), tail, dependence, and generated-tube constants. Define the resulting feasible observation error \(q_{R,n}\); do not reuse \(\ell_n\) by assertion.
-
-#### HE-3 — oracle lag-row theorem
-
-For each included lag, prove the Hilbert–Schmidt row concentration under the chosen product-moment and dependence conditions. The bounded-envelope benchmark is
-
-\[
-O_p(R_n^2n^{-1/2}),
-\]
-
-but sharper variance-sensitive bounds should be retained when proved.
-
-#### HE-4 — feasible row and operator assembly
-
-Prove a typed bound of the form
-
-\[
-d_n\lesssim \text{oracle row}+2R_nq_{R,n}+q_{R,n}^2
-+\text{frame, target, and dependence defects},
-\]
-
-then use
+The completed fresh campaign independently rederived the active powers and propagated them through mean localization, the complete generated-set test, polygonal framing, the lag row, and
 
 \[
 \eta_n=2A_{2,n}d_n+d_n^2.
 \]
 
-No factor of \(R_n\), \(A_{2,n}\), lag count, or dependence budget may be hidden in \(O(1)\).
+On a complete fractional-normal domain,
 
-#### HE-5 — signal phase diagram
+\[
+K_S,K_{R1},K_G,K_{L1},K_C=O(1),\quad
+K_B=O(1+\alpha_n^{-1}),\quad
+K_{L2}=O(\alpha_n^{-1/2}),\quad
+K_F=O(\alpha_n^{-1}),\quad
+\rho_{H,n}=O(\sqrt{\alpha_n}).
+\]
 
-State consistency in terms of \(\eta_n=o(\Delta_n)\). Work out separate corollaries for:
+The support/energy scale must also be \(O(\sqrt{\alpha_n})\). For \(\alpha_n\asymp m_n^{-A}\), \(m_n=n^x\), matched rank-one signal, fixed lag/dependence, and negligible defects, one conservative sufficient window is
 
-- localised factors with bounded signal;
-- pervasive factors whose lag signal grows with dimension;
-- normalised observations with signal preserved;
-- normalised observations with signal dilution;
-- matrix observations, distinguishing matrix size \(m_n\) from tangent dimension \(p_n=m_n(m_n+1)/2\).
+\[
+0<x<\frac{3}{5A}.
+\]
 
-#### HE-6 — hostile lower bounds and counterexamples
+This boundary is not minimax. A self-similar fixed-active-block construction admits any fixed polynomial inactive dimension, so there is no universal direct \(m_n\)-ceiling. Repeated positive eigenvalues are not a margin; rank loss is.
 
-At minimum, attack:
+## 3. P1 — application verification
 
-- coordinatewise moments without a total/product budget;
-- growing energy with a fixed eigengap;
-- normalisation of a localised factor;
-- pervasive signal with weak idiosyncratic lag contamination;
-- growing rank under bounded or slowly growing energy.
+The analytical packages are closed, but empirical application claims still require model-specific checks.
 
-For every proposed growth window, either prove attainability or give a counterexample. Numerical plots do not establish sharpness.
+### APP-FRAME — FRAME-2P-U verification and implementation
 
-### Completion gate
+- verify the U2P generated-tube, strong-convexity, vertex-action, composed-action, and single/double replacement constants for each proposed curved geometry;
+- decide whether the data construction genuinely permits three innovation-separated colours with identical phase-balanced masks and one common finite-array target;
+- verify GLO, included-lag factorisation, exact local-law sampling or \(a>1/2\), and every coupling/design/mask defect at sub-root-\(n\) scale;
+- implement the exact fitted-polygon derivative rather than a same-band score or latent \(\Omega\) surrogate;
+- verify common-gauge equivariance and the actual \(2A_{2,n}d_n+d_n^2=o_p(\Delta_n)\) condition;
+- run N-16/N-17 before making an application-level oracle claim.
 
-HE closes only when one theorem states all rates in \((n,b_n,R_n,A_{2,n},\Delta_n)\) and the dependence/tube budgets, proves a nonempty consistency regime, and supplies at least one pervasive application model satisfying it without scientifically arbitrary rescaling.
+### APP-FIN — realised covariance and correlation dynamics
 
-## 2. P0 — BW: moving-centre Bures–Wasserstein theorem
+- specify the raw-return sampling scheme, covariance estimator, regularisation, and overlap;
+- quantify the covariance-estimation measurement error, dependence, and included-lag contamination;
+- decide whether covariance dynamics, rather than the full return distribution, is the estimand;
+- use the fixed-size, fixed-margin growing-size, or restricted shrinking-margin BW package only when its complete generated-domain, support/energy, object-count, dependence, target, and gap conditions are defensible;
+- use the diagonal HE–BW branch only when fixed axes are scientific structure.
 
-### Objective
+### APP-NEURO — functional connectivity and diffusion
 
-Build a full Paper 1 geometry-and-statistics route for covariance matrices under the same Bures–Wasserstein estimand used by the parent application.
-
-### Required outputs
-
-#### BW-1 — domain and metric specification
-
-Choose whether the theorem lives on strictly positive-definite matrices, a fixed-rank PSD stratum, or a quotient representation. State the BW metric, tangent norm, Exp/Log convention, horizontal alignment, and every uniqueness condition. Quantify distance from rank loss and nonunique alignment.
-
-#### BW-2 — generated-set closure
-
-Prove that population means, empirical local means, Richardson/blend images, connectors, chords, and reconstructed observations stay in one explicitly controlled domain with probability tending to one. A bound on the raw observations alone is insufficient.
-
-#### BW-3 — dimension-uniform differential calculus
-
-Prove or disprove matrix-size-uniform bounds for every fixed-order map consumed by G1 and the polygonal-frame proof:
-
-- squared-distance score and Hessian;
-- Exp and Log;
-- optimal alignment/horizontal lift;
-- connector and comparison maps;
-- Richardson and blend maps;
-- ruled-surface/frame variation.
-
-Track the dependence on lower eigenvalue, upper eigenvalue, rank, and spectral multiplicity margins. Do not import the AIRM proof.
-
-#### BW-4 — mean and feasible-frame theorem
-
-Either reproduce the positive three-scale and polygonal route under BW or design a replacement estimator with fewer geometric consumers. Prove its level, grid, and frame error bounds.
-
-#### BW-5 — lag identification
-
-Show that the transported BW tangent observations yield the intended loading space under explicit included-lag noise/cross-covariance conditions. Define \(A_{2,n}\), \(\Delta_n\), and the target in the BW tangent norm.
-
-#### BW-6 — fixed-size theorem first
-
-Close the complete moving-centre theorem for fixed matrix size before making a growing-size claim. Then audit every constant for matrix-size uniformity.
-
-#### BW-7 — boundary and nonuniqueness attacks
-
-Construct or cite explicit failures caused by:
-
-- eigenvalues approaching zero;
-- rank changes;
-- nonunique Procrustes alignment;
-- nonunique Fréchet means;
-- generated estimator images leaving the controlled stratum.
-
-### Completion gate
-
-BW closes only when the estimator is well-defined on a proved high-probability event, every consumed differential is bounded in the stated norm, and the final lag/loading theorem has no AIRM-only lemma hidden in its dependency chain.
-
-## 3. P1 — application verification after HE/BW
-
-Application matching begins from proved property packages, not labels.
-
-### APP-FIN — realised covariance dynamics
-
-- specify raw return sampling, covariance estimator, regularisation, and monthly/rolling overlap;
-- identify whether covariance dynamics—not the full return distribution—is the estimand;
-- quantify covariance-estimation noise and its included-lag contamination;
-- test whether signal is pervasive or localised as the asset universe grows;
-- compare AIRM, BW, log-Euclidean, and direct covariance baselines under the same forecast protocol.
-
-### APP-NEURO — functional connectivity and diffusion data
-
-- separate raw time series, estimated connectivity matrices, and the scientific target;
-- model overlapping-window dependence and regularisation bias;
-- check energy and signal under increasing parcellation;
-- distinguish moving eigenvectors from approximately fixed anatomical axes;
-- reject dimension refinement that changes the estimand without an explicit continuum interpretation.
+- separate raw signals, estimated matrix series, and the RFM target;
+- quantify overlapping-window dependence and regularisation bias;
+- check whether increasing parcellation is a stable continuum estimand;
+- verify the applicable AIRM/BW generated-domain and FRAME-2P-U producer package separately rather than inferring either from spectral conditioning;
+- reject diagonal-flat claims when eigenvectors move.
 
 ### APP-SENSOR/GENE — expanding panels
 
-- distinguish adding genuinely new noisy variables from refining a fixed-energy latent object;
-- formulate a pervasive-factor DGP with checkable product dependence;
-- verify whether the eigengap strengthens fast enough to pay the HE numerator;
-- retain raw-variable benchmarks that do not require a covariance aggregation.
-
-### Numerical role
-
-The later numerical suite should compare reconstruction, factor stability, factor-number selection, and genuine out-of-sample forecasting. It validates usefulness and diagnostics; it does not close HE or BW proof nodes.
+- verify Hilbert/HS rather than coordinatewise dependence budgets;
+- determine whether the serial factor is localised or pervasive;
+- verify the exact assembly/gap ratio and target-contamination scale;
+- retain raw-variable baselines that do not require covariance aggregation.
 
 ## 4. P2 — secondary analytical backlog
 
-These do not block the robust theorem or the two primary programmes unless explicitly imported:
+These do not block the proved Paper 1 robust/FRAME-2P-U branches, HE packages, or the fixed-size, fixed-margin growing-size, and restricted fractional-normal shrinking-margin BW packages:
 
-- **CF-PD:** conditional Hilbert/HS physical-dependence inequality or joint retained-row coupling for infinite-memory oracle cancellation;
-- **AIRM-SIGNED:** prove or disprove a matrix-size-uniform scalar-plus-HS or controlled-block representation for the full AIRM random Hessian;
-- **FRAME-DB:** generic curved non-rigid frame debiasing with a proved first-order coefficient;
-- **G1-Q4:** positive-weight bias order at least four with all Exp/Log/Richardson derivatives verified;
-- **GEO-N/GEO-AV:** necessity and averaged variants of curvature-derivative control;
-- **MIX-SHARP:** sharpness of sufficient polynomial-mixing thresholds;
-- **P1-ID:** necessity side of the curved mean/factor identification ambiguity.
+- **CF-PD:** conditional Hilbert/HS physical-dependence inequality for infinite-memory oracle cancellation;
+- **AIRM-SIGNED:** full-AIRM matrix-size-uniform structural Hessian representation;
+- **G1-Q4:** positive-weight bias order at least four;
+- **GEO-N/GEO-AV:** necessity and averaged curvature-derivative variants;
+- **MIX-SHARP:** sharp polynomial-mixing thresholds;
+- **P1-ID:** necessity side of curved mean/factor identification.
+- **BW-U-D1:** smallest joint nonlocal factored-alignment margin powers;
+- **BW-U-D2:** sharp endpoint-Jacobi envelope outside fractional-normal cells;
+- **BW-U-D3:** smallest higher nonlocal Richardson/blend/ruled-map powers;
+- **BW-U-D4:** minimized closed polynomial for every higher endpoint-PT derivative.
 
-Paper 2’s cross-tangent algebra, localised concentration, and estimated-frame bootstrap remain in [[Paper 2 — Moving loading subbundle]] and are parked while Paper 1 applications are prioritised.
+Paper 2 remains standalone and parked. Its cross-tangent algebra, localised concentration, and estimated-frame bootstrap stay in [[Paper 2 — Moving loading subbundle]].
 
 ## 5. Execution order
 
-1. Run HE-1/HE-2 and BW-1/BW-2 in parallel as independent analytical scoping tasks.
-2. Close HE-3/HE-4; only then derive the HE phase diagram.
-3. Close BW-3; choose between reusing and replacing the current feasible-frame estimator.
-4. Obtain a complete fixed-size BW theorem before its growing-size audit.
-5. Match finance, neuro, and expanding-panel applications only to assumption packages that have survived the hostile pass.
-6. Design the numerical suite from the final theorem regimes and declared failure modes.
+1. Freeze this canonical theorem state in version control before notation-only rewriting or simulation implementation.
+2. Build one notation/conventions ledger and simplify exposition without changing theorem hypotheses, norms, targets, or rates.
+3. Implement the smallest proof-faithful FRAME-2P-U experiment: N-16 plus the N-17 negative controls and common-gauge test.
+4. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
+5. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, P1-ID, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.
+6. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], where every row is labelled PLANNED.
 
 ## 6. Repository rule
 
-Canonical theorem status appears only in this queue, [[Analytical reconstruction — proof ledger and rebuilt spec]], and the named canonical theorem/application files. Documents under `Ideas/Archived` are evidence and history. Their old status labels do not override the canon.
-
+This is the only live queue. HE, BW, FRAME-DB, and FRAME-IF working dossiers and hostile ledgers are archived proof records, not parallel status sources. No open node above is consumed by a proved theorem.

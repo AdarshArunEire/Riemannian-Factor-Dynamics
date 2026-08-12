@@ -14,8 +14,8 @@ They are not independent sources of current theorem status. Current claims are g
 ## Folder map
 
 - `Historical canonical files`: complete pre-rebuild ledger and queue, preserved verbatim.
-- `Proof workstreams`: APP-A/B/C and HD1-A/B/C proof and adversarial-audit records.
+- `Proof workstreams`: APP-A/B/C, HD1-A/B/C, HE, BW, the joint HE–BW records, the completed BW-SIZE-FIXED-MARGIN and BW-SIZE-SHRINKING-MARGIN campaigns, and the completed FRAME-DB/FRAME-IF geometry, statistical, hostile-audit, and lead-adjudication records.
 - `Proof history`: superseded G1 addenda retained for derivation history.
-- `Run prompts`: completed team prompts; these specify past work but do not create live obligations.
+- `Run prompts`: completed team prompts, including the HE–BW, staged BW growing-size, and FRAME-DB campaigns; these specify past work but do not create live obligations.
 
 Paper 2 remains a visible standalone note because it is a distinct research object, although its work is currently parked.

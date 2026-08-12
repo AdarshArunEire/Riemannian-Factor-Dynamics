@@ -18,7 +18,7 @@ tags:
 
 # Paper 2 — Moving loading subbundle
 
-> Parent: [[Time-varying Fréchet mean Riemannian factor model]]. Sibling: [[Paper 1 — Locally stationary Riemannian factor model]]. Current statuses are governed by [[Analytical reconstruction — proof ledger and rebuilt spec]]. Paper 2 remains standalone but is parked while the Paper 1 growing-energy and Bures–Wasserstein programmes are pursued.
+> Parent: [[Time-varying Fréchet mean Riemannian factor model]]. Sibling: [[Paper 1 — Locally stationary Riemannian factor model]]. Current statuses are governed by [[Analytical reconstruction — proof ledger and rebuilt spec]]. Paper 2 remains standalone and parked after the Paper 1 HE and fixed-size BW closure campaign; no HE/BW result changes Paper 2 mathematics.
 
 ## Current verdict
 

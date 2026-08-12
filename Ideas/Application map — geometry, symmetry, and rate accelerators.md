@@ -2,8 +2,8 @@
 type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
-verdict: robust bounded-energy Paper 1 and its application-specific accelerators are closed under explicit assumptions; growing-energy/pervasive-factor scaling and full moving-centre Bures–Wasserstein geometry are the two primary open application programmes
-last-audited: 2026-08-08
+verdict: FRAME-2P-U, HE, fixed-size BW, fixed-margin BW, restricted fractional-normal shrinking-margin BW, and diagonal HE–BW packages are closed under explicit assumptions; applications are remapped to exact, conditional, approximate, or rejected matches
+last-audited: 2026-08-12
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
@@ -33,8 +33,9 @@ last-audited: 2026-08-08
 5. Full AIRM SPD is Hadamard and locally symmetric, not flat. On absolute spectral bands, all fixed-order Exp, Log, parallel-transport, Hessian, Richardson, connector, and ruled-surface differentials consumed by HD-G are uniform in matrix size in the project AIRM/Frobenius norms. This verifies geometry, not energy, GLO, frame cancellation, lag orthogonality, or signal. **PROVED, T-APP-2.**
 6. Fixed finite memory may be replaced in the robust theorem by dimension-uniform causal Hilbert physical dependence with summable \(L^2\) and essential-sup innovation effects. Infinite-memory physical dependence does not create exact cross-fit independence. **PROVED / shortcut DISPROVED.**
 7. Signed growing-\(p_n\) G1 is proved when the random Hessian is deterministic, scalar plus a uniformly Hilbert–Schmidt-bounded remainder, or controlled block-scalar. This includes flat/common-commuting flats and bounded constant-negative-curvature models. It is not verified for unrestricted full AIRM SPD, and faster signed mean convergence alone is not loading immunity. **PROVED UNDER EXPLICIT ASSUMPTIONS / OPEN AS QUALIFIED.**
-8. When total energy grows, the proved defect identities expose factors \(R_n\) and \(R_n^2\) in mean-score and lag-product errors. Whether loading recovery survives depends jointly on these numerators, \(A_{2,n}\), and \(\Delta_n\). A complete pervasive-factor phase diagram is **OPEN**; normalisation is not a theorem because it may erase a localised signal.
-9. The parent covariance application uses Bures–Wasserstein geometry. The AIRM differential theorem does not transfer to it. Diagonal fixed-basis BW is flat, but full noncommuting moving-centre BW requires a separate domain, differential, mean/frame, and lag-identification proof. **OPEN PROGRAMME.**
+8. The HE theorem is **PROVED UNDER EXPLICIT ASSUMPTIONS** for both bounded-tail and expanding-domain truncation packages. It exposes centre, frame, score, product, target, \(A_{2,n}\), and \(\Delta_n\) separately; proves sufficient flat and curved energy windows; supplies explicit pervasive and growing-rank DGPs; and gives a sub-Weibull truncation corollary with explicit score/product tail integrals.
+9. The fixed-size full-rank local/regularized BW theorem, the noncommuting fixed-margin geometry producer, and a restricted fractional-normal shrinking-margin theorem are **PROVED UNDER EXPLICIT ASSUMPTIONS**. The shrinking theorem has sufficient—not globally sharp—windows and requires support/energy \(O(\sqrt{\alpha_n})\). Global/rank-changing PSD and unsafeguarded-estimator claims are **DISPROVED/RETRACTED**. The fixed-basis diagonal HE–BW branch is proved.
+10. FRAME-2P-U is an entirely observable generic-curved oracle branch. Three exactly separated training/validation/evaluation colours, an independently undersmoothed validation path, and the exact derivative of the fitted evaluation polygon row jointly remove the first-order mean/base-log and non-rigid frame terms. With \(b_n=n^{-1/7}\), \(M_n\asymp n^{2/7}\), \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\), its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and its row is root-\(n\), uniformly for arbitrary \(p_n\) under the explicit U2P producers. Bounded total energy alone is insufficient. **PROVED UNDER EXPLICIT ASSUMPTIONS.**
 
 ## 1. Term-by-term error ledger
 
@@ -59,12 +60,12 @@ Here \(e_t=\log_{\mu_t}\hat\mu_t\), \(H_t=\tfrac12\operatorname{Hess}_{\mu_t}d(\
 | LOG-2 | quadratic Log remainder | Taylor remainder | \(O_p(\ell_n^2)\) | lag products | zero in a vector space; already oracle-negligible |
 | CON | endpoint connectors | typed geometric error | HD-G controlled | observation/frame map | identity in one affine flat |
 | FR-R | one common orthogonal \(Q_n\) | rigid frame | exact conjugation | intrinsic target | absorbed by aligned comparison; no eigengap |
-| FR-N | \(\Omega_tY_t\) | non-rigid frame | \(O_p(\ell_n)\) robustly | lag products | zero in one flat; otherwise direct coefficient bound |
+| FR-N | \(\Omega_tY_t\) | non-rigid frame | \(O_p(\ell_n)\) robustly | lag products | zero in one flat; direct coefficient bound; or FRAME-2P-U full-functional correction |
 | HOL | ribbon/polygon holonomy | curvature interaction | PF gives \(O_p(\ell_n)\) | FR-N | zero if \(R\) vanishes on normalized ribbon planes; \(\nabla R=0\) is insufficient |
-| L-M1 | \(-H_te_t\otimes Y_{t-h}\) | linear mean lag term | \(O_p(\ell_n)\) pathwise | \(d_n\) | conditional GLO + exact split gives \(O_p(\ell_n/\sqrt n)\) |
-| L-M2 | \(-Y_t\otimes H_{t-h}e_{t-h}\) | linear mean lag term | same | \(d_n\) | reverse-endpoint GLO |
-| L-F1 | \(\Omega_tY_t\otimes Y_{t-h}\) | linear frame lag term | \(O_p(\ell_n)\) | \(d_n\) | frame rigidity/flatness/direct defect only |
-| L-F2 | \(Y_t\otimes\Omega_{t-h}Y_{t-h}\) | linear frame lag term | same | \(d_n\) | same |
+| L-M1 | \(-H_te_t\otimes Y_{t-h}\) | linear mean lag term | \(O_p(\ell_n)\) pathwise | \(d_n\) | conditional GLO + exact split; or FRAME-2P-U inverse-Karcher/base-log action |
+| L-M2 | \(-Y_t\otimes H_{t-h}e_{t-h}\) | linear mean lag term | same | \(d_n\) | reverse-endpoint GLO; or the lagged FRAME-2P-U derivative action |
+| L-F1 | \(\Omega_tY_t\otimes Y_{t-h}\) | linear frame lag term | \(O_p(\ell_n)\) | \(d_n\) | frame rigidity/flatness/direct defect; or FRAME-2P-U Jacobi/connector action |
+| L-F2 | \(Y_t\otimes\Omega_{t-h}Y_{t-h}\) | linear frame lag term | same | \(d_n\) | same at the lagged endpoint |
 | L-Q | terms quadratic in \(e,\Omega\) | feasible remainder | \(O_p(r_e^2+r_er_F+r_F^2)\) | \(d_n\) | harmless if nuisance rates are \(o(n^{-1/4})\) |
 | O-S | oracle lag-row fluctuation | HS sampling | \(n^{-1/2}\) | \(d_n\) | fixed memory or C-PD; oracle floor |
 | LN | \(D_h=\Gamma_h-AC_f(h)A^*\) | population target bias | \(\zeta_n=(\sum_h\|D_h\|_{op}^2)^{1/2}\) | target/gap | exact included-lag orthogonality |
@@ -92,6 +93,7 @@ Levels are **G** geometry, **L** law/symmetry, **M** model alignment, **D** depe
 | Isotropy (L) | merely \(EH=cI\) or marginal rotation invariance | no lag GLO identity | none | — | — | none | — | isotropic marginals | conditional radii | **DISPROVED as sufficient** | APP-B CE-B4; APP-C C-S2 |
 | Deterministic/scalar Hessian (L/G) | \(H_t=H_0\) pathwise, especially \(I\) | mean zero passes through \(H_0\) | GLO coefficient; signed Hessian fluctuation | expectation/conditional | split for lag; signed LP | signed growing-\(p\); oracle only with frame | dimension-free | flat/common flat | scalar expected Hessian | **PROVED / shortcut DISPROVED** | APP-C C-SG1; APP-B §3 |
 | GLO + exact split + frame rigidity (L/D/G/E) | both GLO identities; disjoint innovations; \(\phi_F=o(n^{-1/2})\) | all four linear coefficients centred/negligible | L-M/L-F | conditional + direct | split/frame correction | equation (3.1) | envelope-uniform | abstract curved package | GLO alone | **PROVED UNDER ASSUMPTIONS** | T-APP-3 |
+| FRAME-2P-U (G/L/M/D/E) | U2P uniform tube/action/replacement producers; exact three colours; GLO/LN; exact law or \(a>1/2\); \(1/6<\gamma<3/14\) | full fitted-row derivative toward independent undersmoothed path | all four L-M/L-F pilot terms | pathwise cancellation + Hilbert Hájek projection | cyclic two-path polygon correction | root-\(n\) row; \(o_p(n^{-1/2})\) nuisance remainder | arbitrary \(p_n\) when U2P is uniform | padded hyperbolic product; known curved geometries with checked producers | bounded energy alone; same-band score | **PROVED UNDER EXPLICIT ASSUMPTIONS** | T-APP-3B / FRAME-IF closure |
 | Higher-order smoothing (E) | certified order \(q\) | \(b^3\to b^q\) | M-B only | bias | higher correction/signed LP | \(n^{-q/(2q+1)}\) mean | proof-dependent | structural signed classes | oracle claim from smoother | **rate distinction PROVED** | APP-B §8 |
 | Signed structural G1 (G/L/E/D) | localized LP; \(H=aI+K\), HS-bounded/PD \(K\), or blocks | scalar + HS concentration | signed empirical Hessian | empirical | localized signed LP | \(\ell_{q,n}\) | arbitrary \(p_n\) under budget | flat, common flat, constant negative curvature | unrestricted full AIRM | **PROVED UNDER ASSUMPTIONS** | T-APP-5 |
 | Hilbert physical dependence (D) | uniform summable \(L^2\) and essential-sup effects for scores/rows | martingale projection and bounded differences | dependence assumption for M-S/O-S | empirical | none for Route R | same robust rate | Hilbert dimension-free | causal functional/matrix processes | generic polynomial mixing | **PROVED** | T-APP-4 |
@@ -131,9 +133,44 @@ If all non-oracle terms are \(o(n^{-1/2})\) and \(\eta_n=o(\Delta_n)\),
 \hat\lambda_{r+1}=O_p(n^{-1}).
 \tag{3.2}
 \]
-**PROVED UNDER EXPLICIT ASSUMPTIONS.** The concrete exact branch is flat/common-commuting geometry plus exact splitting, where \(\varepsilon_G=\phi_F=0\). A generic curved moving-centre branch is **CONDITIONAL** until it proves \(\phi_F=o(n^{-1/2})\); GLO does not imply this.
+**PROVED UNDER EXPLICIT ASSUMPTIONS.** The concrete exact branch is flat/common-commuting geometry plus exact splitting, where \(\varepsilon_G=\phi_F=0\). For an uncorrected generic curved row, the direct-defect version remains **CONDITIONAL** until it proves \(\phi_F=o(n^{-1/2})\); GLO does not imply this. T-APP-3B below is the separate proved observable correction route and does not assume the uncorrected coefficient is negligible.
 
 At \(b_n=n^{-1/7}\), \(a\ge3/7\), the squares \(b_n^6,(nb_n)^{-1},n^{-2a},n^{-2}\) are \(O(n^{-6/7})\), and cross-terms are bounded by sums of squares. Thus \(\ell_n^2=o(n^{-1/2})\), while \(\ell_n/\sqrt n=O(n^{-13/14})\). Split-mask terms must separately be \(o(n^{-1/2})\), e.g. block length \(B_n\) must satisfy \(B_n/n=o(n^{-1/2})\).
+
+### T-APP-3B — FRAME-2P-U observable generic-curved correction
+
+Let \(\widehat q^T\) be the positive three-scale training polygon at \(b_n=n^{-1/7}\), \(\check q^V\) an independent validation polygon at \(c_n=n^{-\gamma}\), and \(\widehat{\mathfrak T}_E(q)\) the complete masked evaluation-row functional. With \(M_n\asymp n^{2/7}\), define
+
+\[
+d_j^{TV}=\log_{\widehat q_j^T}\check q_j^V,
+\qquad
+\widehat{\mathfrak T}^{2p}_{T,V,E}
+=\widehat{\mathfrak T}_E(\widehat q^T)
++D\widehat{\mathfrak T}_E(\widehat q^T)[d^{TV}],
+\tag{3B.1}
+\]
+
+and average over the three cyclic fold roles. The derivative in (3B.1) includes the inverse-Karcher base-log action and the fitted polygon's transport, Jacobi, connector, and curvature actions. Common rigid gauge changes jointly conjugate both terms; they are not additive error.
+
+Assume the full U2P package uniformly in \(p_n\): fixed lag/memory; bounded total energy; unique strongly convex Karcher means; a \(C^4\) law/mean; one known generated tube with the consumed score, barycentre-replacement, Richardson, Exp/Log, PT/Jacobi, and first two masked-row polygon derivatives bounded; vertex actions \(\max_j\|K_{n,j}\|\le C/M_n\), \(\sum_j\|K_{n,j}\|\le C\); aggregate single/double replacements \(C/n\), \(C/(n^2c_n)\); exact three-colour innovation separation and identical phase-balanced masks; GLO and included-lag factorisation; and exact local law or \(a>1/2\) with all mask/design/coupling defects \(o(n^{-1/2})\). If
+
+\[
+\frac16<\gamma<\frac3{14},
+\]
+
+then
+
+\[
+\widehat{\mathfrak T}^{2p}_n-\mathfrak T_n
+=\mathbb G_{E,n}[Z_n]+\mathbb G_{V,n}[\varphi_{n,c}]+R_n,
+\quad
+\|R_n\|_{\oplus HS}=o_p(n^{-1/2}),
+\tag{3B.2}
+\]
+
+and both influence rows are \(O_p(n^{-1/2})\). Hence \(d_n^{db}=O_p(n^{-1/2})\); if \(2A_{2,n}d_n^{db}+(d_n^{db})^2=o_p(\Delta_n)\), loading error is \(O_p(n^{-1/2}/\Delta_n)\) and \(\widehat\lambda_{r+1,n}^{db}=O_p(n^{-1})\). **PROVED UNDER EXPLICIT ASSUMPTIONS.**
+
+The same-band score/Richardson construction is **DISPROVED** because it generically retains \(b_n^3K[B_3]\asymp n^{-3/7}\). Direct frame/\(\Omega\) plug-in is only conditionally valid. Invariant-only redesign is rejected because it changes the estimand. A padded \(\mathbb H^2(-1)\times\mathbb R^{p_n-2}\) model proves the U2P class is nonempty and genuinely curved/non-rigid for arbitrary \(p_n\).
 
 ### T-APP-4 — broader dependence
 
@@ -163,24 +200,45 @@ Flat/common-flat Hessians have \(K=0\). In constant negative curvature the Hessi
 
 Balancing yields \(n^{-q/(2q+1)}\), slower than \(n^{-1/2}\) for finite \(q\). Faster mean convergence is not immunity. Under a separate T-APP-3 package, \(\ell_{q,n}^2=o(n^{-1/2})\) is enough.
 
-### T-APP-6 — growing-energy/pervasive-factor programme
+### T-APP-6 — growing-energy/pervasive-factor theorem
 
-Let \(R_n=\sup_t\|Y_{t,n}\|\) and let \(q_{R,n}\) denote a mean/frame error rederived with every energy, tail, dependence, and tube constant exposed. The proved algebraic and concentration ledgers give the benchmark scales
+Under the bounded-tail/generated-domain assumptions, define the full feasible error
 
 \[
-\text{score}=O_p\!\left(\frac{R_n}{\sqrt{nb_n}}\right),\qquad
-\text{oracle row}=O_p\!\left(\frac{R_n^2}{\sqrt n}\right),\qquad
-\text{feasible comparison}\lesssim 2R_nq_{R,n}+q_{R,n}^2.
+q_{R,n}\lesssim
+L_{\log,n}\{r_{\mu,n}+K_{\mu,n}M_n^{-2}\}
++r_{F,n}\{\mathcal E_{2,n}+L_{\log,n}r_{\mu,n}\}
++\rho_{{\rm con},n}+\rho_{{\rm obs},n}.
+\]
+
+With variance-sensitive product rate \(\omega_n\),
+
+\[
+d_n\lesssim\omega_n+\sqrt{h_{0,n}}
+\{2\mathcal E_{2,n}q_{R,n}+q_{R,n}^2\}
++\zeta_n+\rho_{{\rm mask},n}+\rho_{{\rm disc},n}.
 \tag{3.6}
 \]
 
-The operator perturbation remains \(\eta_n=2A_{2,n}d_n+d_n^2\), and the loading condition remains \(\eta_n=o(\Delta_n)\). Thus growing energy is not automatically fatal when pervasive lag signal strengthens \(\Delta_n\), but no such compensation may be assumed. **SCALING LEDGER PROVED; COMPLETE THEOREM AND PHASE DIAGRAM OPEN.**
+The loading condition is \(\eta_n=2A_{2,n}d_n+d_n^2=o_p(\Delta_n)\). For \(R_n=n^\rho\), simplified sufficient fixed-gap windows are \(\rho<3/13\) in a flat/rigid frame and \(\rho<3/20\) for the generic curved frame, with their displayed local-stationarity competitors. A concrete pervasive DGP has \(A_{2,n}\asymp p_n\) and \(\Delta_n\asymp p_n^2\). **PROVED UNDER EXPLICIT ASSUMPTIONS.**
 
-### T-APP-7 — moving-centre Bures–Wasserstein programme
+For unbounded observations, deterministic expanding-domain clipping adds \(b_{S,n}(T_n)\) to the mean rate and \(\sqrt{h_{0,n}}b_{W,n}(T_n)\) to the lag row, and requires
 
-For full noncommuting covariance matrices under BW geometry, a Paper 1 theorem requires: a quantitative domain away from rank-loss/nonunique-alignment strata; uniqueness of every population and empirical mean; dimension-uniform score, Hessian, Exp/Log, alignment, connector, Richardson, and ruled-surface bounds on generated images; a BW-valid feasible frame or replacement estimator; and a lag-identification theorem in the BW tangent norm. **OPEN.**
+\[
+N_{X,n}\pi_{X,n}(T_n)+N_{Y,n}\pi_{Y,n}(T_n)\to0.
+\]
 
-The diagonal fixed-basis submodel reduces to flat square-root coordinates and may reuse T-APP-1 after checking boundary, energy, dependence, and signal. This special case does not prove the full BW programme.
+The original and clipped empirical constructions coincide on this event; concentration is proved for the clipped array without conditioning. Sub-Weibull tails admit \(T_n=K_n\{c\log N_n\}^{1/\alpha}\), \(c>1\), subject to the expanding-domain geometry and final gap condition. **PROVED UNDER EXPLICIT ASSUMPTIONS; NOT MINIMAL.**
+
+### T-APP-7 — moving-centre Bures–Wasserstein theorem
+
+For fixed matrix size, full-rank SPD BW has a **PROVED UNDER EXPLICIT ASSUMPTIONS** local/regularized theorem using constrained stage means, complete generated-domain safeguards, quotient Levi–Civita polygonal transport, and exact lag identification. Its robust rate is \(O_p\{(n^{-1/2}+\ell_n)/\Delta_n\}\).
+
+The fixed-margin noncommuting geometry is also **PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS**: one recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\), independent of matrix size, reaches the G1 and PF geometric consumers. Generic polygon derivatives retain explicit \(N+\mathsf L\) dependence; the canonical PF error retains \(v_\mu r_N+(N+1)r_N^2+v_\mu a_\mu N^{-2}\). This is a geometry producer, not a shrinking-margin, energy, dependence, signal, or eigengap theorem.
+
+The restricted fractional-normal shrinking-margin chain is **PROVED UNDER EXPLICIT ASSUMPTIONS**. It requires strict score-pair/generated slack, support and energy \(O(\sqrt{\alpha_n})\), fractional-normal PF cells, and the exact row/assembly/gap conditions. Its active coefficients include \(K_B=O(1+\alpha_n^{-1})\), \(K_{L2}=O(\alpha_n^{-1/2})\), \(K_F=O(\alpha_n^{-1})\), and \(\rho_H=O(\sqrt{\alpha_n})\). For \(\alpha_n\asymp m_n^{-A}\) with matched local rank-one signal, \(m_n=n^x\), the sufficient window is \(0<x<3/(5A)\). This is not a maximum growth law; a self-similar fixed active block admits arbitrary polynomial inactive dimension. Fixed/growing energy is outside this shrinking normal-pair class.
+
+The global/rank-changing PSD theorem is **DISPROVED**, and the original unsafeguarded global estimator is **RETRACTED**. Unrestricted nonlocal sharp exponent minimisation remains **OPEN but unconsumed**. The diagonal fixed-basis positive-root branch has a proved HE corollary; it does not cover rotating eigenspaces.
 
 ## 4. Stability and reality bridge
 
@@ -190,6 +248,7 @@ The diagonal fixed-basis submodel reduces to flat square-root coordinates and ma
 | fixed algebra | \(Y=D+N\), aligned \(D,e\), \(\|N\|_F\le\varepsilon_{A,n}\) | \(O(\varepsilon_{A,n}\ell_n)\) Hessian action | recentering | same \(o(n^{-1/14})\) | **STABLE APPROXIMATE** if basis is meaningful |
 | relevant-plane flatness | normalized \(\varepsilon_{R,n}=\sup\|R(S_s,S_\tau)\|/\|S_s\wedge S_\tau\|\) | \(\varepsilon_{R,n}\operatorname{Area}\) | frame | direct frame term \(o(n^{-1/2})\) | raw commutators remain diagnostic |
 | frame rigidity | direct-sum HS \(\phi_{F,n}\) | additive \(\phi_{F,n}\) | signal-carrying frame bias | \(o(n^{-1/2})\) | exact in one flat; fragile in full AIRM |
+| FRAME-2P-U producer defects | failure of uniform vertex actions, replacement bounds, common masks, exact separation, or local-law accuracy | retain each failed producer as an explicit row/tube/mask/coupling remainder | mean and frame correction | full remainder \(o(n^{-1/2})\) | application-verifiable; not implied by energy |
 | lag noise/cross terms | \(\zeta_n=(\sum_h\|D_h\|_{op}^2)^{1/2}\) | \(2A_{2,n}\zeta_n+\zeta_n^2\) | population target bias | exact expression \(o(n^{-1/2})\) and \(o(\Delta_n)\) | restrictive but model-checkable |
 | infinite-memory split | \(\vartheta_\infty(g_n)\) plus estimator coupling | coefficient plus conditional sampling remainder | dependence leakage | entire proved remainder \(o(n^{-1/2})\) | **CONDITIONAL** |
 | PD budgets | \(\Theta_2,\Theta_\infty\) | multiply score/lag stochastic terms | sampling | bounded or displayed growth | plausible causal short memory |
@@ -208,10 +267,11 @@ An empirical commutator is diagnostic until linked to both the fixed-algebra and
 | Robust under C-PD | same | same | same with PD constants | same | same | same | **PROVED** |
 | Flat/common flat + split | \(\ell_n\) | zero after anchor | \(n^{-1/2}+\ell_n^2+\rho_n\) | \(n^{-1/2}/\Delta_n\) if defects negligible | \(O_p(n^{-1})\) | \(n^{-1}=o(\tau_n)\ll\Delta_n\) | **PROVED UNDER SPLIT** |
 | Abstract curved GLO | \(\ell_n\) | direct \(\phi_F\) | equation (3.1) | oracle only if frame/defects negligible | row square | corresponding window | **CONDITIONAL for generic application** |
+| FRAME-2P-U generic curved | training \(n^{-3/7}\); validation \(c^3+(nc)^{-1/2}\) | corrected inside the full row derivative | \(n^{-1/2}\) | \(n^{-1/2}/\Delta_n\) under assembly/gap | \(O_p(n^{-1})\) | \(n^{-1}=o(\tau_n)\ll\Delta_n\) | **PROVED UNDER U2P** |
 | Known centre | zero | zero | \(n^{-1/2}+\rho_n\) | oracle | \(n^{-1}\) | oracle window | **PROVED** |
 | Constant/parametric centre | \(n^{-1/2}\) | \(n^{-1/2}\) or rigid | \(n^{-1/2}\) | oracle order; changed limit possible | \(n^{-1}\) | oracle window | **PROVED; not immunity** |
 | Signed structural mean | \(\ell_{q,n}\) | first order unless flat | \(n^{-1/2}+\ell_{q,n}\) robustly | \((n^{-1/2}+\ell_{q,n})/\Delta_n\) | row square | row-based | **PROVED mean; robust loading chain** |
-| Growing energy/pervasive signal | \(q_{R,n}\), to be rederived | energy-scaled | benchmark \(R_n^2n^{-1/2}+2R_nq_{R,n}+q_{R,n}^2+\) defects | \((2A_{2,n}d_n+d_n^2)/\Delta_n\) | row square after proof | regime-specific | **OPEN; component scaling ledger proved** |
+| Growing energy/pervasive signal | typed centre RMS \(r_{\mu,n}\), frame \(r_{F,n}\), and full \(q_{R,n}\) | empirical-energy scaled | \(\omega_n+\sqrt{h_{0,n}}(2E_{2,n}q_{R,n}+q_{R,n}^2)+\zeta_n+\) typed defects | \((2A_{2,n}d_n+d_n^2)/\Delta_n\) | \(O_p(d_n^2)\) | \(d_n^2\ll\tau_n\ll\Delta_n\), \(\eta_n=o(\Delta_n)\) | **PROVED UNDER EXPLICIT BOUNDED-TAIL ASSUMPTIONS** |
 
 Signal remains separate. Under exact factorization,
 \[
@@ -249,29 +309,55 @@ Rates use the actual \(\Delta_n\); replace it by \(s_n^2\) only after verifying 
 | Symmetric matrices, Frobenius | \({\rm Sym}(m)\), \(m(m+1)/2\) | bounded Frobenius variation | vector-space flat | finite memory/C-PD; LN/gap | Euclidean signed/positive; same split | PSD/metric target, mask/LN | robust and split-oracle | entrywise energy; AIRM estimand differs | **EXACT STRUCTURAL MATCH** | T-APP-1/3 |
 | Fixed-basis SPD | common AIRM flat; \(m\) log coordinates | bounded log-eigenvalue energy | flat totally geodesic | finite memory/C-PD; LN/gap in algebra | estimator constrained to flat | off-algebra \(\varepsilon_A=o(n^{-1/14})\) for approximate oracle | robust fallback; exact-split oracle | changing axes, zero eigenvalues, dilution | **EXACT STRUCTURAL MATCH** if DGP-fixed basis | T-APP-1/3 |
 | Nearly fixed-basis SPD | full AIRM band | separate bounded energy | curved perturbation of fixed algebra | same temporal/signal checks | constrained/regularized | direct off-algebra and normalized ribbon defects, total \(o(n^{-1/2})\) | degraded equation (3.1) | raw commutators, multiplicity, basis drift | **STABLE APPROXIMATE MATCH** only with direct defects | APP-A §4; APP-B §7 |
-| Full covariance/correlation SPD | AIRM; \(m(m+1)/2\) | band is insufficient; bounded energy uses R, pervasive energy awaits T-APP-6 | Hadamard, locally symmetric, curved; GLO absent generically | finite memory/C-PD robust; LN/gap explicit | positive three-scale PF; no automatic cancellation | noncommutation, frame, escape, LN, HE scaling | bounded-energy robust HD1/C-PD; pervasive branch open | moving eigenvectors, coloured noise, signal dilution | **EXACT AIRM GEOMETRY; HE ACCELERATION OPEN** | T-APP-2/6; R |
+| Full covariance/correlation SPD | AIRM; \(m(m+1)/2\) | band is insufficient; bounded energy uses R; HE uses its typed energy/signal ledger | Hadamard, locally symmetric, curved; GLO absent generically | finite memory/C-PD robust; LN/gap explicit | positive three-scale PF; FRAME-2P-U only if U2P/GLO/split checks hold | noncommutation, frame, escape, LN, HE scaling, U2P actions | bounded-energy HD1/C-PD; bounded-tail HE; conditional curved oracle | moving eigenvectors, coloured noise, signal dilution, unverified U2P | **CONDITIONAL MATCH — CHECKS LISTED** | T-APP-2/3B/6; R |
 | Individual diffusion tensors | AIRM SPD(3), fixed \(p=6\) | band/tube plausible | curved unless common axes | temporal and gap checked | fixed-\(p\) positive; flat submodel | axis change/band escape | robust fixed-\(p\), or flat oracle | fibre crossings/rotations | **STABLE APPROXIMATE MATCH** | APP-A/C |
-| Functional connectivity covariance | regularized SPD, \(m_n\) regions | bounded-energy continuum or HE theorem needed | generally noncommuting/singularity risk | overlapping-window dependence; signal may dilute or strengthen | robust positive only at bounded energy | regularization target, escape, LN, overlap, HE phase | conditional bounded-energy fallback; HE open | changing eigenvectors/pervasive modes | **MODEL-FRAGILE; HIGH-VALUE HE TARGET** | T-APP-6 |
+| Functional connectivity covariance | regularized SPD, \(m_n\) regions | bounded-energy continuum, bounded-tail HE, or proved truncation regime | generally noncommuting/singularity risk | overlapping-window dependence; signal may dilute or strengthen | positive three-scale PF | regularization target, escape, LN, overlap, HE phase | conditional bounded-energy fallback or HE theorem | changing eigenvectors/pervasive modes | **CONDITIONAL MATCH — CHECKS LISTED** | T-APP-6 |
 | Product manifolds / voxelwise tensors | product dimension sum | summable component energy | componentwise; flat only if active factors flat | vector C-PD and aggregate gap | positive; signed with block budget | energy, block count, dilution | robust or signed mean | growing components/cross dependence | **STABLE APPROXIMATE MATCH** | T-APP-4/5 |
-| Constant-negative-curvature embeddings | bounded hyperbolic tube; \(p_n\) may grow | bounded radius/energy | locally symmetric, curved; GLO separate | C-PD; LN/gap | structural signed LP | GLO and frame must separately satisfy (3.1) | faster mean; robust loading | heteroskedasticity, frame | **EXACT STRUCTURAL MATCH for signed mean only** | T-APP-5 |
+| Constant-negative-curvature embeddings | bounded hyperbolic tube; \(p_n\) may grow | bounded radius/energy | locally symmetric, curved; GLO separate | exact finite-memory colours for FRAME-2P-U; LN/gap | structural signed LP or two-path correction | verify U2P actions/replacements, masks, GLO, and law accuracy | faster mean; robust loading; curved oracle under U2P | heteroskedasticity, frame, failed split | **CONDITIONAL ORACLE MATCH — CHECKS LISTED** | T-APP-3B/5 |
 | Grassmann/shape/compact symmetric | metric-specific | tube model needed | cut/conjugacy risks despite local symmetry | separate | new localized theorem | quantitative margins | no current growing-\(p\) corollary | nonunique Log/mean | **UNKNOWN / DIAGNOSTIC-ONLY** | APP-A §6 |
-| Diagonal BW SPD | fixed diagonal algebra; square-root coordinates | bounded root-energy/lower margin | flat diagonal coordinates | C-PD possible; gap checked | coordinate estimator/split | boundary and standard flat defects | flat robust/oracle | zero eigenvalues/basis change | **EXACT STRUCTURAL MATCH under diagonal restriction** | APP-A §6 |
-| Full BW covariance | full BW metric | separate BW and HE budgets | incomplete on SPD; quotient/alignment structure | separate dependence and lag target | BW-specific mean/frame estimator | PSD boundary, alignment, generated-set calculus | diagonal flat only; full theorem open | rank loss, nonuniqueness, target change | **PRIMARY OPEN PROGRAMME** | T-APP-7 |
+| Diagonal BW SPD | fixed basis; positive square-root coordinates | root-energy and coordinatewise lower margin | exactly flat root coordinates | finite memory/C-PD and actual gap checked | localized coordinate mean; rigid frame | Richardson/blend positivity and standard flat defects | fixed-basis diagonal HE–BW corollary | zero coordinates, basis change, diluted gap | **EXACT MATCH** within the stated direct-observation model | T-APP-7 |
+| Full BW covariance | full-rank SPD, fixed or growing matrix size | bounded tangent energy on fixed margins; shrinking support/energy on the fractional-normal branch | free quotient with dimension-uniform fixed-margin calculus and restricted shrinking-margin calculus | finite memory or proved dependence and actual lag target | localized/regularized mean and generated-object fallback | spectral, polar, Exp, normal-pair, path, connector, reconstruction, object-count, and gap checks | fixed-size theorem; fixed-margin growing-size geometry; restricted shrinking-margin statistical theorem | rank loss; global means; pervasive shrinking-normal energy; generated-domain escape | **CONDITIONAL MATCH — CHECKS LISTED** | T-APP-7 |
 
-## 8. Ranked programme
+## 8. Post-closure application remapping
 
-1. **HE theorem:** reopen expanding asset, sensor, gene, imaging, and connectivity systems by proving the joint \((R_n,A_{2,n},\Delta_n)\) regime rather than normalising by fiat.
-2. **Moving-centre full BW theorem:** connect Paper 1 directly to the parent covariance application, fixed matrix size first and growing size second.
-3. **Hilbert functional/multivariate factors:** exact flatness, interpretable C-PD, robust and split-oracle branches already available.
-4. **Fixed-axis diagonal covariance/volatility/diffusion:** exact common flat when the axes are scientific structure, not preprocessing.
-5. **Full AIRM covariance/correlation:** high scientific value and verified growing-size geometry; bounded-energy robust theorem is honest, pervasive and oracle branches remain application-fragile.
-6. **Symmetric-matrix factors under Frobenius loss and individual diffusion tensors:** credible present applications when their stated metric/axis assumptions are the scientific estimand.
-7. **Constant-curvature embeddings:** clean signed growing-\(p\) mean application, not an oracle loading application without T-APP-3.
-8. **Compact symmetric spaces:** future local-geometry programmes; no current growing-\(p\) corollary.
+These labels govern application claims after the HE/BW proof campaign. They classify the complete observation-to-estimand route, not just the ambient geometry.
 
-Every fragile accelerator within the bounded-energy AIRM/Hadamard scope retains (R) as its robust fallback. T-APP-6 and T-APP-7 lie outside that scope: high energy must satisfy its own phase condition, and full BW must first supply its own geometry-and-estimator theorem.
+| Application family | Authoritative label | What is matched | Mandatory checks or displayed defect |
+|---|---|---|---|
+| Fixed-axis diagonal covariance/volatility | **EXACT MATCH** | directly observed positive diagonal covariance series in one scientific basis, analysed in BW root coordinates | common basis, coordinatewise root margin, bounded-tail/dependence ledger, actual \(\Delta_n\), and generated Richardson/blend positivity |
+| Functional/Hilbert data | **CONDITIONAL MATCH — CHECKS LISTED** | direct Hilbert-valued observations with flat geometry | total rather than coordinatewise energy, product-process dependence, mean/frame budget, lag target, and eigengap |
+| Expanding sensor arrays | **CONDITIONAL MATCH — CHECKS LISTED** | direct high-dimensional observations under the bounded-tail or expanding-domain truncation HE theorem | effective energy/truncation scale, \(A_{2,n},\Delta_n\), product dependence, tail integrals, generated-tube closure, contamination, and selector window |
+| Gene-expression panels | **CONDITIONAL MATCH — CHECKS LISTED** | direct panel observations under the bounded-tail or expanding-domain truncation HE theorem | preprocessing/normalisation must preserve the estimand; verify energy/tails, dependence, pervasive versus localised signal, target contamination, and gap |
+| Realised covariance/correlation finance | **CONDITIONAL MATCH — CHECKS LISTED** | full-rank BW analysis of a fixed- or growing-size covariance-matrix series after construction, using the fixed-margin or restricted fractional-normal package as applicable | sampling/noise/asynchronicity covariance-estimation error, regularisation target, complete generated-domain margins, support/energy regime, temporal dependence, object counts, and actual lag gap |
+| Functional-connectivity covariance/diffusion | **CONDITIONAL MATCH — CHECKS LISTED** | fixed- or growing-size regularised SPD series under local AIRM or the applicable BW package | window-overlap dependence, preliminary covariance error, regularisation bias, spectral/polar/Exp/normal margins, support/energy, signal dilution, generated-domain reach, and estimand-specific gap |
+| Nearly fixed-axis covariance | **APPROXIMATE MATCH — DEFECT PENALTY DISPLAYED** | a fixed-basis diagonal/root model plus controlled off-basis motion | add the measured off-algebra, frame, connector, and target-contamination defects to \(q_{R,n}\) and \(d_n\); require \(\eta_n=o(\Delta_n)\) |
+| Rank-changing or globally singular BW covariance | **REJECTED MATCH — ESTIMAND OR ASSUMPTIONS NOT DEFENSIBLE** | none under the present theorem | continuum alignments/geodesics/means and singular Log/lift behaviour invalidate the claimed construction |
+| General growing-size noncommuting BW covariance | **CONDITIONAL MATCH — CHECKS LISTED** | directly observed full-rank matrix series on either the compatible fixed-margin domain or the restricted fractional-normal shrinking domain | verify complete generated-domain margins, support/energy, path/grid/object counts, dependence and lag target, (A_{2,n}), and (Delta_n); fixed bands alone still do not prove those statistical conditions |
 
-## 9. Dependency graph
+For covariance applications the scientific pipeline is explicitly
+\[
+\text{raw multivariate data}\longrightarrow
+\text{estimated/regularised covariance series}\longrightarrow
+\text{AIRM or BW RFM}\longrightarrow
+\text{separate factor forecasting}.
+\]
+The first arrow has its own measurement-error, dependence, and target budget. The RFM theorem does not prove that layer, and reconstruction error is not a forecasting theorem.
+
+## 9. Ranked programme
+
+1. **HE application verification:** instantiate either the proved bounded-tail \((R_n,A_{2,n},\Delta_n)\) ledger or the expanding-domain truncation ledger for asset, sensor, gene, imaging, and connectivity systems rather than normalising by fiat.
+2. **BW application verification and covariance-measurement layer:** use the proved fixed-margin or restricted fractional-normal theorem only when its complete support/slack/path/row/gap package is verified; separately quantify preliminary covariance estimation.
+3. **FRAME-2P-U application verification:** identify geometries and data laws where the dimension-uniform composed-action, replacement, exact-colour, mask, GLO, and exact-law/\(a>1/2\) producers are actually checkable; retain the robust theorem whenever any producer fails.
+4. **Hilbert functional/multivariate factors:** exact flatness, interpretable C-PD, robust and split-oracle branches already available.
+5. **Fixed-axis diagonal covariance/volatility/diffusion:** exact common flat when the axes are scientific structure, not preprocessing.
+6. **Full AIRM covariance/correlation:** high scientific value and verified growing-size geometry; bounded-energy robust theorem is honest, while FRAME-2P-U is available only after its application-specific U2P/GLO/split checks.
+7. **Symmetric-matrix factors under Frobenius loss and individual diffusion tensors:** credible present applications when their stated metric/axis assumptions are the scientific estimand.
+8. **Constant-curvature embeddings:** clean signed growing-\(p\) mean application and the explicit nonempty FRAME-2P-U curved witness class.
+9. **Compact symmetric spaces:** future local-geometry programmes; no current growing-\(p\) corollary.
+
+Every fragile accelerator within the bounded-energy AIRM/Hadamard scope retains (R) as its robust fallback. The HE theorem is usable only after its complete phase and generated-domain conditions are checked. BW is closed at fixed size, on fixed-margin size-uniform generated domains, and on the restricted fractional-normal shrinking class. Rank change, pervasive shrinking-normal energy, and unrestricted globally sharp growth remain outside the proved scope.
+
+## 10. Dependency graph
 
 \[
 \begin{array}{c}
@@ -285,14 +371,19 @@ Every fragile accelerator within the bounded-energy AIRM/Hadamard scope retains 
     \text{T-APP-5 signed structure}\to\text{faster mean}
     \not\Rightarrow\text{immunity};\qquad
     \text{root-}n\text{ parametric centre}\to\text{oracle order, not immunity};\\
-    \text{T-APP-6 HE OPEN}\dashrightarrow\{\text{G1,row,comparison,gap phase}\};\qquad
-    \text{T-APP-7 BW OPEN}\dashrightarrow\{\text{geometry,mean/frame,lag target}\}.
+    \text{U2P + three colours + undersmoothed validation}\to
+    \text{T-APP-3B corrected root-}n\text{ row};\\
+    \text{T-APP-6 HE}\to\{\text{G1,row,comparison,gap phase}\};\qquad
+    \text{T-APP-7 BW fixed/fractional-normal}\to
+    \{\text{local geometry,mean/frame,lag target,restricted size growth}\};\\
+    \text{unrestricted nonlocal sharp powers OPEN}\dashrightarrow
+    \text{optional sharper BW windows}.
 \end{array}
 \]
 
-No OPEN or CONDITIONAL node is consumed by a proved theorem. The flat oracle branch uses exact finite-memory separation, not the open infinite-memory coupling branch. Full-AIRM robust HD1 uses T-APP-2, not the open full-AIRM signed or oracle branches.
+No OPEN or CONDITIONAL node is consumed by a proved theorem. The flat and FRAME-2P-U oracle branches use exact finite-memory colour separation, not the open infinite-memory coupling branch. Full-AIRM robust HD1 uses T-APP-2; a full-AIRM FRAME-2P-U application still has to verify U2P, GLO, masks, and the split rather than inheriting them from local symmetry.
 
-## 10. Status and optional work
+## 11. Status and optional work
 
 | Node | Status | Consequence | Proof |
 |---|---|---|---|
@@ -307,11 +398,19 @@ No OPEN or CONDITIONAL node is consumed by a proved theorem. The flat oracle bra
 | structural signed growing-\(p\) G1 | **PROVED UNDER ASSUMPTIONS** | T-APP-5 | APP-C §4 |
 | unrestricted full-AIRM signed G1 | **OPEN** | consumed by no theorem | APP-C §4.2 |
 | positive curvature-corrected \(q\ge4\) | **OPEN** | consumed by no theorem | G1 / OPEN OBLIGATIONS |
-| generic frame/Hessian debiasing | **OPEN** | consumed by no theorem | APP-B §7 |
-| growing-energy/pervasive-factor theorem | **OPEN; component scalings proved** | primary next programme | T-APP-6 / OPEN OBLIGATIONS HE |
-| full moving-centre BW theorem | **OPEN; diagonal flat special case only** | primary next programme | T-APP-7 / OPEN OBLIGATIONS BW |
+| FRAME-2P-U generic curved frame/mean debiasing | **PROVED UNDER EXPLICIT U2P ASSUMPTIONS** | root-\(n\) row, oracle loading numerator, \(n^{-1}\) null spectrum | [[FRAME-IF — closure adjudication]]; archived A/B/C closure dossiers |
+| same-band score/Richardson debiasing | **DISPROVED** | generically retains \(n^{-3/7}\) curved bias | FRAME-IF-B/C |
+| direct frame/\(\Omega\) plug-in | **CONDITIONAL** | valid only with an extra observable frame producer | FRAME-IF closure |
+| invariant-only frame redesign | **REJECTED FOR THIS ESTIMAND** | changes the loading target | FRAME-IF closure |
+| bounded-tail growing-energy/pervasive-factor theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | selective HE application remapping | T-APP-6 / archived HE dossier |
+| expanding-domain HE truncation theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | unbounded-score HE applications with explicit tail/domain checks | T-APP-6 / archived HE-TRUNC dossier |
+| fixed-size local full-rank moving-centre BW theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | fixed-size BW applications | T-APP-7 / archived BW dossier |
+| diagonal fixed-basis HE–BW corollary | **PROVED UNDER EXPLICIT ASSUMPTIONS** | exact restricted intersection | T-APP-7 / archived joint dossier |
+| noncommuting BW fixed-margin geometry | **PROVED UNDER EXPLICIT ASSUMPTIONS** | closes the HD-G producer on compatible generated domains | [[BW-SIZE-FIXED-MARGIN — lead claim and objection ledger]]; archived A/B/C dossiers |
+| BW shrinking-margin statistical extension | **PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS** | sufficient local windows; no growing-energy claim | [[BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger]]; archived D/E/F dossiers |
+| unrestricted nonlocal BW sharp powers | **OPEN — OPTIONAL EXPONENT MINIMISATION** | consumed by no theorem | OPEN OBLIGATIONS BW-U-D1--U-D4 |
 
-## 11. Cross-audit record
+## 12. Cross-audit record
 
 The hostile pass made these material corrections before integration:
 
@@ -322,4 +421,6 @@ The hostile pass made these material corrections before integration:
 - Lag contamination enters as \(2A_{2,n}\zeta_n+\zeta_n^2\); the actual gap remains \(\Delta_n\).
 - AIRM calculus verifies HD-G only. Constant-curvature scalar-plus-rank-one structure proves signed G1 only. Neither is a statistical cancellation theorem.
 
-The cross-audit records are APP-A §11, APP-B §14, and APP-C §9 under `Archived/Proof workstreams`. Every proved application row depends only on proved nodes; conditional accelerators display their missing coefficient. The HE and BW programmes were added after canonical reconstruction and are not consumed by any proved branch.
+The cross-audit records are APP-A §11, APP-B §14, APP-C §9, the archived FRAME-DB/FRAME-IF two-pass campaign, the joint HE–BW hostile audit, the HE-TRUNC proof, and the fixed- and shrinking-margin BW campaigns under Archived/Proof workstreams. Every proved application row depends only on proved nodes; conditional application labels display their remaining model-specific checks. FRAME-2P-U, the bounded-tail HE theorem, expanding-domain truncation theorem, fixed-size local BW theorem, fixed-margin growing-size geometry, restricted fractional-normal shrinking-margin theorem, and diagonal intersection are proved under their displayed packages. Unrestricted nonlocal BW exponent minimisation remains optional and is consumed by no proved theorem.
+
+The planned empirical stress tests are specified in [[Numerical suite — theorem-driven design matrix]]. They are downstream diagnostics and do not change any analytical status.

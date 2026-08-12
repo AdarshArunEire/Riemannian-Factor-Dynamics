@@ -5,8 +5,8 @@ aliases:
   - Moving-centre RFM
   - Locally stationary Riemannian factor model
 status: current-programme
-verdict: Paper 1 has a closed bounded-energy growing-p theorem and explicit accelerators; growing-energy/pervasive factors and full moving-centre Bures–Wasserstein covariance dynamics are the two primary next programmes; Paper 2 remains separate and parked
-last-audited: 2026-08-08
+verdict: Paper 1 has the robust and FRAME-2P-U curved-oracle branches plus closed HE, fixed-size/fixed-margin BW, and restricted shrinking-margin BW packages; optional sharpness questions remain unconsumed; Paper 2 remains separate and parked
+last-audited: 2026-08-12
 area:
   - geometry
   - time-series
@@ -96,12 +96,16 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 | Paper 1 feasible lag/loading theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, polygonal Route R |
 | Factor-number threshold/ridged selector | PROVED | arbitrary $p_n$; raw ratio disproved |
 | Flat/common-flat exact-split oracle loading | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary \(p_n\), bounded total energy |
+| FRAME-2P-U generic-curved oracle loading | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary \(p_n\) under the dimension-uniform U2P generated-tube, composed-action, replacement, mask, finite-memory split, GLO, and exact-law or \(a>1/2\) package |
 | Known/root-\(n\) parametric centre loading | PROVED | oracle order; parametric branch is not immunity |
 | Hilbert physical-dependence robust extension | PROVED | arbitrary \(p_n\) under uniform coefficients |
 | Full AIRM fixed-band higher differentials | PROVED | matrix-size uniform in project norms; no cancellation |
 | Structured signed growing-\(p_n\) mean | PROVED UNDER EXPLICIT ASSUMPTIONS | full AIRM signed branch remains open |
-| Growing-energy/pervasive-factor theorem | OPEN PROGRAMME | component \(R_n\)-scalings proved; joint phase diagram not closed |
-| Full moving-centre Bures–Wasserstein theorem | OPEN PROGRAMME | diagonal fixed-basis flat special case only |
+| Growing-energy/pervasive-factor theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | bounded-tail and expanding-domain truncation HE chains; sufficient flat/curved windows and explicit pervasive/growing-rank DGPs |
+| Full moving-centre Bures–Wasserstein theorem | PROVED UNDER EXPLICIT ASSUMPTIONS — FIXED SIZE | full-rank local/regularized estimator; global/rank-changing PSD theorem disproved |
+| Noncommuting BW fixed-margin growing-size geometry | PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS | recurrence-defined dimension-free quotient/G1/PF producer; statistical inputs remain separate |
+| BW shrinking-margin statistical propagation | PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS | sufficient \(x<3/(5A)\) corollary; support/energy must shrink; unrestricted sharp powers remain open |
+| Fixed-basis diagonal HE–BW | PROVED UNDER EXPLICIT ASSUMPTIONS | positive-root flat DGP; moving eigenvectors excluded |
 | Paper 2 frame/subbundle identities | PROVED | dimension-free algebra |
 | Paper 2 cross-tangent estimator and bootstrap | OPEN | fixed $p$ first, then growing $p$ |
 
@@ -109,9 +113,13 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 
 The affine-invariant SPD geometry is not the high-dimensional blocker: on fixed absolute generated spectral bands, every fixed-order differential consumed by HD-G is now proved uniform in matrix size in the project norms. Spectral bands do not bound total tangent energy. Local symmetry does not cancel the random-Hessian or ribbon terms. The structured signed route avoids a sphere net only for deterministic, scalar-plus-HS, or controlled block Hessians; this structure remains unverified for full AIRM.
 
-The robust chain is closed in [[HD1 — growing-dimension Paper 1 proof dossier]]. The application-specific oracle chain separately requires cancellation of both linear mean terms and both non-rigid-frame terms. Signal \(s_n\) and eigengap \(\Delta_n\) remain distinct; Davis–Kahan pays \(\Delta_n^{-1}\), with \(s_n^{-2}\) only after proving \(\Delta_n\ge s_n^2\). No branch covers pervasive energy by assertion, and every normalization must recheck the gap.
+The robust chain is closed in [[HD1 — growing-dimension Paper 1 proof dossier]]. The sharper oracle chain still requires control of both linear mean terms and both non-rigid-frame terms. In a flat this follows from exact splitting plus GLO/frame rigidity. On a generic curved class, FRAME-2P-U now supplies an entirely observable three-colour correction: an independent undersmoothed validation path estimates the training path's realised displacement, and the evaluation polygon derivative corrects both base-log/Hessian and Jacobi/connector/frame actions. Signal \(s_n\) and eigengap \(\Delta_n\) remain distinct; Davis–Kahan pays \(\Delta_n^{-1}\), with \(s_n^{-2}\) only after proving \(\Delta_n\ge s_n^2\). No branch covers pervasive energy by assertion, and every normalization must recheck the gap.
 
-The high-energy frontier must expose \(R_n\) in mean, lag-product, and feasible-comparison errors while allowing \(A_{2,n}\) and \(\Delta_n\) to strengthen. This is the correct route for expanding panels; the bounded-energy theorem remains the correct route for fixed-energy or trace-class refinement.
+The high-energy theorem exposes score/product budgets, generated-domain constants, centre and frame error separately, and the exact assembly ratio
+\[
+\{2A_{2,n}d_n+d_n^2\}/\Delta_n.
+\]
+It proves nonempty localised, pervasive, matrix, and growing-rank regimes under bounded-tail assumptions. Its expanding-domain truncation theorem adds explicit score/product tail integrals, no-clipping escape probability, and a sub-Weibull corollary for unbounded observations. For BW, fixed-size full-rank local geometry, the noncommuting fixed-margin calculus, and a restricted fractional-normal shrinking-margin chain are closed. The latter requires support/energy \(O(\sqrt{\alpha_n})\) and therefore is not a pervasive-energy theorem. Unrestricted nonlocal sharp exponent minimisation is optional and open.
 
 ## Paper split
 
@@ -124,17 +132,17 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Main current risks
 
-- The robust growing-\(p_n\) rate is slower than the parent fixed-centre oracle rate; the flat exact-split and root-\(n\) centre branches are sharper but structurally narrower.
-- Cross-fitting alone does not restore quadratic curved recentering. The oracle branch separately needs GLO and a negligible non-rigid frame coefficient.
+- The robust growing-\(p_n\) rate remains slower than the parent fixed-centre oracle rate. FRAME-2P-U recovers the oracle numerator on a curved class, but only after verifying its stronger U2P producers and exact three-colour target construction.
+- Cross-fitting alone does not restore quadratic curved recentering. Same-band score correction is disproved; the successful route needs an independently undersmoothed validation path with \(1/6<\gamma<3/14\), exact local law or \(a>1/2\), and dimension-uniform composed-action/replacement control.
 - Paper 2 cannot inherit a Euclidean bootstrap merely by changing frame or substituting an $L^2$ mean rate.
-- Bures–Wasserstein incompleteness and boundary distance must not be hidden by affine-invariant SPD simplifications.
-- The parent’s covariance demonstration uses Bures–Wasserstein geometry, so AIRM verification alone does not connect Paper 1 to that exact application.
-- Growing energy can be offset by growing signal only through a proved joint phase condition; rescaling can erase localised factors.
+- Bures–Wasserstein boundary distance and rank loss require the proved local/regularized estimator; the global PSD theorem is false.
+- The parent’s covariance demonstration can consume the fixed-size BW theorem only after its covariance-estimation measurement layer and generated-domain margins are checked.
+- Growing energy can be offset by growing signal only through the proved assembly/gap phase conditions; rescaling can erase localised factors.
 - The raw factor-number ratio is disproved as a consequence of the available eigenvalue rates; threshold and ridged selectors are proved internally.
 
 ## Live work
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. The next priorities are the growing-energy/pervasive-factor theorem and the full moving-centre Bures–Wasserstein theorem. After those proof gates, the application suite should test realised covariance, functional connectivity, and expanding sensor/gene panels against direct non-factor and alternative-geometry baselines. Infinite-memory conditional splitting, generic curved frame debiasing, unrestricted full-AIRM signed Hessians, and higher positive smoothing remain secondary. Paper 2 is parked and remains standalone.
+All live work is in [[OPEN OBLIGATIONS — current research actions]]. FRAME-2P-U, the fixed-margin growing-size noncommuting BW calculus, and the restricted fractional-normal shrinking-margin theorem are proved. Application verification and the planned numerical suite are downstream of those packages. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and remains standalone.
 
 ## Related notes
 
@@ -142,4 +150,6 @@ All live work is in [[OPEN OBLIGATIONS — current research actions]]. The next 
 - [[G1 audit — resolution of the uniform local Fréchet rate]]
 - [[Paper 1 — Locally stationary Riemannian factor model]]
 - [[Paper 2 — Moving loading subbundle]]
+- [[Application map — geometry, symmetry, and rate accelerators]]
+- [[Numerical suite — theorem-driven design matrix]]
 - [[OPEN OBLIGATIONS — current research actions]]
