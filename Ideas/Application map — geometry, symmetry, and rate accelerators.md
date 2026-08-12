@@ -330,7 +330,7 @@ These labels govern application claims after the HE/BW proof campaign. They clas
 | Functional/Hilbert data | **CONDITIONAL MATCH — CHECKS LISTED** | direct Hilbert-valued observations with flat geometry | total rather than coordinatewise energy, product-process dependence, mean/frame budget, lag target, and eigengap |
 | Expanding sensor arrays | **CONDITIONAL MATCH — CHECKS LISTED** | direct high-dimensional observations under the bounded-tail or expanding-domain truncation HE theorem | effective energy/truncation scale, \(A_{2,n},\Delta_n\), product dependence, tail integrals, generated-tube closure, contamination, and selector window |
 | Gene-expression panels | **CONDITIONAL MATCH — CHECKS LISTED** | direct panel observations under the bounded-tail or expanding-domain truncation HE theorem | preprocessing/normalisation must preserve the estimand; verify energy/tails, dependence, pervasive versus localised signal, target contamination, and gap |
-| Realised covariance/correlation finance | **CONDITIONAL MATCH — CHECKS LISTED** | full-rank BW analysis of a fixed- or growing-size covariance-matrix series after construction, using the fixed-margin or restricted fractional-normal package as applicable | sampling/noise/asynchronicity covariance-estimation error, regularisation target, complete generated-domain margins, support/energy regime, temporal dependence, object counts, and actual lag gap |
+| Realised covariance/correlation finance | **CONDITIONAL MATCH — CHECKS LISTED** | full-rank BW analysis of a fixed- or growing-size covariance-matrix series after construction, using the fixed-margin or restricted fractional-normal package as applicable; parent APP-FIN and public code supply a 12-stock monthly baseline | reproduce/audit the parent RFM/LFM/LOCF/EWMA pipeline, then check sampling/noise/asynchronicity covariance-estimation error, regularisation target, complete generated-domain margins, support/energy regime, temporal dependence, object counts, and actual lag gap |
 | Functional-connectivity covariance/diffusion | **CONDITIONAL MATCH — CHECKS LISTED** | fixed- or growing-size regularised SPD series under local AIRM or the applicable BW package | window-overlap dependence, preliminary covariance error, regularisation bias, spectral/polar/Exp/normal margins, support/energy, signal dilution, generated-domain reach, and estimand-specific gap |
 | Nearly fixed-axis covariance | **APPROXIMATE MATCH — DEFECT PENALTY DISPLAYED** | a fixed-basis diagonal/root model plus controlled off-basis motion | add the measured off-algebra, frame, connector, and target-contamination defects to \(q_{R,n}\) and \(d_n\); require \(\eta_n=o(\Delta_n)\) |
 | Rank-changing or globally singular BW covariance | **REJECTED MATCH — ESTIMAND OR ASSUMPTIONS NOT DEFENSIBLE** | none under the present theorem | continuum alignments/geodesics/means and singular Log/lift behaviour invalidate the claimed construction |
@@ -343,6 +343,8 @@ For covariance applications the scientific pipeline is explicitly
 \text{AIRM or BW RFM}\longrightarrow
 \text{separate factor forecasting}.
 \]
+
+For APP-FIN this pipeline has a concrete starting implementation: the parent repository contains BW utilities, simulation code, and S&P 500 analysis/reproduction scripts. That lowers engineering cost and fixes a comparison baseline; it does not verify the project's moving-centre, HE, selector-repair, or FRAME assumptions.
 The first arrow has its own measurement-error, dependence, and target budget. The RFM theorem does not prove that layer, and reconstruction error is not a forecasting theorem.
 
 ## 9. Ranked programme
@@ -404,12 +406,12 @@ The robust HD1 and exact-flat branches consume no open node. FRAME-2P-U is inste
 | same-band score/Richardson debiasing | **DISPROVED** | generically retains \(n^{-3/7}\) curved bias | FRAME-IF-B/C |
 | direct frame/\(\Omega\) plug-in | **CONDITIONAL** | valid only with an extra observable frame producer | FRAME-IF closure |
 | invariant-only frame redesign | **REJECTED FOR THIS ESTIMAND** | changes the loading target | FRAME-IF closure |
-| bounded-tail growing-energy/pervasive-factor theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | selective HE application remapping | T-APP-6 / archived HE dossier |
-| expanding-domain HE truncation theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | unbounded-score HE applications with explicit tail/domain checks | T-APP-6 / archived HE-TRUNC dossier |
-| fixed-size local full-rank moving-centre BW theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | fixed-size BW applications | T-APP-7 / archived BW dossier |
+| bounded-tail growing-energy/pervasive-factor theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | selective HE application remapping | [[HE — canonical growing-energy theorem boundary]]; archived HE dossier |
+| expanding-domain HE truncation theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | unbounded-score HE applications with explicit tail/domain checks | [[HE — canonical growing-energy theorem boundary]]; archived HE-TRUNC dossier |
+| fixed-size local full-rank moving-centre BW theorem | **PROVED UNDER EXPLICIT ASSUMPTIONS** | fixed-size BW applications | [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]]; archived BW dossier |
 | diagonal fixed-basis HE–BW corollary | **PROVED UNDER EXPLICIT ASSUMPTIONS** | exact restricted intersection | T-APP-7 / archived joint dossier |
-| noncommuting BW fixed-margin geometry | **PROVED UNDER EXPLICIT ASSUMPTIONS** | closes the HD-G producer on compatible generated domains | [[BW-SIZE-FIXED-MARGIN — lead claim and objection ledger]]; archived A/B/C dossiers |
-| BW shrinking-margin statistical extension | **PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS** | sufficient local windows; no growing-energy claim | [[BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger]]; archived D/E/F dossiers |
+| noncommuting BW fixed-margin geometry | **PROVED UNDER EXPLICIT ASSUMPTIONS** | closes the HD-G producer on compatible generated domains | [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]]; archived A/B/C dossiers |
+| BW shrinking-margin statistical extension | **PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS** | sufficient local windows; no growing-energy claim | [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]; archived D/E/F dossiers |
 | unrestricted nonlocal BW sharp powers | **OPEN — OPTIONAL EXPONENT MINIMISATION** | consumed by no theorem | OPEN OBLIGATIONS BW-U-D1--U-D4 |
 
 ## 12. Cross-audit record

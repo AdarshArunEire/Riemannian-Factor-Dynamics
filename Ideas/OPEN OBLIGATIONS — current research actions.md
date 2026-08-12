@@ -26,9 +26,11 @@ The campaign closed, under explicit assumptions:
 
 The following are not open tasks because they are false: a global/rank-changing BW theorem, an unsafeguarded global BW estimator theorem, harmless global normalisation, and a general noncommuting HE–BW corollary from the current assumptions.
 
+Canonical theorem boundaries are [[HE — canonical growing-energy theorem boundary]], [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]], [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]], and [[FRAME-2P-U — conditional two-path debiasing theorem]]. Archived campaign dossiers are proof provenance only.
+
 ## 1. P0 — BW-SIZE-FIXED-MARGIN
 
-**Status: PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS — ARCHIVED.**
+**Status: PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS. Canonical boundary: [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]].**
 
 On fixed absolute spectral bands, fixed full-rank Exp/polar margin, and a declared normal radius, derive in Frobenius/BW operator norms, uniformly in matrix size:
 
@@ -40,11 +42,11 @@ On fixed absolute spectral bands, fixed full-rank Exp/polar margin, and a declar
 6. base-varying BW tangent-norm equivalences;
 7. a dimension-uniform positive-Hessian/normal-radius theorem on every generated pair.
 
-The archived Stage 1 proof avoids \(\|L\|_F\asymp\sqrt m\), produces an explicit recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\), and reaches G1/PF without hiding generic polygon \(N+\mathsf L\), grid \(\sqrt{N+1}r_N\), or PF \(v_\mu,r_N,a_\mu,N\) inputs. The compatible generated domain includes fixed spectral, polar, Exp, normal-pair, and path-length margins and a recurrence-controlled nonempty neighbourhood. This closes fixed-margin geometry only.
+The archived Stage 1 proof avoids \(\|L\|_F\asymp\sqrt m\), produces an explicit recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\), and reaches G1/PF without hiding generic polygon \(N+\mathsf L\), grid \(\sqrt{N+1}r_N\), or PF \(v_\mu,r_N,a_\mu,N\) inputs. The canonical boundary classifies which margins are primitive, which geometry producers are derived, and which statistical inputs remain application-supplied. This closes fixed-margin geometry only.
 
 ## 2. P0 — BW-SIZE-SHRINKING-MARGIN
 
-**Status: PROVED UNDER EXPLICIT RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS — SUFFICIENT WINDOWS, NOT GLOBALLY SHARP.**
+**Status: PROVED UNDER EXPLICIT RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS — SUFFICIENT WINDOWS, NOT GLOBALLY SHARP. Canonical boundary: [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]].**
 
 The completed fresh campaign independently rederived the active powers and propagated them through mean localization, the complete generated-set test, polygonal framing, the lag row, and
 
@@ -86,6 +88,8 @@ The analytical packages are closed, but empirical application claims still requi
 
 ### APP-FIN — realised covariance and correlation dynamics
 
+- clone, environment-freeze, audit, and reproduce the parent's public implementation at <https://github.com/shuochieh/Riemannian_factor_model> before altering the estimator;
+- reproduce the 12-stock monthly realised-covariance construction and the RFM/LFM/LOCF/EWMA forecasting comparisons where the upstream Yahoo data remain available; record the VIX-factor comparison as interpretation, not a theorem;
 - specify the raw-return sampling scheme, covariance estimator, regularisation, and overlap;
 - quantify the covariance-estimation measurement error, dependence, and included-lag contamination;
 - decide whether covariance dynamics, rather than the full return distribution, is the estimand;
@@ -126,13 +130,13 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 
 ## 5. Execution order
 
-1. Freeze this corrected canonical theorem state in version control before notation-only rewriting or simulation implementation.
-2. Build one notation/conventions ledger and simplify exposition without changing theorem hypotheses, norms, targets, or rates.
-3. Implement the smallest proof-faithful FRAME-2P-U experiment: N-16 plus the N-17 negative controls and common-gauge test.
+1. Run N-00: freeze the parent's public environment, reproduce and audit its simulations and APP-FIN pipeline, and map its objects to the canonical notation.
+2. Maintain one notation/conventions ledger while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
+3. After N-00, implement the smallest proof-faithful FRAME-2P-U extension: N-16 plus the N-17 negative controls and common-gauge test. Reuse verified baseline components; implement the three-colour derivative correction separately.
 4. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
 5. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, P1-ID, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.
 6. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], where every row is labelled PLANNED.
 
 ## 6. Repository rule
 
-Sections 3–5 are the only live queue. HE, BW, FRAME-DB, and FRAME-IF dossiers are archived proof provenance, not parallel status sources. Robust HD1 and the exact-flat branch consume no open node. FRAME-2P-U is deliberately conditional on U2P; its growing-curvature application-verification item is open and is not disguised as a closed generic theorem.
+Sections 3–5 are the only live queue. Archived HE, BW, FRAME-DB, and FRAME-IF dossiers are proof provenance, not parallel status sources; their canonical theorem boundaries now carry producer classification and current status. Robust HD1 and the exact-flat branch consume no open node. FRAME-2P-U is deliberately conditional on U2P; its growing-curvature application-verification item is open and is not disguised as a closed generic theorem.

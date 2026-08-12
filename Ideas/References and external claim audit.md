@@ -15,10 +15,28 @@ authority: external attribution, parent-paper comparison, and primary-source sco
 **Huang, Shuo-Chieh; Chen, Rong; Chen, Yaqing (2026). “A Riemannian Factor Model for Manifold-Valued Time Series.” arXiv:2607.28385v1.**
 
 - Primary record: <https://arxiv.org/abs/2607.28385>
+- Public reference implementation: <https://github.com/shuochieh/Riemannian_factor_model>. The repository includes Bures--Wasserstein utilities and simulations, the main RFM functions, and S&P 500 analysis/reproduction scripts. It is the reproduction baseline for APP-FIN and the numerical suite, not evidence for any project-specific extension.
 - Theorem 2: under the assumptions of Theorem 1 plus componentwise MA\((\infty)\) and short-memory covariance decay, the loading-space rate is \(O_p(1/(\kappa^2\sqrt n))\).
 - Proposition 3: signal eigenvalues fluctuate at \(n^{-1/2}\), null eigenvalues at \(n^{-1}\), and \(\lambda_r\ge\kappa^2\).
-- P1 is a bounded-radius/support assumption. The discussion following Proposition 3 explicitly notes that it prevents total factor and idiosyncratic energy from diverging with \(p\). The parent theorem is therefore dimension-free in a bounded-total-energy regime, not a classical per-coordinate-noise or pervasive-energy regime.
+- Theorem 2's short-memory condition is broader than fixed finite dependence: (13)--(14) require
+  \[
+  \frac{|\operatorname{Tr}\Gamma_\xi(s,t)|}
+  {\{\operatorname{Tr}\Gamma_\xi(s,s)\operatorname{Tr}\Gamma_\xi(t,t)\}^{1/2}}
+  \le C_\xi |s-t|^{-d_\xi},
+  \]
+  with \(\sup_{\xi\in B_\mu(\epsilon)}C_\xi=O(1)\) and a uniform lower bound on \(d_\xi\) strictly greater than one; the paper explicitly identifies finite \(m\)-dependence as a special case.
+- The dimension-free rate is the theorem statement, but the paper's concrete P3 verification in Example 1 is dimension-restricted: geometric \(\alpha\)-mixing permits \(p=o(n^\gamma/\log n)\) for some \(0<\gamma<1/2\), while its algebraic-mixing verification assumes fixed \(p\). These are sufficient verifications, not a contradiction of Theorem 2.
+- P1 is a bounded-radius/support assumption. The discussion following Theorem 2 explicitly notes that it prevents total factor and idiosyncratic energy from diverging with \(p\). The parent theorem is therefore dimension-free in a bounded-total-energy regime, not a classical per-coordinate-noise or pervasive-energy regime.
+- APP-FIN uses 240 monthly realised covariance matrices from 12 U.S. stocks, modelled under Bures--Wasserstein geometry. It compares RFM with LFM, LOCF, and EWMA, forecasts one month ahead, and reports a market-wide factor that tracks VIX. This application and its public code mean project reproduction and extension do not start from zero.
 - Project comparison: robust Paper 1 preserves the parent’s arbitrary-ambient-dimension/bounded-energy character but pays the moving-centre \(n^{-3/7}\) numerator. FRAME-2P-U conditionally restores root-\(n\) **order**, not the parent limit law: its validation influence generally changes asymptotic variance.
+
+### Remark P-RATIO — what Proposition 3 does and does not justify
+
+The parent defines the raw estimator in Eq. (5),
+\[
+\widehat r=\arg\min_{1\le i\le R}\widehat\lambda_{i+1}/\widehat\lambda_i,
+\]
+and says that Proposition 3 justifies it. The displayed rates alone do not imply that conclusion: \(\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)\) has the advertised signal/null orders but the raw ratio selects two rather than one. This is a direct logical correction to the claimed implication, not a claim that the estimator fails empirically. The parent's Table 2 success rates (above 80% at \(n=100\) and about 100% at \(n=200\) in the reported designs) are fully compatible with the non-derivability result. The project's threshold and ridged-ratio selectors add the missing separation conditions.
 
 ## 2. Geometry and probability sources actually invoked
 
@@ -42,7 +60,7 @@ These ten corrections were previously stranded in archived notes. They are canon
 | ID | Corrected claim | Canonical consequence |
 |---|---|---|
 | C-AUDIT-1 | Lam–Yao (2012) does not contain the project’s \(1/(\kappa^2\sqrt n)\) rate, and its rate assumptions restrict idiosyncratic noise more than its identification algebra does. | The rate is attributed to Huang–Chen–Chen (2026), Theorem 2; no Lam–Yao shortcut is used. |
-| C-AUDIT-2 | Lam–Yao’s post-rank raw eigenvalue ratios were conjectural, not a proved finite-sample selector theorem. | Paper 1 uses the internally proved threshold/ridged selector; raw ratio remains disproved from the available error rates. |
+| C-AUDIT-2 | Lam–Yao’s post-rank raw eigenvalue ratios were conjectural, not a proved finite-sample selector theorem. The parent paper's Eq. (5) conclusion likewise does not follow from Proposition 3's displayed rates alone. | Paper 1 uses the internally proved threshold/ridged selector; Remark P-RATIO makes the logical correction without claiming empirical failure. |
 | C-AUDIT-3 | Wu–Zhou–Hong has no confidence-band scale \(\varrho_n\); its dimension condition is moment-order polynomial, not a \(\log p\) statement. | Any Paper 2 localization/bootstrap scale must be proved internally. |
 | C-AUDIT-4 | Continuity of \(p\mapsto\operatorname{inj}(p)\) is the Klingenberg/Gromoll–Klingenberg–Meyer pointwise-manifold result, not the Ehrlich/Sakai continuity-in-the-metric result. | Compactness can give a fixed-curve positive infimum, but triangular-array generated-tube margins remain explicit. |
 | C-AUDIT-5 | Gavrilov/Pennec give \(\log_x\operatorname{Exp}_yZ=w+PZ+\frac16R(PZ,w)w+\frac13R(PZ,w)PZ+O(4)\). | The old \(1/3\) first coefficient and omitted cubic term are retracted; tensor typing is retained. |

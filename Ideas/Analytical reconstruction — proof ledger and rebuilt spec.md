@@ -7,7 +7,7 @@ last-audited: 2026-08-12
 
 # Analytical reconstruction — proof ledger and rebuilt spec
 
-> **Primary source of truth.** This file records the current programme, theorem boundary, dependency structure, and live research frontier. Detailed proofs live in [[HD1 — growing-dimension Paper 1 proof dossier]], [[G1 audit — resolution of the uniform local Fréchet rate]], and the records under `Archived/Proof workstreams`. Superseded ledgers are preserved under `Archived/Historical canonical files`; they are not sources of current theorem status.
+> **Primary source of truth.** This file records the current programme, dependency structure, and live research frontier. Branch-level assumption/conclusion boundaries are [[FRAME-2P-U — conditional two-path debiasing theorem]], [[HE — canonical growing-energy theorem boundary]], [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]], and [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]. Detailed derivations live in [[HD1 — growing-dimension Paper 1 proof dossier]], [[G1 audit — resolution of the uniform local Fréchet rate]], and the records under `Archived/Proof workstreams`. Superseded ledgers are preserved under `Archived/Historical canonical files`; they are not sources of current theorem status.
 
 ## 1. Scientific object
 
@@ -87,7 +87,7 @@ If \(\mathcal G=[\Gamma_1\ \cdots\ \Gamma_{h_0}]\), then \(\mathbb L=\mathcal G\
 \widehat\lambda_{r+1}\le d_n^2.
 \]
 
-Threshold and ridged-ratio selectors are proved under their displayed separation windows. The raw unregularised eigenvalue ratio is disproved from the available rate assumptions.
+Threshold and ridged-ratio selectors are proved under their displayed separation windows. Consistency of the raw unregularised eigenvalue ratio is disproved **as an implication of the available signal/null rate statements alone**; this is the parent Eq. (5) correction in Remark P-RATIO of [[Paper 1 — Locally stationary Riemannian factor model]], not a claim of empirical failure.
 
 ## 4. Proved application-specific branches
 
@@ -191,7 +191,7 @@ d_n=O_p\!\left(n^{-(3-20\rho)/7}+n^{-(a-2\rho)}\right).
 
 These are sufficient, not minimax, regions. Explicit pervasive and growing-rank DGPs prove that strengthening signal can pay growing energy through the exact assembly/gap ratio. Coordinatewise control, fixed gap with arbitrary energy, harmless global normalisation, coloured-lag immunity, and unrestricted growing rank are disproved by analytic counterexamples.
 
-**Status: PROVED UNDER EXPLICIT ASSUMPTIONS**, including the bounded-tail and expanding-domain truncation routes.
+**Status: PROVED UNDER EXPLICIT ASSUMPTIONS**, including the bounded-tail and expanding-domain truncation routes. The authoritative assumption/conclusion boundary and producer classification is [[HE — canonical growing-energy theorem boundary]].
 
 ## 7. BW — moving-centre Bures–Wasserstein covariance dynamics
 
@@ -251,7 +251,7 @@ This is not a sharp maximum window. A self-similar fixed active block whose law/
 
 Global/rank-changing PSD claims are disproved by orthogonal rank-one endpoints with nonunique alignments, geodesics, logarithms, and means. Raw spectral bands do not close generated Richardson images. Eigenvalue collapse blows the BW metric and Sylvester constants.
 
-**Status:** fixed-size full-rank local/regularized theorem **PROVED UNDER EXPLICIT ASSUMPTIONS**; fixed-margin noncommuting growing-\(m\) geometry **PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS**; shrinking-margin noncommuting theorem **PROVED UNDER EXPLICIT RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS WITH SUFFICIENT WINDOWS**; global/rank-changing theorem **DISPROVED**. Unrestricted nonlocal sharp exponent minimisation remains open and is not consumed.
+**Status:** fixed-size full-rank local/regularized theorem **PROVED UNDER EXPLICIT ASSUMPTIONS**; fixed-margin noncommuting growing-\(m\) geometry **PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS**; shrinking-margin noncommuting theorem **PROVED UNDER EXPLICIT RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS WITH SUFFICIENT WINDOWS**; global/rank-changing theorem **DISPROVED**. The authoritative boundaries are [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] and [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]. Unrestricted nonlocal sharp exponent minimisation remains open and is not consumed.
 
 The general noncommuting HE–BW intersection is not proved. A fixed-basis diagonal/root-coordinate BW corollary is proved under an explicit positive-root DGP; one nonempty window is \(b_n=n^{-1/7}\), \(m_n=o(n^{6/7}/\log n)\), together with its boundary and tail conditions.
 
@@ -320,8 +320,8 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | 10. hidden lag contamination | SUSTAINED | (P1-OP-zeta) and the \((n^{-1/2}+\ell_n+\zeta_n)/\Delta_n^0\) rate are canonical |
 | 11. floating derivative order | SUSTAINED | HD-G fixes \(k_0=4\) |
 | 12. stale BW shrinking ledger | SUSTAINED | top-layer and objection tables now record the completed adjudication |
-| 13. archived proofs called noncanonical | SUSTAINED | archive is citable proof provenance; status authority is separate; FRAME has a canonical theorem-boundary file |
-| 14. zero code/numbers | SUSTAINED | numerical suite is explicitly empirically unvalidated with zero implementation/output |
+| 13. archived proofs called noncanonical | SUSTAINED AND CLOSED | archive is citable proof provenance; FRAME, HE, BW fixed-margin, and BW shrinking-margin now each have a canonical theorem-boundary and producer-classification file |
+| 14. zero project-extension code/numbers | SUSTAINED WITH BASELINE CORRECTION | the extension suite remains unimplemented and empirically unvalidated, but the parent's public R/BW and APP-FIN code is now the mandatory N-00 reproduction baseline |
 | 15. \(\Delta_n\) collision | SUSTAINED | G1 Hessian defect renamed \(\delta_{H,\mathrm{LS},n}\) |
 | 16. genuinely open list | CONFIRMED | items remain open and unconsumed except where a theorem is explicitly conditional |
 | 17. mechanical defects | SUSTAINED | missing LaTeX slashes, false wiki link, bare inline math, and queue title/scope repaired |
@@ -339,6 +339,9 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | [[OPEN OBLIGATIONS — current research actions]] | only live queue and execution order |
 | [[References and external claim audit]] | parent-paper metadata, external citations, and restored C-AUDIT corrections |
 | [[FRAME-2P-U — conditional two-path debiasing theorem]] | canonical FRAME-2P-U theorem boundary, producer classification, and scope correction |
+| [[HE — canonical growing-energy theorem boundary]] | canonical bounded-tail/truncation HE theorem boundary, producer classification, target split, and sufficient phase regimes |
+| [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] | canonical safeguarded fixed-size BW statistical theorem plus fixed-margin matrix-size-uniform geometry boundary |
+| [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]] | canonical restricted fractional-normal shrinking-margin theorem, producer classification, sufficient window, and impossibility boundary |
 | [[FRAME-IF — closure adjudication]] | archived FRAME-2P-U theorem, route adjudication, and canonical migration source |
 | [[FRAME-IF-A — geometry closure]] | archived typed polygon, gauge, Jacobi, and dimension-uniform geometry proof |
 | [[FRAME-IF-B — statistical closure]] | archived replacement, Hájek, bandwidth-window, and row theorem proof |

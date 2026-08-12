@@ -10,7 +10,7 @@ updated: 2026-08-12
 
 ## 1. Scope and status
 
-Every item in this note is **PLANNED**. As of 2026-08-12, the repository contains **zero simulation implementation and zero empirical output** for this suite. The analytical results are therefore empirically unvalidated. No future simulation result can prove a theorem; the suite is intended to test rate boundaries, distinguish corrected theorems from disproved shortcuts, and expose the exact open extensions.
+Every project-specific item in this note is **PLANNED**. As of 2026-08-12, this repository contains **zero implementation and zero empirical output for the extension suite**, so its new analytical results remain empirically unvalidated. The parent paper nevertheless supplies a public R/BW reference implementation at <https://github.com/shuochieh/Riemannian_factor_model>, including simulation, main-function, and S&P 500 reproduction scripts. We therefore begin by reproducing and auditing that baseline; the new HE, BW-uniformity, selector-repair, and FRAME correction layers remain unimplemented. No future simulation result can prove a theorem.
 
 The primary targets are:
 
@@ -19,6 +19,10 @@ The primary targets are:
 3. factor-number threshold and ridged-ratio behaviour;
 4. domain, spectral-margin, and generated-object failures;
 5. forecasting only as a separate downstream experiment after reconstruction has been evaluated.
+
+The parent APP-FIN reproduction is the implementation seed for N-16/N-17 and the finance benchmark, not a substitute for them. Reusable centre, BW, lag-operator, factor, forecasting, and data-pipeline code should be adapted only after its conventions and targets are matched to the canonical notation. FRAME's three-colour split, fitted-polygon derivative, nuisance/influence decomposition, and common-gauge tests are new work.
+
+Analytical predictions in this suite are governed by [[HE — canonical growing-energy theorem boundary]], [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]], [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]], and [[FRAME-2P-U — conditional two-path debiasing theorem]]. Archived campaign files are proof provenance, not alternative simulation specifications.
 
 ## 2. Common experimental axes
 
@@ -41,6 +45,7 @@ All rate plots use the actual empirical \(R_n,A_{2,n},\Delta_n\) and the theorem
 
 | ID | Regime and DGP | Parameter sweep | Predicted analytical behaviour | Failure boundary or diagnostic | Status |
 |---|---|---|---|---|---|
+| N-00 | parent-paper reproduction baseline | run the public BW/sphere simulations and S&P 500 reproduction scripts under a frozen environment | recover the parent estimator, raw-ratio behaviour, reconstruction/forecast pipeline, and reported benchmark definitions before adding project corrections | version drift, unavailable Yahoo data, or target/convention mismatch must be logged rather than silently repaired | **PLANNED; PUBLIC CODE AVAILABLE** |
 | N-01 | bounded-energy HD1 baseline | fixed \(R,h_0,r,\Delta>0\); increasing \(n,p\) | \(d_n=O_p(n^{-1/2}+\ell_n)\); loading \(O_p(d_n/\Delta)\); null eigenvalues \(O_p(d_n^2)\) | generated-tube or dependence violation | **PLANNED** |
 | N-02 | HE flat/rigid frame | \(\rho\) below, at, and above \(3/13\); \(b_n=n^{-(1-2\rho)/7}\) | leading balanced rate \(n^{-(3-13\rho)/7}\), plus \(n^{-(a-\rho)}\) | consistency transition at \(\rho=3/13\); balanced headline also needs \(a\ge(3-6\rho)/7\) | **PLANNED** |
 | N-03 | HE generic curved moving frame | \(\rho\) below, at, and above \(3/20\) | rate \(n^{-(3-20\rho)/7}+n^{-(a-2\rho)}\) | frame-energy multiplier causes the \(3/20\) boundary | **PLANNED** |
@@ -75,7 +80,7 @@ Factor-number diagnostics:
 
 - threshold selector with a documented \(d_n^2\ll\tau_n\ll\Delta_n\) window;
 - ridged ratio with a documented ridge and nonzero adjacent-spectrum condition;
-- raw unregularised ratio as a negative control, expected to reproduce the known over-selection counterexample.
+- raw unregularised ratio as both a parent-baseline comparator and a targeted negative control: favourable finite-sample behaviour is compatible with failure on the known rate-valid over-selection counterexample.
 
 ## 5. Covariance construction is a separate experiment
 
@@ -119,4 +124,4 @@ No reconstruction theorem is described as a forecasting guarantee.
 
 ## 8. Execution gate
 
-The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. Implementation begins after this canonical status repair is committed, the first subset of planned rows is chosen, and its immutable configuration schema is frozen. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness work must not be treated as prerequisites unless the selected application or numerical design actually consumes them.
+The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. Implementation begins with N-00: freeze and audit the parent public environment, reproduce its simulations/APP-FIN pipeline where the upstream data remain accessible, and map its objects to the canonical notation. N-16/N-17 then extend that audited baseline rather than beginning from zero, while their correction-specific components remain new code. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness are not prerequisites unless the selected design consumes them.

@@ -290,11 +290,15 @@ $$
 \hat r_n=\#\{j:\hat\lambda_{j,n}>\tau_n\}
 $$
 
-is consistent. A ridge-ratio selector is also consistent under a lower bound on adjacent nonzero population eigenvalue ratios. The raw ratio is **DISPROVED**: for $\hat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$, minimising consecutive unregularised ratios selects rank two.
+is consistent. A ridge-ratio selector is also consistent under a lower bound on adjacent nonzero population eigenvalue ratios. Consistency of the raw ratio **does not follow from the displayed rates alone**: for $\hat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$, the signal and null eigenvalues have the claimed orders but minimising consecutive unregularised ratios selects rank two.
+
+### Remark P-RATIO — correction to the parent paper's Eq. (5) justification
+
+The parent uses $\widehat r=\arg\min_{1\le i\le R}\widehat\lambda_{i+1}/\widehat\lambda_i$ in Eq. (5) and says Proposition 3 justifies it. The counterexample above disproves that implication from Proposition 3's displayed rates without extra post-rank separation. It does **not** show practical failure: the parent's Table 2 reports selection above 80% at $n=100$ and about 100% at $n=200$ in its simulated designs. Paper 1 therefore uses the proved threshold or ridged-ratio selector and treats the raw ratio as an empirical comparator, not a theorem-backed selector under rates alone.
 
 ## Parent comparison
 
-Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time Series*, arXiv:2607.28385v1, Theorem 2 and Proposition 3, use \(\kappa\) for a factor-lag singular-value strength, obtain \(O_p(1/(\kappa^2\sqrt n))\), and state \(\lambda_r\ge\kappa^2\). Their P1 bounded-radius condition explicitly implies total factor and noise energy cannot diverge with \(p\); their theorem is not a classical pervasive-energy result. The robust moving-centre theorem matches that bounded-total-energy/arbitrary-ambient-dimension character but has a slower fallback rate. Conditional FRAME-2P-U matches the root-\(n\) rate order under U2P and three colours; its added validation influence prevents a claim of oracle limit-law equivalence. See [[References and external claim audit]].
+Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time Series*, arXiv:2607.28385v1, Theorem 2 and Proposition 3, use \(\kappa\) for a factor-lag singular-value strength, obtain \(O_p(1/(\kappa^2\sqrt n))\), and state \(\lambda_r\ge\kappa^2\). Their P1 bounded-radius condition explicitly implies total factor and noise energy cannot diverge with \(p\); their theorem is not a classical pervasive-energy result. Their short-memory conditions (13)--(14) are broader than fixed finite dependence: they require trace-normalised algebraic covariance decay with \(C_\xi\) uniformly bounded and a uniform lower bound on \(d_\xi\) strictly greater than one near \(\mu\), and identify finite \(m\)-dependence as a special case. Theorem 2 is dimension-free as stated, but Example 1 verifies P3 under geometric \(\alpha\)-mixing only for \(p=o(n^\gamma/\log n)\), \(0<\gamma<1/2\), and under algebraic mixing only for fixed \(p\). The robust moving-centre theorem matches the bounded-total-energy/arbitrary-ambient-dimension character but has a slower fallback rate and presently uses fixed finite memory. Conditional FRAME-2P-U matches the root-\(n\) rate order under U2P and three colours; its added validation influence prevents a claim of oracle limit-law equivalence. The parent's realised-covariance APP-FIN and public implementation provide the numerical reproduction baseline. See [[References and external claim audit]].
 
 ## Claims excluded from Paper 1
 
@@ -308,7 +312,7 @@ Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time
 - the same-band score/Richardson construction as a valid generic curved correction;
 - an invariant-only redesign as an estimator of the original loading space;
 - beyond-rank \(d_n^2\) from Weyl alone;
-- consistency of the raw eigenvalue ratio;
+- consistency of the raw eigenvalue ratio from the displayed signal/null rates alone;
 - automatic higher AIRM differential bounds from H-LIP alone;
 - automatic transfer of AIRM geometry to Bures–Wasserstein covariance data;
 - a pervasive-factor corollary obtained merely by dividing observations by \(\sqrt p\).
@@ -326,6 +330,9 @@ Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time
 - [[Analytical reconstruction — proof ledger and rebuilt spec]]
 - [[Application map — geometry, symmetry, and rate accelerators]]
 - [[Numerical suite — theorem-driven design matrix]]
+- [[HE — canonical growing-energy theorem boundary]]
+- [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]]
+- [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]
 - [[HE — growing energy and pervasive signal working dossier]]
 - [[BW — moving-centre Bures-Wasserstein working dossier]]
 - [[FRAME-IF — closure adjudication]]
@@ -334,4 +341,4 @@ Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time
 - [[Joint HE-BW error ledger and hostile audit]]
 - [[OPEN OBLIGATIONS — current research actions]]
 
-The HD1-A/B/C and HE/BW campaign links resolve to archived proof records. Only the canonical files above govern current wording and status.
+The HD1-A/B/C and working-dossier campaign links resolve to archived proof records. FRAME, HE, and both BW size packages now have explicit canonical theorem-boundary files above; those files and the top-level ledgers govern current wording and status.

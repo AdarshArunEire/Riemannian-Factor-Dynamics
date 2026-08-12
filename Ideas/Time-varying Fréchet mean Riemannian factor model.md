@@ -94,17 +94,17 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 | Integrated mean and corrected derivative rates | PROVED UNDER EXPLICIT ASSUMPTIONS | dimension-free; derivative carries $n^{-a}/b_n$ under level-only local stationarity |
 | Ribbon holonomy and rotational decomposition | PROVED INTERNALLY; curvature/holonomy expansions CITED EXTERNALLY | fixed-$p$ stochastic theorem; Hunger Proposition 2.7 and Ambrose–Singer; see [[References and external claim audit]] |
 | Paper 1 feasible lag/loading theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, polygonal Route R |
-| Factor-number threshold/ridged selector | PROVED | arbitrary $p_n$; raw ratio disproved |
+| Factor-number threshold/ridged selector | PROVED | arbitrary $p_n$; raw-ratio consistency is not implied by the displayed signal/null rates alone |
 | Flat/common-flat exact-split oracle loading | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary \(p_n\), bounded total energy |
 | FRAME-2P-U two-path loading | CONDITIONAL IMPLICATION PROVED | root-\(n\) rate order under U2P; current growing-\(p_n\) witness has one fixed curved active block plus flat padding; growing-curvature/AIRM/BW verification is open |
 | Known/root-\(n\) parametric centre loading | PROVED | oracle order; parametric branch is not immunity |
 | Hilbert physical-dependence robust extension | PROVED | arbitrary \(p_n\) under uniform coefficients |
 | Full AIRM fixed-band higher differentials | PROVED | matrix-size uniform in project norms; no cancellation |
 | Structured signed growing-\(p_n\) mean | PROVED UNDER EXPLICIT ASSUMPTIONS | full AIRM signed branch remains open |
-| Growing-energy/pervasive-factor theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | bounded-tail and expanding-domain truncation HE chains; sufficient flat/curved windows and explicit pervasive/growing-rank DGPs |
-| Full moving-centre Bures–Wasserstein theorem | PROVED UNDER EXPLICIT ASSUMPTIONS — FIXED SIZE | full-rank local/regularized estimator; global/rank-changing PSD theorem disproved |
-| Noncommuting BW fixed-margin growing-size geometry | PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS | recurrence-defined dimension-free quotient/G1/PF producer; statistical inputs remain separate |
-| BW shrinking-margin statistical propagation | PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS | sufficient \(x<3/(5A)\) corollary; support/energy must shrink; unrestricted sharp powers remain open |
+| Growing-energy/pervasive-factor theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | bounded-tail and expanding-domain truncation chains; see [[HE — canonical growing-energy theorem boundary]] |
+| Full moving-centre Bures–Wasserstein theorem | PROVED UNDER EXPLICIT ASSUMPTIONS — FIXED SIZE | safeguarded full-rank estimator; see [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]]; global/rank-changing PSD theorem disproved |
+| Noncommuting BW fixed-margin growing-size geometry | PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS | dimension-free quotient/G1/PF producer with application-supplied statistics; see [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] |
+| BW shrinking-margin statistical propagation | PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS | sufficient \(x<3/(5A)\) corollary; see [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]] |
 | Fixed-basis diagonal HE–BW | PROVED UNDER EXPLICIT ASSUMPTIONS | positive-root flat DGP; moving eigenvectors excluded |
 | Paper 2 frame/subbundle identities | PROVED | dimension-free algebra |
 | Paper 2 cross-tangent estimator and bootstrap | OPEN | fixed $p$ first, then growing $p$ |
