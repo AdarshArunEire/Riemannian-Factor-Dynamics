@@ -60,6 +60,8 @@ The final theorem uses the following single regime. These are theorem assumption
 
 When \(\alpha_n\downarrow0\), the restricted BW shrinking-margin theorem verifies a triangular-array replacement only on complete fractional-normal domains: \(\rho_{H,n}=O(\sqrt{\alpha_n})\), support/energy is \(O(\sqrt{\alpha_n})\), cubic bias and PF coefficients may pay \(\alpha_n^{-1}\), and every grid, cell, path, object-count, row, signal, and actual-gap condition is propagated termwise. A conservative rank-one corollary with \(\alpha_n\asymp m_n^{-A}\) has \(m_n=n^x\), \(0<x<3/(5A)\). This is sufficient rather than minimax and does not authorize fixed/growing energy. Neither geometry producer supplies HD-X automatically. For $m_n\times m_n$ SPD, $p_n=m_n(m_n+1)/2$.
 
+The HD-G differential order is fixed at \(k_0=4\), matching T-APP-2. The consumed list is Exp, Log, connector, Richardson, score/Hessian, and ruled-surface Jacobi differentiation; the theorem does not assume an unspecified number of derivatives.
+
 **(HD-X) Model and total energy.** In the true parallel frame,
 
 \[
@@ -69,9 +71,18 @@ X_{t,n}=\operatorname{Exp}_{\mu_n(u_t)}
 Y_{t,n}=A_nf_{t,n}+\varepsilon_{t,n},
 \]
 
-where $A_n^*A_n=I_r$, $r<\infty$ is fixed, and $\|Y_{t,n}\|\le R$ almost surely with $R$ independent of $n,p_n$. This is bounded total tangent energy, not coordinatewise boundedness. It does not by itself bound $\|f_t\|$; no such inference is used.
+where $A_n^*A_n=I_r$, $r<\infty$ is fixed, and $\|Y_{t,n}\|\le R$ almost surely with $R$ independent of $n,p_n$. This is bounded total tangent energy, not coordinatewise boundedness. It is a trace-class/function-space regime in which finer coordinates resolve one fixed amount of variation. It excludes the classical regime where each new coordinate contributes order-one noise and total energy grows like \(p_n\). Thus “arbitrary \(p_n\)” means ambient-dimension agnostic inside this energy class, not a universal cure for high-dimensional noise. It does not by itself bound $\|f_t\|$; no such inference is used.
 
-**(HD-M) Mean law and local stationarity.** The actual and proxy rows are $m_0$-dependent for one fixed $m_0$. The proxy laws have Fréchet mean $\mu_n(u)$, the score/Hessian law has the uniform derivatives in HD-G and Workstream A (A4), and a coupling satisfies $d(X_{t,n},X_t^{(u_t,n)})\le Cn^{-a}$ almost surely. The mean curve has uniformly bounded derivatives through the order used below. A probabilistic tube event is not substituted for the almost-sure radius condition.
+**(HD-M) Mean law and local stationarity.** The actual and proxy rows are $m_0$-dependent for one fixed $m_0$. The proxy laws have Fréchet mean $\mu_n(u)$, the score/Hessian law has the uniform derivatives in HD-G and Workstream A (A4), and the baseline coupling satisfies
+\[
+\sup_{t,n}\|d(X_{t,n},X_t^{(u_t,n)})\|_{L^2}\le Cn^{-a}.
+\tag{HD-M2}
+\]
+The mean curve has uniformly bounded derivatives through the order used below. The almost-sure radius/tube condition remains a separate support assumption in HD-X/HD-G; it is not inferred from (HD-M2). The optional continuous-\(u\) supremum theorem G1-HD additionally assumes
+\[
+\sup_{t,n}d(X_{t,n},X_t^{(u_t,n)})\le Cn^{-a}\quad\text{almost surely}.
+\tag{HD-Minf}
+\]
 
 **(HD-K) Mean estimator.** Use the nonnegative one-sided scale kernels
 
@@ -92,7 +103,7 @@ The matrix $Q_n=\sum_{h=1}^{h_0}C_{f,n}(h)C_{f,n}(h)^*$ is positive definite. Al
 
 ## 2. Mean theorems
 
-Workstream A proves, without a sphere net and uniformly for arbitrary $p_n$,
+Under the optional stronger (HD-Minf), Workstream A proves, without a sphere net and uniformly for arbitrary $p_n$,
 
 \[
 r_{\infty,n}:=
@@ -102,7 +113,7 @@ b_n^3+n^{-a}+n^{-1}+\sqrt{\frac{\log n}{nb_n}},
 \tag{G1-HD}
 \]
 
-and
+Under the baseline \(L^2\) coupling (HD-M2), it proves
 
 \[
 \ell_n:=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1},
@@ -120,7 +131,7 @@ d(\hat\mu_n^{(3)}(v_j),\mu_n(v_j))^2\right\}^{1/2}
 \tag{GRID}
 \]
 
-The proof is empirical Sturm at each deterministic population barycentre, the weighted Hilbert inequality obtained by splitting an $m_0$-dependent row into $m_0+1$ independent residue classes, and the scale identities $\sum\lambda_jc_j=\sum\lambda_jc_j^2=0$. The latter cancel both the usual second-order term and the nonlinear $m_1^2C$ term. Continuous-$u$ interpolation uses a one-dimensional time grid with $O(\log n)$ entropy; no $S^{p_n-1}$ net occurs.
+The proof is empirical Sturm at each deterministic population barycentre, the weighted Hilbert inequality obtained by splitting an $m_0$-dependent row into $m_0+1$ independent residue classes, and the scale identities $\sum\lambda_jc_j=\sum\lambda_jc_j^2=0$. For G1-HD-L2 and GRID, the coupling contribution is bounded in mean square and then by Markov; no essential-sup coupling is consumed. The scale identities cancel both the usual second-order term and the nonlinear $m_1^2C$ term. Continuous-$u$ interpolation for the optional supremum theorem uses a one-dimensional time grid with $O(\log n)$ entropy; no $S^{p_n-1}$ net occurs.
 
 The corrected derivative theorem is also proved:
 
@@ -199,7 +210,7 @@ If one included lag is full rank, (Q_n\succeq C_{f,n}(h)C_{f,n}(h)^*), hence
 
 One full-rank lag is sufficient, not necessary: complementary rank-deficient lags can make (Q_n) positive definite while (s_n=0).
 
-Let (widehat Y_{t,n}) use the polygonal centre/frame and the endpoint connector of PF. Uniform Log base-point Lipschitz bounds and PF imply the feasible-observation RMS error
+Let \(\widehat Y_{t,n}\) use the polygonal centre/frame and the endpoint connector of PF. Uniform Log base-point Lipschitz bounds and PF imply the feasible-observation RMS error
 
 \[
 q_n^2:=\max_{h\le h_0}\frac1{N_{n,h}}\sum_t
@@ -213,7 +224,7 @@ The transformed feasible row need not remain (m_0)-dependent: the next compariso
 
 ### Theorem P1-OP-HD — feasible lag operator
 
-In the Hilbert space of Hilbert–Schmidt operators, fixed (m_0,h_0) and (|Y_t|\le R) give
+In the Hilbert space of Hilbert–Schmidt operators, fixed \(m_0,h_0\) and \(\|Y_t\|\le R\) give
 
 \[
 d_{\rm or,n}:=
@@ -232,7 +243,7 @@ d_n:=\left\{\sum_{h=1}^{h_0}
 \tag{P1-ROW}
 \]
 
-Let (A_{2,n}=(\sum_h\|\Gamma_n(h)\|_{\rm op}^2)^{1/2}\le\sqrt{h_0}R^2). Row-operator multiplication yields
+Let \(A_{2,n}=(\sum_h\|\Gamma_n(h)\|_{\rm op}^2)^{1/2}\le\sqrt{h_0}R^2\). Row-operator multiplication yields
 
 \[
 \boxed{
@@ -241,7 +252,21 @@ Let (A_{2,n}=(\sum_h\|\Gamma_n(h)\|_{\rm op}^2)^{1/2}\le\sqrt{h_0}R^2). Row-oper
 \tag{P1-OP}
 \]
 
-No cross-fitting is needed for this robust theorem. A leave-block-out implementation may be used, but its deletion error must be added; it is not called zero under generic mixing. The sharper quadratic curved-recentring route is excluded from the final theorem because Workstream B's bounded hyperbolic two-state counterexample shows that cross-fitting alone does not kill the random Hessian term (H(q,X)e).
+**Approximate-target corollary.** Exact HD-L is the special case \(\zeta_n=0\). More generally let
+\[
+\Gamma_n(h)=\Gamma_n^0(h)+D_n(h),\qquad
+\Gamma_n^0(h)=A_nC_{f,n}(h)A_n^*,\qquad
+\zeta_n=\left\{\sum_h\|D_n(h)\|_{\rm op}^2\right\}^{1/2}.
+\]
+Put \(\bar d_n=d_n+\zeta_n\), \(A_{2,n}^0=(\sum_h\|\Gamma_n^0(h)\|_{\rm op}^2)^{1/2}\), and \(\mathbb L_n^0=\sum_h\Gamma_n^0(h)\Gamma_n^0(h)^*\). Then
+\[
+\|\widehat{\mathbb L}_n-\mathbb L_n^0\|_{\rm op}
+\le 2A_{2,n}^0\bar d_n+\bar d_n^2=:\bar\eta_n.
+\tag{P1-OP-zeta}
+\]
+All loading and selector conclusions below hold relative to the ideal factor target after replacing \(d_n,\eta_n,\Delta_n\) by \(\bar d_n,\bar\eta_n,\Delta_n^0\). Consistency requires \(\bar\eta_n=o_p(\Delta_n^0)\); persistent unbudgeted contamination is not hidden by the exact-factorisation headline.
+
+No cross-fitting is needed for this robust theorem. A leave-block-out implementation may be used, but its deletion error must be added; it is not called zero under generic mixing. The sharper quadratic curved-recentring route is excluded from the final theorem because Workstream B's bounded hyperbolic two-state counterexample shows that cross-fitting alone does not kill the random Hessian term \(H(q,X)e\).
 
 ### Beyond-rank square and factor number
 
@@ -287,8 +312,8 @@ $\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$: it selects two factors bec
 
 ## 4. Final loading-space theorem
 
-> **Theorem HD-E (dimension-free growing-$p_n$ Paper 1 theorem — PROVED UNDER EXPLICIT ASSUMPTIONS).** Under HD-G through HD-L, with the feasible polygonal estimator and fixed $r,h_0,m_0$, let $\widehat E_n$ be the leading $r$-dimensional eigenspace of $\widehat{\mathbb L}_n$, transported to the true reference tangent space by the endpoint connector. If $\eta_n=o_p(\Delta_n)$, then for arbitrary $p_n\to\infty$,
-> 
+> **Theorem HD-E (ambient-dimension-free bounded-energy Paper 1 theorem — PROVED UNDER EXPLICIT ASSUMPTIONS).** Under HD-G through HD-L, with the feasible polygonal estimator and fixed $r,h_0,m_0$, let $\widehat E_n$ be the leading $r$-dimensional eigenspace of $\widehat{\mathbb L}_n$, transported to the true reference tangent space by the endpoint connector. If $\eta_n=o_p(\Delta_n)$, then for arbitrary $p_n\to\infty$ inside HD-X's bounded-total-energy class,
+>
 > \[
 > \boxed{
 > \|\sin\Theta(\widehat E_n,E_n)\|_{\rm op}
@@ -297,7 +322,14 @@ $\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$: it selects two factors bec
 > \ell_n=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1}.}
 > \tag{HD-E}
 > \]
-> 
+>
+> Under approximate included-lag factorisation, the corresponding headline is
+> \[
+> \|\sin\Theta(\widehat E_n,E_n^0)\|_{\rm op}
+> =O_p\!\left(\frac{n^{-1/2}+\ell_n+\zeta_n}{\Delta_n^0}\right)
+> \]
+> whenever (P1-OP-zeta) is \(o_p(\Delta_n^0)\).
+>
 > If one included factor lag is full rank, the denominator may be weakened to $s_n^2$. The factor number is consistently estimated by the threshold selector under TAU, or by the ridged ratio under TAU and the nonzero-spectrum ratio condition.
 
 **Proof.** G1-HD-L2 and GRID feed Theorem PF. PF and uniform Log stability give OBS. Hilbert–Schmidt finite-memory concentration plus the pathwise feasible expansion give P1-ROW; deterministic row assembly gives P1-OP. Davis–Kahan uses the actual eigengap $\Delta_n$, producing HD-E. SIG2 alone permits the $s_n^{-2}$ weakening. EV and TAU prove the two factor selectors. Every node has been proved above or in the cross-audited A/B dossiers. G1′, cross-fitting, GLO symmetry, a full empirical Hessian operator bound, and the raw ratio are not consumed. $\square$
@@ -308,18 +340,18 @@ For $b_n=n^{-\alpha}$, the explicit level rate is
 \ell_n=O\{n^{-3\alpha}+n^{-(1-\alpha)/2}+n^{-a}\}.
 \]
 
-Balancing the first two terms gives $\alpha=1/7$ and $\ell_n=O(n^{-3/7})$ when $a\ge3/7$. The former practical choice $b_n=n^{-1/5}$ remains admissible; it gives $\ell_n=O(n^{-2/5}+n^{-a})$, hence $O_p(n^{-2/5}/\Delta_n)$ when $a\ge2/5$, null eigenvalues $O_p(n^{-4/5})$, and—for strong fixed signal—one may take any ridge/threshold between these two scales. There is no restriction on $p_n$ because all norm, geometry, and memory constants are dimension-uniform.
+Balancing the first two terms gives $\alpha=1/7$ and $\ell_n=O(n^{-3/7})$ when $a\ge3/7$. The former practical choice $b_n=n^{-1/5}$ remains admissible; it gives $\ell_n=O(n^{-2/5}+n^{-a})$, hence $O_p(n^{-2/5}/\Delta_n)$ when $a\ge2/5$, null eigenvalues $O_p(n^{-4/5})$, and—for strong fixed signal—one may take any ridge/threshold between these two scales. There is no separate algebraic restriction on $p_n$ because all norm, geometry, energy, and memory constants are assumed dimension-uniform. HD-X nevertheless excludes order-one variation in each of \(p_n\) new coordinates; the HE theorem is the separate route for growing energy.
 
 This is a trace-class/bounded-total-energy theorem. It does not claim a pervasive-factor regime with energy proportional to $p_n$, and it does not attain the parent fixed-centre $n^{-1/2}$ rate on a generic curved moving-centre model. The slower rate is the price of retaining a pathwise robust theorem after the generic quadratic curved-recentring claim was disproved.
 
 ## 5. Counterexamples and superseded claims
 
-- **DISPROVED:** level local stationarity implies an (O(n^{-a})) derivative contribution. The sharp flat sign-of-kernel-derivative construction attains (n^{-a}/b_n).
-- **DISPROVED:** a width-(b_n) forward/backward blend preserves (b_n^3) derivative bias. Its (L^2) derivative cost is (b_n^{5/2}); the fixed-width blend replaces it.
-- **DISPROVED:** coordinatewise bounded moments imply dimension-free norm concentration. Independent Rademacher coordinates give (sqrt{p_n/(nb_n)}).
-- **DISPROVED:** unqualified polynomial mixing yields an (n^{-1/2}) Hilbert rate. A bounded regenerative process with (alpha(h)\asymp h^{-\beta}), (0<\beta<1), has sample-mean scale (n^{-\beta/2}).
+- **DISPROVED:** level local stationarity implies an \(O(n^{-a})\) derivative contribution. The sharp flat sign-of-kernel-derivative construction attains \(n^{-a}/b_n\).
+- **DISPROVED:** a width-\(b_n\) forward/backward blend preserves \(b_n^3\) derivative bias. Its \(L^2\) derivative cost is \(b_n^{5/2}\); the fixed-width blend replaces it.
+- **DISPROVED:** coordinatewise bounded moments imply dimension-free norm concentration. Independent Rademacher coordinates give \(\sqrt{p_n/(nb_n)}\).
+- **DISPROVED:** unqualified polynomial mixing yields an \(n^{-1/2}\) Hilbert rate. A bounded regenerative process with \(\alpha(h)\asymp h^{-\beta}\), \(0<\beta<1\), has sample-mean scale \(n^{-\beta/2}\).
 - **DISPROVED:** cross-fitting alone makes curved mean recentering quadratic. The random Hessian in Workstream B's hyperbolic Markov example leaves a nonzero first derivative.
-- **DISPROVED:** (kappa^{-2}) is correct when (kappa) denotes the eigengap. Davis–Kahan pays (Delta_n^{-1}); (s_n^{-2}) follows only from SIG2.
+- **DISPROVED:** \(\kappa^{-2}\) is correct when \(\kappa\) denotes the eigengap. Davis–Kahan pays \(\Delta_n^{-1}\); \(s_n^{-2}\) follows only from SIG2.
 - **DISPROVED:** one full-rank lag is necessary. Complementary deficient lags can identify the full loading space.
 - **DISPROVED:** Weyl implies the beyond-rank square. The row-operator min–max proof is required.
 - **DISPROVED:** the raw eigenvalue-ratio selector follows from the beyond-rank square. The threshold or ridge is required.
@@ -349,7 +381,7 @@ There is no OPEN or CONDITIONAL node in the dependency graph of HD-E. Later appl
 
 ## 7. Parent comparison and verification history
 
-The primary parent paper defines its $\kappa$ as the maximum smallest singular value of an included factor lag, not as an eigengap, and states $\lambda_r\ge\kappa^2$. Its fixed-centre short-memory theorem reports $n^{-1/2}/\kappa^2$, and its Proposition 3 reports $n^{-1/2}$ signal-eigenvalue errors and $n^{-1}$ null eigenvalues. HD-E matches the parent's dimension-free **bounded-total-energy / arbitrary-$p_n$** character and internally proves the lag-row square, but differs by using fixed finite memory, explicit uniform moving-mean geometry, a slower robust moving-centre rate, and a proved threshold/ridged selector. HD-E itself does not claim the parent's oracle rate or unregularised ratio conclusion; the separate FRAME-2P-U theorem recovers the oracle numerator under its stronger U2P and three-colour package.
+The primary parent paper defines its $\kappa$ as the maximum smallest singular value of an included factor lag, not as an eigengap, and states $\lambda_r\ge\kappa^2$. Its fixed-centre short-memory theorem reports $n^{-1/2}/\kappa^2$, and its Proposition 3 reports $n^{-1/2}$ signal-eigenvalue errors and $n^{-1}$ null eigenvalues. HD-E matches the parent's dimension-free **bounded-total-energy / arbitrary-$p_n$** character and internally proves the lag-row square, but differs by using fixed finite memory, explicit uniform moving-mean geometry, a slower robust moving-centre rate, and a proved threshold/ridged selector. HD-E itself does not claim the parent's oracle rate or unregularised ratio conclusion. Conditional FRAME-2P-U matches the parent numerator's root-\(n\) order under U2P; its validation influence changes the first-order law, and the current growing-\(p_n\) witness has fixed active curvature plus flat padding.
 
 Independent proof work is retained under `Archived/Proof workstreams` in:
 

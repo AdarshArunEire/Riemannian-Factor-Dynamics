@@ -2,17 +2,17 @@
 type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
-verdict: FRAME-2P-U, HE, fixed-size BW, fixed-margin BW, restricted fractional-normal shrinking-margin BW, and diagonal HE–BW packages are closed under explicit assumptions; applications are remapped to exact, conditional, approximate, or rejected matches
+verdict: FRAME-2P-U is a closed conditional implication but has no verified growing-curvature application; HE and the scoped BW packages are separately closed under explicit assumptions
 last-audited: 2026-08-12
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
 
-> **Authority and scope.** [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust theorem. This file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as noncanonical proof records. Paper 2 is out of scope.
+> **Authority and scope.** [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust theorem. This file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as citable proof provenance, while current status is governed here. Paper 2 is out of scope.
 
 ## 0. Current conclusions
 
-1. The robust arbitrary-\(p_n\) result remains
+1. Under exact included-lag factorisation, the robust arbitrary-ambient-\(p_n\) bounded-energy result is
    \[
    d_n=O_p(n^{-1/2}+\ell_n),\qquad
    \|\sin\Theta(\hat E_n,E_n)\|_{\rm op}
@@ -21,7 +21,7 @@ last-audited: 2026-08-12
    \ell_n=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1}.
    \tag{R}
    \]
-   At \(b_n=n^{-1/7}\), \(a\ge3/7\), its numerator is \(n^{-3/7}\). **PROVED in HD1.**
+   With approximate-target defect \(\zeta_n\), replace the row numerator by \(n^{-1/2}+\ell_n+\zeta_n\) and use the ideal-target gap. At \(b_n=n^{-1/7}\), \(a\ge3/7\), the exact-target numerator is \(n^{-3/7}\). **PROVED in HD1.**
 2. After one common anchor rotation is removed, the feasible lag product has exactly four first-order nuisance terms: two base-point/Hessian terms and two non-rigid frame terms. Geometry, law symmetry, sample separation, and frame rigidity act on different terms. **PROVED, APP-B Lemma APP-B1.**
 3. On a Hilbert space, the Frobenius vector space of symmetric matrices, or one fixed common-eigenbasis AIRM-SPD flat, exact training/evaluation separation conditionally centres the two additive terms and flatness removes the two frame terms. Then
    \[
@@ -35,7 +35,7 @@ last-audited: 2026-08-12
 7. Signed growing-\(p_n\) G1 is proved when the random Hessian is deterministic, scalar plus a uniformly Hilbert–Schmidt-bounded remainder, or controlled block-scalar. This includes flat/common-commuting flats and bounded constant-negative-curvature models. It is not verified for unrestricted full AIRM SPD, and faster signed mean convergence alone is not loading immunity. **PROVED UNDER EXPLICIT ASSUMPTIONS / OPEN AS QUALIFIED.**
 8. The HE theorem is **PROVED UNDER EXPLICIT ASSUMPTIONS** for both bounded-tail and expanding-domain truncation packages. It exposes centre, frame, score, product, target, \(A_{2,n}\), and \(\Delta_n\) separately; proves sufficient flat and curved energy windows; supplies explicit pervasive and growing-rank DGPs; and gives a sub-Weibull truncation corollary with explicit score/product tail integrals.
 9. The fixed-size full-rank local/regularized BW theorem, the noncommuting fixed-margin geometry producer, and a restricted fractional-normal shrinking-margin theorem are **PROVED UNDER EXPLICIT ASSUMPTIONS**. The shrinking theorem has sufficient—not globally sharp—windows and requires support/energy \(O(\sqrt{\alpha_n})\). Global/rank-changing PSD and unsafeguarded-estimator claims are **DISPROVED/RETRACTED**. The fixed-basis diagonal HE–BW branch is proved.
-10. FRAME-2P-U is an entirely observable generic-curved oracle branch. Three exactly separated training/validation/evaluation colours, an independently undersmoothed validation path, and the exact derivative of the fitted evaluation polygon row jointly remove the first-order mean/base-log and non-rigid frame terms. With \(b_n=n^{-1/7}\), \(M_n\asymp n^{2/7}\), \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\), its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and its row is root-\(n\), uniformly for arbitrary \(p_n\) under the explicit U2P producers. Bounded total energy alone is insufficient. **PROVED UNDER EXPLICIT ASSUMPTIONS.**
+10. FRAME-2P-U is an entirely observable **conditional U2P implication**. Three exactly separated training/validation/evaluation colours, an independently undersmoothed validation path, and the exact derivative of the fitted evaluation polygon row jointly remove the first-order mean/base-log and non-rigid frame terms. With \(b_n=n^{-1/7}\), \(M_n\asymp n^{2/7}\), \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\), its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and its row is root-\(n\), uniformly only when every U2P primitive is uniform in \(p_n\). The current growing-\(p_n\) witness pads one fixed curved active block with flat inactive coordinates; no genuinely growing-curvature, growing-AIRM, or growing-BW application has been verified. **CONDITIONAL THEOREM PROVED; GROWING-CURVATURE APPLICATION OPEN.**
 
 ## 1. Term-by-term error ledger
 
@@ -93,7 +93,7 @@ Levels are **G** geometry, **L** law/symmetry, **M** model alignment, **D** depe
 | Isotropy (L) | merely \(EH=cI\) or marginal rotation invariance | no lag GLO identity | none | — | — | none | — | isotropic marginals | conditional radii | **DISPROVED as sufficient** | APP-B CE-B4; APP-C C-S2 |
 | Deterministic/scalar Hessian (L/G) | \(H_t=H_0\) pathwise, especially \(I\) | mean zero passes through \(H_0\) | GLO coefficient; signed Hessian fluctuation | expectation/conditional | split for lag; signed LP | signed growing-\(p\); oracle only with frame | dimension-free | flat/common flat | scalar expected Hessian | **PROVED / shortcut DISPROVED** | APP-C C-SG1; APP-B §3 |
 | GLO + exact split + frame rigidity (L/D/G/E) | both GLO identities; disjoint innovations; \(\phi_F=o(n^{-1/2})\) | all four linear coefficients centred/negligible | L-M/L-F | conditional + direct | split/frame correction | equation (3.1) | envelope-uniform | abstract curved package | GLO alone | **PROVED UNDER ASSUMPTIONS** | T-APP-3 |
-| FRAME-2P-U (G/L/M/D/E) | U2P uniform tube/action/replacement producers; exact three colours; GLO/LN; exact law or \(a>1/2\); \(1/6<\gamma<3/14\) | full fitted-row derivative toward independent undersmoothed path | all four L-M/L-F pilot terms | pathwise cancellation + Hilbert Hájek projection | cyclic two-path polygon correction | root-\(n\) row; \(o_p(n^{-1/2})\) nuisance remainder | arbitrary \(p_n\) when U2P is uniform | padded hyperbolic product; known curved geometries with checked producers | bounded energy alone; same-band score | **PROVED UNDER EXPLICIT ASSUMPTIONS** | T-APP-3B / FRAME-IF closure |
+| FRAME-2P-U (G/L/M/D/E) | U2P uniform tube/action/replacement producers; exact three colours; GLO/LN; exact law or \(a>1/2\); \(1/6<\gamma<3/14\) | full fitted-row derivative toward independent undersmoothed path | all four L-M/L-F pilot terms | pathwise cancellation + Hilbert Hájek projection | cyclic two-path polygon correction | root-\(n\) row; \(o_p(n^{-1/2})\) nuisance remainder | arbitrary \(p_n\) only when U2P is uniform | fixed-dimensional curved models; fixed curved active block with flat padding | bounded energy alone; same-band score; growing-curvature inference from padding | **CONDITIONAL IMPLICATION PROVED; APPLICATION VERIFICATION OPEN** | [[FRAME-2P-U — conditional two-path debiasing theorem]] |
 | Higher-order smoothing (E) | certified order \(q\) | \(b^3\to b^q\) | M-B only | bias | higher correction/signed LP | \(n^{-q/(2q+1)}\) mean | proof-dependent | structural signed classes | oracle claim from smoother | **rate distinction PROVED** | APP-B §8 |
 | Signed structural G1 (G/L/E/D) | localized LP; \(H=aI+K\), HS-bounded/PD \(K\), or blocks | scalar + HS concentration | signed empirical Hessian | empirical | localized signed LP | \(\ell_{q,n}\) | arbitrary \(p_n\) under budget | flat, common flat, constant negative curvature | unrestricted full AIRM | **PROVED UNDER ASSUMPTIONS** | T-APP-5 |
 | Hilbert physical dependence (D) | uniform summable \(L^2\) and essential-sup effects for scores/rows | martingale projection and bounded differences | dependence assumption for M-S/O-S | empirical | none for Route R | same robust rate | Hilbert dimension-free | causal functional/matrix processes | generic polynomial mixing | **PROVED** | T-APP-4 |
@@ -137,7 +137,7 @@ If all non-oracle terms are \(o(n^{-1/2})\) and \(\eta_n=o(\Delta_n)\),
 
 At \(b_n=n^{-1/7}\), \(a\ge3/7\), the squares \(b_n^6,(nb_n)^{-1},n^{-2a},n^{-2}\) are \(O(n^{-6/7})\), and cross-terms are bounded by sums of squares. Thus \(\ell_n^2=o(n^{-1/2})\), while \(\ell_n/\sqrt n=O(n^{-13/14})\). Split-mask terms must separately be \(o(n^{-1/2})\), e.g. block length \(B_n\) must satisfy \(B_n/n=o(n^{-1/2})\).
 
-### T-APP-3B — FRAME-2P-U observable generic-curved correction
+### T-APP-3B — FRAME-2P-U observable conditional correction
 
 Let \(\widehat q^T\) be the positive three-scale training polygon at \(b_n=n^{-1/7}\), \(\check q^V\) an independent validation polygon at \(c_n=n^{-\gamma}\), and \(\widehat{\mathfrak T}_E(q)\) the complete masked evaluation-row functional. With \(M_n\asymp n^{2/7}\), define
 
@@ -154,6 +154,8 @@ and average over the three cyclic fold roles. The derivative in (3B.1) includes 
 
 Assume the full U2P package uniformly in \(p_n\): fixed lag/memory; bounded total energy; unique strongly convex Karcher means; a \(C^4\) law/mean; one known generated tube with the consumed score, barycentre-replacement, Richardson, Exp/Log, PT/Jacobi, and first two masked-row polygon derivatives bounded; vertex actions \(\max_j\|K_{n,j}\|\le C/M_n\), \(\sum_j\|K_{n,j}\|\le C\); aggregate single/double replacements \(C/n\), \(C/(n^2c_n)\); exact three-colour innovation separation and identical phase-balanced masks; GLO and included-lag factorisation; and exact local law or \(a>1/2\) with all mask/design/coupling defects \(o(n^{-1/2})\). If
 
+This is the high-level invocation. [[FRAME-2P-U — conditional two-path debiasing theorem]] separately classifies the vertex and aggregate replacement rates as conditionally derived from lower-level curvature, strong-convexity, local-support, and composed-row primitives. An application must verify either the low-level producer chain or the high-level rates directly; it must not count the same rate as both an assumption and an independent conclusion.
+
 \[
 \frac16<\gamma<\frac3{14},
 \]
@@ -168,9 +170,9 @@ then
 \tag{3B.2}
 \]
 
-and both influence rows are \(O_p(n^{-1/2})\). Hence \(d_n^{db}=O_p(n^{-1/2})\); if \(2A_{2,n}d_n^{db}+(d_n^{db})^2=o_p(\Delta_n)\), loading error is \(O_p(n^{-1/2}/\Delta_n)\) and \(\widehat\lambda_{r+1,n}^{db}=O_p(n^{-1})\). **PROVED UNDER EXPLICIT ASSUMPTIONS.**
+and both influence rows are \(O_p(n^{-1/2})\). Hence \(d_n^{db}=O_p(n^{-1/2})\); if \(2A_{2,n}d_n^{db}+(d_n^{db})^2=o_p(\Delta_n)\), loading error is \(O_p(n^{-1/2}/\Delta_n)\) and \(\widehat\lambda_{r+1,n}^{db}=O_p(n^{-1})\). The validation influence is leading sampling noise, so the result matches oracle **rate order**, not the oracle limit law or efficiency. **CONDITIONAL IMPLICATION PROVED.**
 
-The same-band score/Richardson construction is **DISPROVED** because it generically retains \(b_n^3K[B_3]\asymp n^{-3/7}\). Direct frame/\(\Omega\) plug-in is only conditionally valid. Invariant-only redesign is rejected because it changes the estimand. A padded \(\mathbb H^2(-1)\times\mathbb R^{p_n-2}\) model proves the U2P class is nonempty and genuinely curved/non-rigid for arbitrary \(p_n\).
+The same-band score/Richardson construction is **DISPROVED** because it generically retains \(b_n^3K[B_3]\asymp n^{-3/7}\). Direct frame/\(\Omega\) plug-in is only conditionally valid. Invariant-only redesign is rejected because it changes the estimand. The padded \(\mathbb H^2(-1)\times\mathbb R^{p_n-2}\) witness proves only logical nonemptiness at every ambient \(p_n\): all active curvature stays in one fixed two-dimensional block. It does not verify growing active curvature or growing-size AIRM/BW.
 
 ### T-APP-4 — broader dependence
 
@@ -267,7 +269,7 @@ An empirical commutator is diagnostic until linked to both the fixed-algebra and
 | Robust under C-PD | same | same | same with PD constants | same | same | same | **PROVED** |
 | Flat/common flat + split | \(\ell_n\) | zero after anchor | \(n^{-1/2}+\ell_n^2+\rho_n\) | \(n^{-1/2}/\Delta_n\) if defects negligible | \(O_p(n^{-1})\) | \(n^{-1}=o(\tau_n)\ll\Delta_n\) | **PROVED UNDER SPLIT** |
 | Abstract curved GLO | \(\ell_n\) | direct \(\phi_F\) | equation (3.1) | oracle only if frame/defects negligible | row square | corresponding window | **CONDITIONAL for generic application** |
-| FRAME-2P-U generic curved | training \(n^{-3/7}\); validation \(c^3+(nc)^{-1/2}\) | corrected inside the full row derivative | \(n^{-1/2}\) | \(n^{-1/2}/\Delta_n\) under assembly/gap | \(O_p(n^{-1})\) | \(n^{-1}=o(\tau_n)\ll\Delta_n\) | **PROVED UNDER U2P** |
+| FRAME-2P-U conditional U2P | training \(n^{-3/7}\); validation \(c^3+(nc)^{-1/2}\) | corrected inside the full row derivative | \(n^{-1/2}\) | \(n^{-1/2}/\Delta_n\) under assembly/gap | \(O_p(n^{-1})\) | \(n^{-1}=o(\tau_n)\ll\Delta_n\) | **IMPLICATION PROVED; GROWING-\(p\) WITNESS IS FLAT-PADDED** |
 | Known centre | zero | zero | \(n^{-1/2}+\rho_n\) | oracle | \(n^{-1}\) | oracle window | **PROVED** |
 | Constant/parametric centre | \(n^{-1/2}\) | \(n^{-1/2}\) or rigid | \(n^{-1/2}\) | oracle order; changed limit possible | \(n^{-1}\) | oracle window | **PROVED; not immunity** |
 | Signed structural mean | \(\ell_{q,n}\) | first order unless flat | \(n^{-1/2}+\ell_{q,n}\) robustly | \((n^{-1/2}+\ell_{q,n})/\Delta_n\) | row square | row-based | **PROVED mean; robust loading chain** |
@@ -347,7 +349,7 @@ The first arrow has its own measurement-error, dependence, and target budget. Th
 
 1. **HE application verification:** instantiate either the proved bounded-tail \((R_n,A_{2,n},\Delta_n)\) ledger or the expanding-domain truncation ledger for asset, sensor, gene, imaging, and connectivity systems rather than normalising by fiat.
 2. **BW application verification and covariance-measurement layer:** use the proved fixed-margin or restricted fractional-normal theorem only when its complete support/slack/path/row/gap package is verified; separately quantify preliminary covariance estimation.
-3. **FRAME-2P-U application verification:** identify geometries and data laws where the dimension-uniform composed-action, replacement, exact-colour, mask, GLO, and exact-law/\(a>1/2\) producers are actually checkable; retain the robust theorem whenever any producer fails.
+3. **FRAME-2P-U application verification:** first construct or disprove a genuinely growing-curvature family satisfying the dimension-uniform composed-action and replacement producers; then identify data laws satisfying exact colours, masks, GLO, and exact-law/\(a>1/2\). Retain the robust theorem whenever any producer fails.
 4. **Hilbert functional/multivariate factors:** exact flatness, interpretable C-PD, robust and split-oracle branches already available.
 5. **Fixed-axis diagonal covariance/volatility/diffusion:** exact common flat when the axes are scientific structure, not preprocessing.
 6. **Full AIRM covariance/correlation:** high scientific value and verified growing-size geometry; bounded-energy robust theorem is honest, while FRAME-2P-U is available only after its application-specific U2P/GLO/split checks.
@@ -381,7 +383,7 @@ Every fragile accelerator within the bounded-energy AIRM/Hadamard scope retains 
 \end{array}
 \]
 
-No OPEN or CONDITIONAL node is consumed by a proved theorem. The flat and FRAME-2P-U oracle branches use exact finite-memory colour separation, not the open infinite-memory coupling branch. Full-AIRM robust HD1 uses T-APP-2; a full-AIRM FRAME-2P-U application still has to verify U2P, GLO, masks, and the split rather than inheriting them from local symmetry.
+The robust HD1 and exact-flat branches consume no open node. FRAME-2P-U is instead an explicit conditional implication: it consumes U2P primitives, and verification for a genuinely growing-curvature application remains open. Full-AIRM robust HD1 uses T-APP-2; a full-AIRM FRAME-2P-U application does not inherit U2P, GLO, masks, or sample separation from local symmetry.
 
 ## 11. Status and optional work
 
@@ -398,7 +400,7 @@ No OPEN or CONDITIONAL node is consumed by a proved theorem. The flat and FRAME-
 | structural signed growing-\(p\) G1 | **PROVED UNDER ASSUMPTIONS** | T-APP-5 | APP-C §4 |
 | unrestricted full-AIRM signed G1 | **OPEN** | consumed by no theorem | APP-C §4.2 |
 | positive curvature-corrected \(q\ge4\) | **OPEN** | consumed by no theorem | G1 / OPEN OBLIGATIONS |
-| FRAME-2P-U generic curved frame/mean debiasing | **PROVED UNDER EXPLICIT U2P ASSUMPTIONS** | root-\(n\) row, oracle loading numerator, \(n^{-1}\) null spectrum | [[FRAME-IF — closure adjudication]]; archived A/B/C closure dossiers |
+| FRAME-2P-U conditional frame/mean debiasing | **ASSUMPTION-TO-CONCLUSION IMPLICATION PROVED** | root-\(n\) row order and \(n^{-1}\) null spectrum; no oracle limit-law equivalence | [[FRAME-2P-U — conditional two-path debiasing theorem]]; archived FRAME-IF dossiers |
 | same-band score/Richardson debiasing | **DISPROVED** | generically retains \(n^{-3/7}\) curved bias | FRAME-IF-B/C |
 | direct frame/\(\Omega\) plug-in | **CONDITIONAL** | valid only with an extra observable frame producer | FRAME-IF closure |
 | invariant-only frame redesign | **REJECTED FOR THIS ESTIMAND** | changes the loading target | FRAME-IF closure |

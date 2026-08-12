@@ -1,13 +1,13 @@
 ---
 type: canonical-research-queue
-title: OPEN OBLIGATIONS — current research actions
+title: STATUS AND OPEN OBLIGATIONS — current research actions
 status: active
 last-audited: 2026-08-12
 ---
 
-# OPEN OBLIGATIONS — current research actions
+# STATUS AND OPEN OBLIGATIONS — current research actions
 
-> **Only live queue.** Closed proof-run specifications and superseded TODO lists are archived. [[Analytical reconstruction — proof ledger and rebuilt spec]] governs theorem status. Numerical evidence cannot close any item below.
+> **Status plus live queue.** Sections 0–2 record closed context; Sections 3–5 contain the live queue and execution order. [[Analytical reconstruction — proof ledger and rebuilt spec]] governs theorem status. Numerical evidence cannot close an analytical item.
 
 ## 0. Closed analytical campaigns
 
@@ -22,7 +22,7 @@ The campaign closed, under explicit assumptions:
 7. the HE-TRUNC expanding-domain theorem, including unconditional no-clipping transfer, explicit score/product tail integrals, induced mean/frame/row/loading rates, and a sub-Weibull corollary;
 8. BW-SIZE-FIXED-MARGIN: the matrix-size-uniform noncommuting quotient, curvature, transport, Hessian/normal-radius, generated-map, and polygonal-frame geometry under one compatible fixed-margin generated-domain package.
 9. BW-SIZE-SHRINKING-MARGIN on the restricted fractional-normal class: sharp primitive floors, termwise G1/PF/row/gap propagation, a conservative sufficient \(m_n\)-window, a self-similar attainability branch, and exact impossibility boundaries.
-10. FRAME-2P-U: the entirely observable three-colour undersmoothed two-path correction, its dimension-uniform root-\(n\) row theorem under U2P, its finite-dimensional parametric fallback, and the disproof of the same-band score-only and invariant-only routes.
+10. FRAME-2P-U: the entirely observable three-colour undersmoothed two-path correction and its root-\(n\) assumption-to-conclusion theorem under U2P, plus the disproof of the same-band score-only and invariant-only routes. Its only growing-\(p_n\) witness has fixed active curvature with flat padding; genuinely growing-curvature/AIRM/BW verification remains open.
 
 The following are not open tasks because they are false: a global/rank-changing BW theorem, an unsafeguarded global BW estimator theorem, harmless global normalisation, and a general noncommuting HE–BW corollary from the current assumptions.
 
@@ -76,6 +76,7 @@ The analytical packages are closed, but empirical application claims still requi
 
 ### APP-FRAME — FRAME-2P-U verification and implementation
 
+- construct or disprove a genuinely growing-active-curvature family satisfying U2P; flat inactive padding does not close this item;
 - verify the U2P generated-tube, strong-convexity, vertex-action, composed-action, and single/double replacement constants for each proposed curved geometry;
 - decide whether the data construction genuinely permits three innovation-separated colours with identical phase-balanced masks and one common finite-array target;
 - verify GLO, included-lag factorisation, exact local-law sampling or \(a>1/2\), and every coupling/design/mask defect at sub-root-\(n\) scale;
@@ -108,7 +109,7 @@ The analytical packages are closed, but empirical application claims still requi
 
 ## 4. P2 — secondary analytical backlog
 
-These do not block the proved Paper 1 robust/FRAME-2P-U branches, HE packages, or the fixed-size, fixed-margin growing-size, and restricted fractional-normal shrinking-margin BW packages:
+These do not block robust HD1, the conditional FRAME-2P-U implication, HE packages, or the fixed-size, fixed-margin growing-size, and restricted fractional-normal shrinking-margin BW packages:
 
 - **CF-PD:** conditional Hilbert/HS physical-dependence inequality for infinite-memory oracle cancellation;
 - **AIRM-SIGNED:** full-AIRM matrix-size-uniform structural Hessian representation;
@@ -125,7 +126,7 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 
 ## 5. Execution order
 
-1. Freeze this canonical theorem state in version control before notation-only rewriting or simulation implementation.
+1. Freeze this corrected canonical theorem state in version control before notation-only rewriting or simulation implementation.
 2. Build one notation/conventions ledger and simplify exposition without changing theorem hypotheses, norms, targets, or rates.
 3. Implement the smallest proof-faithful FRAME-2P-U experiment: N-16 plus the N-17 negative controls and common-gauge test.
 4. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
@@ -134,4 +135,4 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 
 ## 6. Repository rule
 
-This is the only live queue. HE, BW, FRAME-DB, and FRAME-IF working dossiers and hostile ledgers are archived proof records, not parallel status sources. No open node above is consumed by a proved theorem.
+Sections 3–5 are the only live queue. HE, BW, FRAME-DB, and FRAME-IF dossiers are archived proof provenance, not parallel status sources. Robust HD1 and the exact-flat branch consume no open node. FRAME-2P-U is deliberately conditional on U2P; its growing-curvature application-verification item is open and is not disguised as a closed generic theorem.

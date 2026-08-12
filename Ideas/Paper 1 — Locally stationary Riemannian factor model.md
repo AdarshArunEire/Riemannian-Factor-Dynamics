@@ -5,7 +5,7 @@ aliases:
   - Moving-centre RFM, covariantly constant loadings
   - Paper 1
 status: current-spec
-verdict: the robust theorem and the FRAME-2P-U generic-curved oracle branch are proved for arbitrary dimension under their separate explicit packages; HE and the fixed-size, fixed-margin size-uniform, and restricted shrinking-margin BW results are also closed as scoped
+verdict: the robust theorem is proved; FRAME-2P-U is a proved conditional U2P implication with only fixed-active-curvature padded growing-dimensional witnesses, not a verified generic growing-curvature or AIRM result; HE and scoped BW results remain as separately adjudicated
 last-audited: 2026-08-12
 area:
   - geometry
@@ -26,7 +26,7 @@ Paper 1 is a dynamic dimension-reduction model with a slowly moving baseline. It
 
 ## Current scope
 
-Paper 1 now has a nontrivial bounded-total-energy robust theorem for arbitrary $p_n\to\infty$, an arbitrary-$p_n$ generic-curved oracle branch under FRAME-2P-U's stronger U2P package, and bounded-tail/expanding-domain high-energy theorems with explicit energy, product, geometry, signal, and gap budgets. The bounded-energy robust core is dimension-free because total tangent energy, finite-memory length, lag count, factor rank, and every geometric differential constant are uniformly bounded. Its fallback moving-centre loading rate is slower than the parent fixed-centre oracle rate; FRAME-2P-U recovers the root-$n$ row only when its additional producers are verified.
+Paper 1 now has a nontrivial bounded-total-energy robust theorem for arbitrary ambient $p_n\to\infty$, a conditional root-\(n\) implication under FRAME-2P-U's stronger U2P package, and bounded-tail/expanding-domain high-energy theorems with explicit energy, product, geometry, signal, and gap budgets. The bounded-energy robust core is dimension-free because total tangent energy, finite-memory length, lag count, factor rank, and every geometric differential constant are uniformly bounded. This is a trace-class/function-space regime, not the classical regime where every added coordinate carries order-one noise. FRAME-2P-U has only a fixed-active-curvature padded growing-\(p_n\) witness; a genuinely growing-curvature application remains open.
 
 For a fixed real dataset, the bounded-energy condition is a finite constant and does not forbid using the method. When genuinely new noisy coordinates are added, the proved HE theorem applies only if its complete bounded-tail or truncation/generated-domain phase conditions hold.
 
@@ -49,12 +49,12 @@ The canonical property-first map is [[Application map — geometry, symmetry, an
   \|\sin\Theta\|_{\rm op}=O_p(n^{-1/2}/\Delta_n)
   \]
   when the displayed defects are \(o(n^{-1/2})\). At \(b_n=n^{-1/7}\), \(a\ge3/7\), \(\ell_n^2=o(n^{-1/2})\).
-- **FRAME-2P-U generic-curved oracle branch — PROVED UNDER EXPLICIT ASSUMPTIONS.** Three exactly separated training, validation, and evaluation colours use
+- **FRAME-2P-U conditional two-path branch — PROVED AS AN U2P IMPLICATION.** Three exactly separated training, validation, and evaluation colours use
   \[
   b_n=n^{-1/7},\qquad M_n\asymp n^{2/7},\qquad
   c_n=n^{-\gamma},\quad \frac16<\gamma<\frac3{14}.
   \]
-  The observable evaluation-row derivative from the training polygon toward an independent undersmoothed validation polygon cancels the complete first-order mean/base-log and non-rigid frame errors. Under U2P's dimension-uniform generated-tube, Karcher, composed-action, single/double replacement, finite-memory split, mask, GLO, included-lag, and exact-local-law or \(a>1/2\) producers, its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and the corrected row is root-\(n\), uniformly for arbitrary \(p_n\). Bounded energy alone does not imply U2P.
+  The observable evaluation-row derivative from the training polygon toward an independent undersmoothed validation polygon cancels the complete first-order mean/base-log and non-rigid frame errors. Under U2P's generated-tube, Karcher, composed-action, single/double replacement, finite-memory split, mask, GLO, included-lag, and exact-local-law or \(a>1/2\) producers, all uniform in \(p_n\), its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and the corrected row is root-\(n\). The implication permits arbitrary ambient \(p_n\), but the only growing-dimensional witness has fixed active curvature plus flat padding. No growing-size AIRM/BW or growing-active-curvature U2P verification exists. Bounded energy alone does not imply U2P.
 - **Known/constant/parametric centre branch — PROVED.** A known centre is immune. A root-\(n\) constant or finite-dimensional parametric centre preserves oracle order but generally enters the first-order law; it is not first-order immunity.
 - **Physical-dependence branch — PROVED.** Uniform summable Hilbert \(L^2\) and essential-sup innovation effects replace fixed memory in the robust G1/oracle-row chain. Exact cancellation under infinite memory remains conditional on a joint row coupling or conditional physical-dependence theorem.
 - **Structured signed growing-\(p_n\) mean — PROVED UNDER EXPLICIT ASSUMPTIONS.** Deterministic, scalar-plus-Hilbert–Schmidt, and controlled block-scalar Hessians avoid the operator sphere net. This covers flat/common flats and bounded constant-negative-curvature tubes, but not unrestricted full AIRM SPD. Faster mean convergence alone does not imply oracle loading.
@@ -114,7 +114,7 @@ Y_{t,n}=\mathcal P^{\mu_n}_{u_t\to u_0}\log_{\mu_n(u_t)}X_{t,n}
 =A_nf_{t,n}+\varepsilon_{t,n}.
 $$
 
-Here $A_n^*A_n=I_r$, with fixed $r$, and $\|Y_{t,n}\|\le R$ almost surely uniformly in $n,p_n$. The row and its smooth proxy laws are fixed-$m_0$-dependent. Level local stationarity is $O(n^{-a})$.
+Here $A_n^*A_n=I_r$, with fixed $r$, and $\|Y_{t,n}\|\le R$ almost surely uniformly in $n,p_n$. The row and its smooth proxy laws are fixed-$m_0$-dependent. Baseline level local stationarity is the \(L^2\) coupling \(\sup_{t,n}\|d(X_{t,n},X_t^{(u_t,n)})\|_{L^2}=O(n^{-a})\). The optional continuous-\(u\) supremum theorem additionally uses the essential-sup version. Almost-sure tube containment is a separate support assumption.
 
 The mean estimator uses three nonnegative one-sided scale kernels,
 
@@ -175,7 +175,7 @@ $$
 $$
 
 The displayed factorisation requires zero idiosyncratic lag covariance and zero factor–noise cross covariances at included lags. If
-(Q_n=\sum_hC_{f,n}(h)C_{f,n}(h)^*\succ0), then
+\(Q_n=\sum_hC_{f,n}(h)C_{f,n}(h)^*\succ0\), then
 
 $$
 \operatorname{ran}\mathbb L_n=\operatorname{ran}A_n,
@@ -202,7 +202,18 @@ $$
 \le 2A_{2,n}d_n+d_n^2=:\eta_n.
 $$
 
-No cross-fitting or quadratic mean cancellation is consumed by this robust theorem. Cross-fitting alone is insufficient on curved manifolds: the random Hessian (H(q,X)) can leave a first-order recentering term.
+If included-lag factorisation is only approximate, write
+\[
+\Gamma_n(h)=\Gamma_n^0(h)+D_n(h),\qquad
+\zeta_n=\left\{\sum_h\|D_n(h)\|_{\rm op}^2\right\}^{1/2}.
+\]
+Then the row error to the ideal factor target is \(\bar d_n=d_n+\zeta_n\) and the honest loading numerator is
+\[
+2A_{2,n}^0\bar d_n+\bar d_n^2.
+\]
+Thus the general robust rate is \(O_p((n^{-1/2}+\ell_n+\zeta_n)/\Delta_n^0)\); the shorter display below is its exact-target \(\zeta_n=0\) case.
+
+No cross-fitting or quadratic mean cancellation is consumed by this robust theorem. Cross-fitting alone is insufficient on curved manifolds: the random Hessian \(H(q,X)\) can leave a first-order recentering term.
 
 The separate FRAME-2P-U estimator uses fitted training vertices \(\widehat q^T\), independent validation vertices \(\check q^V\), and one masked evaluation-row functional:
 
@@ -237,10 +248,10 @@ then
 \widehat\lambda_{r+1,n}^{db}=O_p(n^{-1}).
 \]
 
-This theorem does not validate the same-band score/Richardson correction: that route generically retains an \(n^{-3/7}\) curved bias and is disproved. Direct frame/\(\Omega\) plug-in remains conditional on an extra frame producer, while an invariant-only redesign changes the estimand.
+This theorem does not validate the same-band score/Richardson correction: that route generically retains an \(n^{-3/7}\) curved bias and is disproved. Direct frame/\(\Omega\) plug-in remains conditional on an extra frame producer, while an invariant-only redesign changes the estimand. The extra validation influence is leading root-\(n\) noise, so the result has oracle rate order but is not oracle-equivalent and generally has a different asymptotic variance.
 
-> **Final robust loading theorem.** If $\eta_n=o_p(\Delta_n)$, then for arbitrary $p_n\to\infty$,
-> 
+> **Final robust loading theorem (exact-target case \(\zeta_n=0\)).** If $\eta_n=o_p(\Delta_n)$, then for arbitrary $p_n\to\infty$ inside the bounded-total-energy class,
+>
 > $$
 > \boxed{
 > \|\sin\Theta(\hat E_n,E_n)\|_{\rm op}
@@ -283,20 +294,20 @@ is consistent. A ridge-ratio selector is also consistent under a lower bound on 
 
 ## Parent comparison
 
-The Huang–Chen–Chen parent paper uses $\kappa$ for the factor-lag singular value corresponding here to $s_n$, and states $\lambda_r\ge\kappa^2$. The robust theorem matches its dimension-free bounded-total-energy character for arbitrary $p_n$, but adds a moving centre and therefore uses stronger uniform geometry and a slower fallback rate. FRAME-2P-U recovers a root-$n$ lag row and the parent's oracle numerator on a genuinely curved moving-centre class, but pays for it with exact three-colour separation, GLO, stronger local-law accuracy, and the full U2P producer package. Paper 1 still does not inherit the parent's broader short-memory formulation or consistency of the unregularised ratio from the displayed eigenvalue rates alone.
+Huang, Chen and Chen (2026), *A Riemannian Factor Model for Manifold-Valued Time Series*, arXiv:2607.28385v1, Theorem 2 and Proposition 3, use \(\kappa\) for a factor-lag singular-value strength, obtain \(O_p(1/(\kappa^2\sqrt n))\), and state \(\lambda_r\ge\kappa^2\). Their P1 bounded-radius condition explicitly implies total factor and noise energy cannot diverge with \(p\); their theorem is not a classical pervasive-energy result. The robust moving-centre theorem matches that bounded-total-energy/arbitrary-ambient-dimension character but has a slower fallback rate. Conditional FRAME-2P-U matches the root-\(n\) rate order under U2P and three colours; its added validation influence prevents a claim of oracle limit-law equivalence. See [[References and external claim audit]].
 
 ## Claims excluded from Paper 1
 
-- fixed (p) as the final scope;
+- fixed \(p\) as the final scope;
 - coordinatewise energy in place of bounded total norm;
-- unqualified polynomial mixing as a dimension-free (n^{-1/2}) assumption;
-- (n^{-a}) rather than (n^{-a}/b_n) in G1′ under level-only local stationarity;
-- (Delta_n^{-2}) in Davis–Kahan;
+- unqualified polynomial mixing as a dimension-free \(n^{-1/2}\) assumption;
+- \(n^{-a}\) rather than \(n^{-a}/b_n\) in G1′ under level-only local stationarity;
+- \(\Delta_n^{-2}\) in Davis–Kahan;
 - a generic quadratic mean-recentring claim from cross-fitting alone;
 - bounded total energy alone as sufficient for FRAME-2P-U;
 - the same-band score/Richardson construction as a valid generic curved correction;
 - an invariant-only redesign as an estimator of the original loading space;
-- beyond-rank (d_n^2) from Weyl alone;
+- beyond-rank \(d_n^2\) from Weyl alone;
 - consistency of the raw eigenvalue ratio;
 - automatic higher AIRM differential bounds from H-LIP alone;
 - automatic transfer of AIRM geometry to Bures–Wasserstein covariance data;
@@ -318,6 +329,8 @@ The Huang–Chen–Chen parent paper uses $\kappa$ for the factor-lag singular v
 - [[HE — growing energy and pervasive signal working dossier]]
 - [[BW — moving-centre Bures-Wasserstein working dossier]]
 - [[FRAME-IF — closure adjudication]]
+- [[FRAME-2P-U — conditional two-path debiasing theorem]]
+- [[References and external claim audit]]
 - [[Joint HE-BW error ledger and hostile audit]]
 - [[OPEN OBLIGATIONS — current research actions]]
 

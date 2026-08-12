@@ -10,7 +10,7 @@ updated: 2026-08-12
 
 ## 1. Scope and status
 
-Every item in this note is **PLANNED**. No simulation result is evidence for a theorem, and no numerical outcome is currently reported. The suite begins only after the analytical FRAME/HE/BW verdicts: it tests proved rate boundaries, distinguishes corrected theorems from disproved shortcuts, and exposes the exact open extensions.
+Every item in this note is **PLANNED**. As of 2026-08-12, the repository contains **zero simulation implementation and zero empirical output** for this suite. The analytical results are therefore empirically unvalidated. No future simulation result can prove a theorem; the suite is intended to test rate boundaries, distinguish corrected theorems from disproved shortcuts, and expose the exact open extensions.
 
 The primary targets are:
 

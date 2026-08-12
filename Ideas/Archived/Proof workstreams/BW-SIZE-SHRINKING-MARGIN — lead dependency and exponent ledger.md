@@ -1,26 +1,26 @@
 ---
-type: working-proof-ledger
+type: archived-proof-ledger
 title: BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger
-status: stage-2-adjudicated-ready-to-archive
-authority: lead-working-file-only
+status: completed-archived-proof
+authority: proof-provenance; canonical status is maintained in the primary proof ledger
 prerequisite: BW-SIZE-FIXED-MARGIN Gate A
 ---
 
 # BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger
 
-> **STAGE 2 ADJUDICATED / READY TO ARCHIVE.** Stage 1 is archived and proved. Two Stage 2 hostile passes are complete. This ledger records the restricted sufficient shrinking-margin theorem, its sharp primitive floors, its exact impossibility boundaries, and the isolated nonlocal exponent-minimisation questions. Canonical status is maintained in the primary proof ledger.
+> **STAGE 2 ADJUDICATED AND ARCHIVED.** Stage 1 is archived and proved. Two Stage 2 hostile passes are complete. This ledger records the restricted sufficient shrinking-margin theorem, its sharp primitive floors, its exact impossibility boundaries, and the isolated nonlocal exponent-minimisation questions. Canonical status is maintained in the primary proof ledger.
 
 ## Separate ledgers
 
 | Layer | Required inputs | Output to next layer | Status |
 |---|---|---|---|
-| geometry blow-up | \(\alpha_n,\beta_n,\chi_n,k_0\); normal and path margins | sharp/sufficient primitive and composed coefficients | OPEN |
-| generated-domain reach | population slack; number of generated objects; grid localization | probability of complete GD membership | OPEN |
-| total-energy/statistical mean | tangent energy, dependence, bandwidth, local stationarity | \(r_{\mu,n}\), grid RMS/sup bounds | OPEN |
-| polygonal frame | geometry coefficient, \(N,r_N,v_\mu,a_\mu\) | \(r_{F,n}\) | OPEN |
-| feasible lag row | observation Lipschitz coefficient, energy, \(r_{\mu,n},r_{F,n}\) | \(d_n\) | OPEN |
-| loading recovery | \(A_{2,n},d_n,\Delta_n\) | \(\eta_n=2A_{2,n}d_n+d_n^2\), Davis–Kahan | OPEN |
-| factor selection | \(d_n^2,\Delta_n\) | nonempty threshold/ridge window | OPEN |
+| geometry blow-up | \(\alpha_n,\beta_n,\chi_n,k_0\); normal and path margins | sharp primitive floors and sufficient fractional-normal coefficients | CLOSED on restricted domain; unrestricted nonlocal minimisation optional |
+| generated-domain reach | population slack; number of generated objects; grid localization | complete generated-event conditions | CLOSED conditionally on displayed slack/object-count tests |
+| total-energy/statistical mean | tangent energy, dependence, bandwidth, local stationarity | \(r_{\mu,n}\), grid RMS/sup bounds | CLOSED under shrinking support/energy package |
+| polygonal frame | geometry coefficient, \(N,r_N,v_\mu,a_\mu\) | \(r_{F,n}\) | CLOSED under fractional-normal PF cells |
+| feasible lag row | observation Lipschitz coefficient, energy, \(r_{\mu,n},r_{F,n}\) | \(d_n\) | CLOSED under typed lag/dependence/defect conditions |
+| loading recovery | \(A_{2,n},d_n,\Delta_n\) | \(\eta_n=2A_{2,n}d_n+d_n^2\), Davis–Kahan | CLOSED conditionally on assembly/gap ratio |
+| factor selection | \(d_n^2,\Delta_n\) | nonempty threshold/ridge window | CLOSED conditionally on displayed separation |
 
 ## Campaign rules
 
@@ -34,7 +34,14 @@ prerequisite: BW-SIZE-FIXED-MARGIN Gate A
 
 | Claim | Attack | Repair or counterexample | Independent checker | Final status | Canonical consequence |
 |---|---|---|---|---|---|
-| pending | pending | pending | pending | pending | none before gate |
+| normal radius larger than \(O(\sqrt{\alpha_n})\) | lower-edge scalar and noncommuting families | impossible uniformly on the stated full-rank class | F, then D/E | DISPROVED | retain fractional-normal radius |
+| PF coefficient \(o(\alpha_n^{-1})\) | noncommuting curvature floor | impossible on general noncommuting class | F | DISPROVED | retain \(K_F=O(\alpha_n^{-1})\) |
+| fixed/growing energy with shrinking normal-pair support | compare support radius and tangent energy | analytically incompatible in this theorem class | D/F | DISPROVED | no pervasive shrinking-margin corollary |
+| geometry-only ceiling on \(m_n\) | self-similar fixed-active-block construction | arbitrary polynomial inactive dimension is attainable | E/F | DISPROVED | size window must use model links |
+| conservative \(x<3/(5A)\) window | recompute termwise mean/PF/loading exponents | sufficient, not minimax | D/E/F | PROVED SUFFICIENT | canonical restricted corollary |
+| RMS grid error authorizes every generated object | maximum/grid attack | needs \(\sqrt{M_n+1}\) or a proved sup event | F | DISPROVED | retain explicit object-count event |
+| loading follows without actual gap budget | signal-dilution examples | require \(2A_2d+d^2=o(\Delta)\) | E/F | DISPROVED | actual gap remains explicit |
+| repeated positive eigenvalues are a BW singularity | quotient/polar check | repetition is harmless; rank loss is the boundary | D/F | DISPROVED | remove false margin |
 
 ## Lead independent checks — pre-hostile freeze
 
@@ -72,7 +79,7 @@ The exact downstream conditions retain: stage and grid localization against \(\d
 d_n^2=o(\tau_n)\ll\Delta_n.
 \]
 
-Two nonempty branches are under review:
+Two nonempty branches were adjudicated:
 
 1. a general local power branch with \(\alpha_n\asymp m_n^{-A}\), support/score scale \(a_n\), \(K_B\asymp K_F\asymp\alpha_n^{-1}\), and rank-one \(A_{2,n}\asymp\alpha_n\), \(\Delta_n\asymp\alpha_n^2\); termwise balance gives the provisional sufficient window \(m_n=n^x\), \(x<3/(5A)\);
 2. a self-similar active-block family in which the law/path jets, support, speed, and signal all dilate with \(a_n\); all margin blow-up cancels against physical scaling and arbitrary polynomial \(m_n\) can be added through inactive coordinates. This proves that no universal direct \(m_n\)-window exists without model links.

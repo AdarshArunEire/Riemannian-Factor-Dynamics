@@ -5,7 +5,7 @@ aliases:
   - Moving-centre RFM
   - Locally stationary Riemannian factor model
 status: current-programme
-verdict: Paper 1 has the robust and FRAME-2P-U curved-oracle branches plus closed HE, fixed-size/fixed-margin BW, and restricted shrinking-margin BW packages; optional sharpness questions remain unconsumed; Paper 2 remains separate and parked
+verdict: Paper 1 has a closed robust branch and a conditional FRAME-2P-U implication whose only growing-dimensional witness has fixed active curvature; HE and scoped BW packages are separately closed; Paper 2 remains separate and parked
 last-audited: 2026-08-12
 area:
   - geometry
@@ -89,14 +89,14 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 
 | Component | Current status | Scope |
 |---|---|---|
-| Moving-centre identification under pointwise local-mean ergodicity | PROVED/CITED | fixed $p$; algebraic condition not inherently dimensional |
+| Moving-centre identification under pointwise local-mean ergodicity | PROVED INTERNALLY; mean-square ergodic step CITED EXTERNALLY | fixed $p$; Doob (1953), Chapter X §7; see [[References and external claim audit]] |
 | Positive-weight growing-$p_n$ G1 route | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, bounded total energy/fixed memory |
 | Integrated mean and corrected derivative rates | PROVED UNDER EXPLICIT ASSUMPTIONS | dimension-free; derivative carries $n^{-a}/b_n$ under level-only local stationarity |
-| Ribbon holonomy and rotational decomposition | PROVED/CITED | fixed-$p$ stochastic theorem; geometric constants can be dimension-free |
+| Ribbon holonomy and rotational decomposition | PROVED INTERNALLY; curvature/holonomy expansions CITED EXTERNALLY | fixed-$p$ stochastic theorem; Hunger Proposition 2.7 and Ambrose–Singer; see [[References and external claim audit]] |
 | Paper 1 feasible lag/loading theorem | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, polygonal Route R |
 | Factor-number threshold/ridged selector | PROVED | arbitrary $p_n$; raw ratio disproved |
 | Flat/common-flat exact-split oracle loading | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary \(p_n\), bounded total energy |
-| FRAME-2P-U generic-curved oracle loading | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary \(p_n\) under the dimension-uniform U2P generated-tube, composed-action, replacement, mask, finite-memory split, GLO, and exact-law or \(a>1/2\) package |
+| FRAME-2P-U two-path loading | CONDITIONAL IMPLICATION PROVED | root-\(n\) rate order under U2P; current growing-\(p_n\) witness has one fixed curved active block plus flat padding; growing-curvature/AIRM/BW verification is open |
 | Known/root-\(n\) parametric centre loading | PROVED | oracle order; parametric branch is not immunity |
 | Hilbert physical-dependence robust extension | PROVED | arbitrary \(p_n\) under uniform coefficients |
 | Full AIRM fixed-band higher differentials | PROVED | matrix-size uniform in project norms; no cancellation |
@@ -113,7 +113,7 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 
 The affine-invariant SPD geometry is not the high-dimensional blocker: on fixed absolute generated spectral bands, every fixed-order differential consumed by HD-G is now proved uniform in matrix size in the project norms. Spectral bands do not bound total tangent energy. Local symmetry does not cancel the random-Hessian or ribbon terms. The structured signed route avoids a sphere net only for deterministic, scalar-plus-HS, or controlled block Hessians; this structure remains unverified for full AIRM.
 
-The robust chain is closed in [[HD1 — growing-dimension Paper 1 proof dossier]]. The sharper oracle chain still requires control of both linear mean terms and both non-rigid-frame terms. In a flat this follows from exact splitting plus GLO/frame rigidity. On a generic curved class, FRAME-2P-U now supplies an entirely observable three-colour correction: an independent undersmoothed validation path estimates the training path's realised displacement, and the evaluation polygon derivative corrects both base-log/Hessian and Jacobi/connector/frame actions. Signal \(s_n\) and eigengap \(\Delta_n\) remain distinct; Davis–Kahan pays \(\Delta_n^{-1}\), with \(s_n^{-2}\) only after proving \(\Delta_n\ge s_n^2\). No branch covers pervasive energy by assertion, and every normalization must recheck the gap.
+The robust chain is closed in [[HD1 — growing-dimension Paper 1 proof dossier]]. The sharper oracle chain still requires control of both linear mean terms and both non-rigid-frame terms. In a flat this follows from exact splitting plus GLO/frame rigidity. Under the explicit U2P package, FRAME-2P-U supplies an entirely observable three-colour correction: an independent undersmoothed validation path estimates the training path's realised displacement, and the evaluation polygon derivative corrects both base-log/Hessian and Jacobi/connector/frame actions. The implication is proved, but no genuinely growing-curvature family has been verified. Signal \(s_n\) and eigengap \(\Delta_n\) remain distinct; Davis–Kahan pays \(\Delta_n^{-1}\), with \(s_n^{-2}\) only after proving \(\Delta_n\ge s_n^2\). No branch covers pervasive energy by assertion, and every normalization must recheck the gap.
 
 The high-energy theorem exposes score/product budgets, generated-domain constants, centre and frame error separately, and the exact assembly ratio
 \[
@@ -132,7 +132,7 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Main current risks
 
-- The robust growing-\(p_n\) rate remains slower than the parent fixed-centre oracle rate. FRAME-2P-U recovers the oracle numerator on a curved class, but only after verifying its stronger U2P producers and exact three-colour target construction.
+- The robust growing-\(p_n\) rate remains slower than the parent fixed-centre oracle rate. FRAME-2P-U matches the oracle numerator's root-\(n\) **order** only under U2P; its added validation influence changes the limit variance, and no genuinely growing-curvature application has yet been verified.
 - Cross-fitting alone does not restore quadratic curved recentering. Same-band score correction is disproved; the successful route needs an independently undersmoothed validation path with \(1/6<\gamma<3/14\), exact local law or \(a>1/2\), and dimension-uniform composed-action/replacement control.
 - Paper 2 cannot inherit a Euclidean bootstrap merely by changing frame or substituting an $L^2$ mean rate.
 - Bures–Wasserstein boundary distance and rank loss require the proved local/regularized estimator; the global PSD theorem is false.
@@ -142,7 +142,7 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Live work
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. FRAME-2P-U, the fixed-margin growing-size noncommuting BW calculus, and the restricted fractional-normal shrinking-margin theorem are proved. Application verification and the planned numerical suite are downstream of those packages. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and remains standalone.
+All live work is in [[OPEN OBLIGATIONS — current research actions]]. The FRAME-2P-U implication, the fixed-margin growing-size noncommuting BW calculus, and the restricted fractional-normal shrinking-margin theorem are proved under their named packages; FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Application verification and the planned numerical suite are downstream. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and remains standalone.
 
 ## Related notes
 

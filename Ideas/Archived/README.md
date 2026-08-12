@@ -2,7 +2,7 @@
 
 These files preserve proof provenance, hostile audits, superseded canonical ledgers, and run prompts. Historical canonical files received only an archival banner/status correction; their substantive contents remain intact so that no counterexample, rejected shortcut, or derivation is lost.
 
-They are not independent sources of current theorem status. Current claims are governed by:
+They are not independent sources of current theorem status. They **are valid proof provenance** when a canonical theorem links to them: “archived” means status is governed elsewhere, not that the derivation has been discarded. Current claims are governed by:
 
 - [[Analytical reconstruction — proof ledger and rebuilt spec]];
 - [[Paper 1 — Locally stationary Riemannian factor model]];

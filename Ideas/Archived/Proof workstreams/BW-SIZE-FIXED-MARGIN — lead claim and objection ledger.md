@@ -1,8 +1,8 @@
 ---
-type: working-proof-ledger
+type: archived-proof-ledger
 title: BW-SIZE-FIXED-MARGIN — lead claim and objection ledger
-status: gate-a-adjudicated-ready-to-archive
-authority: lead-working-file-only
+status: completed-archived-proof
+authority: proof-provenance; canonical status is maintained in the primary proof ledger
 ---
 
 # BW-SIZE-FIXED-MARGIN — lead claim and objection ledger
@@ -16,6 +16,8 @@ Fix (0<\alpha<\beta<\infty), (\chi>0), (r_0>0), and a finite derivative order (k
 The common constant, if it exists, must be a finite explicit function (C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)), independent of matrix size. Its geometric conclusion must not be presented as an energy, concentration, target, or signal theorem.
 
 ## Common claim ledger
+
+> **Historical freeze warning.** The `pending` and `in review` cells in the next pre-hostile tables record the state before Gate A. They are preserved to show what was attacked and are superseded by “Gate A adjudication” and “Final objection dispositions” below; they are not current statuses.
 
 | ID | Exact claim | Domain and margins | Input/output norms | Producer | Direct consumer | Dimension dependence | Objection | Resolution | Status |
 |---|---|---|---|---|---|---|---|---|---|

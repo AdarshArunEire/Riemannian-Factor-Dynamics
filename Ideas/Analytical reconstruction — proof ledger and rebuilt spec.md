@@ -47,7 +47,7 @@ Define
 \ell_n=b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1}.
 \]
 
-Then the feasible lag-row error and loading-space error obey
+Under exact included-lag factorisation, the feasible lag-row error and loading-space error obey
 
 \[
 d_n=O_p(n^{-1/2}+\ell_n),
@@ -56,7 +56,11 @@ d_n=O_p(n^{-1/2}+\ell_n),
 =O_p\!\left(\frac{n^{-1/2}+\ell_n}{\Delta_n}\right),
 \]
 
-provided the assembled operator perturbation is \(o_p(\Delta_n)\). At \(b_n=n^{-1/7}\) and \(a\ge3/7\), the robust numerator is \(n^{-3/7}\). This is a dimension-free bounded-total-energy theorem, not a classical pervasive-factor theorem.
+provided the assembled operator perturbation is \(o_p(\Delta_n)\). With approximate target defect
+\[
+\zeta_n^2=\sum_h\|\Gamma_n(h)-A_nC_{f,n}(h)A_n^*\|_{\rm op}^2,
+\]
+the honest row numerator is \(n^{-1/2}+\ell_n+\zeta_n\) and the denominator is the ideal-target gap \(\Delta_n^0\). At \(b_n=n^{-1/7}\) and \(a\ge3/7\), the exact-target robust numerator is \(n^{-3/7}\). This is an ambient-dimension-free bounded-total-energy theorem, not a classical pervasive-factor theorem.
 
 ## 3. Signal, operator, and factor number
 
@@ -94,13 +98,13 @@ The canonical property-to-application source is [[Application map — geometry, 
   d_n=O_p(n^{-1/2}+\ell_n^2+\rho_n).
   \]
   Negligible defects recover the oracle \(n^{-1/2}/\Delta_n\) loading numerator.
-- **FRAME-2P-U generic-curved oracle branch.** Use three exactly separated training, validation, and evaluation colours. The training path uses \(b_n=n^{-1/7}\) and \(M_n\asymp n^{2/7}\); an independent validation path uses \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\). Differentiating the observable evaluation polygon row from the training path toward the validation path cancels the complete pilot first variation. Under the explicit U2P dimension-uniform generated-tube, strong-convexity, composed-action, replacement, dependence, mask, GLO, included-lag, and exact-local-law or \(a>1/2\) package,
+- **FRAME-2P-U conditional two-path branch.** Use three exactly separated training, validation, and evaluation colours. The training path uses \(b_n=n^{-1/7}\) and \(M_n\asymp n^{2/7}\); an independent validation path uses \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\). Differentiating the observable evaluation polygon row from the training path toward the validation path cancels the complete pilot first variation. Under the explicit U2P generated-tube, strong-convexity, composed-action, replacement, dependence, mask, GLO, included-lag, and exact-local-law or \(a>1/2\) package, with every constant uniform in \(p_n\),
   \[
   \widehat{\mathfrak T}^{2p}_n-\mathfrak T_n
   =\mathbb G_{E,n}[Z_n]+\mathbb G_{V,n}[\varphi_{n,c}]+R_n,
   \qquad \|R_n\|_{\oplus HS}=o_p(n^{-1/2}).
   \]
-  Both influence rows are root-\(n\), so \(d_n^{db}=O_p(n^{-1/2})\), loading recovery is \(O_p(n^{-1/2}/\Delta_n)\) under the actual assembly/gap condition, and the beyond-rank spectrum is \(O_p(n^{-1})\). The theorem is uniform for arbitrary \(p_n\) only because every U2P producer is uniform; bounded total energy alone is insufficient.
+  Both influence rows are root-\(n\), so \(d_n^{db}=O_p(n^{-1/2})\), loading recovery is \(O_p(n^{-1/2}/\Delta_n)\) under the actual assembly/gap condition, and the beyond-rank spectrum is \(O_p(n^{-1})\). This is an abstract implication uniform over arrays satisfying U2P, not a verified generic growing-curvature theorem. The only growing-\(p_n\) witness currently pads a fixed hyperbolic active block with flat inactive directions; growing-size AIRM/BW U2P remains unverified. Bounded total energy alone is insufficient.
 - **Known or root-\(n\) centre branch.** A known centre is immune. A constant pooled or finite-dimensional parametric centre estimated at root-\(n\) preserves oracle order but generally changes the first-order law.
 - **Physical-dependence branch.** Uniform summable Hilbert \(L^2\) and essential-sup innovation effects replace fixed finite memory for the robust mean and oracle-row concentration chain. They do not create exact sample separation under infinite memory.
 - **AIRM fixed-band geometry.** All fixed-order Exp, Log, transport, Hessian, Richardson, connector, and ruled-surface differentials consumed by the theorem are uniform in SPD matrix size in the project norms on fixed generated spectral bands. This proves geometry, not bounded energy, lag orthogonality, cancellation, or signal.
@@ -129,7 +133,7 @@ d_j^{TV}=\log_{\widehat q_j^T}\check q_j^V,
 
 and average over cyclic colour assignments. The derivative contains the inverse-Karcher base-log action and the polygon transport, Jacobi, connector, and curvature actions, so it cancels both mean channels and both non-rigid frame channels. A common rigid gauge conjugates the base row and correction together and is never charged as additive error. The validation influence is leading root-\(n\) sampling noise; only the post-influence nuisance remainder is \(o_p(n^{-1/2})\).
 
-The same-band score/Richardson correction is **DISPROVED**: it is centred at the same smoothed barycentre and generically retains \(b_n^3K[B_3]\asymp n^{-3/7}\) on a curved noncommuting example. Direct \(\Omega\)-plug-in is only conditionally valid because it needs an additional observable frame producer. An invariant-only redesign is rejected because it changes the loading estimand.
+The same-band score/Richardson correction is **DISPROVED**: it is centred at the same smoothed barycentre and generically retains \(b_n^3K[B_3]\asymp n^{-3/7}\) on a curved noncommuting example. Direct \(\Omega\)-plug-in is only conditionally valid because it needs an additional observable frame producer. An invariant-only redesign is rejected because it changes the loading estimand. The validation influence in the successful construction is leading sampling noise, so FRAME-2P-U matches oracle rate order but not the oracle limit law or efficiency.
 
 ## 6. HE — growing energy and pervasive factors
 
@@ -219,7 +223,7 @@ d_n=O_p(n^{-1/2}+\ell_n),\qquad
 =O_p\!\left(\frac{n^{-1/2}+\ell_n}{\Delta_n}\right)
 \]
 
-under bounded BW tangent energy, exact included-lag factorisation, and the displayed local-domain/dependence assumptions. The beyond-rank square and corrected selectors carry over.
+under bounded BW tangent energy, exact included-lag factorisation, and the displayed local-domain/dependence assumptions. With approximate factorisation defect \(\zeta_n\), replace the numerator row rate by \(n^{-1/2}+\ell_n+\zeta_n\) and use the ideal-target eigengap; this is the same (P1-OP-zeta) budget as robust HD1. The beyond-rank square and corrected selectors carry over.
 
 The shrinking-margin campaign closes a narrower noncommuting triangular-array class. On complete fractional-normal generated domains with strict population score-pair slack, proportional factor/polar/Exp slacks, fractional-normal PF cells, and shrinking support \(R_{X,n}^{\sup},\mathcal E_{2,n}=O(\sqrt{\alpha_n})\), the verified local coefficients are
 
@@ -260,7 +264,7 @@ flowchart TD
     GEO --> PF
     DEP["Finite memory or proved physical dependence"] --> G1
     DEP --> ROW["Oracle lag-row concentration"]
-    U2P["FRAME-2P-U uniform composed-action and replacement producers"] --> F2P["Observable two-path corrected row"]
+    U2P["Assumed uniform U2P primitives"] --> F2P["Conditionally derived two-path corrected row"]
     F2P --> D
     PF --> COMP["Feasible-versus-oracle comparison"]
     ROW --> D["Lag-row error d_n"]
@@ -279,7 +283,7 @@ flowchart TD
     BWS -. "optional exponent minimisation" .-> BWO["Unrestricted nonlocal sharp powers: OPEN"]
 ```
 
-No open node is consumed by a proved theorem.
+Every displayed conclusion is either proved from the named baseline assumptions or stated as an implication conditional on its named producer package. In particular, FRAME-2P-U consumes U2P as explicit assumptions; U2P verification for growing-curvature applications is not claimed closed.
 
 ## 9. Claims excluded from the canon
 
@@ -300,7 +304,29 @@ No open node is consumed by a proved theorem.
 - a raw eigenvalue-ratio consistency claim from the displayed eigenvalue errors;
 - numerical success as a proof of any analytical statement.
 
-## 10. Canonical file map
+## 10. Hostile audit disposition — 2026-08-12
+
+| Audit item | Disposition | Canonical effect |
+|---|---|---|
+| 1. FRAME “generic curved” | SUSTAINED | renamed conditional U2P implication; flat-padded witness no longer counts as growing active curvature |
+| 2. producers proved and assumed | SUSTAINED / TYPED | low-level assumptions and conditionally derived vertex/replacement rates are separated in the canonical FRAME theorem |
+| 3. global no-open-node invariant | RETRACTED | replaced by branch-specific dependency statements |
+| 4. citationless PROVED/CITED | SUSTAINED | compound label retired; [[References and external claim audit]] restores sources and C-AUDIT-1–10 |
+| 5. unnamed parent | SUSTAINED | Huang–Chen–Chen (2026), arXiv:2607.28385v1, Theorem 2, Proposition 3, and P1 are recorded |
+| 6. rate versus limit law | SUSTAINED | FRAME matches root-\(n\) order only; validation influence and changed variance are explicit |
+| 7. local-stationarity modes | SUSTAINED | robust RMS theorem uses \(L^2\); optional uniform path theorem uses essential sup; tube support is separate |
+| 8. hidden strength of bounded energy | SUSTAINED | robust scope is called ambient-dimension-free trace-class/function-space, not classical per-coordinate high dimension |
+| 9. GLO class | SUSTAINED | GLO remains an explicit restrictive assumption; broad application characterization is open |
+| 10. hidden lag contamination | SUSTAINED | (P1-OP-zeta) and the \((n^{-1/2}+\ell_n+\zeta_n)/\Delta_n^0\) rate are canonical |
+| 11. floating derivative order | SUSTAINED | HD-G fixes \(k_0=4\) |
+| 12. stale BW shrinking ledger | SUSTAINED | top-layer and objection tables now record the completed adjudication |
+| 13. archived proofs called noncanonical | SUSTAINED | archive is citable proof provenance; status authority is separate; FRAME has a canonical theorem-boundary file |
+| 14. zero code/numbers | SUSTAINED | numerical suite is explicitly empirically unvalidated with zero implementation/output |
+| 15. \(\Delta_n\) collision | SUSTAINED | G1 Hessian defect renamed \(\delta_{H,\mathrm{LS},n}\) |
+| 16. genuinely open list | CONFIRMED | items remain open and unconsumed except where a theorem is explicitly conditional |
+| 17. mechanical defects | SUSTAINED | missing LaTeX slashes, false wiki link, bare inline math, and queue title/scope repaired |
+
+## 11. Canonical file map
 
 | File | Authority |
 |---|---|
@@ -311,6 +337,8 @@ No open node is consumed by a proved theorem.
 | [[Application map — geometry, symmetry, and rate accelerators]] | property, cancellation, rate, and application matching |
 | [[Numerical suite — theorem-driven design matrix]] | planned analytical stress tests; no numerical verdicts |
 | [[OPEN OBLIGATIONS — current research actions]] | only live queue and execution order |
+| [[References and external claim audit]] | parent-paper metadata, external citations, and restored C-AUDIT corrections |
+| [[FRAME-2P-U — conditional two-path debiasing theorem]] | canonical FRAME-2P-U theorem boundary, producer classification, and scope correction |
 | [[FRAME-IF — closure adjudication]] | archived FRAME-2P-U theorem, route adjudication, and canonical migration source |
 | [[FRAME-IF-A — geometry closure]] | archived typed polygon, gauge, Jacobi, and dimension-uniform geometry proof |
 | [[FRAME-IF-B — statistical closure]] | archived replacement, Hájek, bandwidth-window, and row theorem proof |
@@ -327,5 +355,5 @@ No open node is consumed by a proved theorem.
 | [[BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger]] | archived restricted-theorem adjudication ledger |
 | [[Joint HE-BW error ledger and hostile audit]] | archived typed ledger and two hostile passes |
 | [[Paper 2 — Moving loading subbundle]] | standalone Paper 2 scope |
-| `Archived/Proof workstreams` | noncanonical proof and hostile-audit provenance |
+| `Archived/Proof workstreams` | citable proof and hostile-audit provenance; archive location does not determine theorem status |
 | `Archived/Historical canonical files` | superseded ledgers and queues |

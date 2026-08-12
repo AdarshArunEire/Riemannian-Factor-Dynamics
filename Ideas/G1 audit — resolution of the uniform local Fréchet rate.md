@@ -172,7 +172,7 @@ exactly, including at the boundary. Hence $m_1=\cdots=m_d=0$ and every nonlinear
 The former claim that bandwidth Richardson extrapolation necessarily fails at the boundary is retracted. It fails for a two-sided kernel truncated by the domain; it works for a one-sided kernel looking into the domain, whose shape moments do not depend on $u$.
 
 Let $K\ge0$ on $[0,1]$ and $K_j(v)=K(v/c_j)/c_j$. Then
-$$m_1(j)=c_j\mu_1,\qquad m_2(j)=c_j^2\mu_2,qquad
+$$m_1(j)=c_j\mu_1,\qquad m_2(j)=c_j^2\mu_2,\qquad
 m_1(j)^2=\frac{\mu_1^2}{\mu_2}m_2(j).$$
 Thus any $\lambda$ satisfying $\sum\lambda_j=1$, $\sum\lambda_jc_j=0$, and $\sum\lambda_jc_j^2=0$ kills both first- and second-order bias, including the $m_1^2C$ term. One explicit choice is
 $$
@@ -200,14 +200,14 @@ Write $H(q,x)=\tfrac12\operatorname{Hess}_qd(q,x)^2$. The minimal abstract SW-AS
 
 - **S1:** $\sup_{q,x}\|H(q,x)\|_{\mathrm{op}}\le\bar H$ on the estimation tube;
 - **S2:** $H(q,x)$ has a pathwise Lipschitz (or entropy-compatible) modulus in $q$, after transporting both operators to one tangent space;
-- **S3:** $\sup_q\|\mathbb EH(q,X_{t,n})-\mathbb EH(q,X_t^{(u_t)})\|\le\Delta_n$;
+- **S3:** \(\sup_q\|\mathbb EH(q,X_{t,n})-\mathbb EH(q,X_t^{(u_t)})\|\le\delta_{H,\mathrm{LS},n}\);
 - **S4 / SW-L:** $\sup_q\|\mathbb EH(q,X^{(v)})-\mathbb EH(q,X^{(u)})\|\le L_{\mathrm{law}}|v-u|$;
 - **S5:** $\mathbb EH(q,X^{(u)})\succeq\operatorname{Id}$.
 
 > **Theorem SW-AS.** With $\sup_u\|w(u)\|_1\le W$,
 > $$
 > \sup_{u,q}\left\|\frac12\operatorname{Hess}\hat F_u-H_{P_u}(q)\right\|_{\mathrm{op}}
-> =O_p\!\left(W\left[L_{\mathrm{law}}b+\Delta_n+(\bar H+L_q)\sqrt{\frac{p+\log n}{nb}}\right]\right).
+> =O_p\!\left(W\left[L_{\mathrm{law}}b+\delta_{H,\mathrm{LS},n}+(\bar H+L_q)\sqrt{\frac{p+\log n}{nb}}\right]\right).
 > $$
 > If the right side is $o_p(1)$, the local criterion is uniformly strongly convex with lower constant tending to $1$.
 
@@ -230,7 +230,7 @@ If \(\alpha_n\downarrow0\), the proved replacement is restricted: every populati
 
 On a geodesic tube, let $\gamma(t)=\exp_q(t\log_qx)$, $t\in[0,1]$, and let $J_w$ solve
 $$
-\nabla_t^2J_w+R(J_w,\dot\gamma)\dot\gamma=0,qquad J_w(0)=w,quad J_w(1)=0.
+\nabla_t^2J_w+R(J_w,\dot\gamma)\dot\gamma=0,\qquad J_w(0)=w,\quad J_w(1)=0.
 $$
 Then
 $$H(q,x)w=-\nabla_tJ_w(0).$$
@@ -252,7 +252,7 @@ The locally symmetric version sets $K_1=0$. The averaged quantity $K_1^{\mathrm{
 The sphere calculation proves only that $K_0$ without quantitative non-conjugacy is insufficient: as $\theta\uparrow\pi$, the tangential Hessian eigenvalue $\theta\cot\theta$ has derivative of order $(\pi-\theta)^{-2}$ while $K_0$ and $\nabla R=0$ stay fixed. It does **not** settle whether $(K_0,\rho^*,\Theta)$ alone controls $\nabla H$. Necessity of any $\nabla R$ bound remains OPEN.
 
 For affine-invariant SPD, congruences are isometries and inversion $A\mapsto A^{-1}$ is an isometry fixing $I$ with derivative $-\operatorname{Id}$. Since $\nabla R$ is an odd-degree covariant tensor, invariance under this geodesic symmetry gives $(\nabla R)_I=0$, and transitivity gives $\nabla R\equiv0$. The Koszul formula gives, at $I$,
-$$R(U,V)W=-\frac14[[U,V],W].$$
+$$R(U,V)W=-\frac14\bigl[ [U,V],W\bigr].$$
 Using $\|[U,V]\|_F\le2\|U\|_F\|V\|_F$ twice yields $|R|\le1$, uniformly in $p$. Thus H-LIP-SYM supplies dimension-uniform $L_H$ when $\rho^*=O(1)$.
 
 ## 8. Correct $L^2$ and derivative theorems
