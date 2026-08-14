@@ -7,13 +7,15 @@ last-audited: 2026-08-12
 
 # Analytical reconstruction — proof ledger and rebuilt spec
 
-> **Primary source of truth.** This file records the current programme, dependency structure, and live research frontier. Branch-level assumption/conclusion boundaries are [[FRAME-2P-U — conditional two-path debiasing theorem]], [[HE — canonical growing-energy theorem boundary]], [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]], and [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]. Detailed derivations live in [[HD1 — growing-dimension Paper 1 proof dossier]], [[G1 audit — resolution of the uniform local Fréchet rate]], and the records under `Archived/Proof workstreams`. Superseded ledgers are preserved under `Archived/Historical canonical files`; they are not sources of current theorem status.
+> **Primary source of truth.** This file records the current programme, dependency structure, and live research frontier. [[P1-ID — centre-drift and factor identification boundary]] is the closed canonical identification theorem package. Branch-level estimation boundaries are [[FRAME-2P-U — conditional two-path debiasing theorem]], [[HE — canonical growing-energy theorem boundary]], [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]], and [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]]. Detailed derivations live in [[HD1 — growing-dimension Paper 1 proof dossier]], [[G1 audit — resolution of the uniform local Fréchet rate]], and the records under `Archived/Proof workstreams`. Superseded ledgers are preserved under `Archived/Historical canonical files`; they are not sources of current theorem status.
 
 ## 1. Scientific object
 
-The parent Riemannian factor model is a dynamic dimension-reduction model for manifold-valued time series. It maps observations to a tangent space at a Fréchet centre, estimates a low-dimensional loading space from lagged covariance, and optionally forecasts the extracted factor scores with a separate time-series model before mapping the result back to the manifold.
+The parent Riemannian factor model is a dynamic dimension-reduction model for manifold-valued time series. It maps observations to a tangent space at a Fréchet centre, estimates a low-dimensional loading space from lagged covariance, and optionally forecasts the extracted factor scores with a separate time-series model before mapping the result back to the manifold. Its (P2) assumes that the marginal law has the same Fréchet mean \(\mu\) at every time. Thus centre drift is excluded by specification; it is not separately estimated or tested.
 
-Paper 1 replaces the fixed centre by a smooth path while retaining one covariantly constant loading space:
+Paper 1 begins one level earlier: if the empirical baseline can move, when are centre drift and a serially persistent tangent factor distinct objects of the observed law? P1-ID closes that question. A unique pointwise Fréchet mean is a marginal-law functional; the other identified objects are exact quotients: the minimum dynamic loading span up to gauge and white-at-zero allocation, pointwise mean recovery with a non-uniform near-zero boundary, the weakened-reference compatible-chart orbit, and the complete fixed-centre contaminated lag row. The fixed-centre output does not itself provide a drift/factor split. This proves non-separation without calling the parent's leading factor spurious or drift-dominated.
+
+Conditional on an identified or explicitly convention-chosen split, Paper 1 replaces the fixed centre by a smooth path while retaining one covariantly constant loading space:
 
 \[
 X_{t,n}=\operatorname{Exp}_{\mu_n(u_t)}
@@ -27,7 +29,53 @@ After transport to the anchor tangent space,
 Y_{t,n}=A_nf_{t,n}+\varepsilon_{t,n},\qquad A_n^*A_n=I_r.
 \]
 
-The estimand is the fixed transported loading space \(E_n=\operatorname{ran}A_n\). Paper 2 asks a different question—whether the loading subspace itself moves—and remains standalone.
+### The estimand (CANON-1)
+
+The canonical estimand is the **minimum lag-generated dynamic span**
+
+\[
+\mathcal S_{X,n}
+=\overline{\operatorname{span}}\{\operatorname{ran}\Gamma_n(h):h\ne0\}
+=\operatorname{ran}\mathbb L_n .
+\]
+
+\(E_n=\operatorname{ran}A_n\) is **not** the estimand in general. The two coincide exactly under the minimum-representation condition
+
+\[
+Q_n=\sum_{h=1}^{h_0}C_{f,n}(h)C_{f,n}(h)^*\succ0,
+\qquad\text{and then}\qquad
+\mathcal S_{X,n}=E_n,\quad \Delta_n=\lambda_{\min}(Q_n).
+\]
+
+They differ whenever a loaded coordinate is dynamically white: such a coordinate lies in \(\operatorname{ran}A_n\), contributes to no nonzero-lag covariance, and is not identified — ID-2 proves it remains reallocable between factor and noise. Declaring \(E_n\) as the estimand without \(Q_n\succ0\) therefore names an object the data cannot distinguish.
+
+No theorem changes. Every estimation result already requires a positive eigengap, and \(\Delta_n>0\) implies \(Q_n\succ0\); the defect was in the specification, which named the larger object. Three consequences are now stated explicitly rather than left implicit:
+
+1. \(r\) is the **dynamic** rank \(\dim\mathcal S_{X,n}\), not the raw column count of a declared loading matrix;
+2. "loading" means the **total dynamic loading** — under a latent stochastic centre it absorbs the centre's own dynamics, and the centre/factor sub-split inside it is not identified (P1-ID §5.1, §14.3);
+3. outside the centred jointly Gaussian minimum-representation class this is **second-order** identification only (CANON-3 below).
+
+Paper 2 asks a different question—whether the loading subspace itself moves—and remains standalone.
+
+### P1-ID terminal theorem register
+
+| Slot | Identified object or boundary | Terminal disposition |
+|---|---|---|
+| ID-0 | hierarchy of marginal, full-law, one-path, fixed-row, and weakened-reference information | implications enumerated; all claimed converses separated by exact counterexamples |
+| ID-1 | Fréchet argmin as a marginal-law functional | unique centre proved; nonempty nonsingleton and empty-argmin boundaries separated |
+| ID-2 | flat/Hilbert minimum dynamic loading space and factor/noise quotient | minimum span and gauge proved; white-at-zero reallocation and non-Gaussian FDD non-identification proved; Gaussian minimum-representation quotient classified |
+| ID-3 | one-path local mean recovery | pointwise no-zero-atom equivalence proved; same-freeze local transfer proved; uniform recovery near frequency zero disproved |
+| ID-4 | curved weakened-reference model | exact compatible-chart orbit proved; geodesic/flat preservation proved on full support; generic rank invariance disproved by an exact sphere law |
+| ID-5 | fixed-centre lag object | universal score split, nine affine terms, nonlinear geometry remainder, end/local-stationarity/sample errors, and aligned/orthogonal/partial-rank consequences proved |
+| ID-6 | scientific interpretation | Factor 1 is protected: without the ID-2–ID-5 assumptions, only non-separation or sensitivity may be reported |
+| ID-7 | constructive separation | modulus \(\psi^+\) identified as the exact price of persistence; \(\ell_n(\psi)=b_n^3+\psi^+(nb_n)+n^{-a}+n^{-1}\) proved to propagate through the whole chain; attained by the project's own three-scale estimator; matched to ID-3's floor through the single scalar \(x_n=(1-\rho_n)nb_n\) with no gap |
+| ID-8 | curvature class of reference-dependent rank | rank inflation proved universal in curvature and **not** a cut-locus artefact; exact witnesses in \(H^2\), AIRM and BW; the only rigid branches are flat, including the fixed-eigenbasis BW orthant |
+| ID-9 | sharpness of the ID-1 gate | R1 existence **excluded** on BW; R2 uniqueness **holds** on BW and **fails** on spheres with an exact selector cost; R3 is a genuine crack — the gate is non-binding on the latent-stochastic-centre class; R4 is not an escape; R5 separated on the geometries used |
+| ID-10 | persistence window | \(d\in[0,\tfrac12)\) with rate \(n^{-3(1-2d)/(7-2d)}\); \(\theta\in[0,1)\) with induced \(a=1-\theta\); headline \(n^{-3/7}\) iff \(d=0\); \(a\ge3/7\) reclassified as a design constant, primitive clause \(a\ge3\alpha\) |
+
+The generic uniqueness claim therefore survives only for the marginal Fréchet centre, **and only on the deterministic-centre class**. At every other layer the theorem states the exact quotient or proves non-identification; each restricted positive result is separated from its counterexample by a support, spectral, noise, rank, or branch boundary.
+
+Two scope locks are load-bearing and are stated in full in [[P1-ID — centre-drift and factor identification boundary]] §4.1 and §5.1. ID-1 and ID-2 are both **true as stated and non-binding on the latent-stochastic-centre class**: a random centre is not a functional of any information set, and a serially dependent latent centre cannot occupy ID-2's temporally uncorrelated residual, so it is absorbed into the loading. Neither theorem is retracted. What is not identified — even from \(\mathcal I_J\) — is the split of the identified total dynamic loading into a centre part and a factor part. Restoring that split requires a **declared frequency-band separation**, proved both necessary and sufficient, and untestable from the observed law. ID-7 is the theorem that makes one such declaration estimable.
 
 ## 2. Canonical theorem boundary
 
@@ -257,6 +305,20 @@ The general noncommuting HE–BW intersection is not proved. A fixed-basis diago
 
 ## 8. Dependency graph
 
+The scientific and estimation dependencies are deliberately different. P1-ID is a closed identification/interpretation theorem, not an unproved lemma hidden inside HD1; it determines the interpretation of the estimand that the estimation machinery targets.
+
+```mermaid
+flowchart LR
+    P2["Parent (P2): one fixed marginal Fréchet mean"] --> FIX["Fixed-centre lag-factor output"]
+    ALT["Possible moving centre plus persistent factors"] --> FIX
+    FIX --> SUP["Leading persistent direction may superpose drift and factor"]
+    SUP --> ID["P1-ID: separability, equivalence class, or impossibility"]
+    EST["Scoped Paper 1 estimation theorems"] --> INT["Scientifically interpreted recovered object"]
+    ID --> INT
+```
+
+The existing theorem dependency graph remains:
+
 ```mermaid
 flowchart TD
     G1["Dimension-free mean and grid error"] --> PF["Polygonal feasible frame"]
@@ -331,6 +393,11 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | File | Authority |
 |---|---|
 | [[Time-varying Fréchet mean Riemannian factor model]] | scientific overview and paper split |
+| [[P1-ID — centre-drift and factor identification boundary]] | closed ID-0–ID-10 theorem package: impossibility boundaries, constructive separation, curvature class of rank inflation, the ID-1 gate sharpness verdict, the persistence window, and the Factor 1 interpretation |
+| [[P1-ID-CLOSE — lead ledger]] | archived P1-ID-CLOSE adjudication ledger, objection record, and closure audit |
+| [[P1-ID-CLOSE-A — constructive separation, persistence window, and centre conventions]] | archived ID-7, ID-10 and route R4 proof source |
+| [[P1-ID-CLOSE-B — curved geometry, existence and uniqueness]] | archived ID-8 and routes R1, R2 proof source |
+| [[P1-ID-CLOSE-C — latent stochastic centre and sample-level non-uniqueness]] | archived routes R3, R5 proof and counterexample source |
 | [[Paper 1 — Locally stationary Riemannian factor model]] | concise current Paper 1 theorem |
 | [[HD1 — growing-dimension Paper 1 proof dossier]] | full robust theorem proof |
 | [[G1 audit — resolution of the uniform local Fréchet rate]] | mean-estimation proof source |

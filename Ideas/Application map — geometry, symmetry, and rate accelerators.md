@@ -2,13 +2,13 @@
 type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
-verdict: FRAME-2P-U is a closed conditional implication but has no verified growing-curvature application; HE and the scoped BW packages are separately closed under explicit assumptions
+verdict: application matching begins with the P1-ID drift/factor estimand; after that split is declared, FRAME-2P-U, HE, and the scoped BW packages retain their separately adjudicated statuses
 last-audited: 2026-08-12
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
 
-> **Authority and scope.** [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust theorem. This file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as citable proof provenance, while current status is governed here. Paper 2 is out of scope.
+> **Authority and scope.** [[P1-ID — centre-drift and factor identification boundary]] governs whether centre drift and persistent factors are distinct scientific estimands. Once a split is declared, [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust estimator and this file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as citable proof provenance, while current status is governed here. Paper 2 is out of scope.
 
 ## 0. Current conclusions
 
@@ -36,6 +36,48 @@ last-audited: 2026-08-12
 8. The HE theorem is **PROVED UNDER EXPLICIT ASSUMPTIONS** for both bounded-tail and expanding-domain truncation packages. It exposes centre, frame, score, product, target, \(A_{2,n}\), and \(\Delta_n\) separately; proves sufficient flat and curved energy windows; supplies explicit pervasive and growing-rank DGPs; and gives a sub-Weibull truncation corollary with explicit score/product tail integrals.
 9. The fixed-size full-rank local/regularized BW theorem, the noncommuting fixed-margin geometry producer, and a restricted fractional-normal shrinking-margin theorem are **PROVED UNDER EXPLICIT ASSUMPTIONS**. The shrinking theorem has sufficient—not globally sharp—windows and requires support/energy \(O(\sqrt{\alpha_n})\). Global/rank-changing PSD and unsafeguarded-estimator claims are **DISPROVED/RETRACTED**. The fixed-basis diagonal HE–BW branch is proved.
 10. FRAME-2P-U is an entirely observable **conditional U2P implication**. Three exactly separated training/validation/evaluation colours, an independently undersmoothed validation path, and the exact derivative of the fitted evaluation polygon row jointly remove the first-order mean/base-log and non-rigid frame terms. With \(b_n=n^{-1/7}\), \(M_n\asymp n^{2/7}\), \(c_n=n^{-\gamma}\), \(1/6<\gamma<3/14\), its post-influence nuisance remainder is \(o_p(n^{-1/2})\) and its row is root-\(n\), uniformly only when every U2P primitive is uniform in \(p_n\). The current growing-\(p_n\) witness pads one fixed curved active block with flat inactive coordinates; no genuinely growing-curvature, growing-AIRM, or growing-BW application has been verified. **CONDITIONAL THEOREM PROVED; GROWING-CURVATURE APPLICATION OPEN.**
+11. P1-ID is closed at the identification boundary. A unique marginal Fréchet mean is a law-functional, but the minimum dynamic loading space, a full factor/noise representation, a one-path local mean, a weakened reference, and a fixed-anchor lag row are different targets. The identified object is respectively the minimum lag-generated subspace/quotient, the full-law quotient under its stated class, a pointwise spectral target with no uniform near-zero-frequency guarantee, a compatible-chart orbit, or the contaminated row itself. **PROVED / GENERIC UNIQUENESS DISPROVED AT THE STATED BOUNDARIES.**
+
+## 0A. P1-ID application preflight
+
+No loading-space rate supplies identification. Before using a theorem in this map, the application record must state:
+
+| Question | Required declaration | If the declaration fails |
+|---|---|---|
+| Centre | Fréchet argmin exists; uniqueness or an explicit selector; single-valued Log on the almost-sure support | report the minimizer set or declare the centre undefined in the model class |
+| Dynamic loading | included nonzero lags, both factor–noise cross-lag directions, temporally white residual, and whether rank is minimum | report only the lag-generated subspace or the larger observational quotient |
+| Full latent law | Gaussian minimum representation with a positive-definite factor covariance sequence and positive trace-class residual, or another fully proved latent class | do not infer a unique factor/noise decomposition from second-order objects |
+| One path | the frozen process has no zero-frequency atom; local transfer uses an explicit same-freeze \(L^2\) coupling or direct pair-moment approximation | claim only pointwise recovery under the verified class; no uniform guarantee near frequency zero |
+| Reference change | compatible normal charts and a declared branch; full score/observation support on a common injective geodesic or totally geodesic flat for rank preservation | identify only the compatible-chart orbit; allow rank inflation |
+| Fixed anchor | score-mean term, factor, residual, both cross directions, residual lag, and nonlinear geometry remainder are retained or individually ruled out | interpret the fitted row as a superposition, not as drift or factor dominance |
+
+Two further declarations are now required, because the closure package proves they are not optional.
+
+| Question | Required declaration | If the declaration fails |
+|---|---|---|
+| Latent baseline | the centre is **deterministic** in rescaled time, or a **frequency-band separation** is declared: a centre-free high band and a factor-free low band, with white residual and zero cross-spectra | nothing beyond the observed law is identified; report the law, not a decomposition. The declaration is untestable and must be labelled a convention |
+| Persistence | the frozen factor's ergodic-average modulus satisfies \(\psi^+(nb_n)\to0\); state the memory exponent \(d\) or the near-unit-root exponent \(\theta\) | outside \(d<\tfrac12\) / \(\theta<1\) there is no consistency; inside but with \(d>0\) the rate is \(n^{-3(1-2d)/(7-2d)}\), not \(n^{-3/7}\) |
+
+### 0A.1 ID-8 verdict by geometry — reference-dependent rank
+
+Rank inflation under a reference change is a **curvature phenomenon, universal in curvature**, not a cut-locus artefact of the \(S^2\) construction. The criterion is \(c'(0)\wedge c''(0)\ne0\) for \(c(t)=\log_y\operatorname{Exp}_x(tV)\), for which \(R(PV,w)PV\ne0\) is sufficient; nonzero sectional curvature of \(\operatorname{span}\{PV,w\}\) is sufficient but not necessary.
+
+| Geometry | Rank under reference change | Consequence for applications |
+|---|---|---|
+| flat / common injective geodesic / totally geodesic flat | **preserved** | the only rigid case; ID-4's positive statement is exactly this |
+| fixed-eigenbasis (diagonal) BW orthant | **preserved, exactly** | \(A\mapsto A^{1/2}\) is an isometry onto a Euclidean orthant; use only when fixed axes are genuine scientific structure |
+| Hadamard \(H^2\) | **inflates**, globally and exactly, no cut locus | negative curvature is not protective |
+| AIRM \({\rm SPD}(m)\), \(m\ge2\) | **inflates** | APP-NEURO and any AIRM covariance application |
+| Bures–Wasserstein, full rank, noncommuting | **inflates**, exact \({\rm SPD}(2)\) witness for every \(a\ne1\) | **APP-FIN**: realised covariances are noncommuting, so squarely non-rigid |
+| spheres and sphere products | **inflates** | the parent's simulation geometry |
+
+Operationally: a refit under a different reference, anchor, or centre convention that reports a different factor count is **not** evidence about the data. It may be pure geometry. Only a common-flat verification licenses the comparison.
+
+### 0A.2 ID-7 separation preconditions
+
+Before any application claims a drift/factor split it must verify, in primitive terms: (S1) a deterministic \(C^3\) centre path in rescaled time; (S2) frozen weak stationarity with modulus \(\psi^+\), and (S2b) a Hölder-in-\(u\) frozen law — this last is **more than HD1 assumes** and is declared, its boundary reason being that the same-freeze coupling otherwise has no modulus; (S3) HD-M2; (S4) ID-2's conditions frozen at each \(u\); (S5) HD-K together with \(\psi^+(nb_n)=o(1)\). Under these the centre and loading are separately identified **and** separately estimable at \(\ell_n(\psi)\).
+
+In particular, a changed leading component under a moving-centre refit is sensitivity evidence. It does not prove that the parent Factor 1 is spurious, drift-dominated, or erroneous. The converse positive statement is Corollary P-DRIFT in [[Paper 1 — Locally stationary Riemannian factor model]]: under aligned or small drift the parent's conclusions survive unchanged, and under orthogonal drift the inflation is exactly \(\dim P_{\mathcal S_X^\perp}D\).
 
 ## 1. Term-by-term error ledger
 

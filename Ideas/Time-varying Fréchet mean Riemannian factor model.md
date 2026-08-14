@@ -5,7 +5,7 @@ aliases:
   - Moving-centre RFM
   - Locally stationary Riemannian factor model
 status: current-programme
-verdict: Paper 1 has a closed robust branch and a conditional FRAME-2P-U implication whose only growing-dimensional witness has fixed active curvature; HE and scoped BW packages are separately closed; Paper 2 remains separate and parked
+verdict: P1-ID is closed by exact quotients and impossibility boundaries; Paper 1 has scoped estimation branches and Paper 2 remains separate and parked
 last-audited: 2026-08-12
 area:
   - geometry
@@ -22,20 +22,22 @@ tags:
 
 ## Scientific question
 
-The parent Riemannian factor model uses a fixed Fréchet mean. The moving-centre programme asks what happens when the centre itself drifts along a smooth trajectory and whether lagged factor structure can still be separated from that drift.
+The parent Riemannian factor model assumes in (P2) that every marginal law has the same Fréchet mean. The moving-centre programme asks the prior identification question: if the baseline can move, when can that centre drift be separated from a serially persistent tangent factor?
 
 $$
 X_{t,n}=\operatorname{Exp}_{\mu(u_t)}[A(u_t)f_{t,n}+\delta_{t,n}],
 \qquad u_t=t/n.
 $$
 
-The central scientific distinction is not merely that tangent spaces change. It is whether an apparent change in factor loadings is induced by re-expressing the same loading space along a moving centre, or reflects a genuinely moving loading subspace.
+The fixed-centre lag operator can receive both contributions. Its leading direction may therefore be a superposition of baseline drift and factor persistence, without the fitted model reporting the split. This does **not** establish that the leading factor is spurious or that drift dominates it. [[P1-ID — centre-drift and factor identification boundary]] proves the exact identified quotients: unique marginal centres, the minimum dynamic loading quotient, pointwise but non-uniform one-path recovery, the weakened-reference orbit with curved rank failure, and the complete contaminated lag row.
+
+The next distinction is geometric: after centre drift and factor variation have been made distinct estimands, is an apparent change in factor loadings induced merely by re-expressing one loading space along that moving centre, or does the loading subspace itself genuinely move?
 
 ### What the model is for
 
 RFM is primarily geometry-aware dynamic dimension reduction. Lagged covariance identifies a few tangent directions that carry serial persistence, rather than directions that merely have large contemporaneous variance. The factor scores may be interpreted or used to reconstruct observations. For genuine forecasting, a separate time-series model is fitted to the factors and its forecast is mapped back with Exp. Covariance construction is scientifically justified only when covariance dynamics are the estimand; it is not a lossless replacement for modelling the raw multivariate distribution.
 
-Paper 1 adds a slowly moving baseline. In applications such as covariance dynamics, it aims to separate structural drift in the baseline matrix from recurrent low-rank dynamic departures.
+Paper 1 adds a slowly moving baseline. In applications such as covariance dynamics, it aims to separate structural drift in the baseline matrix from recurrent low-rank dynamic departures. Its rate and geometry theorems estimate that decomposition under explicit identifying assumptions; they do not by themselves prove that every observed law admits a unique scientific split.
 
 ## Current model hierarchy
 
@@ -89,6 +91,7 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 
 | Component | Current status | Scope |
 |---|---|---|
+| Centre-drift versus factor identification (P1-ID) | CLOSED — ID-0 through ID-6 terminal | exact quotients, curved rank-inflation boundary, one-path non-uniformity, and complete contamination theorem |
 | Moving-centre identification under pointwise local-mean ergodicity | PROVED INTERNALLY; mean-square ergodic step CITED EXTERNALLY | fixed $p$; Doob (1953), Chapter X §7; see [[References and external claim audit]] |
 | Positive-weight growing-$p_n$ G1 route | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, bounded total energy/fixed memory |
 | Integrated mean and corrected derivative rates | PROVED UNDER EXPLICIT ASSUMPTIONS | dimension-free; derivative carries $n^{-a}/b_n$ under level-only local stationarity |
@@ -125,13 +128,14 @@ It proves nonempty localised, pervasive, matrix, and growing-rank regimes under 
 
 Paper 1 and Paper 2 answer different questions.
 
-- **Paper 1:** can a moving centre be removed without losing the fixed loading space and its lag-factor interpretation?
+- **Paper 1:** when are centre drift and persistent factors separately identified, and—under that split—can the moving centre be removed without losing the fixed loading space and its lag-factor interpretation?
 - **Paper 2:** after removing the moving centre, does the loading subspace itself move intrinsically?
 
 The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's publication status remains conditional on its open estimator/bootstrap nodes; it is neither dismissed nor declared complete.
 
 ## Main current risks
 
+- P1-ID proves generic weakened-reference rigidity false and identifies the compatible-chart orbit, with an exact curved rank-inflation boundary. Its fixed-centre theorem supports superposition/non-separation, not claims that Factor 1 is spurious or drift-dominated.
 - The robust growing-\(p_n\) rate remains slower than the parent fixed-centre oracle rate. FRAME-2P-U matches the oracle numerator's root-\(n\) **order** only under U2P; its added validation influence changes the limit variance, and no genuinely growing-curvature application has yet been verified.
 - Cross-fitting alone does not restore quadratic curved recentering. Same-band score correction is disproved; the successful route needs an independently undersmoothed validation path with \(1/6<\gamma<3/14\), exact local law or \(a>1/2\), and dimension-uniform composed-action/replacement control.
 - Paper 2 cannot inherit a Euclidean bootstrap merely by changing frame or substituting an $L^2$ mean rate.
@@ -142,11 +146,14 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Live work
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. The FRAME-2P-U implication, the fixed-margin growing-size noncommuting BW calculus, and the restricted fractional-normal shrinking-margin theorem are proved under their named packages; FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Application verification and the planned numerical suite are downstream. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and remains standalone.
+P1-ID is closed and supplies the interpretation boundary. N-18 is a sensitivity diagnostic rather than proof.
+
+All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 remains the first computational task. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
 
 ## Related notes
 
 - [[Analytical reconstruction — proof ledger and rebuilt spec]]
+- [[P1-ID — centre-drift and factor identification boundary]]
 - [[G1 audit — resolution of the uniform local Fréchet rate]]
 - [[Paper 1 — Locally stationary Riemannian factor model]]
 - [[Paper 2 — Moving loading subbundle]]

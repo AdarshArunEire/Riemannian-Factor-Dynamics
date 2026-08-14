@@ -84,6 +84,18 @@ The mean curve has uniformly bounded derivatives through the order used below. T
 \tag{HD-Minf}
 \]
 
+**(HD-M/HD-K persistence constraint — imposed by ID-10.)** The stochastic term \((nb_n)^{-1/2}\) appearing in \(\ell_n\) below is not universal. [[P1-ID — centre-drift and factor identification boundary]] §12 proves it is the specialisation to HD-M of the frozen-factor ergodic-average modulus \(\psi^+(nb_n)\), and that the correct object in general is
+
+\[
+\ell_n(\psi)=b_n^3+\psi^+(nb_n)+n^{-a}+n^{-1},
+\]
+
+which propagates through G1-HD-L2, GRID, Theorem PF, OBS, P1-ROW, P1-OP, EV and Davis–Kahan with no other change. Three consequences bind HD-M and HD-K:
+
+1. HD-M's \(m_0\)-dependence gives \(\psi^+(N)\le\sqrt{(2m_0+1)R^2/N}\), so \(\ell_n(\psi)\) reduces to \(\ell_n\) verbatim. The matching *lower* bound needs \(\Lambda_u=\sum_h\operatorname{tr}\Gamma_u(h)>0\); \(Z_t=e_t-e_{t-1}\) has \(\psi(N)=\sqrt2/N\). The upper bound is the only direction consumed.
+2. Under a memory exponent \(d\in(0,\tfrac12)\), \(\psi^+(N)\asymp N^{-(1/2-d)}\), the optimal bandwidth becomes \(b_n=n^{-(1-2d)/(7-2d)}\) and the rate \(n^{-3(1-2d)/(7-2d)}\). HD-K's \(nb_n/\log n\to\infty\) never binds; \(b_n\to0\) forces \(d<\tfrac12\). The residue-class device used in the G1-HD-L2 proof has **no long-memory analogue**, and the optional sup-norm results G1-HD and HD-Minf do not survive \(d>0\). Neither is consumed by Theorem HD-E, so this is a proved separation and not a gap — but it is displayed rather than assumed.
+3. **\(a\ge3/7\) is a design constant, not a primitive.** The primitive clause is \(a\ge3\alpha\) for \(b_n=n^{-\alpha}\) (HD-K separately needs only \(a\ge\alpha\)); \(a\ge3/7\) is its \(\alpha=1/7\) instance. In the near-unit-root parameterisation \(\rho_n=1-n^{-\theta}\) with persistence varying in rescaled time, the induced exponent is \(a=1-\theta\) exactly and sharply, the re-optimised \(\alpha=(1-\theta)/7\) satisfies \(a\ge3\alpha\) automatically, and the window is \(\theta\in[0,1)\) with rate \(n^{-3(1-\theta)/7}\).
+
 **(HD-K) Mean estimator.** Use the nonnegative one-sided scale kernels
 
 \[
