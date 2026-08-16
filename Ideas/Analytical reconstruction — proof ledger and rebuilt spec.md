@@ -303,6 +303,18 @@ Global/rank-changing PSD claims are disproved by orthogonal rank-one endpoints w
 
 The general noncommuting HE–BW intersection is not proved. A fixed-basis diagonal/root-coordinate BW corollary is proved under an explicit positive-root DGP; one nonempty window is \(b_n=n^{-1/7}\), \(m_n=o(n^{6/7}/\log n)\), together with its boundary and tail conditions.
 
+## 7A. P1-LOSS — forecast evaluation (scope condition, downstream of everything above)
+
+The programme now has a theorem about how its output is **scored**, which it previously did not. It is a scope condition on reporting, not a change to the method.
+
+A loss preserves the ranking of covariance forecasts under a conditionally unbiased proxy **iff** it is a Bregman divergence in the coordinate in which the proxy is unbiased; a **symmetric** loss can be robust only if it is a fixed Mahalanobis form in that coordinate. Hence no non-flat geodesic distance is admissible, and flatness alone is not sufficient — the chart must also be affinely parametrised, which is why log-Euclidean fails despite being flat. Squared Bures–Wasserstein instead rewards the Fréchet barycentre of the proxy's conditional law, below the conditional mean by \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case and by \(\Theta(m/M)\) in the matrix case. The authoritative boundary is [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]].
+
+**LO-6 — the proved separation.** No evaluation node is an ancestor of any estimation or identification node. Every estimation object — \(\hat\mu_n\), the polygonal frame, \(\widehat{\mathbb L}_n\), \(d_n\), \(\eta_n\), Davis–Kahan, the selectors — is a functional of the observed array alone; none is defined by minimising a forecast loss against a proxy, and none takes a forecast as an argument. **No closed P1-ID, HD1, HE, BW-FIXED-MARGIN, BW-SHRINKING-MARGIN or FRAME-2P-U node is disturbed.**
+
+The **one real edge** is stated rather than hidden. If the observed \(X_{t,n}\) are themselves proxies of a latent covariance, the estimator's Fréchet-mean step targets the barycentre of the *observed* law, which differs from the latent one at order \(\Theta(m/M)\). CANON-1 defines the estimand from the observed law, so no theorem changes; the edge quantifies a measurement-error term the canon already budgets — a \(\zeta_n^{\rm proxy}=O(m/M)\) contribution to the existing (P1-OP-zeta) target defect, and the APP-FIN measurement-error item in the live queue. The loading rate is already stated as \(O_p\{(n^{-1/2}+\ell_n+\zeta_n)/\Delta_n^0\}\) and is unchanged.
+
+**Status: PROVED UNDER EXPLICIT ASSUMPTIONS**, with LO-2 DISPROVED as a robust loss, LO-4 SHARPLY REFORMULATED AND PROVED, routes E2 and E3 DISPROVED as escapes, and routes E1, E4, E5 REFORMULATED AND PROVED.
+
 ## 8. Dependency graph
 
 The scientific and estimation dependencies are deliberately different. P1-ID is a closed identification/interpretation theorem, not an unproved lemma hidden inside HD1; it determines the interpretation of the estimand that the estimation machinery targets.
@@ -343,7 +355,12 @@ flowchart TD
     BWF --> PF
     BWS["Restricted shrinking-margin BW theorem"] --> GEO
     BWS -. "optional exponent minimisation" .-> BWO["Unrestricted nonlocal sharp powers: OPEN"]
+    DK --> OUT["Reconstruction or forecast"]
+    OUT --> EVAL["P1-LOSS: admissible evaluation loss"]
+    PROX["Proxy measurement error"] -. "zeta_n contribution, O(m/M)" .-> LN
 ```
+
+The evaluation node has **one** incoming edge, from the estimator's output, and **no** outgoing edge into any estimation node. The dotted edge is the measurement-error contribution to the existing target-defect budget, not a new dependency.
 
 Every displayed conclusion is either proved from the named baseline assumptions or stated as an implication conditional on its named producer package. In particular, FRAME-2P-U consumes U2P as explicit assumptions; U2P verification for growing-curvature applications is not claimed closed.
 
@@ -364,7 +381,11 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 - a general noncommuting HE–BW intersection beyond the proved fixed-basis positive-root branch;
 - \(\Delta_n^{-2}\) in Davis–Kahan;
 - a raw eigenvalue-ratio consistency claim from the displayed eigenvalue errors;
-- numerical success as a proof of any analytical statement.
+- numerical success as a proof of any analytical statement;
+- a symmetric or geodesic loss used to score a covariance forecast against a proxy unbiased in the linear coordinate;
+- flatness of a geometry presented as sufficient for proxy-robustness;
+- recalibration of a forecast presented as restoring ranking robustness;
+- Patton (2011) or Gneiting (2011) cited for the matrix loss characterisation; only Laurent–Rombouts–Violante (2013) is stated for matrices.
 
 ## 10. Hostile audit disposition — 2026-08-12
 
@@ -409,6 +430,7 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | [[HE — canonical growing-energy theorem boundary]] | canonical bounded-tail/truncation HE theorem boundary, producer classification, target split, and sufficient phase regimes |
 | [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] | canonical safeguarded fixed-size BW statistical theorem plus fixed-margin matrix-size-uniform geometry boundary |
 | [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]] | canonical restricted fractional-normal shrinking-margin theorem, producer classification, sufficient window, and impossibility boundary |
+| [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] | canonical **evaluation-only** boundary: the proxy-robust loss class, the sharp no-go for geodesic losses, the exact induced bias, recalibration, the five route dispositions, and the proved separation from every estimation theorem |
 | [[FRAME-IF — closure adjudication]] | archived FRAME-2P-U theorem, route adjudication, and canonical migration source |
 | [[FRAME-IF-A — geometry closure]] | archived typed polygon, gauge, Jacobi, and dimension-uniform geometry proof |
 | [[FRAME-IF-B — statistical closure]] | archived replacement, Hájek, bandwidth-window, and row theorem proof |

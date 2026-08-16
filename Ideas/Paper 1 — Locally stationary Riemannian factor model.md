@@ -42,6 +42,12 @@ The estimation theorem targets the declared transported loading space only after
 
 > **Scope limit (CANON-3) — the exact FDD quotient is Gaussian and the application does not inherit it.** ID-2's classification of the full finite-dimensional-distribution quotient — loading gauge plus every feasible lag-zero allocation, with \(\Gamma_g(h)=R^{-1}\Gamma_f(h)R^{-*}\) for \(h\ne0\) and \(\Gamma_g(0)=R^{-1}\Gamma_f(0)R^{-*}+K\) — holds on the **centred jointly Gaussian minimum-representation class** with iid Gaussian noise independent of the complete factor process. Outside Gaussianity it classifies **second order only**, and ID-0 shows this is not a technicality: the stationary Rademacher three-block process matches iid Rademachers at every covariance lag while differing in a consecutive third moment. Tangent-space log-covariance data is not Gaussian — a realised covariance matrix mapped through \(\operatorname{Log}\) is a nonlinear function of returns — so APP-FIN, APP-NEURO and every covariance application inherit **second-order identification only**. Any claim about the latent factor law, as opposed to the identified span and its lag covariances, is outside the theorem.
 
+> **Scope limit (CANON-4) — evaluation. The loss used to score a forecast is not free, and the natural geometric choice is not admissible.** Paper 1's output is a reconstruction or, after a factor-score model, a covariance forecast, and it will be scored against an ex-post *proxy* — a realised covariance matrix, not the latent conditional mean. [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] proves that a loss preserves the ranking of forecasts under such a proxy **iff** it is a Bregman divergence in the coordinate in which the proxy is conditionally unbiased, and that a **symmetric** loss can be robust only if it is a fixed Mahalanobis form in that coordinate. Squared Bures–Wasserstein, AIRM and log-Euclidean distances are therefore all inadmissible for scoring — the first two because they are curved, the third because it is flat in the *wrong* coordinate. What a geodesic loss actually rewards is the Fréchet barycentre of the *proxy's* conditional law, which is strictly below the conditional mean: exactly \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case, and for a Wishart-type proxy exactly \(-\frac{\lambda_i}{M}\big[\frac14+\sum_k\frac{\lambda_k^2}{(\lambda_i+\lambda_k)^2}\big]\) per eigenvalue. That distortion is \(\Theta(m/M)\), not \(\Theta(1/M)\), so it grows with the matrix size: at the flagship configuration of \(m=12\) assets and monthly realised covariance from \(M\approx21\) daily returns it is **8.8%–35.9%** under Bures–Wasserstein and **32.9%** under AIRM. A forecaster reporting the correct conditional mean is beaten by one reporting a substantially shrunken covariance.
+>
+> **Paper 1 therefore reports squared Frobenius distance and multivariate QLIKE**, both of which are proxy-robust; QLIKE's *ranking* survives a singular proxy even though its *level* does not. If a geodesic loss is reported for comparability, its induced target is stated and the recalibration of P1-LOSS §4 is applied — for AIRM the scalar \(c=1-\frac{m+1}{2M}\) is exact, for Bures–Wasserstein a scalar correction is only partial. Recalibration restores the **location of the optimum** and never the **ranking robustness**: only the loss class does that.
+>
+> **This is a scope condition on reporting. It changes no estimand, no rate, no assumption, and no application's standing** — the proved separation is P1-LOSS §6, and the only edge into the estimation chain is a \(\Theta(m/M)\) measurement-error contribution to the existing target-defect budget \(\zeta_n\).
+
 If an application cannot verify these conditions, it may still estimate the declared row or sensitivity contrast, but it must not relabel the result as an identified drift/factor decomposition.
 
 ## Current scope
@@ -359,7 +365,10 @@ Their Theorem 2 and Proposition 3 use \(\kappa\) for a factor-lag singular-value
 - consistency of the raw eigenvalue ratio from the displayed signal/null rates alone;
 - automatic higher AIRM differential bounds from H-LIP alone;
 - automatic transfer of AIRM geometry to Bures–Wasserstein covariance data;
-- a pervasive-factor corollary obtained merely by dividing observations by \(\sqrt p\).
+- a pervasive-factor corollary obtained merely by dividing observations by \(\sqrt p\);
+- a squared Bures–Wasserstein, AIRM, or log-Euclidean distance used to score or train a covariance forecast against a proxy that is conditionally unbiased for \(\Sigma\); each rewards a strictly shrunken target and none preserves the ranking;
+- a recalibration of the forecast presented as restoring proxy-robustness; it restores the location of the optimum only;
+- a global-minimum-variance portfolio evaluation presented as detecting a level or scalar distortion in a covariance forecast; it is exactly blind to it.
 - an unbounded-score HE extension that suppresses escape probabilities, tail integrals, expanding-domain constants, or target bias;
 - a global, rank-changing, pervasive shrinking-normal, or unrestricted sharp noncommuting BW corollary;
 - a general HE–BW intersection beyond the proved fixed-basis positive-root case.
@@ -381,6 +390,7 @@ Their Theorem 2 and Proposition 3 use \(\kappa\) for a factor-lag singular-value
 - [[BW — moving-centre Bures-Wasserstein working dossier]]
 - [[FRAME-IF — closure adjudication]]
 - [[FRAME-2P-U — conditional two-path debiasing theorem]]
+- [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]]
 - [[References and external claim audit]]
 - [[Joint HE-BW error ledger and hostile audit]]
 - [[OPEN OBLIGATIONS — current research actions]]

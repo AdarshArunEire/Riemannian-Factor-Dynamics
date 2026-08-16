@@ -57,6 +57,7 @@ Two further declarations are now required, because the closure package proves th
 |---|---|---|
 | Latent baseline | the centre is **deterministic** in rescaled time, or a **frequency-band separation** is declared: a centre-free high band and a factor-free low band, with white residual and zero cross-spectra | nothing beyond the observed law is identified; report the law, not a decomposition. The declaration is untestable and must be labelled a convention |
 | Persistence | the frozen factor's ergodic-average modulus satisfies \(\psi^+(nb_n)\to0\); state the memory exponent \(d\) or the near-unit-root exponent \(\theta\) | outside \(d<\tfrac12\) / \(\theta<1\) there is no consistency; inside but with \(d>0\) the rate is \(n^{-3(1-2d)/(7-2d)}\), not \(n^{-3/7}\) |
+| **Evaluation** | state the **loss**, the **target functional**, the **proxy and its coordinate of unbiasedness**, and whether the (loss, proxy-coordinate) pair is **proxy-robust** by [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] LO-1. If a geodesic loss is used, state the induced target and whether the §4 recalibration is applied. If the eigenvector protection of P1-LOSS §3.1 is relied on, declare and check the proxy's fourth-moment structure | the reported ranking is not a ranking of forecast accuracy for the stated target: report the induced target instead, or add a robust loss (Frobenius, multivariate QLIKE) alongside |
 
 ### 0A.1 ID-8 verdict by geometry — reference-dependent rank
 
