@@ -1,0 +1,295 @@
+# =====================================================================
+# PREDECLARATION
+#
+# Written before any experiment runs. This file is what makes the
+# numbers evidence rather than decoration.
+#
+# THE RULE: append-only.
+#   - Adding a new entry, or a dated amendment to an existing one, is fine.
+#   - Editing or deleting a committed line is not.
+#   - An amendment made AFTER seeing a result must say so and give the
+#     reason. An amendment made on evidence INDEPENDENT of the outcome
+#     (e.g. a calibration measurement) should say that too.
+#
+# created: 2026-08-16
+# =====================================================================
+
+meta:
+  created: 2026-08-16
+  root_seed: 20260816          # arbitrary by design; fixed in advance is the point
+  seed_derivation: >
+    One root. Per-experiment and per-stream seeds are derived with
+    numpy SeedSequence.spawn, which constructs independent streams
+    rather than merely probably-independent ones. Train, validation
+    and test draw from separate spawned roots so that nothing is
+    evaluated on draws it was tuned against.
+  amendments: []               # append dated entries here; never edit above
+
+
+# ---------------------------------------------------------------------
+# GLOBAL — what happens when a check fails
+# ---------------------------------------------------------------------
+kill_criteria:
+  principle: >
+    Every failure has three possible causes: a code bug, a test-design
+    error, or a real problem with the theorem. The first two are cheaper
+    and more comfortable, so every failure will look like one of them
+    first. Usually it will be. The procedure exists so that the third
+    stays on the table.
+
+  procedure:
+    - step: 1
+      name: log before debugging
+      detail: >
+        Record timestamp, experiment, cell, observed value, predicted
+        value, and your first hypothesis — BEFORE any debugging begins.
+        This is the load-bearing step. It makes later explaining-away
+        visible rather than silently absorbed.
+      writes_to: results/final/failure_log.md
+
+    - step: 2
+      name: obvious-bug pass
+      detail: Normal debugging. If it resolves, record what it was.
+
+    - step: 3
+      name: stability test
+      detail: >
+        If it survives step 2, check whether the failure reproduces
+        across (a) different seeds, (b) different spectra or DGP
+        parameters, and (c) a second independent implementation of the
+        same quantity. Stability across all three is the evidence that
+        separates a real problem from an artefact.
+
+    - step: 4
+      name: escalate
+      detail: >
+        A failure stable under all three variations marks the affected
+        theorem UNDER AUDIT in the proof ledger, and the dependent paper
+        claim is suspended until resolved. The fix is never to widen the
+        tolerance.
+
+
+# ---------------------------------------------------------------------
+# N-19 — evaluation-loss distortion (P1-LOSS §3–§4)
+# ---------------------------------------------------------------------
+N19:
+  status: predeclared
+  kind: monte-carlo
+  purpose: >
+    Falsifier for the P1-LOSS closed forms. Measures the finite-sample
+    size of an already-proved distortion. Cannot prove anything; can
+    only fail.
+
+  claims:
+    C1: Frobenius barycentre of the proxy law equals Sigma (no distortion)
+    C2: AIRM barycentre equals c*Sigma with c = 1 - (m+1)/(2M)
+    C3: >
+      BW barycentre is diagonal in Sigma's eigenbasis with per-eigenvalue
+      defect |B_ii|/lambda_i = (1/M)[1/4 + sum_k lam_k^2/(lam_i+lam_k)^2]
+    C4: multivariate QLIKE is minimised at Sigma
+    C5: a non-Wishart proxy rotates the induced BW eigenbasis; Wishart does not
+
+  criterion:
+    type: monte-carlo-standard-error
+    rule: PASS if |observed - predicted| < 3 * SE
+    se_estimate: sd across the R independent streams, divided by sqrt(R)
+    rationale: >
+      Self-scaling. C2 and C3 are asymptotic expansions in 1/M and the
+      grid deliberately includes cells where 1/M is not small — at
+      m=12, M=21 the AIRM correction is ~0.31. A flat relative tolerance
+      would be too harsh there and vacuous at M=1638, where the true
+      defect is ~0.05% and any relative test measures noise.
+
+  budget:
+    streams_R: 20
+    draws_per_stream_n: 50000
+    allocation: flat across all cells
+    known_limitation: >
+      Power is NOT uniform. Proxy spread is ~sqrt(2/M) while the defect
+      is O(1/M), so the signal-to-noise ratio falls as M grows. At
+      m=3, M=1638 this is roughly 3x and the cell is a weak check.
+      This must be REPORTED, not hidden: state the smallest defect each
+      cell could have resolved.
+
+  grid:
+    m: [3, 12]
+    M: [21, 78, 1638]          # M=21 with m=12 is the flagship (12 assets, monthly RC)
+    spectra:
+      - name: near-flat
+        condition_number: ~2
+      - name: moderate
+        condition_number: ~10
+      - name: equity-like
+        condition_number: ~50
+        detail: one dominant eigenvalue plus a decaying tail
+    eigenbasis: >
+      Random rotation, NOT the identity — otherwise "diagonal in Sigma's
+      eigenbasis" is an artefact of the starting point rather than a test.
+
+  open_action: >
+    The canon quotes 8.8–35.9% for the BW distortion at m=12, M=21.
+    That range is spectrum-dependent. Either recover the spectrum that
+    produced it, or restate the figure against one of the three declared
+    spectra above. A referee recomputing it with their own Sigma will
+    get a different number and will ask.
+
+  implementation_note: >
+    The barycentre loop must be batched — numpy.linalg.eigh accepts
+    stacked (n, m, m) arrays. A Python loop over 50000 matrices is
+    roughly 100x slower and makes this grid unaffordable.
+
+
+# ---------------------------------------------------------------------
+# N-18a — rank-inflation witnesses (ID-8)
+# ---------------------------------------------------------------------
+N18a:
+  status: predeclared
+  kind: deterministic          # no seeds, no streams, no standard errors
+  purpose: >
+    Code verification against theorems already proved analytically.
+    Agreement confirms the implementation; disagreement indicts the code.
+    Neither outcome can alter ID-8.
+
+  constructions:
+    - BW on SPD(2), x = diag(a,1), V off-diagonal, a != 1
+    - AIRM on SPD(2), noncommuting
+    - H^2
+    - diagonal-BW rigid control (must NOT inflate)
+
+  criterion:
+    type: allclose-pair
+    rule: |D_obs - D_pred| <= atol + rtol * |D_pred|
+    rtol: 1.0e-10              # PROVISIONAL — see calibration below
+    atol: 1.0e-14              # PROVISIONAL — see calibration below
+    rationale: >
+      Relative where the defect is healthy, absolute floor where it is
+      not. A purely relative test breaks as a -> 1, because D_pred -> 0
+      there — the same trap as M=1638 in N-19.
+
+  calibration:
+    required: true
+    when: before the first comparison run
+    method: >
+      Compute D_pred two mathematically equivalent ways and measure how
+      far apart they land. This measures achievable precision on this
+      machine's BLAS and makes NO reference to D_obs.
+    then: >
+      Set rtol one order of magnitude above the measured spread and atol
+      one order above the measured floor. If this disagrees with the
+      provisional values above, THE MEASUREMENT WINS — record the
+      supersession as a dated amendment. This is an outcome-independent
+      revision and is therefore legitimate.
+
+  derived_output:
+    detectability_boundary: >
+      atol also defines where the effect is numerically dead: the a-value
+      at which D_pred falls below atol. Report it. It is the difference
+      between "rank inflation is universal in curvature" (a theorem, true
+      everywhere) and "rank inflation is detectable" (an empirical
+      question) — and the second is what P-DRIFT case 3 relies on when it
+      reaches real data.
+
+
+# ---------------------------------------------------------------------
+# N-00 — parent reproduction
+# ---------------------------------------------------------------------
+N00:
+  status: predeclared
+  established_fact: >
+    Neither simulation_main.R nor BWS_simulation.R calls set.seed().
+    Exact reproduction was never available — the parent's own numbers are
+    not reproducible by the parent. A numeric mismatch is therefore not a
+    failure of this project. Record neutrally in reference/AUDIT.md.
+
+  parent_design:
+    n_sim: 300
+    BWS_sweep: {n: [50, 100, 200], p: [5, 10], cases: 4}
+    saves: >
+      BWS_simulation.R writes per-replication arrays, so whole
+      distributions can be compared, not only means.
+
+  stage_A:
+    name: like-for-like
+    n_sim: 300
+    criterion: >
+      |theirs - mine| < 3 * SE_combined, where
+      SE_combined = sd * sqrt(1/300 + 1/300) ~ sd/12.
+    purpose_and_limit: >
+      This band is roughly a quarter of a standard deviation — wide.
+      Stage A catches gross pipeline errors and proves the thing runs.
+      IT CANNOT CERTIFY AGREEMENT. Do not report it as though it does.
+
+  stage_B:
+    name: sharp test
+    when: after Stage A passes
+    n_sim: 3000+               # time one config at 300 before committing
+    criterion: >
+      With own error effectively negligible, test whether each published
+      figure is consistent with one 300-draw sample from the measured
+      distribution: |theirs - mine| < 2 * sd/sqrt(300).
+
+  highest_value_check: >
+    Before anything else in the APP-FIN scripts runs: determine which
+    loss ranks RFM against LFM/LOCF/EWMA. Confirmed present in the
+    scripts are squared Bures-Wasserstein, Frobenius, a subspace
+    distance, and a GMV portfolio risk error. If the BW-based rankings
+    and the Frobenius-based rankings ever disagree, that is a live
+    instance of P1-LOSS in a published comparison.
+
+
+# ---------------------------------------------------------------------
+# FORECAST COMPARISON — framing locked, specification deferred
+# ---------------------------------------------------------------------
+forecast_comparison:
+  status: framing-locked / specification-deferred
+  defer_reason: >
+    Real-data design blocked on the panel question; positive-control
+    pattern cannot be well designed until estimator behaviour is known.
+    Revisit at Phase 5.
+
+  framing_verbatim: >
+    "Is their assumption leaving information on the table for prediction
+    and estimation?"
+
+  interpretive_commitments:
+    - >
+      This tests whether the fixed-centre restriction is COSTLY IN
+      PREDICTION, not whether it is FALSE. By ID-6, no amount of forecast
+      improvement licenses the claim that the centre moves.
+    - >
+      A flexible but misspecified model can dominate a correctly
+      specified one. The moving-centre model has more capacity and could
+      win by acting as a better smoother rather than by capturing
+      structure.
+    - >
+      ASYMMETRY: a null result is equally uninformative. Failure to beat
+      the fixed-centre model is NOT evidence that the centre is fixed.
+    - >
+      Route to a stronger claim, if one becomes available: P-DRIFT case 3
+      predicts orthogonal drift inflates recovered dimension by exactly
+      dim P_{S_X-perp} D. That is the only theorem-backed positive
+      empirical signature in the canon. Any narrowing of the claim goes
+      through it, as a dated append — never as an edit to the above.
+
+  two_sided_design:
+    principle: locked now, parameters later
+    placebo:
+      dgp: provably FIXED centre
+      reads: >
+        If the moving-centre model still wins, the advantage is capacity,
+        not structure.
+    positive_control:
+      dgp: provably MOVING centre, realistic movement pattern
+      reads: >
+        If the moving-centre model does NOT win, the estimator is
+        underpowered or broken.
+      why_it_matters_more: >
+        Without it, a null on real data is uninterpretable. If drift
+        cannot be detected on data built to contain drift, "no
+        improvement on the S&P panel" says nothing about the S&P panel.
+      intended_output: >
+        A detection-threshold curve — the smallest drift resolvable at
+        n=240 — compared against plausible real drift. This tells you
+        BEFORE touching the data whether the flagship application can
+        resolve anything at all.
+    deferred: [drift pattern, magnitude grid, persistence grid, split dates, panel, horizon]
