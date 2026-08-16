@@ -25,10 +25,12 @@ venv/
 .RData
 .Ruserdata
 .Rproj.user/
-reference/renv/library/
-reference/renv/staging/
+renv/library/
+renv/staging/
 
 # --- os ------------------------------------------------------------------
 .DS_Store
 Thumbs.db
 desktop.ini
+
+BUILD.md
