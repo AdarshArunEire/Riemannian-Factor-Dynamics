@@ -2,7 +2,7 @@
 type: canonical-research-queue
 title: STATUS AND OPEN OBLIGATIONS — current research actions
 status: active
-last-audited: 2026-08-12
+last-audited: 2026-08-16
 ---
 
 # STATUS AND OPEN OBLIGATIONS — current research actions
@@ -97,7 +97,7 @@ The analytical packages are closed, but empirical application claims still requi
 - clone, environment-freeze, audit, and reproduce the parent's public implementation at <https://github.com/shuochieh/Riemannian_factor_model> before altering the estimator;
 - reproduce the 12-stock monthly realised-covariance construction and the RFM/LFM/LOCF/EWMA forecasting comparisons where the upstream Yahoo data remain available; record the VIX-factor comparison as interpretation, not a theorem;
 - preserve the original fixed-centre fit as the N-00 baseline, then separately test how the leading factor changes under declared moving-centre fits; report this as an identification sensitivity analysis, not evidence that the original factor is spurious or that drift dominates;
-- declare which P1-ID information set is available, verify existence and uniqueness of the marginal Fréchet centre and a single Log branch on the observed support, and distinguish the minimum dynamic loading space from a larger raw factor parameterisation. Existence and uniqueness are now **automatic** on the full-rank BW cone (P1-ID §14.2), so the burden here is the declaration, not a proof;
+- declare which P1-ID information set is available, verify existence and uniqueness of the marginal Fréchet centre and a single Log branch on the observed support, and distinguish the minimum dynamic loading space from a larger raw factor parameterisation. Existence and uniqueness are **automatic** on the full-rank BW cone — a **cited** result (Kroshnin–Spokoiny–Suvorikova 2021 Thm 2.1; Santoro–Panaretos arXiv:2305.15592 Thm 1), not internal; see P1-ID §14.2 and C-AUDIT-11 — so the burden here is the declaration, not a proof;
 - **declare whether the baseline volatility level is treated as deterministic in rescaled time or as a latent stochastic process.** If latent, state the frequency-band separation explicitly, label it a convention, and do not report the centre/factor split as identified — P1-ID §14.3 proves nothing beyond the observed law is identified without it;
 - **state the persistence regime.** Estimate or bound the memory exponent \(d\) of the tangent factor and report \(\psi^+(nb_n)\) against \(b_n^3\); the advertised \(n^{-3/7}\) requires \(d=0\). Do **not** import a memory exponent from daily exchange-rate realised volatility — the transfer to monthly equity realised covariance is unverified and no theorem consumes it;
 - **do not treat a moving-centre or alternative-convention refit as a robustness check on the factor count.** BW is noncommuting, so by P1-ID §13 rank inflation under reference change is a theorem, not a data finding. Report the compatible-chart orbit;
@@ -151,6 +151,21 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 5. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
 6. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.
 7. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], where every row is labelled PLANNED.
+
+## 5A. Literature and attribution actions — added 2026-08-16
+
+Opened by the prior-art audit in [[Literature review — external positioning and prior art]]. These block **citation and novelty wording only**; none blocks code.
+
+- **L-2b** read Kroshnin–Spokoiny–Suvorikova (2021), *Ann. Appl. Probab.* 31(3), Theorem 2.1 in full before the ID-9 appendix remark is written;
+- **L-3** read and cite Zemel–Panaretos (2019), *Bernoulli* 25(2), and Masarotto–Panaretos–Zemel (2022), arXiv:2212.04797;
+- **L-4** compare Santoro–Panaretos (arXiv:2310.13764) Remark 6 — their deliberate avoidance of the Petersen–Müller assumptions — against [[G1 audit — resolution of the uniform local Fréchet rate]];
+- **L-5** read arXiv:2606.00858, *Change-Point Detection for Object-valued Time Series*, for the introduction's motivation that Fréchet centres move; this is the external evidence ID-6 forbids the project from supplying itself;
+- **L-6/L-7/L-2d** skim arXiv:2605.18316, arXiv:2604.03566, arXiv:2404.03878, Chewi–Maunu–Rigollet–Stromme (COLT 2020), Ahidar-Coutrix–Le Gouic–Paris (arXiv:1806.02740) for related work;
+- **L-8 (NEW, actionable — not just a citation).** Nguyen–Uribe Theorem 3.2 gives a **verifiable a-priori** spectral-dominance condition for existence of a *signed* BW barycentre. The project's three-scale mean uses signed Richardson coefficients \(\lambda=(1/3,-2,8/3)\), and the canon already records that unsafeguarded Richardson images are disproved, that the fixed-size BW estimator needs a generated-set membership test with deterministic fallback, and that N-12 exists precisely because signed extrapolation can exit the cone. **Test whether Theorem 3.2 supplies a checkable sufficient condition that replaces or supplements the runtime admissibility test.** One afternoon; a positive result improves the estimator, a negative result is a citation. See [[Literature review — external positioning and prior art]] §2.6.2;
+- **L-9.** Check Nguyen–Uribe Lemma 3.5 (\(K\le3/(2\lambda_{\min})\)) and Lemma 3.6 (\(\operatorname{inj}=\sqrt{\lambda}\)) against the BW-FIXED-MARGIN generated-domain margins before either is claimed as internal;
+- **L-10 (Paper 2, parked but record it now).** Peng & Shen, arXiv:2605.18316, model a time-varying low-rank factor structure on a Grassmann-type quotient. Any wording of the form "first time-varying factor subspace on a manifold" is **unsafe** for [[Paper 2 — Moving loading subbundle]]. Paper 1 is unaffected — their centre is fixed and there is no Fréchet mean, transport, or lag operator anywhere in it;
+- **scope caveat, load-bearing:** Theorem SW-AS is a **Hadamard** result (it consumes \(H_{P_u}\succeq\mathrm{Id}\)). BW is nonnegatively curved. The signed local-polynomial route must not be presented as covering the flagship covariance application;
+- **terminology lock:** the project says *moving Fréchet centre* or *centre path* \(\mu_n(u)\). "Fréchet mean flow" denotes Santoro–Panaretos's object — an i.i.d.-replicate-flow datum — and must not be used for this project's centre.
 
 ## 6. Repository rule
 

@@ -2,7 +2,7 @@
 type: canonical-proof-ledger
 title: Analytical reconstruction — proof ledger and rebuilt spec
 status: canonical
-last-audited: 2026-08-12
+last-audited: 2026-08-16
 ---
 
 # Analytical reconstruction — proof ledger and rebuilt spec
@@ -13,7 +13,7 @@ last-audited: 2026-08-12
 
 The parent Riemannian factor model is a dynamic dimension-reduction model for manifold-valued time series. It maps observations to a tangent space at a Fréchet centre, estimates a low-dimensional loading space from lagged covariance, and optionally forecasts the extracted factor scores with a separate time-series model before mapping the result back to the manifold. Its (P2) assumes that the marginal law has the same Fréchet mean \(\mu\) at every time. Thus centre drift is excluded by specification; it is not separately estimated or tested.
 
-Paper 1 begins one level earlier: if the empirical baseline can move, when are centre drift and a serially persistent tangent factor distinct objects of the observed law? P1-ID closes that question. A unique pointwise Fréchet mean is a marginal-law functional; the other identified objects are exact quotients: the minimum dynamic loading span up to gauge and white-at-zero allocation, pointwise mean recovery with a non-uniform near-zero boundary, the weakened-reference compatible-chart orbit, and the complete fixed-centre contaminated lag row. The fixed-centre output does not itself provide a drift/factor split. This proves non-separation without calling the parent's leading factor spurious or drift-dominated.
+Paper 1 begins one level earlier: if the empirical baseline can move, when are centre drift and a serially persistent tangent factor distinct objects of the observed law? P1-ID closes that question. A unique pointwise Fréchet mean is a marginal-law functional — and the centre path here is defined **pointwise by construction**, never by minimising over whole centre paths (contrast Santoro–Panaretos, arXiv:2310.13764v2, Lemma 1, where the path-level objective is primary and its reduction to pointwise barycentres is a theorem; cited as comparison, not consumed); the other identified objects are exact quotients: the minimum dynamic loading span up to gauge and white-at-zero allocation, pointwise mean recovery with a non-uniform near-zero boundary, the weakened-reference compatible-chart orbit, and the complete fixed-centre contaminated lag row. The fixed-centre output does not itself provide a drift/factor split. This proves non-separation without calling the parent's leading factor spurious or drift-dominated.
 
 Conditional on an identified or explicitly convention-chosen split, Paper 1 replaces the fixed centre by a smooth path while retaining one covariantly constant loading space:
 
@@ -70,7 +70,7 @@ Paper 2 asks a different question—whether the loading subspace itself moves—
 | ID-6 | scientific interpretation | Factor 1 is protected: without the ID-2–ID-5 assumptions, only non-separation or sensitivity may be reported |
 | ID-7 | constructive separation | modulus \(\psi^+\) identified as the exact price of persistence; \(\ell_n(\psi)=b_n^3+\psi^+(nb_n)+n^{-a}+n^{-1}\) proved to propagate through the whole chain; attained by the project's own three-scale estimator; matched to ID-3's floor through the single scalar \(x_n=(1-\rho_n)nb_n\) with no gap |
 | ID-8 | curvature class of reference-dependent rank | rank inflation proved universal in curvature and **not** a cut-locus artefact; exact witnesses in \(H^2\), AIRM and BW; the only rigid branches are flat, including the fixed-eigenbasis BW orthant |
-| ID-9 | sharpness of the ID-1 gate | R1 existence **excluded** on BW; R2 uniqueness **holds** on BW and **fails** on spheres with an exact selector cost; R3 is a genuine crack — the gate is non-binding on the latent-stochastic-centre class; R4 is not an escape; R5 separated on the geometries used |
+| ID-9 | sharpness of the ID-1 gate | R1 existence **excluded** on BW; R2 uniqueness **holds** on BW — **CITED EXTERNALLY, not internal** (Kroshnin–Spokoiny–Suvorikova 2021 Thm 2.1; Santoro–Panaretos arXiv:2305.15592 Thm 1; Masarotto–Panaretos–Zemel 2019 Cor. 9; novelty claim retracted, C-AUDIT-11) — and **fails** on spheres with an exact selector cost that **is** internal; R3 is a genuine crack — the gate is non-binding on the latent-stochastic-centre class; R4 is not an escape; R5 separated on the geometries used |
 | ID-10 | persistence window | \(d\in[0,\tfrac12)\) with rate \(n^{-3(1-2d)/(7-2d)}\); \(\theta\in[0,1)\) with induced \(a=1-\theta\); headline \(n^{-3/7}\) iff \(d=0\); \(a\ge3/7\) reclassified as a design constant, primitive clause \(a\ge3\alpha\) |
 
 The generic uniqueness claim therefore survives only for the marginal Fréchet centre, **and only on the deterministic-centre class**. At every other layer the theorem states the exact quotient or proves non-identification; each restricted positive result is separated from its counterexample by a support, spectral, noise, rank, or branch boundary.
