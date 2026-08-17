@@ -23,7 +23,89 @@ meta:
     rather than merely probably-independent ones. Train, validation
     and test draw from separate spawned roots so that nothing is
     evaluated on draws it was tuned against.
-  amendments: []               # append dated entries here; never edit above
+  amendments:                  # append dated entries here; never edit above
+
+    - date: 2026-08-17
+      section: N18a.criterion
+      kind: outcome-independent
+      title: provisional tolerances superseded by measurement
+      why_legitimate: >
+        N-18a's calibration block required this: measure achievable
+        precision on this machine's BLAS, then set the tolerance one order
+        above the measured spread, and if that disagrees with the
+        provisional values THE MEASUREMENT WINS. The measurement makes no
+        reference to any result we would prefer, so this revision is
+        outcome-independent and does not weaken the falsifier.
+      superseded:
+        rtol: 1.0e-10
+        atol: 1.0e-14
+        note: elementwise, hand-chosen, never measured
+      now: >
+        Test statistic is the RELATIVE Frobenius residual
+        ||X - ref||_F / ||ref||_F, not an elementwise comparison. An
+        elementwise relative test is not what backward stability bounds:
+        it divides a norm-scale error by an individual entry, so it fails
+        on small entries for reasons that carry no information.
+        Tolerance is num_tol(amplification) = safety * eps * amplification
+        with safety = 10, and amplification set per identity by the
+        worst-conditioned INTERMEDIATE quantity in the formula:
+          exp(log S) = S      amplification 1        (forward composition)
+          R R = S             amplification 1        (forward composition)
+          Ri S Ri = I         amplification kappa
+          X # Y = Y # X       amplification kappa**2
+      basis:
+        artifact: results/final/spd_calibration.md
+        generator: experiments/calibrate_spd.py
+        measured_on: Intel64 Family 6 Model 165 (i7-10700), Windows 11, numpy 2.5.2
+        max_implied_constant: 2.23
+        headroom_at_safety_10: 4.5x
+        note: >
+          BLAS-dependent. Re-run the generator and append a further
+          amendment if numpy, the BLAS, or the primitives change.
+
+    - date: 2026-08-17
+      section: N18a.derived_output / forward reference to B1.3 (AIRM)
+      kind: recorded-constraint
+      title: float64 ceiling on the two-point geometric mean
+      finding: >
+        g_mean via A^(1/2) (A^(-1/2) B A^(-1/2))^(1/2) A^(1/2) loses accuracy
+        as eps * kappa**2, not eps * kappa, because the intermediate
+        sandwiches a DIFFERENT matrix and nothing cancels. At kappa ~ 1e8 the
+        product eps*kappa**2 ~ 1: the intermediate goes numerically
+        indefinite and spd_sqrt's strict guard raises before any number is
+        returned. Measured relative symmetry error at kappa = 1e5 is already
+        ~1e-7.
+      consequence: >
+        This is a property of THIS FORMULA, not of the geometric mean.
+        Better-conditioned formulations exist (Cholesky-based; generalized
+        eigenproblem of the pencil (A,B), which is symmetric in its
+        arguments by construction) -- see Iannazzo, arXiv:1201.0101, and the
+        2024 Acta Sci. Math. survey. B1.3 should choose the formulation
+        deliberately rather than inherit this one, since AIRM barycentres
+        are built on it and empirical covariance matrices are not always
+        well conditioned.
+      open_question: >
+        Symmetry error at m=12 is ~100x SMALLER than at m=2,3 for the same
+        kappa. Higher dimension performing better is backwards. Hypothesis:
+        geomspace puts all spectral mass at the two extremes when m=2, which
+        is the worst case for the sandwich, while m=12 has moderating
+        interior eigenvalues. If so, kappa alone does not determine
+        difficulty and the sweep is confounding two factors -- which is the
+        same reason N-19 declares three spectra rather than one. Not yet
+        tested.
+
+    - date: 2026-08-17
+      section: N18a.criterion.rule
+      kind: syntax-repair
+      title: quoted the rule string so the file parses
+      detail: >
+        The line read  rule: |D_obs - D_pred| <= ...  . In YAML a bare | in
+        value position opens a literal block scalar, so the file had never
+        been valid YAML and no tool could read the predeclaration. The
+        string is now quoted. Character content is unchanged; this is a
+        parser fix, not a change of criterion. Recorded here because the
+        append-only rule covers committed lines regardless of how harmless
+        the edit looks.
 
 
 # ---------------------------------------------------------------------
@@ -158,7 +240,7 @@ N18a:
 
   criterion:
     type: allclose-pair
-    rule: |D_obs - D_pred| <= atol + rtol * |D_pred|
+    rule: "|D_obs - D_pred| <= atol + rtol * |D_pred|"
     rtol: 1.0e-10              # PROVISIONAL — see calibration below
     atol: 1.0e-14              # PROVISIONAL — see calibration below
     rationale: >
