@@ -6,7 +6,7 @@ import numpy as np
 def sym(A):
     return 0.5 * (A + A.mT)
 
-def _rebuild(s, V):
+def rebuild_spd(s, V):
     return (V * s[..., None, :]) @ V.mT
 
 def spd_eigh(A, strict=True): # validated decomposition
@@ -19,7 +19,7 @@ def spd_eigh(A, strict=True): # validated decomposition
 
 def spd_op(A, op, strict=True):
     lam, V = spd_eigh(A, strict)
-    return _rebuild(op(lam), V)
+    return rebuild_spd(op(lam), V)
 
 
 def spd_sqrt(A, strict=True):
@@ -33,8 +33,8 @@ def spd_invsqrt(A, strict=True):
 def g_mean(A, B, strict=True):
     lam, V = spd_eigh(A, strict)
     r_lam = np.sqrt(lam) # one sqrt
-    r_A = _rebuild(r_lam, V)
-    ir_A = _rebuild(1.0 / r_lam, V) 
+    r_A = rebuild_spd(r_lam, V)
+    ir_A = rebuild_spd(1.0 / r_lam, V) 
     return r_A @ spd_sqrt(ir_A @ B @ ir_A, strict) @ r_A
 
 def spd_log(A, strict=True):

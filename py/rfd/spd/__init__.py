@@ -1,1 +1,0 @@
-from .linalg import sym, spd_sqrt, spd_invsqrt, spd_log, spd_exp, geometric_mean
