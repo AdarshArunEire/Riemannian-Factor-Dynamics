@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 
 def num_tol(amplification=1.0, dtype=np.float64, safety=10.0):
@@ -21,3 +22,14 @@ def num_tol(amplification=1.0, dtype=np.float64, safety=10.0):
     changes -- see VERSIONS.md.
     """
     return safety * np.finfo(dtype).eps * amplification
+
+
+@pytest.fixture
+def rng():
+    """Fresh generator, same root seed, for every test.
+
+    Function-scoped on purpose: a module-level generator would make each
+    test's draws depend on which tests ran before it, so a failure would
+    stop reproducing the moment you used -k to run it alone.
+    """
+    return np.random.default_rng(20260816)

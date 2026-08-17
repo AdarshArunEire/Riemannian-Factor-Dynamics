@@ -10,11 +10,6 @@ import pytest
 #   X, Y    two independent random SPD draws
 
 
-@pytest.fixture
-def rng():
-    return np.random.default_rng(20260816)
-
-
 def rel_fro(X, ref):
     """Relative Frobenius residual, batched over the leading stack axis."""
     return np.linalg.norm(X - ref, axis=(-2, -1)) / np.linalg.norm(ref, axis=(-2, -1))
