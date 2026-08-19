@@ -27,7 +27,7 @@ The original order was written before three things were known. It is reordered, 
 
 | # | task | why here |
 |---|---|---|
-| ~~1~~ | ~~**B1.4** loss module~~ | **done** — `py/rfd/eval/losses.py`, 314 tests green |
+| ~~1~~ | ~~**B1.4** loss module~~ | **done** — `py/rfd/eval/losses.py`, 315 tests green |
 | ~~2~~ | ~~**B3.4a** RC panel, δ and κ~~ | **done** — panel built and verified against the published LOCF/EWMA numbers |
 | ~~3~~ | ~~**B3.1** clone + audit~~ | **done** — `reference/AUDIT.md`, commit `c07d49c` |
 | 1 | **B3.2 → B3.3** — run their sims, notation map | the reproduction proper |
@@ -143,7 +143,7 @@ Affine equivariance verified as the original plan predicted — it does catch mo
 >
 > Note also that `logeuclid_barycentre` is a third centre for E7 — currently it compares BW, AIRM and arithmetic only.
 
-**Done 2026-08-18.** `py/rfd/eval/losses.py` — convention is `loss(H, S)`, forecast first, everywhere, plus a `LOSSES` registry. Suite at 314 green.
+**Done 2026-08-18.** `py/rfd/eval/losses.py` — convention is `loss(H, S)`, forecast first, everywhere, plus a `LOSSES` registry. Suite at 315 green after the shared NaN-guard regression.
 
 ---
 
@@ -245,11 +245,18 @@ Still open: `renv::snapshot()` against their actual package set (`maotai`, `expm
 
 **Do.** `BWS_simulation.R`, `Sphere_simulation.R`, `simulation_main.R`, `sim_do.R`, `sim_summary.R`. These need **no external data**.
 
-**How.** **Run `sim_do.R`, not `BWS_simulation.R` directly** — the driver is what seeds it and it loops the four cases. Then `sim_summary.R`, which reads `./save/` and will be empty until `sim_do.R` has finished. Capture stdout to `results/raw/n00/`. Compare against the paper's tables — especially Table 2, the raw-eigenvalue-ratio selection rates.
+**How.** Do **not** call upstream `sim_do.R` directly. It sources the already-complete four-case sweep four times while its `type` variable is unused, overwriting the same 192 files on every pass; only pass four survives. It also lacks `./save/` and contains a proven stray worker-side `sink()`. Use the audited wrapper from the repository root:
+
+```powershell
+Rscript R/run_parent_simulations.R --check
+Rscript R/run_parent_simulations.R
+```
+
+The wrapper leaves upstream byte-for-byte untouched, patches only the stray `sink()` in a disposable `results/raw/n00` copy, runs the complete four-case sweep once with the final driver seed, and captures the raw files, manifest, console log and summary plots. Compare against the paper's tables — especially Table 2, the raw-eigenvalue-ratio selection rates.
 
 The grid as coded: `num_sim = 300`, `p ∈ {5,10}`, `n ∈ {50,100,200}`, 4 cases = **24 cells**. True rank 5, ten factors evaluated, train `n`, test 200, `batch_size = 16`, `max.iter = 16`. Cases and their parameters are in AUDIT §7 — including a comment/code mismatch on case 4's `z_noise`.
 
-**Expect it to fail on the first run.** `BWS_simulation.R` calls bare `sink()` inside every `%dopar%` worker with no matching `sink(file)`; in a worker with no active sink that errors. Log it, do not fix their file — work around it in a wrapper if you must.
+The wrapper must abort if either audited defect changes: exactly one bare worker-side `sink()` and the redundant four-pass driver. That is a prompt to re-audit upstream, not broaden the patch.
 
 **Done when.** Their outputs are reproduced within Monte Carlo error, or every divergence is logged in `AUDIT.md` with a hypothesis. Use the Stage A / Stage B criteria in `config/predeclaration.yaml` — and remember Stage A's band is roughly a quarter of a standard deviation. It catches gross pipeline errors. **It cannot certify agreement; do not report it as though it does.**
 

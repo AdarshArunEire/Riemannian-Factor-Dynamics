@@ -474,7 +474,12 @@ No complex leakage on any finite case, so the `Re(...)` wrappers in their
 
 1. **B3.2 cannot run as written.** `sim_summary.R` reads `./save/`, which is
    empty until `sim_do.R` has run. Run `sim_do.R` first; expect the `sink()`
-   error.
+   error. A second defect is now recorded: `sim_do.R` loops `type=1:4`, but
+   `BWS_simulation.R` does not consume `type` and already loops all four cases.
+   The driver therefore runs the complete 24-cell suite four times and
+   overwrites the same 192 files; only its fourth pass survives. The audited
+   `R/run_parent_simulations.R` wrapper removes the one stray `sink()` only in
+   a disposable copy and executes that retained complete pass once.
 2. **B3.4a is fully specified** — vendor, window, field, scaling all recorded
    above. The only open choice is adjusted-vs-raw close, and that is open for
    them too.
