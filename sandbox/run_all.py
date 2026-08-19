@@ -28,6 +28,9 @@ STEPS = [
     ("e2", "experiments/e2_boundary.py", "boundary -- where it stops working"),
     ("e1", "experiments/e1_convergence_surface.py", "surface -- dispersion vs kappa"),
     ("e3", "experiments/e3_tol_accuracy.py", "tol vs accuracy"),
+    ("e5", "experiments/e5_airm_cost.py", "AIRM cost vs BW -- replaces E4's guess"),
+    ("e6", "experiments/e6_airm_convergence.py", "AIRM surface + step size"),
+    ("e7", "experiments/e7_geometry_divergence.py", "BW vs AIRM vs arithmetic centres"),
 ]
 
 

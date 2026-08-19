@@ -161,7 +161,83 @@ def plot_e3():
     _save(fig, "e3_tol")
 
 
+def plot_e5():
+    df = _load("e5_airm_cost")
+    if df is None:
+        return
+    colour = {m: SLOTS[i] for i, m in enumerate(sorted(df["m"].unique()))}
+    dash = {c: DASH[i] for i, c in enumerate(sorted(df["cond"].unique()))}
+    fig, (a, b) = plt.subplots(1, 2, figsize=(11, 4.3))
+    for (m, cond), g in df.groupby(["m", "cond"], sort=True):
+        g = g.sort_values("N")
+        lbl = f"m={m}, $\\kappa$={cond:.0e}"
+        a.plot(g["N"], g["bw_seconds"], color=colour[m], linestyle=dash[cond],
+               marker="o", label=f"BW  {lbl}")
+        a.plot(g["N"], g["airm_seconds"], color=colour[m], linestyle=dash[cond],
+               marker="s", alpha=0.55, label=f"AIRM {lbl}")
+        b.plot(g["N"], g["ratio"], color=colour[m], linestyle=dash[cond], marker="o",
+               label=lbl)
+    a.set(xscale="log", yscale="log", xlabel="N", ylabel="seconds",
+          title="One barycentre   (circle BW, square AIRM)")
+    b.axhline(1.0, color=MUTED, linestyle=":", linewidth=1.2)
+    b.axhline(2.0, color=MUTED, linestyle="--", linewidth=1.0)
+    b.set(xscale="log", xlabel="N", ylabel="AIRM / BW",
+          title="Cost ratio   (dashed = E4's assumed 2x)", ylim=(0, None))
+    a.legend(fontsize=7, loc="upper left")
+    fig.suptitle("E5 - AIRM vs BW cost", color=INK, x=0.01, ha="left")
+    fig.tight_layout()
+    _save(fig, "e5_airm_cost")
+
+
+def plot_e6():
+    df = _load("e6_airm_convergence")
+    if df is None:
+        return
+    df = df[df["m"] == df["m"].max()]          # busiest m only; 12 lines is unreadable
+    shapes = list(df["shape"].unique())
+    colour = {c: SLOTS[i] for i, c in enumerate(sorted(df["cond"].unique()))}
+    dash = {st: DASH[i] for i, st in enumerate(sorted(df["step"].unique(), reverse=True))}
+    fig, axes = plt.subplots(1, len(shapes), figsize=(4.9 * len(shapes), 4.3), sharey=True)
+    axes = list(axes) if len(shapes) > 1 else [axes]
+    for ax, shape in zip(axes, shapes):
+        sub = df[df["shape"] == shape]
+        for (step, cond), g in sub.groupby(["step", "cond"], sort=True):
+            g = g.sort_values("delta")
+            ax.plot(g["delta"], g["iters"], color=colour[cond], linestyle=dash[step],
+                    marker="o", label=f"step={step}, $\\kappa$={cond:.0e}")
+        ax.set(xlabel="$\\delta$  (dispersion)", title=f"spectrum: {shape}", ylim=(0, None))
+    axes[0].set_ylabel("iterations to converge")
+    axes[-1].legend(fontsize=8, loc="upper left")
+    fig.suptitle(f"E6 - AIRM convergence (m={df['m'].iloc[0]})", color=INK, x=0.01, ha="left")
+    fig.tight_layout()
+    _save(fig, "e6_airm_convergence")
+
+
+def plot_e7():
+    df = _load("e7_geometry_divergence")
+    if df is None:
+        return
+    colour = {c: SLOTS[i] for i, c in enumerate(sorted(df["cond"].unique()))}
+    dash = {m: DASH[i] for i, m in enumerate(sorted(df["m"].unique()))}
+    fig, (a, b) = plt.subplots(1, 2, figsize=(11, 4.3), sharey=True)
+    for (m, cond), g in df.groupby(["m", "cond"], sort=True):
+        g = g.sort_values("delta")
+        kw = dict(color=colour[cond], linestyle=dash[m], marker="o",
+                  label=f"m={m}, $\\kappa$={cond:.0e}")
+        a.plot(g["delta"], g["d_bw_airm_rel"], **kw)
+        b.plot(g["delta"], g["d_airm_frob_rel"], **kw)
+    for ax, t in ((a, "BW centre vs AIRM centre"), (b, "AIRM centre vs arithmetic mean")):
+        ax.set(xscale="log", yscale="log", xlabel="$\\delta$  (dispersion)", title=t)
+    a.set_ylabel("distance between centres / spread of data")
+    a.legend(fontsize=8, loc="upper left")
+    fig.suptitle("E7 - does the choice of geometry move the centre?",
+                 color=INK, x=0.01, ha="left")
+    fig.tight_layout()
+    _save(fig, "e7_divergence")
+
+
 if __name__ == "__main__":
     plot_e4(); plot_e1(); plot_e2(); plot_e3()
+    plot_e5(); plot_e6(); plot_e7()
     if not any(OUTDIR.glob("*.png")):
         sys.exit("no CSVs found in results/final -- run the experiments first")

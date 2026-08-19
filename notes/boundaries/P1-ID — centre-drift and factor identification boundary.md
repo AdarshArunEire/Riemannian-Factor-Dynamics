@@ -540,3 +540,62 @@ Workstream A proved ID-7, ID-10 and route R4; B proved ID-8 and routes R1, R2; C
 External producers consumed by the closure package, each with exact theorem and scope in [[References and external claim audit]]: Doob's mean-square ergodic theorem (ID-3, ID-7); Gavrilov/Pennec's neighbouring-log expansion (ID-8); Dahlhaus–Richter–Wu Assumption 2.1 (ID-10); Kroshnin–Spokoiny–Suvorikova Theorem 2.1 and Santoro–Panaretos (arXiv:2305.15592) Theorem 1, with Masarotto–Panaretos–Zemel Corollary 9 / Proposition 10 (ID-9 R1 and R2 — **cited, not internal**; the former internal-novelty claim is retracted per C-AUDIT-11, and Agueh–Carlier is retained as historical context only); Kuratowski–Ryll-Nardzewski measurable selection (ID-9 R2).
 
 Proof provenance for the closure package is archived in [[P1-ID-CLOSE — lead ledger]], [[P1-ID-CLOSE-A — constructive separation, persistence window, and centre conventions]], [[P1-ID-CLOSE-B — curved geometry, existence and uniqueness]], and [[P1-ID-CLOSE-C — latent stochastic centre and sample-level non-uniqueness]]. These are proof records, not parallel status authorities.
+
+## 17. Downstream \(\nu\)-phase boundary — what the closed theorem does and does not imply
+
+This section introduces no new identification node. It turns ID-5, ID-6, ID-10 and Corollary P-DRIFT into a controlled downstream experiment.
+
+Let
+
+\[
+\mu_\nu(u)=\operatorname{Exp}_{\mu_0}\{\nu g(u)V\}
+\]
+
+on a declared injective radial domain, with \(V\in T_{\mu_0}M\) and \(g\) fixed. Then \(\nu=0\) is an exactly static centre and increasing \(|\nu|\) increases one declared mode of centre motion. Along this radial geodesic family,
+
+\[
+\mathcal L_{\mu_\nu}
+=|\nu|\,\|V\|\int_0^1|g'(u)|\,du,
+\qquad
+\mathcal V_{\mu_\nu}^2
+=\nu^2\|V\|^2\int_0^1|g'(u)|^2\,du.
+\]
+
+Thus \(\nu\) is a useful experimental coordinate, while path length and path energy are the intrinsic quantities to report. The formulas need not hold for a non-radial parameterisation; in that case compute the intrinsic motion directly.
+
+For a target \(T\), estimator pair \((\widehat T^{\rm stat},\widehat T^{\rm mov})\), sample size \(n\), and fully declared risk \(R_T\), define the moving-centre advantage set
+
+\[
+\mathcal C_T
+=\{\nu\ge0:
+R_T(\widehat T^{\rm mov};\nu)
+<
+R_T(\widehat T^{\rm stat};\nu)\}.
+\]
+
+The first crossover \(\nu_T^\star=\inf\mathcal C_T\) is called a **static-centre breakdown threshold** only after the risk, target, horizon, tuning rule, loss, proxy and DGP are fixed. The set \(\mathcal C_T\) need not be nonempty or an upper interval, so neither existence nor uniqueness of a crossover is automatic. Estimation and forecasting use different risks and may have different—or no—thresholds.
+
+ID-5 determines the local power of the structural contamination. Write its stacked fixed-centre defect as
+
+\[
+\mathcal K_\nu
+=\nu\mathcal K_1+\nu^2\mathcal K_2+o(\nu^2)
+\]
+
+whenever that expansion is justified on the declared family. The linear coefficient contains any surviving drift–factor, drift–noise, or nonlinear curved base-change contribution. Only when centring/orthogonality kills \(\mathcal K_1\), and the clean drift row satisfies \(\mathcal K_\nu=\nu^2\mathcal K_2\), does balancing against a row-resolution scale \(e_n\) give
+
+\[
+\nu_{\rm est}^\star\asymp e_n^{1/2}.
+\]
+
+With \(e_n=n^{-1/2}+\ell_n\), short memory, and \(\ell_n\asymp n^{-3/7}\), this yields the **conditional candidate**
+
+\[
+\nu_{\rm est}^\star\asymp n^{-3/14}.
+\]
+
+It is not a generic theorem. If \(\mathcal K_1\ne0\), the first candidate scale is \(e_n\), not \(e_n^{1/2}\). If drift is aligned with the identified dynamic span, there may be no loading-span breakdown at any small \(\nu\), although within-span eigenvalue ordering and factor interpretation can change. Orthogonal clean drift gives the exact added directions of Corollary P-DRIFT; partial drift can rotate or cancel; nonzero curvature can change rank through ID-8 even when a flat quadratic intuition suggests otherwise. Long memory replaces \(\ell_n\)'s stochastic term by \(\psi^+(nb_n)\) under ID-10.
+
+A forecasting threshold is further downstream. It depends on the score model, horizon, reconstruction, parameter tuning, and an evaluation loss admissible under [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]]. Squared Frobenius and multivariate QLIKE are the primary covariance risks. A geodesic-loss crossover is a crossover for that loss's induced proxy barycentre unless the induced target and recalibration are stated; it is not automatically evidence about latent conditional-mean forecasting.
+
+**Canonical status.** The decomposition and boundary reasons above are consequences of proved ID-5/ID-8/ID-10 results. The numerical location and shape of \(\mathcal C_T\), including the \(n^{-3/14}\) clean-case candidate, are **PREDECLARED DIAGNOSTIC TARGETS, NOT THEOREMS**. They are implemented by N-18c in [[Numerical suite — theorem-driven design matrix]]. The originating research note is archived as [[Why ν matters — the static-centre breakdown threshold]].

@@ -9,8 +9,14 @@ def sym(A):
 def rebuild_spd(s, V):
     return (V * s[..., None, :]) @ V.mT
 
-def spd_eigh(A, strict=True): # validated decomposition
+def spd_eigh(A, strict=True):  # validated decomposition
+    if not np.isfinite(A).all():
+        raise ValueError("matrix contains NaN or Inf")
+
     lam, V = np.linalg.eigh(sym(A))
+    if not np.isfinite(lam).all():
+        raise ValueError("eigendecomposition returned NaN or Inf")
+
     bad = lam.min(axis=-1) < -1e-10 * lam.max(axis=-1)
     if strict and bad.any():
         # strict flag catches non-PSD eigenvalues

@@ -15,6 +15,14 @@ def rel_fro(X, ref):
     return np.linalg.norm(X - ref, axis=(-2, -1)) / np.linalg.norm(ref, axis=(-2, -1))
 
 
+def test_spd_eigh_rejects_nan():
+    """A NaN is rejected at the shared primitive instead of propagating."""
+    S = np.eye(3)
+    S[0, 1] = np.nan
+    with pytest.raises(ValueError, match="NaN or Inf"):
+        spd_eigh(S)
+
+
 @pytest.mark.parametrize("cond", [1e1, 1e3, 1e5])
 @pytest.mark.parametrize("m", [2, 3, 12])
 def test_round_trip(rng, m, cond):

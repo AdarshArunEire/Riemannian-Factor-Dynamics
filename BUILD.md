@@ -4,15 +4,44 @@ title: BUILD — the ordered engineering plan
 status: active
 audience: me, only
 created: 2026-08-16
+reordered: 2026-08-18
 ---
 
 # BUILD
 
 The theory notes live in `notes/`. This file is the other thing: **what to actually type, in what order.**
 
+## What changed on 2026-08-18, and why
+
+The original order was written before three things were known. It is reordered, not corrected — the tasks were right, the sequencing assumed facts that have since been replaced by measurements.
+
+1. **The ticker list and the RC recipe arrived.** Table 3 of the paper has the twelve companies; Huang confirmed by email that realised covariances are the monthly sample covariance of daily log returns. B3.4 is no longer blocked, which was the single biggest reason it sat at the back.
+2. **The falsifiers were costed.** N-19's full grid is ~2.5 h of unattended compute (E5). Anything that runs unattended should never sit in front of work that needs a human, so Phase 2 moves off the critical path rather than gating it.
+3. **E7 raised a question only real data can answer.** The BW and AIRM centres diverge in proportion to dispersion. Nobody knows what dispersion real monthly RCs have, so a cheap measurement is currently blocked on data — which promotes data acquisition from "last" to "soon".
+
+**Task IDs are unchanged** so that anything referring to them still resolves. They are therefore no longer in document order; the running order is the queue below.
+
+---
+
+## Running order
+
+| # | task | why here |
+|---|---|---|
+| ~~1~~ | ~~**B1.4** loss module~~ | **done** — `py/rfd/eval/losses.py`, 314 tests green |
+| ~~2~~ | ~~**B3.4a** RC panel, δ and κ~~ | **done** — panel built and verified against the published LOCF/EWMA numbers |
+| ~~3~~ | ~~**B3.1** clone + audit~~ | **done** — `reference/AUDIT.md`, commit `c07d49c` |
+| 1 | **B3.2 → B3.3** — run their sims, notation map | the reproduction proper |
+| 4 | **B3.4b** — APP-FIN, loss-ranking check first | the payoff |
+| 5 | Phase 4 — the estimator stack | |
+| — | **B2.1 → B2.3** — falsifiers | **fire overnight, any time.** Never block on these |
+
+The principle: **latency-bound work first, compute-bound work unattended, desk work when blocked.** Data acquisition and correspondence have latency measured in days. N-19 has latency measured in hours and needs nobody watching.
+
+---
+
 ## How to use this
 
-- Work top to bottom. Tasks are sized to **one sitting of 2–3 hours**. On a break day, close the laptop; every task ends somewhere you can commit and walk away.
+- Work top to bottom **of the queue**. Tasks are sized to **one sitting of 2–3 hours**. On a break day, close the laptop; every task ends somewhere you can commit and walk away.
 - Each task is **Do / How / Done when**. The *Done when* is the contract — if it isn't met the task isn't finished, and you don't move on by feel.
 - Tick as you go. `[ ]` → `[x]`, and put the commit hash next to it.
 - **Anything that disagrees with a theorem gets written down, not tuned away.** That's the whole reason the numbers exist.
@@ -21,179 +50,210 @@ The theory notes live in `notes/`. This file is the other thing: **what to actua
 
 ---
 
-## Phase 0 — scaffold
+## Measured facts
 
-### [ ] B0.1 — repo shape (1 h)
+Everything below was measured on this machine and is recorded in `results/final/`. Superseding a number here means re-running its generator and appending, not editing.
 
-**Do.** Rename `Ideas/` → `notes/`, then build the tree around it.
+**Tolerances.** `num_tol(amplification) = safety * eps * amplification`, `safety = 10`, in `py/tests/conftest.py`. The amplification is a property of the *operation*, not of the inputs — find the worst-conditioned intermediate in the formula and that sets the power of κ:
 
-```
-riemannian-factor-dynamics/
-├── BUILD.md                  ← this file
-├── notes/                    ← all .md (was Ideas/)
-│   ├── canonical/            Paper 1, Analytical reconstruction, OPEN OBLIGATIONS
-│   ├── boundaries/           P1-ID, P1-LOSS, HE, BW-*, FRAME-2P-U
-│   ├── literature/           Literature review, References audit
-│   └── archive/              proof provenance — read-only in practice
-├── reference/                ← frozen clone of the parent's R repo. NEVER EDIT.
-├── py/
-│   ├── rfd/                  ← the importable package
-│   │   ├── spd/              geometry primitives
-│   │   ├── dgp/              data-generating processes
-│   │   ├── estimators/       centre, frame, lag operator, selectors
-│   │   └── eval/             losses, proxies, forecast comparison
-│   └── tests/
-├── R/                        ← R functions YOU write (not the parent's)
-├── experiments/              ← one dir per N-row; run.py or run.R, doesn't matter
-│   └── N19_loss_distortion/
-├── config/                   ← predeclared grids, seeds, tolerances (yaml)
-├── results/
-│   ├── raw/  intermediate/  final/
-└── sandbox/                  ← notebooks, scratch, throwaway
-```
+| operation | amplification |
+|---|---|
+| `exp(log S)`, `R @ R` — forward compositions | 1 (in practice `m log κ`) |
+| `Ri S Ri = I` — whitening | κ |
+| `g_mean`, all AIRM **distance** identities | κ² |
+| BW and AIRM **barycentre** identities | κ |
 
-**How.** `git mv Ideas notes`, then `mkdir -p`. Add a `.gitignore` covering `results/raw/`, `results/intermediate/`, `sandbox/**/*.ipynb_checkpoints`, `__pycache__`, `.Rhistory`, `.RData`. **Commit `results/final/` and `config/` — those are the paper.**
+Source: `experiments/calibrate_spd.py` → `results/final/spd_calibration.md`. Max implied constant 2.23, min headroom 4.1×.
 
-**Done when.** The tree exists, `git status` is clean, and the staged deletions currently sitting in `Ideas/Archived/` have been resolved deliberately one way or the other.
+**Working ranges.**
 
----
+| | tol | floor | converges to | dead at |
+|---|---|---|---|---|
+| BW barycentre | 1e-12 | ~1e-14 | κ=1e6 | κ=1e8 |
+| AIRM barycentre | 1e-11 | ~6e-12 | κ=1e6 | κ=1e8 |
+| `g_mean` | — | ε·κ² | — | κ~1e8 |
 
-### [ ] B0.2 — environments, both languages, frozen (2 h)
+**Cost.** N-19's declared grid: BW 44 min, AIRM 105 min, **2.5 h total**. At `m=12, M=1638` the draws are 7.9 GB if materialised at once — the proxy generator **must** chunk. (E4, E5.)
 
-**Do.** A reproducible Python env and a reproducible R env, with versions recorded.
+**Convergence is driven by dispersion, not conditioning.** BW iteration count also depends on spectrum shape; AIRM's depends on neither, because affine invariance lets you conjugate the base to the identity, so κ and shape are not properties of the problem. (E1, E6.)
 
-**How.** Python: `venv` + `requirements.txt` pinned with `==`. You need `numpy scipy pandas pyyaml matplotlib pytest`. R: `renv::init()` inside `reference/`, which snapshots exactly what the parent's scripts pull. Write `env/VERSIONS.md` by hand recording OS, Python version, R version, BLAS backend. **The BLAS matters** — matrix square roots differ in the last bits between OpenBLAS and MKL and you will chase that ghost otherwise.
+**Geometry divergence.** `d(BW centre, AIRM centre) / spread ≈ c(m)·δ`, with `c(3)≈0.13`, `c(12)≈0.075`, independent of κ. (E7.)
 
-**Done when.** `pytest` runs (zero tests, exits clean), `renv.lock` exists, `VERSIONS.md` is filled in.
+**Panel agreement with the parent.** Our rebuilt panel reproduces their published LOCF and EWMA numbers to **≤2.4% on bulk statistics** (BW, Frobenius) but was **14.7–27.5% low on the tail statistic** (GMV risk error). The two families are dominated by opposite ends of the spectrum, and the gap is a day-count effect: at ~20 effective trading days per month instead of 21, worst bulk gap falls to 1.5% and worst tail gap to 5.3%, both minimised at the same K. Adjusted close beats raw. The mechanism is a hypothesis, not a fact — see `reference/AUDIT.md` §2b for the argument and the caveats, including that the sweep is non-monotonic. (D1–D4.)
+
+**Panel conditioning.** κ median 4.28e2, max 1.48e4 — well inside E2's working range, which ends near 1e6. δ (mean AIRM distance from the panel's own centre) = **5.23**. Against E7's `c(12)≈0.075`, BW and AIRM centres on this panel sit ~0.39 apart in AIRM units. (`rc_panel_summary.md`.)
+
+**Closed defect (2026-08-19).** `spd_eigh`'s strict PSD comparison was blind to NaN because every ordered comparison with NaN is false. Two cheap guards now reject nonfinite matrices before LAPACK and nonfinite eigenvalues afterwards; one direct regression test injects NaN at the shared primitive. The parent implementation's separate unguarded `sqrt(res)` NaN remains pinned by the parity test and is not silently repaired in the reference code.
 
 ---
 
-### [ ] B0.3 — the predeclaration file (2 h)
+## Phase 0 — scaffold ✅
 
-**Do.** Write `config/predeclaration.yaml` before any experiment runs. This is the thing that makes the numbers evidence rather than decoration.
+- [x] **B0.1** repo shape — `2f29ace`
+- [x] **B0.2** environments, both languages, frozen — `VERSIONS.md`, `renv.lock`, `requirements.txt`
+- [x] **B0.3** the predeclaration file — `config/predeclaration.yaml`, three dated amendments
 
-**How.** Fields: for each planned N-row — Monte Carlo size, RNG seeds (a fixed list, not a base seed), tolerance for a PASS, and *what result would count as disagreement with the theorem*. Plus a global `kill_criteria` block: a numerical contradiction downgrades the affected theorem in the ledger to **UNDER AUDIT**, and the fix is not to widen the tolerance.
-
-**Done when.** The file exists, is committed, and contains at minimum the N-19 and N-18a entries. Tolerances chosen **before** you see any output.
-
-> Watch out: it is very tempting to set a tolerance as a relative error. For quantities that are near zero (the BW defect at large $M$) relative error is dominated by Monte Carlo noise and the test tells you nothing. Think about whether each check is testing the *value* or the *order*, and say which in the file.
+> Note on B0.3: the file was not valid YAML until 2026-08-18 — a bare `|` in value position opened a block scalar. Recorded as a `syntax-repair` amendment. A predeclaration no parser can read is a predeclaration no tool can enforce; check it parses whenever you touch it.
 
 ---
 
 ## Phase 1 — SPD geometry primitives
 
-This is the reusable core. Everything downstream imports it. Build it once, properly.
+The reusable core. Everything downstream imports it.
 
-### [ ] B1.1 — matrix functions (2 h)
+### [x] B1.1 — matrix functions
 
-**Do.** `py/rfd/spd/linalg.py`: `sym`, `spd_sqrt`, `spd_invsqrt`, `spd_log`, `spd_exp`, `geometric_mean(A, B)`.
+`py/rfd/spd/linalg.py`: `sym`, `rebuild_spd`, `spd_eigh`, `spd_op`, `spd_sqrt`, `spd_invsqrt`, `spd_log`, `spd_exp`, `g_mean`.
 
-**How.** All of them via `numpy.linalg.eigh` on the symmetrised input, then act on eigenvalues — **not** `scipy.linalg.sqrtm`/`logm`, which are general-purpose, slower, and return complex dtypes you'll have to keep stripping. Clip eigenvalues at a floor before `sqrt`/`log`.
+**Done, with two corrections to the original plan.** The function is `g_mean`, not `geometric_mean`. And eigenvalues are *not* clipped before `sqrt`/`log` — `spd_eigh` raises instead, under a `strict` flag, which is the better failure mode. Tests: `py/tests/test_linalg.py`.
 
-**Done when.** Round-trip tests pass: `spd_exp(spd_log(A)) ≈ A` and `spd_sqrt(A) @ spd_sqrt(A) ≈ A` to `1e-12` on 100 random SPD matrices at $m \in \{2,3,12\}$. Add a test with condition number $10^8$ and record what precision you actually get — you'll want that number later when N-12 drives the reconstruction toward rank loss.
-
----
-
-### [ ] B1.2 — BW distance and barycentre (3 h)
-
-**Do.** `py/rfd/spd/bw.py`: `bw_dist2(A,B)`, `bw_barycentre(S, ...)`, `bw_log`, `bw_exp`.
-
-**How.** Distance is $\operatorname{tr}A+\operatorname{tr}B-2\operatorname{tr}(A^{1/2}BA^{1/2})^{1/2}$. For the barycentre use the Álvarez-Esteban fixed point,
-$$X \leftarrow X^{-1/2}\Big(\tfrac1N\sum_i (X^{1/2}S_iX^{1/2})^{1/2}\Big)^2 X^{-1/2},$$
-initialised at the arithmetic mean. It's provably convergent on the full-rank cone. Return the iteration count and final residual, don't just return the matrix — you'll want convergence diagnostics in N-12.
-
-**Done when.** For $m=2$ it matches the closed form on commuting pairs; the fixed point satisfies the stationarity equation $X=\frac1N\sum(X^{1/2}S_iX^{1/2})^{1/2}$ to `1e-10`; and it converges in under 50 iterations for well-conditioned inputs.
-
-> Watch out: the fixed point slows down badly as the smallest eigenvalue approaches zero. Record the iteration count as a function of condition number now — that curve *is* your empirical picture of the BW-SHRINKING-MARGIN regime, and it's cheap to get.
+The κ=10⁸ case the original *Done when* asked for lives in E2 rather than in a unit test, because what it produces is a boundary rather than a pass.
 
 ---
 
-### [ ] B1.3 — AIRM distance and Karcher mean (2 h)
+### [x] B1.2 — BW distance and barycentre
 
-**Do.** `py/rfd/spd/airm.py`: `airm_dist2`, `airm_barycentre`, `airm_log`, `airm_exp`, `parallel_transport`.
+`py/rfd/spd/bw.py`: `bw_dist2`, `bw_barycentre`, `bw_frechet`, `trace`. Tests: `py/tests/test_bw.py`, 111 cases.
 
-**How.** Distance $\|\log(A^{-1/2}BA^{-1/2})\|_F^2$. Karcher mean by Riemannian gradient descent: iterate $X \leftarrow X^{1/2}\exp\!\big(\frac1N\sum\log(X^{-1/2}S_iX^{-1/2})\big)X^{1/2}$, stop on gradient norm.
+**Superseding the original watch-out.** It said to record iteration count as a function of condition number, and called that curve the empirical picture of BW-SHRINKING-MARGIN. **E1 shows that is the wrong variable.** Iterations track dispersion δ; across κ at fixed δ they *fall*. If the canon's BW-SHRINKING-MARGIN discussion is written against κ, it needs revisiting before it reaches a draft.
 
-**Done when.** Affine invariance verified numerically: `airm_barycentre(A S A')` equals `A airm_barycentre(S) A'` to `1e-10` for random invertible `A`. That single test catches most implementation errors in one shot.
+Two things the original *Done when* didn't anticipate. The stationarity test is semi-tautological — the loop terminates on exactly that residual — so the load-bearing test is the Fréchet one: perturb the answer and confirm the objective rises. And `bw_dist2` on a commuting family gives one-step convergence, which makes the commuting closed form an excellent *correctness* test and a useless *convergence* test.
 
 ---
 
-### [ ] B1.4 — log-Euclidean, Frobenius, and the loss module (1.5 h)
+### [x] B1.3 — AIRM distance and Karcher mean
+
+`py/rfd/spd/airm.py`: `airm_dist2`, `airm_log`, `airm_exp`, `parallel_transport`, `airm_barycentre`, `airm_frechet`. Tests: `py/tests/test_airm.py`, 72 cases.
+
+Affine equivariance verified as the original plan predicted — it does catch most implementation errors in one shot. Added beyond plan: the N=2 Karcher mean equals `g_mean`, a cross-module check against `linalg.py` with no shared code path.
+
+**`step` is pinned at 1.0.** E6 tested `step=0.5` in 90 cells and it lost in all 90 — the full step converges superlinearly, damping drops it to linear convergence at rate 0.5 and needs `log(tol)/log(0.5) ≈ 36` sweeps regardless of where it starts. Either remove the parameter or document it as do-not-touch.
+
+---
+
+### [x] B1.4 — log-Euclidean, Frobenius, and the loss module (1.5 h)
 
 **Do.** `py/rfd/eval/losses.py`: squared Frobenius, multivariate QLIKE, squared BW, squared AIRM, squared log-Euclidean. Plus `logeuclid_barycentre`.
 
-**How.** QLIKE for matrices: $\operatorname{tr}(H^{-1}S)-\log\det(H^{-1}S)-m$. Use `slogdet`, never `log(det(...))`.
+**How.** QLIKE for matrices: $\operatorname{tr}(H^{-1}S)-\log\det(H^{-1}S)-m$. Use `slogdet`, never `log(det(...))`. The BW and AIRM losses are one-line wrappers over `bw_dist2` and `airm_dist2` — do not reimplement them.
 
-**Done when.** Every loss is zero iff its arguments are equal, and QLIKE is finite and positive on 1000 random pairs.
+**Done when.** Every loss is zero iff its arguments are equal, and QLIKE is finite and positive on 1000 random pairs. Tolerances from `num_tol`, with the amplification argued in a comment.
 
----
+> **Why this is first.** The predeclaration's `highest_value_check` asks which loss ranks RFM against LFM/LOCF/EWMA in the parent's own scripts, and whether BW-ranked and Frobenius-ranked comparisons ever disagree. That check is the most valuable single output of the entire reproduction, and it cannot run without this module. 1.5 hours here unblocks it.
+>
+> Note also that `logeuclid_barycentre` is a third centre for E7 — currently it compares BW, AIRM and arithmetic only.
 
-## Phase 2 — the first falsifier
-
-Nothing here needs external data. This is the cheapest independent check on the canon that exists.
-
-### [ ] B2.1 — Wishart and non-Wishart proxy samplers (2 h)
-
-**Do.** `py/rfd/dgp/proxies.py`: draw $S\sim W_m(\Sigma/M, M)$ so that $\mathbb E[S]=\Sigma$, and a non-Wishart proxy with the same conditional mean.
-
-**How.** Use the **Bartlett decomposition** — lower-triangular $A$ with $A_{ii}=\sqrt{\chi^2_{M-i+1}}$ and $A_{ij}\sim N(0,1)$ below the diagonal, then $S=LAA^\top L^\top$ with $L$ the Cholesky factor of $\Sigma/M$. Cost is $O(m^2)$ per draw instead of $O(Mm)$; the naive route is unusable at $M=1638$. For the non-Wishart proxy use multivariate-$t$ innovations rescaled so the mean is still exactly $\Sigma$.
-
-**Done when.** Sample mean matches $\Sigma$ to Monte Carlo error at every cell of $m\in\{3,12\}$, $M\in\{21,78,1638\}$, and drawing 40 000 matrices at $m=12,M=1638$ takes seconds, not minutes.
+**Done 2026-08-18.** `py/rfd/eval/losses.py` — convention is `loss(H, S)`, forecast first, everywhere, plus a `LOSSES` registry. Suite at 314 green.
 
 ---
 
-### [ ] B2.2 — N-19, the loss-distortion diagnostic (3 h)
+## What the parent actually does
 
-**Do.** `experiments/N19_loss_distortion/run.py`. Test the P1-LOSS §3–§4 closed forms against Monte Carlo.
+Read from the code at commit `c07d49c`, 2026-08-18. Full detail in `reference/AUDIT.md`; this is what changes decisions.
 
-The five claims:
+**Their pipeline.** Fréchet mean → canonical tangent basis at that mean → log-map every observation to a $p(p+1)/2$ coordinate vector → Lam–Yao–Bathia factor model on those coordinates. Everything downstream of the mean is linear algebra in one fixed tangent space.
 
-1. the **Frobenius** barycentre of the proxy law is $\Sigma$ — no distortion;
-2. the **AIRM** barycentre is $c\Sigma$ with $c=1-\frac{m+1}{2M}$;
-3. the **BW** barycentre is diagonal in $\Sigma$'s eigenbasis with per-eigenvalue defect
-   $$\frac{|B_{ii}|}{\lambda_i}=\frac1M\Big[\tfrac14+\sum_k\frac{\lambda_k^2}{(\lambda_i+\lambda_k)^2}\Big];$$
-4. **QLIKE** is minimised at $\Sigma$;
-5. a **non-Wishart** proxy rotates the induced BW eigenbasis; a Wishart one does not.
+**Their Fréchet mean is a fixed budget, not a converged quantity.** `mean_on_BWS(tau = 0.5, tol = -1, max.iter = 100)`. With `tol = -1` the break condition is "the loss got *worse* by more than 1", so in normal operation it runs exactly `max.iter` gradient steps and stops. It is initialised at the **first observation**, and with `batch_size` set it is stochastic (mini-batches of 30 in the application, 16 in the simulations). Our `bw_barycentre` converges to a residual; theirs does not test.
 
-**How.** For each $(m,M)$ cell: build $\Sigma$ with a spread spectrum and a random eigenbasis $Q$ (so that "diagonal in $\Sigma$'s eigenbasis" is a real test, not an artefact of starting diagonal). Draw the proxy sample, compute each barycentre, rotate back through $Q^\top(\cdot)Q$ and compare against prediction. For AIRM, affine invariance means the answer must be a scalar multiple of $\Sigma$ — recover the scalar as $\operatorname{tr}(\Sigma^{-1}A)/m$, which is a much more stable estimate than any single entry. Read tolerances from `config/predeclaration.yaml`; do not hard-code them in the script.
+**Their rank selector cannot exceed the rank you give it.** `LYB_fm` computes `ratios = evals[2:r] / evals[1:(r-1)]` and takes `which.min` — the search runs only over the first `r` eigenvalues, `r` being the argument. This is the raw eigenvalue-ratio selector that P-RATIO is about.
 
-**Done when.** Every cell reports PASS/FAIL against the predeclared tolerance, results are written to `results/final/n19.json`, and **any failure is diagnosed as either a code bug, a test-design error, or a theorem problem — explicitly, in writing.**
-
-> Two warnings, because both will bite. First, claim 2's formula is a **first-order** expansion in $\frac{m+1}{2M}$. At the flagship cell $m=12$, $M=21$ that quantity is about $0.31$, which is not small — think about what "agreement" should mean there before you run it, and check what your canon's stated percentage actually corresponds to. Second, at $M=1638$ the defects are near zero and a relative-error test measures nothing but noise. Decide per cell whether you're testing the value or the order.
+**Their BW log-map square-roots non-symmetric products.** `sqrtm(X %*% M) + sqrtm(M %*% X) - 2M`, via `expm::sqrtm` on a general matrix, which is why `Re(...)` wrappers appear downstream. Ours goes through symmetric sandwiches only, so an independent recomputation is a genuine check rather than a re-run.
 
 ---
 
-### [ ] B2.3 — N-18a, rank-inflation witnesses (2.5 h)
+### The four lines that Paper 1 is about
 
-**Do.** `experiments/N18a_rank_inflation/run.py`. Reproduce ID-8's three analytic constructions as code checks: BW on $\mathrm{SPD}(2)$ with $x=\operatorname{diag}(a,1)$ and $V$ off-diagonal, $a\ne1$; AIRM on $\mathrm{SPD}(2)$ noncommuting; $H^2$. Plus the diagonal-BW rigid control.
+`dyn_RFM`, in `BWS_util.R`:
 
-**How.** Each is a small deterministic calculation, not a simulation — no seeds needed. Compute the affine dimension of the image of the score/observation set under the reference change and check it goes $1\to2$ in the three curved cases and stays at $1$ in the flat control. For the BW case, check the defect against the closed form across a grid of $a\ne1$ and $0<|b|<1+a$.
+```r
+if (m == 0) {
+  aux    = main_BWS(x, r = r, test_size = test_size - m, ...)
+  mu_hat = aux$mu_hat                                  # estimated once
+} else {
+  aux    = main_BWS(x, r = r, test_size = test_size - m, ..., mu_hat = mu_hat)
+}                                                      # and reused thereafter
+```
 
-**Done when.** All three curved cases inflate, the control does not, and the BW defect matches the closed form to `1e-10` across the whole grid. Agreement confirms the implementation; disagreement indicts the code. **Neither outcome can change ID-8** — it's proved analytically. This is a code check.
+The training window expands month by month. The loading space, the factors and the VAR(1) are all re-estimated at every step. **The Fréchet centre is estimated once, on the first training window, and held fixed across all 36 forecast months.**
+
+That is the fixed-centre restriction, in their code, at exactly the point where it could most plausibly cost something. Passing `mu_hat = NULL` would re-estimate it each step — so it is a choice their implementation already supports, not a limitation. Whether it is a costly choice is the open question, and this is where to measure it.
 
 ---
 
-## Phase 3 — the parent, in R
+## Phase 3 — the parent, and the real data
 
-Independent of Phases 1–2. Good work for a day when you want something mechanical.
+Promoted ahead of Phase 2. This is where the project's actual risk lives: everything before it is self-checking, and this is the first thing you don't control — their data, their undocumented choices, no `set.seed`, a repo the author himself calls untidy.
 
-### [ ] B3.1 — clone and freeze (1.5 h)
+### [x] B3.4a — build the RC panel and measure it (3 h)
 
-**Do.** Clone `github.com/shuochieh/Riemannian_factor_model` into `reference/`. Snapshot the environment. Read every script before running any.
+**Do.** Rebuild the 12-stock monthly realised-covariance panel. Then measure two numbers off it.
 
-**How.** `renv::init()`, then `renv::snapshot()`. Write `reference/AUDIT.md` as you read: what each of the 15 scripts does, what it reads, what it writes. **Do not fix anything you find.** Log it.
+**How.** Tickers from Table 3 of arXiv:2607.28385: MSFT, AAPL, ORCL, CSCO, JPM, BAC, WFC, GS, XOM, CVX, COP, EOG. Construction confirmed by Huang, 2026-08-17: *compute the log returns, then the sample covariance of the log returns in each month.*
 
-**Done when.** `AUDIT.md` maps all 15 scripts, and `renv.lock` is committed.
+**Most of the open choices are no longer open** — `stock_price_extract.ipynb` specifies them (AUDIT §2):
+
+| | |
+|---|---|
+| vendor | Yahoo, via `yfinance` |
+| download window | `start="2000-01-01"`, `end="2024-12-31"` |
+| field | `data["Close"]` |
+| analysis window | `[1:240]` = **2000-01 to 2019-12**, last **36** months are test |
+| scaling | `dta * 10000` — decimal returns, covariances then in percentage-point² |
+
+**The one genuinely open choice is adjusted vs raw close**, and it is open for them too: `yf.download`'s default changed, so `Close` is raw in older `yfinance` and auto-adjusted in newer, and the notebook pins no version. Over 2000–2024 that is not a rounding error. Build both, see which matches, and record it. This is the well-posed question to send Huang **if and only if** reproduction diverges materially.
+
+**Second data dependency:** FRED series `VIXCLS`, monthly means over 2000–2019. Not used in estimation — it is the overlay on the Factor 1 plot — but `sp500_reproduce.R` reads it at line 12 and will fail without it.
+
+**Done when.** The panel exists and is documented, **and** you have two numbers written into `results/final/`:
+
+- **κ of the realised covariances.** Marchenko–Pastur predicts sample eigenvalues spread by roughly $\big(\tfrac{1+\sqrt{12/21}}{1-\sqrt{12/21}}\big)^2 \approx 51$ on top of the true condition number, so expect κ ~ 1e3–1e4. E2 says the working range ends near κ=1e6. Confirm you are inside it.
+- **δ, the dispersion of the panel** — mean AIRM distance from its own centre, in the units E7 uses. That number decides whether E7's 7%-of-spread divergence between BW and AIRM centres is interesting or noise, and therefore whether a whole strand of the paper is worth pursuing.
+
+> This single task retires two open questions that are currently blocking. It is the highest-value three hours available.
+
+**Done 2026-08-18.** `experiments/build_rc_panel.py` builds both variants and saves the daily returns alongside, so later diagnostics can re-slice without re-downloading. `experiments/check_panel_vs_parent.py` scores them against Figures 3 and 4.
+
+| | |
+|---|---|
+| κ median / max | 4.28e2 / 1.48e4 — inside E2's range, which ends ~1e6 |
+| δ | 5.23 — so BW and AIRM centres sit ~0.39 apart in AIRM units (E7's `c(12)≈0.075`) |
+| adjusted vs raw | **adjusted** is closer on every statistic; the working choice, not a settled fact |
+| agreement, bulk | BW 0.0–1.0%, Frobenius 0.6–2.4% |
+| agreement, tail | GMV risk error 14.7–27.5% **low** — chased in D1–D4 |
+
+**The one thing that did not match was the risk error**, and it took four diagnostics to explain. Short version: BW and Frobenius are bulk statistics, the risk error is a tail statistic, and their month appears to rest on ~20 trading days rather than 21. `reference/AUDIT.md` §2b has the argument and the caveats. The acceptance tolerance is split accordingly and fixed in `config/predeclaration.yaml` **before** our own estimator runs: **2% bulk, 6% tail**.
+
+**Not sent to Huang.** The divergence is explained, and explained by something on our side. The adjusted-vs-raw question stays unasked.
+
+---
+
+### [x] B3.1 — clone and freeze
+
+Done 2026-08-18. `reference/AUDIT.md` (9 sections) and `reference/PROVENANCE.md`.
+
+**Not committed.** The upstream repo has **no LICENSE file**, so by default all rights are reserved. `reference/.gitignore` excludes everything except the audit and the provenance record. The pin is commit `c07d49c257d489e00b7e15bdd432954946a2a694` (2026-04-30), verified by MD5 against a clone. Pinning matters here: Huang intends to tidy the repo after his travel.
+
+**It is 14 files, not 15** — 12 R scripts and 2 notebooks. Only 8 are ours; five are the sphere branch.
+
+**Nothing runs out of the box, and that is deliberate.** Their `.gitignore` excludes `sp500_covariance/`, `save/` and `Figs/`, so the RC panel, the VIX series and every simulation output are absent by design. Everything referenced-and-missing is listed in AUDIT §1.
+
+Still open: `renv::snapshot()` against their actual package set (`maotai`, `expm`, `deSolve`, `vMF`, `MASS`, `reshape2`, `gridExtra`, `ggplot2`, `lubridate`, `doParallel`, `foreach`).
 
 ---
 
 ### [ ] B3.2 — run the simulations (3 h)
 
-**Do.** `BWS_simulation.R`, `Sphere_simulation.R`, `simulation_main.R`, `sim_do.R`, `sim_summary.R`. These need **no external data** — they run today.
+**Do.** `BWS_simulation.R`, `Sphere_simulation.R`, `simulation_main.R`, `sim_do.R`, `sim_summary.R`. These need **no external data**.
 
-**How.** Run unchanged. Capture stdout to `results/raw/n00/`. Compare against the paper's tables — especially Table 2, the raw-eigenvalue-ratio selection rates (above 80% at $n=100$, ~100% at $n=200$).
+**How.** **Run `sim_do.R`, not `BWS_simulation.R` directly** — the driver is what seeds it and it loops the four cases. Then `sim_summary.R`, which reads `./save/` and will be empty until `sim_do.R` has finished. Capture stdout to `results/raw/n00/`. Compare against the paper's tables — especially Table 2, the raw-eigenvalue-ratio selection rates.
 
-**Done when.** Their simulation outputs are reproduced within Monte Carlo error, or every divergence is logged in `AUDIT.md` with a hypothesis. This is the half of N-00 that isn't blocked on Huang's reply.
+The grid as coded: `num_sim = 300`, `p ∈ {5,10}`, `n ∈ {50,100,200}`, 4 cases = **24 cells**. True rank 5, ten factors evaluated, train `n`, test 200, `batch_size = 16`, `max.iter = 16`. Cases and their parameters are in AUDIT §7 — including a comment/code mismatch on case 4's `z_noise`.
+
+**Expect it to fail on the first run.** `BWS_simulation.R` calls bare `sink()` inside every `%dopar%` worker with no matching `sink(file)`; in a worker with no active sink that errors. Log it, do not fix their file — work around it in a wrapper if you must.
+
+**Done when.** Their outputs are reproduced within Monte Carlo error, or every divergence is logged in `AUDIT.md` with a hypothesis. Use the Stage A / Stage B criteria in `config/predeclaration.yaml` — and remember Stage A's band is roughly a quarter of a standard deviation. It catches gross pipeline errors. **It cannot certify agreement; do not report it as though it does.**
+
+> **Corrected 2026-08-18.** `sim_do.R` *does* call `set.seed(5566 + type)`, and `sp500_reproduce.R` calls `set.seed(1)` — the old claim that nothing was seeded was wrong. But `BWS_simulation.R` runs its replicates in a 12-worker `makeCluster` and a master-side seed does not reach `parallel` workers without `clusterSetRNGStream` or `doRNG`, neither of which is used. So exact reproduction of the *simulation* tables is still unavailable, and a numeric mismatch is still not a failure of this project. See the dated amendment in the predeclaration.
 
 ---
 
@@ -205,17 +265,80 @@ Independent of Phases 1–2. Good work for a day when you want something mechani
 
 **Done when.** Every symbol in their `main_func.R` has a row. **Notation-only rewriting must not change any hypothesis, norm, target or rate** — if you find yourself wanting to, that's a finding, log it.
 
+> Read the paper properly here, not generally: the appendix, the tables, the data section. Table 3 sat unread for a week while the front half was studied closely. When the task is reproduction, the back of the paper is where the spec lives.
+
 ---
 
-### [ ] B3.4 — APP-FIN, when the data question resolves (3 h, BLOCKED)
+### [ ] B3.4b — APP-FIN (3 h)
 
-**Do.** Rebuild the 12-stock monthly realised-covariance panel, then run `sp500_analysis.R` and `sp500_reproduce.R`.
+**Do.** Run **`sp500_reproduce.R`** against the panel from B3.4a. Not `sp500_analysis.R` — same analysis, but unseeded and with older plotting. `sp500_reproduce.R` calls `set.seed(1)`, is single-threaded, and its only randomness is the mini-batch sampling in `mean_on_BWS`. It is the one that might reproduce exactly.
 
-**How.** Blocked on Huang's reply for the ticker list and the RC construction. If no reply within two weeks, use the documented fallback panel and say so in the paper. **This is where R genuinely earns its place** — the `highfrequency` package for realised covariance construction, and `xts`/`quantmod` for the price handling.
+**How — four commands, from the repo root.** Install `maotai`, `expm`, `deSolve` first, then `renv::snapshot()` (the B3.1 leftover).
 
-**Done when.** The panel exists, its construction is fully documented, and every divergence from the paper's reported numbers is logged rather than repaired. Expect *approximate* reproduction only — Yahoo back-adjusts for splits and dividends, so a 2026 rebuild differs from theirs by construction. Decide the acceptable divergence threshold **before** you look.
+```
+python experiments/export_for_parent.py      # panel + VIX -> their input dir
+Rscript R/make_panel_rdata.R                 # -> sp500_12bySector.RData
+Rscript R/run_parent_reproduce.R             # sources THEIR script verbatim
+python experiments/check_parent_run.py       # -> results/final/parent_reproduce.md
+```
 
-> The single highest-value thing in this task isn't the reproduction. It's finding out which loss they used to rank RFM against LFM/LOCF/EWMA. If it's squared Bures–Wasserstein, your P1-LOSS result applies directly to their headline comparison. Check that first, before anything else in the file runs.
+**The blocker nobody predicted:** `sp500_covariance/` **does not exist in their repo**, and nothing in the repo builds it. The RC panel is an *input* to their code. Step 1 supplies it; `reference/PROVENANCE.md` records that a directory was added and no upstream file touched.
+
+**Two traps in step 1**, both silent if you get them wrong: the panel must be written **unscaled**, because `build_rc_panel.py` already applied their ×10000 and `sp500_reproduce.R:148` applies it again; and `covariances` must be `(year, month, asset, asset)` with **year on axis 1**, because their `aperm(dta, c(2,1,3,4))` plus column-major flattening only comes out chronological that way. Both are asserted, not assumed.
+
+**Read Stage 1 before Stage 2.** Their script computes LOCF and EWMA itself from the panel we hand it, and we already have both in Python. Same input, two harnesses — they must agree at round-off. A failure there is *our evaluation code*, and without the check a bad RFM number is ambiguous between three causes instead of one. `check_parent_run.py` exits non-zero if Stage 1 fails, precisely so you cannot read past it.
+
+**Done when.** Every divergence from the paper's reported numbers is logged rather than repaired. Bands were fixed **before** this ran — 2% bulk, 6% tail, `config/predeclaration.yaml` amendment 2026-08-18 — and were set from LOCF and EWMA, which fit nothing. Expect *approximate* reproduction only; the ~20-vs-21 trading-day difference of AUDIT §2b is **not** corrected for. The number to judge on is Stage 3, the **ranking**: a decimal outside the band with the ordering intact is a data difference, a flipped ordering is a reproduction failure.
+
+> **The highest-value check needs no new code, but it does need its own loop.** Their `k = 1:15` loop at line 156 calls `main_BWS` fifteen times and keeps only `xhat`, discarding the FVU vectors every fit returns — so `run_parent_reproduce.R` re-runs it under `DO_FVU`, at the cost of fifteen more fits. Time one with `DO_FVU <- FALSE` first. `main_BWS` already returns `FVU_RFM_BWS`, `FVU_LYB_BWS`, `FVU_RFM_Euc`, `FVU_LYB_Euc` — both metrics, both models, one call. Whether the BW-ranked and Frobenius-ranked orderings ever disagree along the factor-count axis is four vectors and a comparison.
+>
+> Two things to check before attributing any disagreement to P1-LOSS. LYB predictions are pushed onto the cone by `project_to_SPD(x_hat, 1e-6)` **before** the BW distance is taken but not before the Frobenius one, so the two losses are not scoring identical objects and the repair can only help the linear model on the BW side. And in the out-of-sample comparison RFM gets `r=2` while LFM gets `r=1` — not matched on capacity.
+
+**Correction to what we assumed.** There are *two* comparisons, not one. In-sample it is RFM vs **LYB** alone. Out-of-sample it is RFM / LFM / LOCF / EWMA(0.94) over the last 36 months, scored four ways: sine-θ subspace distance on leading eigenspaces, squared BW, Frobenius (**not** squared — the arrays are stored inconsistently, see AUDIT §4), and GMV risk error under weights taken from the *previous* month's realised covariance, identically for all four models.
+
+---
+
+## Phase 2 — the falsifiers (unattended)
+
+**Off the critical path.** Nothing here needs external data or supervision. Cost is known: ~2.5 h for the full N-19 grid across BW and AIRM (E5). Fire it overnight whenever a machine is free, and never sequence anything behind it.
+
+The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is beside the point. So run these early — just don't *wait* on them.
+
+### [ ] B2.1 — Wishart and non-Wishart proxy samplers (2 h)
+
+**Do.** `py/rfd/dgp/proxies.py`: draw $S\sim W_m(\Sigma/M, M)$ so that $\mathbb E[S]=\Sigma$, and a non-Wishart proxy with the same conditional mean.
+
+**How.** Use the **Bartlett decomposition** — lower-triangular $A$ with $A_{ii}=\sqrt{\chi^2_{M-i+1}}$ and $A_{ij}\sim N(0,1)$ below the diagonal, then $S=LAA^\top L^\top$ with $L$ the Cholesky factor of $\Sigma/M$. Cost is $O(m^2)$ per draw instead of $O(Mm)$. For the non-Wishart proxy use multivariate-$t$ innovations rescaled so the mean is still exactly $\Sigma$.
+
+**Done when.** Sample mean matches $\Sigma$ to Monte Carlo error at every cell of $m\in\{3,12\}$, $M\in\{21,78,1638\}$, and drawing 40 000 matrices at $m=12,M=1638$ takes seconds.
+
+> **Hard constraint from E4:** at $m=12$, $M=1638$ the full 50 000 draws need **7.9 GB** if materialised at once. The generator must chunk over draws — roughly 157 MB per thousand. This is not a preference; it fails outright rather than merely being slow.
+
+---
+
+### [ ] B2.2 — N-19, the loss-distortion diagnostic (3 h)
+
+**Do.** `experiments/N19_loss_distortion/run.py`. Test the P1-LOSS §3–§4 closed forms against Monte Carlo. The five claims are enumerated in `config/predeclaration.yaml` under `N19.claims` — read them from there, not from here, so there is one source of truth.
+
+**How.** For each $(m,M)$ cell: build $\Sigma$ with a spread spectrum and a random eigenbasis $Q$ (so "diagonal in $\Sigma$'s eigenbasis" is a real test, not an artefact of starting diagonal). Draw the proxy sample, compute each barycentre, rotate back through $Q^\top(\cdot)Q$ and compare against prediction. For AIRM, affine invariance means the answer must be a scalar multiple of $\Sigma$ — recover the scalar as $\operatorname{tr}(\Sigma^{-1}A)/m$, far more stable than any single entry. Read tolerances from `config/predeclaration.yaml`; never hard-code them.
+
+**Done when.** Every cell reports PASS/FAIL against the predeclared tolerance, results are written to `results/final/n19.json`, and **any failure is diagnosed as either a code bug, a test-design error, or a theorem problem — explicitly, in writing.**
+
+> Two warnings, both of which will bite. Claim 2's formula is a **first-order** expansion in $\frac{m+1}{2M}$; at the flagship cell $m=12$, $M=21$ that quantity is about $0.31$, which is not small. Decide what "agreement" means there before you run it. And at $M=1638$ the defects are near zero, so a relative-error test measures nothing but noise. The predeclaration's `known_limitation` block already commits you to reporting the smallest defect each cell could have resolved — honour it.
+>
+> Still outstanding: the canon quotes 8.8–35.9% for the BW distortion at $m=12$, $M=21$. That range is spectrum-dependent and its provenance is unrecovered. Either find the spectrum that produced it or restate it against one of the three declared spectra.
+
+---
+
+### [ ] B2.3 — N-18a, rank-inflation witnesses (2.5 h)
+
+**Do.** `experiments/N18a_rank_inflation/run.py`. Reproduce ID-8's three analytic constructions as code checks: BW on $\mathrm{SPD}(2)$ with $x=\operatorname{diag}(a,1)$ and $V$ off-diagonal, $a\ne1$; AIRM on $\mathrm{SPD}(2)$ noncommuting; $H^2$. Plus the diagonal-BW rigid control.
+
+**How.** Each is a small deterministic calculation — no seeds. Compute the affine dimension of the image of the score/observation set under the reference change and check it goes $1\to2$ in the three curved cases and stays at $1$ in the flat control.
+
+**Done when.** All three curved cases inflate, the control does not, and the BW defect matches the closed form across the grid — at the tolerance recorded in the predeclaration's 2026-08-17 amendment, **not** the superseded provisional values. Agreement confirms the implementation; disagreement indicts the code. **Neither outcome can change ID-8.**
+
+> Also produce the detectability boundary the predeclaration asks for: the value of $a$ at which the predicted defect falls below the tolerance. That is the difference between "rank inflation is universal in curvature" (a theorem, true everywhere) and "rank inflation is detectable" (an empirical question) — and the second is what P-DRIFT case 3 relies on when it reaches real data.
 
 ---
 
@@ -225,9 +348,11 @@ Independent of Phases 1–2. Good work for a day when you want something mechani
 
 **Do.** `py/rfd/dgp/lsrfm.py`. Generate $X_{t,n}=\operatorname{Exp}_{\mu_n(u_t)}[\mathcal P A_n f_{t,n}+\delta_{t,n}]$ with a controllable centre path, factor rank, lag structure and noise.
 
-**How.** Parameterise the centre path so you can dial drift from zero to large, and the factor from zero to large, independently — you need all four corners for N-18. Make the geometry a plug-in argument so the same DGP runs on BW, AIRM and the sphere.
+**How.** Parameterise the centre path so you can dial drift from zero to large, and the factor from zero to large, independently — you need all four corners for N-18. The canonical family is \(\mu_\nu(u)=\operatorname{Exp}_{\mu_0}\{\nu g(u)V\}\): expose \(\nu\), \(g\), \(V\), and orientation relative to the loading span, while also returning intrinsic path length and energy. Make the geometry a plug-in argument so the same DGP runs on BW, AIRM and the sphere.
 
 **Done when.** With drift off and factor off, the sample Fréchet mean is constant to Monte Carlo error. With factor off and drift on, it tracks $\mu_n(u)$. Both checks pass on all three geometries.
+
+> `random_spd_family(rng, m, cond, delta, n, shape)` in `py/rfd/dgp/spd.py` already separates conditioning from dispersion. Reuse that design here: any DGP whose knobs are confounded produces curves you cannot read.
 
 ---
 
@@ -247,7 +372,7 @@ Independent of Phases 1–2. Good work for a day when you want something mechani
 
 **Do.** `py/rfd/estimators/frame.py`. Join estimated mean vertices by geodesic chords, parallel-transport along the polygon, $M_n\asymp\ell_n^{-2/3}$ cells.
 
-**Done when.** With a known constant centre the frame is the identity to `1e-10`. With a known moving centre on a flat, transport around a closed loop returns the identity — and on a curved one it doesn't, by an amount you can compare to the curvature.
+**Done when.** With a known constant centre the frame is the identity. With a known moving centre on a flat, transport around a closed loop returns the identity — and on a curved one it doesn't, by an amount you can compare to the curvature. `parallel_transport` in `airm.py` is already there.
 
 ---
 
@@ -276,7 +401,28 @@ Sequenced but not detailed yet; write the detail when you get here, because Phas
 - [ ] **B5.3** N-09, N-10, N-15 — the BW branch.
 - [ ] **B5.4** N-16, N-17 — FRAME-2P-U and its negative controls. New code, no reuse from the parent.
 - [ ] **B5.5** The forecast comparison. Frobenius and QLIKE as primary, geodesic losses reported only with the P1-LOSS §4 recalibration and the induced target stated. Diebold–Mariano or Giacomini–White for whether any difference is real. **R for this** — `multDM` and `forecast` have no clean Python equivalent.
-- [ ] **B5.6** The where-it-helps map. The actual contribution: the region where a moving centre pays, the region where it doesn't, and the boundary. Includes the placebo — fit both on a *provably* fixed-centre DGP and check whether the moving-centre model still wins. If it does, you've learned it's flexibility rather than structure, and that's a real finding.
+- [ ] **B5.6 / N-18c** The where-it-helps map. Sweep the canonical \(\nu\)-family and report the complete fixed-minus-moving risk curve, not one cherry-picked crossing. Structural and forecast risks are separate; Frobenius and QLIKE are the primary forecast losses. Include the placebo — fit both on a *provably* fixed-centre DGP and check whether the moving-centre model still wins. If it does, you've learned it is flexibility rather than structure. The positive control matters more: without it, a null on real data is uninterpretable. Test clean quadratic, linear-cross-term, aligned, orthogonal, partial and curved regimes; treat \(n^{-3/14}\) only as the clean short-memory candidate.
+
+---
+
+## Diagnostics already run
+
+Engineering measurements, not paper content. Each writes `.md` + `.csv` to `results/final/`; `python sandbox/run_all.py` re-runs the lot in ~2 min and `sandbox/look.py` redraws the plots into the gitignored `sandbox/plots/`.
+
+| | what it decided |
+|---|---|
+| `calibrate_spd.py` | `safety=10`, and which amplification each identity needs |
+| **E4** `e4_bw_cost.py` | N-19 affordable; batching is linear in N; the 7.9 GB memory constraint |
+| **E2** `e2_boundary.py` | working range ends at κ=1e6; found the NaN guard hole |
+| **E1** `e1_convergence_surface.py` | cost follows dispersion, not conditioning |
+| **E3** `e3_tol_accuracy.py` | `tol=1e-12` is the knee; tighter is pure waste |
+| **E5** `e5_airm_cost.py` | AIRM/BW ratio 2.05× at m=12, 4.78× at m=3 — replaced a guess |
+| **E6** `e6_airm_convergence.py` | `step=1.0` wins 90/90; AIRM cost is blind to κ and shape |
+| **E7** `e7_geometry_divergence.py` | divergence ≈ c(m)·δ — the one with paper content in it |
+| **D1–D3** `diag_risk_gap.py` | **refuted** amplification as the cause of the risk gap; shrinkage made it worse, so theirs is the more ill-conditioned Σ |
+| **D4** `diag_day_count.py` | ~20 effective trading days per month reconciles bulk *and* tail at once — the finding that closed B3.4a |
+
+**E7 is the only one that is embryonic paper material.** It is also the only one currently waiting on something: the real panel's δ (B3.4a). And note the caution in its docstring — divergence of *centres* is not divergence of *rankings*, which is the stronger claim `highest_value_check` actually tests.
 
 ---
 
@@ -288,3 +434,7 @@ Sequenced but not detailed yet; write the detail when you get here, because Phas
 4. **Seeds are lists, not a base seed.** Independent lists for train, validation and test.
 5. **Numerical success proves nothing analytical.** It can only ever falsify.
 6. **`sandbox/` is disposable.** If you'd be upset to lose it, it belongs in `py/rfd/` with a test.
+7. **Tolerances are measured, not typed.** Every tolerance traces to a number from this machine's BLAS. A plausible-looking power of ten is not a tolerance.
+8. **Test the statistic the bound is about.** Backward stability bounds a norm, so test a norm. An elementwise relative test on a matrix fails on small entries for reasons that carry no information.
+9. **A test that passes by construction is not a test.** If the quantity you assert is the one the loop terminates on, or if the algebra cancels before your parameter enters, you have written a tautology. Find the independent check — the closed form, the invariance, the objective.
+10. **State the slack.** When a tolerance is deliberately loose, or a grid is capped, or a term is omitted from a cost model, say so where the result is reported. Silent truncation reads as coverage.

@@ -15,7 +15,7 @@ import pytest
 from rfd.dgp.spd import random_spd, random_Q
 from rfd.spd.linalg import rebuild_spd, sym, spd_sqrt
 from rfd.spd.bw import bw_dist2, trace, bw_barycentre, bw_frechet
-from tests.conftest import num_tol
+from tests.conftest import num_tol, geodesic_perturb
 
 N = 200
 CONDS = [1e1, 1e3, 1e5]
@@ -156,20 +156,18 @@ def test_barycentre_minimises_frechet(rng, m, cond):
     iteration, so unlike the stationarity residual this cannot pass by
     construction.
 
-    t=1e-2 raises the objective by ~1e-5 relative at worst -- ten orders
-    above roundoff -- so a strict > 0 comparison has enormous margin.
+    Perturbation is GEODESIC, not additive: an additive step of 1e-2*||X||
+    leaves the cone entirely once kappa is large, and every perturbation
+    would be skipped. Measured: 0 of 20 survived at m=12, kappa=1e5.
     """
     S = random_spd(rng, m=m, cond=cond, n=N_BARY)
     res = bw_barycentre(S, tol=BARY_TOL)
     assert res.converged
 
     f0 = bw_frechet(res.X, S)
-    scale = np.linalg.norm(res.X)
     for _ in range(20):
-        E = sym(rng.standard_normal((m, m)))
-        Xp = sym(res.X + 1e-2 * scale * E / np.linalg.norm(E))
-        if np.linalg.eigvalsh(Xp).min() <= 0:
-            continue
+        E = rng.standard_normal((m, m))
+        Xp = geodesic_perturb(res.X, E / np.linalg.norm(E))
         assert bw_frechet(Xp, S) > f0
 
 

@@ -17,5 +17,6 @@ They are not independent sources of current theorem status. They **are valid pro
 - `Proof workstreams`: APP-A/B/C, HD1-A/B/C, HE, BW, the joint HE–BW records, the completed BW-SIZE-FIXED-MARGIN and BW-SIZE-SHRINKING-MARGIN campaigns, and the completed FRAME-DB/FRAME-IF geometry, statistical, hostile-audit, and lead-adjudication records.
 - `Proof history`: superseded G1 addenda retained for derivation history.
 - `Run prompts`: completed team prompts, including the HE–BW, staged BW growing-size, and FRAME-DB campaigns; these specify past work but do not create live obligations.
+- `Research notes`: originating intuitions and experiment rationales after their durable content has been migrated into the canon; retained for provenance, not status.
 
 Paper 2 remains a visible standalone note because it is a distinct research object, although its work is currently parked.

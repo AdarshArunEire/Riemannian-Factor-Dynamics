@@ -54,3 +54,19 @@ def random_spd_family(rng, m, cond=10.0, delta=0.0, n=1, shape="geom"):
     E = E / np.linalg.norm(E, axis=(-2, -1), keepdims=True)
     rB = spd_sqrt(B)
     return rB @ spd_exp(delta * E) @ rB
+
+
+def random_congruence(rng, m, n=None, kappa=3.0):
+    """Random invertible M with a CONTROLLED condition number.
+
+        M = Q1 diag(geomspace(1, kappa, m)) Q2'
+
+    For affine-invariance tests. A plain Gaussian matrix would work
+    mathematically but is a bad test instrument: its own condition number is
+    random and occasionally enormous, so a failure tells you nothing about
+    whether AIRM is affine-invariant -- only that you drew a nasty M.
+    Measured: a Gaussian M made the affine test 25x tighter for no reason.
+    """
+    shape = (m, m) if n is None else (n, m, m)
+    Q1, Q2 = random_Q(rng, shape), random_Q(rng, shape)
+    return (Q1 * np.geomspace(1.0, kappa, m)[..., None, :]) @ Q2.mT

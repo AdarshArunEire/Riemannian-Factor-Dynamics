@@ -107,6 +107,137 @@ meta:
         append-only rule covers committed lines regardless of how harmless
         the edit looks.
 
+    - date: 2026-08-18
+      section: N00.established_fact
+      kind: correction-of-fact
+      title: the parent DOES call set.seed -- the conclusion survives, the reason does not
+      was: >
+        "Neither simulation_main.R nor BWS_simulation.R calls set.seed().
+        Exact reproduction was never available."
+      actually: >
+        sim_do.R -- the driver -- calls set.seed(5566 + type) for type in 1:4
+        before sourcing BWS_simulation.R. sp500_reproduce.R calls set.seed(1).
+        simulation_main.R (the SPHERE study, not the SPD one) does not, and
+        sp500_analysis.R does not.
+      why_the_conclusion_still_holds: >
+        BWS_simulation.R runs its 300 replicates inside foreach(...) %dopar% on
+        a 12-worker makeCluster. A master-side set.seed does not propagate to
+        parallel workers; that needs clusterSetRNGStream or doRNG, neither of
+        which is used. .inorder = FALSE compounds it. The randomness therefore
+        happens in unseeded workers and exact reproduction of the simulation
+        tables is still unavailable. A numeric mismatch remains not a failure of
+        this project.
+      but_note: >
+        sp500_reproduce.R is a different case -- seeded, single-threaded, and its
+        only randomness is the mini-batch sampling inside mean_on_BWS
+        (batch_size = 30). That script may be exactly reproducible, and it, not
+        sp500_analysis.R, is the one to run.
+      why_this_matters: >
+        The old wording was a claim about their code that their code contradicts
+        on line 2 of a four-line file. A referee who opened sim_do.R would have
+        found it. Corrected on evidence, before any result was seen.
+      source: reference/AUDIT.md section 6, commit c07d49c
+
+    - date: 2026-08-18
+      section: N00.highest_value_check
+      kind: correction-of-fact
+      title: competitor set was mis-stated, and the check needs no new code
+      was: >
+        "determine which loss ranks RFM against LFM/LOCF/EWMA"
+      actually: >
+        Two different comparisons live in their code. IN-SAMPLE / test-set fit
+        (main_BWS) is RFM vs LYB only -- one competitor, the Lam-Yao-Bathia
+        linear factor model on vectorised SPD data. OUT-OF-SAMPLE forecasting
+        (sp500_reproduce.R) is RFM (r=2) vs LFM (r=1) vs LOCF vs EWMA(lambda
+        0.94), over the last 36 of 240 months.
+      the_check_is_already_computed: >
+        main_BWS returns FVU_RFM_BWS, FVU_LYB_BWS, FVU_RFM_Euc and FVU_LYB_Euc --
+        both metrics, both models, one call. The P1-LOSS question is whether the
+        BW-ranked and Frobenius-ranked orderings ever disagree along the
+        factor-count axis, and answering it means reading four vectors they
+        already produce. No reimplementation needed.
+      caveat_found_while_reading: >
+        Before a BW distance is taken of an LYB prediction it is pushed onto the
+        cone by project_to_SPD(x_hat, 1e-6); the Frobenius comparison uses the
+        raw prediction. The two losses are therefore not scoring identical
+        objects, and the repair can only help the linear model on the BW side.
+        Any disagreement found must be checked against this before it is
+        attributed to P1-LOSS.
+      also: >
+        RFM is given r=2 and LFM r=1 in the out-of-sample comparison, so they are
+        not matched on capacity. GMV weights come from the previous month's
+        realised covariance, identically for all four models, so that comparison
+        varies only the risk forecast and not the portfolio.
+      source: reference/AUDIT.md sections 4 and 9, commit c07d49c
+
+    - date: 2026-08-18
+      section: N00 (panel acceptance tolerance)
+      kind: outcome-independent-of-the-claim
+      title: acceptance tolerance for the reproduction, split bulk vs tail
+      what_is_being_fixed: >
+        How close our rebuilt 12-stock RC panel must bring the published
+        out-of-sample numbers before any result computed on it counts as
+        evidence. No such tolerance had been committed; N00 covered the
+        SIMULATIONS only.
+      value:
+        bulk: 2%      # BW distance, Frobenius distance
+        tail: 6%      # GMV risk prediction error
+        applies_to: mean and median, against arXiv:2607.28385v1 Figures 3 and 4
+      why_two_numbers: >
+        BW and Frobenius are dominated by the LARGEST eigenvalues of the
+        realised covariances. The GMV risk error runs through
+        1/(1' Sigma^-1 1) and is dominated by the SMALLEST. They are
+        different claims about the panel and a single band would either
+        be vacuous for the bulk or unmeetable for the tail. Holding them
+        to one number would hide exactly the structure that D4 found.
+      why_legitimate: >
+        Both numbers are read off LOCF and EWMA. Neither fits anything --
+        no Frechet mean, no factor count, no seed, no convergence -- so
+        neither can be tuned toward a result we would prefer, and neither
+        involves our estimator or theirs. The tolerance is therefore fixed
+        BEFORE the first RFM comparison and is independent of the claim it
+        will later be used to judge. Chosen after seeing an RFM comparison
+        it would not be, and this entry exists so that ordering is on the
+        record.
+      basis:
+        artifacts:
+          - results/final/panel_vs_parent.md
+          - results/final/diag_risk_gap.md
+          - results/final/diag_day_count.md
+        generators:
+          - experiments/check_panel_vs_parent.py
+          - experiments/diag_risk_gap.py
+          - experiments/diag_day_count.py
+        measured:
+          variant: adjusted close (closer than raw on every statistic)
+          full_panel_21_days: {worst_bulk_gap: 2.4%, worst_tail_gap: 23.7%}
+          at_K20_19p9_days:   {worst_bulk_gap: 1.5%, worst_tail_gap: 5.3%}
+        reading: >
+          Set at the best achieved, rounded up: 1.5% -> 2%, 5.3% -> 6%.
+          This is the closest this panel can get to theirs, so nothing
+          downstream may be held to a tighter standard.
+      irreducible_floors:
+        - >
+          Their figures print to 2 decimals, which is +-0.5% on a value of
+          1.0 and less on larger ones.
+        - >
+          Yahoo revises history. A 2026 pull is not byte-identical to
+          whatever they downloaded, whatever else is matched.
+      caveat_that_must_travel_with_this: >
+        K=20 is NOT a determination of their M. The sweep is non-monotonic
+        -- K=17 gives a tail gap of 8.8% and K=18 worsens it to 27.2% --
+        so the finding is "consistent with ~20 effective trading days per
+        month", stated as a band. The mechanism (universe-wide missing-day
+        dropping before the twelve tickers are sliced out) is a HYPOTHESIS
+        consistent with the measurements, not something read off their
+        code. See reference/AUDIT.md section 2b.
+      what_falsifies_the_day_count_story: >
+        If B3.4b reproduces their RFM and LFM numbers at the full 21 days
+        and fails at 20, the day-count explanation is wrong and the three
+        remaining suspects come back on the table: within-month demeaning,
+        returns crossing month boundaries, and winsorising or fill applied
+        before the covariance.
+
 
 # ---------------------------------------------------------------------
 # GLOBAL — what happens when a check fails

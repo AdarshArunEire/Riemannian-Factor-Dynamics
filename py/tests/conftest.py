@@ -1,6 +1,8 @@
 import numpy as np
 import pytest
 
+from rfd.spd.linalg import sym, spd_eigh, rebuild_spd, spd_exp
+
 
 def num_tol(amplification=1.0, dtype=np.float64, safety=10.0):
     """Tolerance for a RELATIVE Frobenius residual.
@@ -33,3 +35,23 @@ def rng():
     stop reproducing the moment you used -k to run it alone.
     """
     return np.random.default_rng(20260816)
+
+
+def geodesic_perturb(X, E, t=1e-2):
+    """Move X along the cone by a symmetric direction E, staying SPD.
+
+        X^(1/2) exp(t E) X^(1/2)
+
+    Use this, never X + tE, for "perturb the answer and check the objective
+    rises" tests. An ADDITIVE perturbation of size t*||X|| swamps the
+    smallest eigenvalue as soon as the matrix is ill conditioned, so the
+    perturbed matrix leaves the cone and gets skipped -- and a test that
+    skips every perturbation passes with zero assertions.
+
+    Measured before this helper existed: at m=12, kappa=1e5, ZERO of 20
+    additive perturbations survived. The Frechet tests in test_bw.py and
+    test_airm.py were silently vacuous in those cells. Standing rule 9.
+    """
+    lam, V = spd_eigh(X)
+    rX = rebuild_spd(np.sqrt(lam), V)
+    return sym(rX @ spd_exp(t * sym(E), strict=False) @ rX)

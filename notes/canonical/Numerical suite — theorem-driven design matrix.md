@@ -1,16 +1,16 @@
 ---
 title: Numerical suite — theorem-driven design matrix
 type: numerical-design
-status: planned
+status: active
 authority: canonical-design-only
-updated: 2026-08-12
+updated: 2026-08-19
 ---
 
 # Numerical suite — theorem-driven design matrix
 
 ## 1. Scope and status
 
-Every project-specific item in this note is **PLANNED**. As of 2026-08-12, this repository contains **zero implementation and zero empirical output for the extension suite**, so its new analytical results remain empirically unvalidated. The parent paper nevertheless supplies a public R/BW reference implementation at <https://github.com/shuochieh/Riemannian_factor_model>, including simulation, main-function, and S&P 500 reproduction scripts. We therefore begin by reproducing and auditing that baseline; the new HE, BW-uniformity, selector-repair, and FRAME correction layers remain unimplemented. No future simulation result can prove a theorem.
+Execution has begun, but the extension suite remains empirically unvalidated. The repository now contains audited SPD geometry and loss primitives, a rebuilt realised-covariance panel, and an APP-FIN parent-pipeline reproduction whose Python/R harness agrees to roundoff and whose published model rankings are preserved. N-00 is therefore **partial**: the parent simulations, full notation map, and predeclared factor-count/loss-ranking loop remain outstanding. The new HE, BW-uniformity, selector-repair, FRAME correction, and \(\nu\)-phase experiments remain unrun. No future simulation result can prove a theorem.
 
 The primary targets are:
 
@@ -48,7 +48,7 @@ All rate plots use the actual empirical \(R_n,A_{2,n},\Delta_n\) and the theorem
 
 | ID | Regime and DGP | Parameter sweep | Predicted analytical behaviour | Failure boundary or diagnostic | Status |
 |---|---|---|---|---|---|
-| N-00 | parent-paper reproduction baseline | run the public BW/sphere simulations and S&P 500 reproduction scripts under a frozen environment | recover the parent estimator, raw-ratio behaviour, reconstruction/forecast pipeline, and reported benchmark definitions before adding project corrections | version drift, unavailable Yahoo data, or target/convention mismatch must be logged rather than silently repaired | **PLANNED; PUBLIC CODE AVAILABLE** |
+| N-00 | parent-paper reproduction baseline | run the public BW/sphere simulations and S&P 500 reproduction scripts under a frozen environment | recover the parent estimator, raw-ratio behaviour, reconstruction/forecast pipeline, and reported benchmark definitions before adding project corrections | version drift, unavailable Yahoo data, or target/convention mismatch must be logged rather than silently repaired | **PARTIAL — APP-FIN PIPELINE REPRODUCED; PARENT SIMULATIONS, NOTATION MAP, AND FACTOR-COUNT LOSS LOOP OUTSTANDING** |
 | N-01 | bounded-energy HD1 baseline | fixed \(R,h_0,r,\Delta>0\); increasing \(n,p\) | \(d_n=O_p(n^{-1/2}+\ell_n)\); loading \(O_p(d_n/\Delta)\); null eigenvalues \(O_p(d_n^2)\) | generated-tube or dependence violation | **PLANNED** |
 | N-02 | HE flat/rigid frame | \(\rho\) below, at, and above \(3/13\); \(b_n=n^{-(1-2\rho)/7}\) | leading balanced rate \(n^{-(3-13\rho)/7}\), plus \(n^{-(a-\rho)}\) | consistency transition at \(\rho=3/13\); balanced headline also needs \(a\ge(3-6\rho)/7\) | **PLANNED** |
 | N-03 | HE generic curved moving frame | \(\rho\) below, at, and above \(3/20\) | rate \(n^{-(3-20\rho)/7}+n^{-(a-2\rho)}\) | frame-energy multiplier causes the \(3/20\) boundary | **PLANNED** |
@@ -69,8 +69,35 @@ All rate plots use the actual empirical \(R_n,A_{2,n},\Delta_n\) and the theorem
 | N-18 | centre-drift/factor identification diagnostic | controlled drift-only, factor-only, aligned, orthogonal, mixed, cross-term, and curved-reference rank-inflation DGPs; then the APP-FIN fixed-centre baseline versus moving-centre fits | verify implementation against ID-4/ID-5 and Corollary P-DRIFT: stable aligned span, clean orthogonal rank addition of exactly \(\dim P_{\mathcal S_X^\perp}D\), partial rotation/cancellation, and exact sphere reference-rank change | validates code and reports sensitivity; it cannot determine empirical component dominance without the canonical identifying assumptions | **PLANNED; RUN ONLY AFTER CLEAN N-00 REPRODUCTION** |
 | N-18a | ID-8 rank-inflation witnesses | reproduce the three exact analytic constructions as code checks: BW \({\rm SPD}(2)\) with \(x=\operatorname{diag}(a,1)\), \(V\) off-diagonal, \(a\ne1\); AIRM \({\rm SPD}(2)\) noncommuting; \(H^2\); plus the diagonal-BW rigid control | the three curved cases inflate affine dimension \(1\to2\) and the diagonal-BW control does not; the BW defect matches the closed form for every \(a\ne1\), \(0<\vert b\vert<1+a\) | a **code-verification** diagnostic against theorems already proved analytically; agreement confirms the implementation, disagreement indicts the code, and neither outcome can alter ID-8 | **PLANNED** |
 | N-18b | ID-7/ID-10 persistence diagnostic | sweep the frozen-factor persistence: short memory, \(\rho_n=1-n^{-\theta}\) for \(\theta\) inside and outside \([0,1)\), and ARFIMA with \(d\in\{0,0.1,0.25,0.4\}\); at each, record \(\psi^+(nb_n)\) against \(b_n^3\) and the realised mean/loading error | the mean error tracks \(\ell_n(\psi)=b_n^3+\psi^+(nb_n)+n^{-a}+n^{-1}\); the re-optimised bandwidth \(n^{-(1-2d)/(7-2d)}\) beats \(n^{-1/7}\) for \(d>0\); separation degrades as \(x_n=(1-\rho_n)nb_n\to O(1)\) | measures the **constant and the finite-\(n\) onset**, not the exponent, which is proved. It cannot establish the memory exponent of any real dataset; APP-FIN's \(d\) remains an assumption under test | **PLANNED** |
+| N-18c | static-centre breakdown phase diagram | \(\mu_\nu(u)=\operatorname{Exp}_{\mu_0}\{\nu g(u)V\}\); sweep \(\nu,n,\Delta\), noise/energy, persistence, drift shape/speed/orientation, geometry and SPD conditioning; compare fixed- and moving-centre estimators | estimate the complete structural- and forecast-risk advantage sets. In the clean flat/orthogonal/centred branch, the first row defect is \(O(\nu^2)\) and the candidate onset is \(\nu_{\rm est}^\star\asymp(n^{-1/2}+\ell_n)^{1/2}\), hence \(n^{-3/14}\) when short-memory \(\ell_n\) dominates | no universal exponent or unique crossover is presumed: surviving cross/curved terms may be \(O(\nu)\), aligned drift may preserve the loading span, and forecasting depends on horizon and a P1-LOSS-admissible loss | **PLANNED; AFTER N-00 AND THE N-18 POSITIVE/PLACEBO CONTROLS** |
 
 | N-19 | evaluation-loss distortion and recalibration diagnostic | \(m\in\{3,12\}\), \(M\in\{21,78,1638\}\) Wishart-type and non-Wishart proxies; score a known conditional mean and its shrunk versions under squared BW, AIRM, log-Euclidean, Frobenius and multivariate QLIKE | the finite-sample distortion tracks the closed forms of [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] §3–§4: BW \(|B_{ii}|/\lambda_i=\frac1M[\frac14+\sum_k\lambda_k^2/(\lambda_i+\lambda_k)^2]\), AIRM \((m+1)/(2M)\); the AIRM scalar recalibration \(c=1-\frac{m+1}{2M}\) removes it and a scalar BW recalibration does not; Frobenius and QLIKE show no distortion; the non-Wishart proxy rotates the induced eigenbasis and the Wishart proxy does not | a **diagnostic**, never a proof: it measures the finite-sample size of an already-proved distortion and the effect of recalibration. It cannot establish or refute LO-1–LO-5, and it does not feed any estimation row | **PLANNED** |
+
+### 3A. N-18c protocol — estimate a phase boundary, do not assume one
+
+For each declared target \(T\), compute
+
+\[
+\widehat{\mathcal D}_T(\nu)
+=\widehat R_T(\widehat T^{\rm mov};\nu)
+-\widehat R_T(\widehat T^{\rm stat};\nu)
+\]
+
+on common Monte Carlo draws. Report the full curve with uncertainty. Define a first crossover only if the negative set is nonempty, and call it a breakdown threshold only if the observed/theoretically justified advantage set is an upper interval. Multiple crossings and no crossing are valid outcomes.
+
+The minimum design contains:
+
+- the exact placebo \(\nu=0\);
+- a positive-control range large enough that the moving-centre estimator should resolve drift;
+- clean flat aligned, orthogonal and partial orientations;
+- a cross-term design with an \(O(\nu)\) defect;
+- noncommuting AIRM/BW and a curved rank-inflation control;
+- sample-size and persistence sweeps, using \(\psi^+(nb_n)\) rather than silently retaining short-memory \((nb_n)^{-1/2}\);
+- structural outputs: centre error, row defect, loading subspace, within-span eigenordering, selected rank and actual gap;
+- forecast outputs at each declared horizon, scored primarily by squared Frobenius and multivariate QLIKE; any geodesic score carries its induced target and P1-LOSS recalibration;
+- intrinsic motion \(\mathcal L_{\mu_\nu}\) and \(\mathcal V_{\mu_\nu}^2\) alongside the design coordinate \(\nu\).
+
+Keep factor strength fixed when sweeping \(\nu\), then repeat over \(\Delta\), observation/noise energy, factor persistence, drift shape/speed, orientation, geometry and spectral conditioning. This experiment measures when dynamic centring is worth its estimation cost. It does not prove that a real centre moves, identify empirical component dominance, or prove the clean-case \(n^{-3/14}\) exponent.
 
 ## 4. Estimator and selector comparisons
 
@@ -132,4 +159,4 @@ No reconstruction theorem is described as a forecasting guarantee.
 
 ## 8. Execution gate
 
-The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. Implementation begins with N-00: freeze and audit the parent public environment, reproduce its simulations/APP-FIN pipeline where the upstream data remain accessible, and map its objects to the canonical notation. N-16/N-17 then extend that audited baseline rather than beginning from zero, while their correction-specific components remain new code. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness are not prerequisites unless the selected design consumes them.
+The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. N-00 has begun: the public environment and APP-FIN pipeline have been audited and reproduced, while the parent simulations, notation map, and factor-count/loss-ranking loop remain to be closed. N-16/N-17 and N-18c then extend that audited baseline rather than beginning from zero, while their correction-specific components remain new code. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness are not prerequisites unless the selected design consumes them.
