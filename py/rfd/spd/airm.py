@@ -65,7 +65,7 @@ def airm_dist2(A, B, strict=True):
     return np.linalg.norm(L, axis=(-2, -1)) ** 2
 
 
-def parallel_transport(V, A, B, strict=True):
+def airm_parallel_transport(V, A, B, strict=True):
     """Transport tangent vector V from A to B along the connecting geodesic.
 
         E = (B A^(-1))^(1/2) = A^(1/2) (A^(-1/2) B A^(-1/2))^(1/2) A^(-1/2)

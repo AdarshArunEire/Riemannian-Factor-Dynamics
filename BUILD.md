@@ -124,7 +124,7 @@ Two things the original *Done when* didn't anticipate. The stationarity test is 
 
 ### [x] B1.3 — AIRM distance and Karcher mean
 
-`py/rfd/spd/airm.py`: `airm_dist2`, `airm_log`, `airm_exp`, `parallel_transport`, `airm_barycentre`, `airm_frechet`. Tests: `py/tests/test_airm.py`, 72 cases.
+`py/rfd/spd/airm.py`: `airm_dist2`, `airm_log`, `airm_exp`, `airm_parallel_transport`, `airm_barycentre`, `airm_frechet`. Tests: `py/tests/test_airm.py`, 72 cases.
 
 Affine equivariance verified as the original plan predicted — it does catch most implementation errors in one shot. Added beyond plan: the N=2 Karcher mean equals `g_mean`, a cross-module check against `linalg.py` with no shared code path.
 
@@ -385,7 +385,7 @@ The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is be
 
 **Do.** `py/rfd/estimators/frame.py`. Join estimated mean vertices by geodesic chords, parallel-transport along the polygon, $M_n\asymp\ell_n^{-2/3}$ cells.
 
-**Done when.** With a known constant centre the frame is the identity. With a known moving centre on a flat, transport around a closed loop returns the identity — and on a curved one it doesn't, by an amount you can compare to the curvature. `parallel_transport` in `airm.py` is already there.
+**Done when.** With a known constant centre the frame is the identity. With a known moving centre on a flat, transport around a closed loop returns the identity — and on a curved one it doesn't, by an amount you can compare to the curvature. `airm_parallel_transport` in `airm.py` is already there.
 
 ---
 
