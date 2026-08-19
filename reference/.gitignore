@@ -1,0 +1,5 @@
+# everything in here is someone else's code -- do not commit it
+*
+!.gitignore
+!AUDIT.md
+!PROVENANCE.md

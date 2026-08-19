@@ -91,7 +91,7 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 
 | Component | Current status | Scope |
 |---|---|---|
-| Centre-drift versus factor identification (P1-ID) | CLOSED — ID-0 through ID-6 terminal | exact quotients, curved rank-inflation boundary, one-path non-uniformity, and complete contamination theorem |
+| Centre-drift versus factor identification (P1-ID) | CLOSED — ID-0 through ID-10 terminal | exact quotients, constructive separation and persistence windows, curved rank-inflation boundary, one-path non-uniformity, and complete contamination theorem |
 | Moving-centre identification under pointwise local-mean ergodicity | PROVED INTERNALLY; mean-square ergodic step CITED EXTERNALLY | fixed $p$; Doob (1953), Chapter X §7; see [[References and external claim audit]] |
 | Positive-weight growing-$p_n$ G1 route | PROVED UNDER EXPLICIT ASSUMPTIONS | arbitrary $p_n$, bounded total energy/fixed memory |
 | Integrated mean and corrected derivative rates | PROVED UNDER EXPLICIT ASSUMPTIONS | dimension-free; derivative carries $n^{-a}/b_n$ under level-only local stationarity |
@@ -146,9 +146,9 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Live work
 
-P1-ID is closed and supplies the interpretation boundary. N-18 is a sensitivity diagnostic rather than proof.
+P1-ID is closed and supplies the interpretation boundary. N-18 checks its exact structural consequences; N-18c measures the target-specific static-versus-moving \(\nu\)-phase diagram. Both are sensitivity diagnostics rather than proof, and neither presumes a unique crossover.
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 remains the first computational task. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
+All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 is partially complete: the APP-FIN pipeline has been reproduced and [[notation-map|the notation map]] is complete, while the parent simulations and factor-count/loss-ranking loop remain before moving-centre modifications. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
 
 ## Related notes
 

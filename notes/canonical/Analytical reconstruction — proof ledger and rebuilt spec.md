@@ -75,7 +75,7 @@ Paper 2 asks a different question—whether the loading subspace itself moves—
 
 The generic uniqueness claim therefore survives only for the marginal Fréchet centre, **and only on the deterministic-centre class**. At every other layer the theorem states the exact quotient or proves non-identification; each restricted positive result is separated from its counterexample by a support, spectral, noise, rank, or branch boundary.
 
-Two scope locks are load-bearing and are stated in full in [[P1-ID — centre-drift and factor identification boundary]] §4.1 and §5.1. ID-1 and ID-2 are both **true as stated and non-binding on the latent-stochastic-centre class**: a random centre is not a functional of any information set, and a serially dependent latent centre cannot occupy ID-2's temporally uncorrelated residual, so it is absorbed into the loading. Neither theorem is retracted. What is not identified — even from \(\mathcal I_J\) — is the split of the identified total dynamic loading into a centre part and a factor part. Restoring that split requires a **declared frequency-band separation**, proved both necessary and sufficient, and untestable from the observed law. ID-7 is the theorem that makes one such declaration estimable.
+Two scope locks are load-bearing and are stated in full in [[P1-ID — centre-drift and factor identification boundary]] §4.1 and §5.1. ID-1 and ID-2 are both **true as stated and non-binding on the latent-stochastic-centre class**: a random centre is not a functional of any information set, and a serially dependent latent centre cannot occupy ID-2's temporally uncorrelated residual, so it is absorbed into the loading. Neither theorem is retracted. What is not identified — even from \(\mathcal I_J\) — is the split of the identified total dynamic loading into a centre part and a factor part. Restoring that split requires a **declared frequency-band separation**, proved both necessary and sufficient, and untestable from the observed law. ID-7 is the theorem that makes one such declaration estimable. P1-ID §17 then turns this boundary into the downstream \(\nu\)-phase diagnostic: a crossover is target-, loss-, horizon-, tuning-, and DGP-specific, and the clean \(n^{-3/14}\) onset is a conditional quadratic-case prediction rather than a universal theorem.
 
 ## 2. Canonical theorem boundary
 
@@ -404,7 +404,7 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | 11. floating derivative order | SUSTAINED | HD-G fixes \(k_0=4\) |
 | 12. stale BW shrinking ledger | SUSTAINED | top-layer and objection tables now record the completed adjudication |
 | 13. archived proofs called noncanonical | SUSTAINED AND CLOSED | archive is citable proof provenance; FRAME, HE, BW fixed-margin, and BW shrinking-margin now each have a canonical theorem-boundary and producer-classification file |
-| 14. zero project-extension code/numbers | SUSTAINED WITH BASELINE CORRECTION | the extension suite remains unimplemented and empirically unvalidated, but the parent's public R/BW and APP-FIN code is now the mandatory N-00 reproduction baseline |
+| 14. zero project-extension code/numbers | SUPERSEDED IN PART | the SPD/loss foundation, realised-covariance panel, and APP-FIN parent reproduction now exist; extension-specific experiments remain unrun and empirically unvalidated |
 | 15. \(\Delta_n\) collision | SUSTAINED | G1 Hessian defect renamed \(\delta_{H,\mathrm{LS},n}\) |
 | 16. genuinely open list | CONFIRMED | items remain open and unconsumed except where a theorem is explicitly conditional |
 | 17. mechanical defects | SUSTAINED | missing LaTeX slashes, false wiki link, bare inline math, and queue title/scope repaired |
@@ -414,7 +414,7 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | File | Authority |
 |---|---|
 | [[Time-varying Fréchet mean Riemannian factor model]] | scientific overview and paper split |
-| [[P1-ID — centre-drift and factor identification boundary]] | closed ID-0–ID-10 theorem package: impossibility boundaries, constructive separation, curvature class of rank inflation, the ID-1 gate sharpness verdict, the persistence window, and the Factor 1 interpretation |
+| [[P1-ID — centre-drift and factor identification boundary]] | closed ID-0–ID-10 theorem package plus the downstream \(\nu\)-phase specification: impossibility boundaries, constructive separation, curvature class of rank inflation, persistence, Factor 1 interpretation, and the conditional static-versus-moving crossover diagnostic |
 | [[P1-ID-CLOSE — lead ledger]] | archived P1-ID-CLOSE adjudication ledger, objection record, and closure audit |
 | [[P1-ID-CLOSE-A — constructive separation, persistence window, and centre conventions]] | archived ID-7, ID-10 and route R4 proof source |
 | [[P1-ID-CLOSE-B — curved geometry, existence and uniqueness]] | archived ID-8 and routes R1, R2 proof source |
@@ -426,6 +426,7 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | [[Numerical suite — theorem-driven design matrix]] | planned analytical stress tests; no numerical verdicts |
 | [[OPEN OBLIGATIONS — current research actions]] | only live queue and execution order |
 | [[References and external claim audit]] | parent-paper metadata, external citations, and restored C-AUDIT corrections |
+| [[notation-map|Parent-to-project notation map]] | canonical translation among the parent paper, pinned R implementation, and Paper 1 notation; records non-equivalences without changing hypotheses, norms, targets, or rates |
 | [[FRAME-2P-U — conditional two-path debiasing theorem]] | canonical FRAME-2P-U theorem boundary, producer classification, and scope correction |
 | [[HE — canonical growing-energy theorem boundary]] | canonical bounded-tail/truncation HE theorem boundary, producer classification, target split, and sufficient phase regimes |
 | [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] | canonical safeguarded fixed-size BW statistical theorem plus fixed-margin matrix-size-uniform geometry boundary |

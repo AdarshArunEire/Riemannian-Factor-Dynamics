@@ -1,0 +1,17 @@
+# Normalise to LF in the repository; check out native (CRLF on Windows).
+# Without this, saving on Windows rewrites whole files and every diff is
+# unreadable -- which matters here because the diff IS the audit trail.
+* text=auto
+
+# Scripts that some Windows tooling prefers with CRLF
+*.ps1  text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# Never touch these
+*.png  binary
+*.pdf  binary
+*.rds  binary
+*.RData binary
+*.npy  binary
+*.pkl  binary

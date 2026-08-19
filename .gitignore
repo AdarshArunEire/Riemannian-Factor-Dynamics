@@ -6,6 +6,11 @@ results/intermediate/*
 !results/intermediate/.gitkeep
 
 # --- scratch -------------------------------------------------------------
+# throwaway plots: look at them, never commit them
+tmp/
+sandbox/plots/
+sandbox/**/*.png
+sandbox/**/*.svg
 sandbox/**/.ipynb_checkpoints/
 sandbox/**/__pycache__/
 sandbox/**/*.pkl
@@ -32,5 +37,3 @@ renv/staging/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-BUILD.md

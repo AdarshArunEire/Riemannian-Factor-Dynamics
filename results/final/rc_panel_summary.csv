@@ -1,0 +1,27 @@
+variant,quantity,value
+adjusted,kappa median,4.2805e+02
+adjusted,kappa min,6.4403e+01
+adjusted,kappa max,1.4838e+04
+adjusted,delta,5.2279
+adjusted,months,240
+adjusted,trading days min/max,15/23
+adjusted,check: shape is (240, 12, 12),PASS
+adjusted,check: first month is 2000-01,PASS
+adjusted,check: last month is 2019-12,PASS
+adjusted,check: every RC is positive definite,PASS
+adjusted,check: trading days per month in 15..25,PASS
+adjusted,check: no NaN or inf,PASS
+adjusted,check: AIRM centre converged,PASS
+raw,kappa median,4.0165e+02
+raw,kappa min,6.4115e+01
+raw,kappa max,1.0237e+04
+raw,delta,5.2106
+raw,months,240
+raw,trading days min/max,15/23
+raw,check: shape is (240, 12, 12),PASS
+raw,check: first month is 2000-01,PASS
+raw,check: last month is 2019-12,PASS
+raw,check: every RC is positive definite,PASS
+raw,check: trading days per month in 15..25,PASS
+raw,check: no NaN or inf,PASS
+raw,check: AIRM centre converged,PASS

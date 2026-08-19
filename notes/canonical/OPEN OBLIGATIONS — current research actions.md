@@ -104,6 +104,7 @@ The analytical packages are closed, but empirical application claims still requi
 - justify both factor–noise cross-lag directions and temporally white residual noise before interpreting the nonzero-lag row as a factor row; otherwise report only the identified contaminated row;
 - for a weakened reference, report the compatible-chart orbit and test whether the full score/observation support lies on a common injective geodesic or totally geodesic flat before invoking rank preservation;
 - for a fixed-centre fit under a moving-centre alternative, retain the score-mean term, both cross-lag directions, noise lag, and nonlinear geometry remainder rather than assigning the whole change to drift;
+- run N-18c as a target-specific \(\nu\)-phase diagram: report intrinsic centre motion and the complete fixed-minus-moving risk curve; separate structural and forecast risks; do not export the clean \(n^{-3/14}\) candidate beyond the quadratic flat/orthogonal/centred regime;
 - specify the raw-return sampling scheme, covariance estimator, regularisation, and overlap;
 - quantify the covariance-estimation measurement error, dependence, and included-lag contamination. P1-LOSS §6 now gives this item an explicit order for the Fréchet-centre component: a proxy of effective sampling depth \(M\) contributes \(\zeta_n^{\rm proxy}=O(m/M)\) times the energy scale to the existing (P1-OP-zeta) budget, which at \(m=12\), \(M\approx21\) is not negligible;
 - **declare the evaluation loss, target and proxy** per [[Application map — geometry, symmetry, and rate accelerators]] §0A. Report squared Frobenius and multivariate QLIKE; do not rank forecasts by squared Bures–Wasserstein, AIRM or log-Euclidean distance without stating the induced target and applying the P1-LOSS §4 recalibration. Do not use a global-minimum-variance evaluation alone: it is exactly blind to a scalar covariance distortion;
@@ -145,12 +146,12 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 ## 5. Execution order
 
 1. Preserve the closed P1-ID quotient and failure boundaries when specifying any model or application; new empirical work may test assumptions or sensitivity but does not replace the identified estimand.
-2. In the computational track, run N-00 unchanged: freeze the parent's public environment, reproduce and audit its simulations and APP-FIN pipeline, and map its objects to the canonical notation. Reproduction must precede moving-centre sensitivity modifications.
-3. Maintain one notation/conventions ledger while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
-4. After N-00, run the separate identification diagnostic N-18 and implement the smallest proof-faithful FRAME-2P-U extension: N-16 plus the N-17 negative controls and common-gauge test. These experiments validate assumptions and measure sensitivity; they do not alter the closed P1-ID theorem or identify empirical component dominance by themselves.
+2. In the computational track, finish N-00 unchanged. The public environment and APP-FIN pipeline are audited and reproduced, and [[notation-map|the full parent-to-project notation map]] is complete; the parent simulations and predeclared factor-count/loss-ranking loop remain. Complete those before moving-centre sensitivity modifications.
+3. Maintain [[notation-map|the notation/conventions ledger]] while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
+4. After N-00, run the separate identification diagnostics N-18/N-18a/N-18b, then N-18c's static-versus-moving phase diagram after its placebo and positive controls pass. Implement the smallest proof-faithful FRAME-2P-U extension: N-16 plus the N-17 negative controls and common-gauge test. These experiments validate assumptions and measure sensitivity; they do not alter the closed P1-ID theorem or identify empirical component dominance by themselves.
 5. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
 6. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.
-7. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], where every row is labelled PLANNED.
+7. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], which now records N-00 as partial and leaves every extension-specific row explicitly planned.
 
 ## 5A. Literature and attribution actions — added 2026-08-16
 

@@ -1,0 +1,13 @@
+variant,model,statistic,published_mean,ours_mean,gap_mean,published_median,ours_median,gap_median
+adjusted,LOCF,BW distance,2.66,2.68,0.7%,2.33,2.39,2.5%
+adjusted,EWMA,BW distance,2.36,2.36,0.0%,2.28,2.23,2.0%
+adjusted,LOCF,Frobenius distance,12.51,12.81,2.4%,8.02,8.25,2.8%
+adjusted,EWMA,Frobenius distance,11.97,12.04,0.6%,9.81,9.81,0.0%
+adjusted,LOCF,risk prediction error,2.61,1.99,23.7%,0.91,1.13,23.9%
+adjusted,EWMA,risk prediction error,1.45,1.24,14.7%,0.89,0.88,1.1%
+raw,LOCF,BW distance,2.66,2.69,1.0%,2.33,2.39,2.4%
+raw,EWMA,BW distance,2.36,2.37,0.2%,2.28,2.23,2.1%
+raw,LOCF,Frobenius distance,12.51,12.80,2.3%,8.02,8.38,4.5%
+raw,EWMA,Frobenius distance,11.97,12.04,0.6%,9.81,9.86,0.5%
+raw,LOCF,risk prediction error,2.61,1.89,27.5%,0.91,0.93,2.7%
+raw,EWMA,risk prediction error,1.45,1.16,20.2%,0.89,0.80,10.4%
