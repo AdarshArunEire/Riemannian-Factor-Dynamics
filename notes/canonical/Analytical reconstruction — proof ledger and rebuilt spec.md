@@ -426,6 +426,7 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | [[Numerical suite — theorem-driven design matrix]] | planned analytical stress tests; no numerical verdicts |
 | [[OPEN OBLIGATIONS — current research actions]] | only live queue and execution order |
 | [[References and external claim audit]] | parent-paper metadata, external citations, and restored C-AUDIT corrections |
+| [[notation-map|Parent-to-project notation map]] | canonical translation among the parent paper, pinned R implementation, and Paper 1 notation; records non-equivalences without changing hypotheses, norms, targets, or rates |
 | [[FRAME-2P-U — conditional two-path debiasing theorem]] | canonical FRAME-2P-U theorem boundary, producer classification, and scope correction |
 | [[HE — canonical growing-energy theorem boundary]] | canonical bounded-tail/truncation HE theorem boundary, producer classification, target split, and sufficient phase regimes |
 | [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] | canonical safeguarded fixed-size BW statistical theorem plus fixed-margin matrix-size-uniform geometry boundary |

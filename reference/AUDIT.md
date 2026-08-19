@@ -197,8 +197,14 @@ eigenvalue-ratio selector — the one the canon's P-RATIO correction is about.
 The predeclaration asks: *which loss ranks RFM against LFM/LOCF/EWMA, and do
 BW-ranked and Frobenius-ranked comparisons ever disagree?*
 
-**They compute both. Side by side. In the same objects.** No new code is needed
-to ask the question — it is already in their output.
+**They compute both side by side in the same returned object.** No estimator
+reimplementation is needed: one retained `main_BWS(..., r = 15)` result
+contains the four complete curves.
+
+**Measured result (corrected 2026-08-19):** RFM has lower held-out FVU at all
+15 ranks under BW and 10 of 15 under Frobenius. Frobenius narrowly prefers LYB
+at ranks 2, 3, 11, 14, and 15, so the loss changes the winner at 5 of 15 ranks.
+This is a reconstruction comparison, not a forecasting result or selector.
 
 ### In-sample / test-set fit (`main_BWS`)
 
@@ -422,7 +428,8 @@ the kind of thing that is a gift rather than a criticism.
   the fifteen fits contribute nothing, and all fifteen discard the four FVU
   vectors `main_BWS` returns — the exact quantities `highest_value_check`
   needs. Sourcing their script therefore costs fifteen fits we cannot avoid
-  and cannot use.
+  and cannot use. The check itself should make one separate call at `r = 15`;
+  it must not repeat the discarded fifteen-fit loop.
 - **Where the time actually goes, and why the loop is worse than it looks.**
   `rfm_bws` (`BWS_util.R:445`) computes `mu_hat` via `mean_on_BWS` only when
   none is supplied — and `mean_on_BWS` takes no `r`. It is called with
@@ -487,9 +494,15 @@ No complex leakage on any finite case, so the `Re(...)` wrappers in their
    Agreement is ~2% on bulk statistics and ~5% on tail statistics once the
    day count of §2b is allowed for. See §2b.)*
 3. **`sp500_reproduce.R` is the target, not `sp500_analysis.R`.**
-4. **`highest_value_check` needs no new code.** `FVU_RFM_BWS` vs `FVU_LYB_BWS`
-   against `FVU_RFM_Euc` vs `FVU_LYB_Euc` is the disagreement test, already
-   computed. Read those four vectors and compare rankings factor-by-factor.
+4. **`highest_value_check` needs one parent fit, not fifteen.**
+   `main_BWS(..., r = 15)` returns all four length-15 vectors:
+   `FVU_RFM_BWS`, `FVU_LYB_BWS`, `FVU_RFM_Euc`, and `FVU_LYB_Euc`.
+   Read them from that single fit and compare rankings factor-by-factor. The
+   completed shared-mean run initially stored prefix means; these recover the
+   rank curve exactly as $v_r=r\bar v_r-(r-1)\bar v_{r-1}$. The corrected result
+   is RFM 15/15 under BW and 10/15 under Frobenius, with winner reversals at
+   ranks 2, 3, 11, 14, and 15. `R/run_parent_victory_lap.R` now writes the
+   returned curves directly.
 5. **The competitor set was mis-stated in our notes.** In-sample it is RFM vs
    **LYB**, one competitor. Out-of-sample it is RFM vs LFM vs LOCF vs EWMA.
    BUILD.md and the predeclaration both said LFM/LOCF/EWMA throughout.

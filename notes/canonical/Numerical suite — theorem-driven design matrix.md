@@ -10,7 +10,7 @@ updated: 2026-08-19
 
 ## 1. Scope and status
 
-Execution has begun, but the extension suite remains empirically unvalidated. The repository now contains audited SPD geometry and loss primitives, a rebuilt realised-covariance panel, and an APP-FIN parent-pipeline reproduction whose Python/R harness agrees to roundoff and whose published model rankings are preserved. N-00 is therefore **partial**: the parent simulations, full notation map, and predeclared factor-count/loss-ranking loop remain outstanding. The new HE, BW-uniformity, selector-repair, FRAME correction, and \(\nu\)-phase experiments remain unrun. No future simulation result can prove a theorem.
+Execution has begun, but the extension suite remains empirically unvalidated. The repository now contains audited SPD geometry and loss primitives, a rebuilt realised-covariance panel, an APP-FIN parent-pipeline reproduction whose Python/R harness agrees to roundoff and whose published model rankings are preserved, and [[notation-map|the full parent-to-project notation map]]. N-00 is therefore **partial**: the parent simulations and predeclared factor-count/loss-ranking loop remain outstanding. The new HE, BW-uniformity, selector-repair, FRAME correction, and \(\nu\)-phase experiments remain unrun. No future simulation result can prove a theorem.
 
 The primary targets are:
 
@@ -159,4 +159,4 @@ No reconstruction theorem is described as a forecasting guarantee.
 
 ## 8. Execution gate
 
-The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. N-00 has begun: the public environment and APP-FIN pipeline have been audited and reproduced, while the parent simulations, notation map, and factor-count/loss-ranking loop remain to be closed. N-16/N-17 and N-18c then extend that audited baseline rather than beginning from zero, while their correction-specific components remain new code. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness are not prerequisites unless the selected design consumes them.
+The load-bearing HE, BW, and FRAME-2P-U analytical campaigns are complete. N-00 has begun: the public environment and APP-FIN pipeline have been audited and reproduced and [[notation-map|the notation map]] is complete, while the parent simulations and factor-count/loss-ranking loop remain to be closed. N-16/N-17 and N-18c then extend that audited baseline rather than beginning from zero, while their correction-specific components remain new code. Infinite-memory cancellation, signed-AIRM, higher positive smoothing, and BW exponent-sharpness are not prerequisites unless the selected design consumes them.

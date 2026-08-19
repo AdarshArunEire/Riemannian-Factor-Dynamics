@@ -23,9 +23,9 @@
 #
 # WHAT THIS COSTS. Sourcing their script runs the k = 1:15 loop at line 156 --
 # fifteen full main_BWS fits -- and keeps only k = 15 for the factor plots. The
-# FVU vectors each fit returns are discarded. So highest_value_check needs its
-# own loop, and DO_FVU below pays for fifteen more fits. Run once with
-# DO_FVU <- FALSE to time it before committing to that.
+# FVU vectors each fit returns are discarded. The matched-rank follow-up is
+# R/run_parent_victory_lap.R: one main_BWS call at r = 15 returns the complete
+# rank-1-through-15 curves and writes them beside this harvest.
 #
 # THE CHECK TO READ FIRST, before RFM. Their script computes LOCF and EWMA
 # itself (lines 295-307, 246-262) from the panel we hand it. We already
@@ -34,74 +34,6 @@
 # evaluation code and not in the data -- and without this check we would have
 # read that as a data problem and gone looking in the wrong place.
 # experiments/check_parent_run.py does the comparison.
-
-DO_FVU    <- TRUE
-FVU_MAX_R <- 15
-FVU_CORES <- 1      # 1 = serial. See "PARALLELISM" below before raising it.
-FVU_SHARE_MU <- TRUE   # read "THE FRECHET MEAN DOES NOT DEPEND ON r" first
-
-# THE FRECHET MEAN DOES NOT DEPEND ON r, AND THIS IS WHERE ALL THE TIME GOES.
-#
-#   rfm_bws (BWS_util.R:445) computes mu_hat by mean_on_BWS ONLY when it is not
-#   supplied, and mean_on_BWS takes no r. It is called with tol = -1, so the
-#   early-exit test `loss_old - loss < tol` never fires and it always runs the
-#   full max.iter = 100 iterations. Each iteration draws a 30-matrix batch for
-#   the gradient but then evaluates `mean(geod_BWS(X, mu_new))` on ALL 204
-#   training matrices (BWS_util.R:252). That full pass, a hundred times, is the
-#   expensive part of a fit. The r-dependent part, LYB_fm, is an eigenproblem on
-#   a 78-dimensional vech and is comparatively free.
-#
-#   So their k = 1:15 loop recomputes the same r-independent Frechet mean
-#   fifteen times, and every fit costs about the same. main_BWS takes a `mu_hat`
-#   argument (main_func.R:73) and forwards it, precisely so you need not.
-#
-#   FVU_SHARE_MU computes it ONCE on the training block and passes it to all
-#   fifteen. That is roughly a 15x saving on this loop -- more than any core
-#   count buys -- and it uses their own parameter, with no edit to their code.
-#
-#   IT IS ALSO THE BETTER EXPERIMENT. mean_on_BWS is stochastic, so recomputing
-#   per r confounds the factor-count axis with mean-estimation noise. Holding
-#   mu_hat fixed makes r the only thing varying between the fifteen fits, which
-#   is what a comparison across r is supposed to mean. It does differ from what
-#   their loop does -- declare it -- but their loop discards these vectors, so
-#   there is no published FVU-by-r number it could disagree with.
-#
-# PARALLELISM. The FVU loop is embarrassingly parallel -- fifteen independent
-# main_BWS calls, one per r, sharing nothing. Three things to know before
-# raising FVU_CORES:
-#
-#   THE FLOOR IS NOT ZERO. Their own k = 1:15 loop (line 156) is fifteen serial
-#   fits inside a file we do not edit, and it is sunk cost no matter what we do
-#   here. Parallelising our loop takes the total from ~30 fits to ~16, not to
-#   two. Roughly a 45% saving, not a 15x one.
-#
-#   IT CHANGES THE NUMBERS, AND THAT IS FINE HERE. main_BWS is stochastic:
-#   mean_on_BWS draws `idx = sample(n, batch_size)` every iteration
-#   (BWS_util.R:242). Run serially after their set.seed(1), r = 1..15 consume
-#   one RNG stream in order; run in parallel, each worker gets its own. So the
-#   parallel FVU numbers are NOT the serial ones. That is acceptable *for this
-#   loop only*, because their script discards the FVU vectors and no published
-#   FVU-by-r figure exists to match. It would NOT be acceptable for the
-#   Figure 3/4 numbers, which is why nothing above this point is parallelised.
-#   clusterSetRNGStream makes our streams reproducible, so re-runs still agree
-#   with each other -- just not with the serial run. Say which you did.
-#
-#   WINDOWS HAS NO fork. PSOCK workers start empty, so each one sets its own
-#   working directory and sources main_func.R and BWS_util.R itself. BLAS
-#   threads are pinned to 1 per worker: these are 12x12 matrices, threaded BLAS
-#   buys nothing at that size, and fifteen workers each spawning threads only
-#   fight each other for cache.
-#
-#   HOW MANY WORKERS. With FVU_SHARE_MU the fits are near-equal in cost, so
-#   this is wave arithmetic, not load balancing: 15 tasks over p workers takes
-#   ceil(15/p) waves. p=5 and p=7 both take 3; p=8 takes 2. Going from 7 to 8
-#   removes a whole wave and 7 buys nothing over 5. So do NOT reflexively
-#   reserve a core -- on an 8-physical-core machine the right answer is 8.
-#
-# MEASURE BEFORE YOU BOTHER. Run once with DO_FVU <- FALSE and read the
-# "their script finished in X s" line: X/15 is one fit. If FVU_SHARE_MU already
-# collapses the loop to a fraction of that, cores are moot -- take the simple
-# serial run and keep the RNG story clean.
 
 root <- getwd()
 if (!dir.exists(file.path(root, "reference")))
@@ -176,92 +108,6 @@ write.csv(summ, file.path(outdir, "summary.csv"), row.names = FALSE)
 
 cat("\n-- as their legends would print them (Figures 3 and 4) --\n")
 print(format(summ, digits = 4))
-
-# ---- highest_value_check --------------------------------------------------
-# main_BWS returns FVU_RFM_BWS, FVU_RFM_Euc, FVU_LYB_BWS, FVU_LYB_Euc from one
-# call -- both metrics, both models. The P1-LOSS question is whether the
-# BW-ranked and Frobenius-ranked orderings of RFM against LYB ever disagree
-# along the factor-count axis. No reimplementation: read the four vectors.
-#
-# CAVEAT that must travel with any disagreement found (AUDIT 4): before a BW
-# distance is taken of an LYB prediction it is pushed onto the cone by
-# project_to_SPD(x_hat, 1e-6), while the Frobenius comparison uses the raw
-# prediction. The two losses are not scoring identical objects, and the repair
-# can only help the linear model on the BW side.
-if (DO_FVU) {
-  cat(sprintf("\nFVU loop, r = 1..%d (another %d fits, %d core%s)\n",
-              FVU_MAX_R, FVU_MAX_R, FVU_CORES, if (FVU_CORES > 1) "s" else ""))
-
-  mu_shared <- NULL
-  if (FVU_SHARE_MU) {
-    n_train <- dim(dta)[1] - 36          # main_BWS slices this way internally
-    set.seed(1)
-    t_mu <- proc.time()[["elapsed"]]
-    mu_shared <- mean_on_BWS(dta[1:n_train, , ], tau = 0.5, tol = -1,
-                             max.iter = 100, batch_size = 30, verbose = FALSE)
-    cat(sprintf("  shared Frechet mean computed once in %.1f s\n",
-                proc.time()[["elapsed"]] - t_mu))
-  }
-
-  one_fit <- function (k) {
-    res <- main_BWS(dta, r = k, test_size = 36, h = 6, batch_size = 30,
-                    max.iter = 100, return_predictions = TRUE,
-                    mu_hat = mu_shared)
-    data.frame(
-      r = k,
-      FVU_RFM_BWS = mean(res$FVU_RFM_BWS), FVU_LYB_BWS = mean(res$FVU_LYB_BWS),
-      FVU_RFM_Euc = mean(res$FVU_RFM_Euc), FVU_LYB_Euc = mean(res$FVU_LYB_Euc),
-      r_hat_RFM = as.numeric(res$r_hat_RFM)[1],
-      r_hat_LYB = as.numeric(res$r_hat_LYB)[1])
-  }
-
-  t_fvu <- proc.time()[["elapsed"]]
-  if (FVU_CORES > 1) {
-    library(parallel)
-    # capped at physical cores, NOT physical-minus-one: with equal-cost tasks
-    # that reservation can cost a full extra wave (see the note above).
-    n_cores <- min(FVU_CORES, detectCores(logical = FALSE), FVU_MAX_R)
-    cat(sprintf("  using %d workers (PSOCK)\n", n_cores))
-    cl <- makeCluster(n_cores)
-
-    # deterministic across re-runs, different from the serial stream -- declare it
-    clusterSetRNGStream(cl, iseed = 1)
-    clusterExport(cl, c("dta", "one_fit", "parent", "mu_shared"),
-                  envir = environment())
-    clusterEvalQ(cl, {
-      Sys.setenv(OMP_NUM_THREADS = "1", OPENBLAS_NUM_THREADS = "1",
-                 MKL_NUM_THREADS = "1")
-      setwd(parent)
-      source("./main_func.R"); source("./BWS_util.R")
-      NULL
-    })
-    # descending r: cost grows with r, so start the long pole first
-    out <- parLapplyLB(cl, rev(seq_len(FVU_MAX_R)), one_fit)
-    stopCluster(cl)
-    rows <- do.call(rbind, out)
-    rows <- rows[order(rows$r), ]
-  } else {
-    rows <- NULL
-    for (k in seq_len(FVU_MAX_R)) {
-      tk <- proc.time()[["elapsed"]]
-      rows <- rbind(rows, one_fit(k))
-      cat(sprintf("  r=%2d  %.1f s\n", k, proc.time()[["elapsed"]] - tk))
-    }
-  }
-  cat(sprintf("  FVU loop total %.1f s  (rng: %s; mu_hat: %s)\n",
-              proc.time()[["elapsed"]] - t_fvu,
-              if (FVU_CORES > 1) "per-worker streams, iseed=1" else "serial, their set.seed(1)",
-              if (FVU_SHARE_MU) "shared, computed once" else "recomputed per r, as they do"))
-  rows$BWS_favours <- ifelse(rows$FVU_RFM_BWS < rows$FVU_LYB_BWS, "RFM", "LYB")
-  rows$Euc_favours <- ifelse(rows$FVU_RFM_Euc < rows$FVU_LYB_Euc, "RFM", "LYB")
-  rows$disagree    <- rows$BWS_favours != rows$Euc_favours
-
-  write.csv(rows, file.path(outdir, "fvu_by_factor.csv"), row.names = FALSE)
-  cat("\n-- highest_value_check: does the loss change the ranking? --\n")
-  print(format(rows, digits = 4))
-  cat(sprintf("\ndisagreements at %d of %d factor counts\n",
-              sum(rows$disagree), nrow(rows)))
-}
 
 dev.off()
 setwd(old_wd)

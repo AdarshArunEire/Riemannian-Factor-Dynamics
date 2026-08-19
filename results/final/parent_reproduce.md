@@ -3,9 +3,9 @@
 Measurement only: no assertions, no pass/fail. Re-run and append a
 dated section rather than editing.
 
-- generated: 2026-08-18 23:00 UTC
+- generated: 2026-08-19 12:23 UTC
 - seed: 20260816
-- numpy 2.5.2, python 3.14.3
+- numpy 2.5.2, python 3.14.7
 - machine: Intel64 Family 6 Model 165 Stepping 5, GenuineIntel / Windows-11-10.0.22631-SP0
 - eps: 2.220446e-16
 - their code sourced verbatim; no upstream file modified
@@ -25,6 +25,23 @@ set from them. RFM and LFM are the reproduction.
 set of decimals. A number outside the band with the ranking intact is a
 data difference; a ranking that flips is a reproduction failure.
 
+Not corrected for: the ~20-vs-21 trading-day difference of AUDIT 2b.
+
+**Stage 4: RFM has lower held-out FVU at 15/15 ranks under BW
+and 10/15 under Frobenius. The winners differ at
+5/15 ranks: 2, 3, 11, 14, 15.**
+The mean relative RFM advantage is 35.55% under BW
+and 4.13% under Frobenius.
+
+Stage 4 is a matched-rank held-out reconstruction comparison, not a
+forecasting test and not a factor-count selector. LYB predictions are
+projected to SPD before BW scoring but not before Frobenius scoring, so
+the five reversals combine loss geometry with that asymmetric repair.
+
+Provenance correction (2026-08-19): the completed shared-mean run first
+stored prefix means. The rank-specific curves here were recovered exactly
+as v_r = r*mean_r - (r-1)*mean_(r-1). Legacy CSV SHA-256:
+5353c10b887e45eaa6c7572643af25d54db564bf3acf0063f6f091aaf3e367db.
 ## Measured
 
 | stage | model | statistic | moment | published/ours | theirs-on-our-panel | gap | verdict |
@@ -71,5 +88,20 @@ data difference; a ranking that flips is a reproduction failure.
 | 3 ranking | - | Frobenius | median | RFM < LOCF < EWMA < LFM | RFM < LOCF < EWMA < LFM |  | same |
 | 3 ranking | - | risk error | mean | RFM < EWMA < LOCF < LFM | RFM < EWMA < LOCF < LFM |  | same |
 | 3 ranking | - | risk error | median | RFM < EWMA < LOCF < LFM | RFM < EWMA < LOCF < LFM |  | same |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=1 | 0.532488 / 1.188170 | 0.152508 / 0.327593 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=2 | 0.368458 / 0.516332 | 0.130046 / 0.115519 |  | DIFFERENT: BW RFM; Frob LYB |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=3 | 0.305767 / 0.432077 | 0.074726 / 0.072743 |  | DIFFERENT: BW RFM; Frob LYB |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=4 | 0.286611 / 0.424781 | 0.068257 / 0.071215 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=5 | 0.263131 / 0.368438 | 0.060904 / 0.063905 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=6 | 0.249981 / 0.358864 | 0.059400 / 0.061523 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=7 | 0.241519 / 0.345939 | 0.057628 / 0.060153 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=8 | 0.228694 / 0.344851 | 0.055079 / 0.056214 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=9 | 0.221511 / 0.341780 | 0.052214 / 0.054726 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=10 | 0.216782 / 0.337696 | 0.050733 / 0.051105 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=11 | 0.211440 / 0.333670 | 0.048718 / 0.048351 |  | DIFFERENT: BW RFM; Frob LYB |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=12 | 0.208200 / 0.329950 | 0.046980 / 0.047284 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=13 | 0.201413 / 0.329171 | 0.045649 / 0.046190 |  | same winner |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=14 | 0.196714 / 0.327652 | 0.044852 / 0.044617 |  | DIFFERENT: BW RFM; Frob LYB |
+| 4 matched-rank FVU | RFM vs LYB | BW / Frobenius | r=15 | 0.190177 / 0.325916 | 0.041645 / 0.041433 |  | DIFFERENT: BW RFM; Frob LYB |
 
-Not corrected for: the ~20-vs-21 trading-day difference of AUDIT 2b.
+The corrected victory-lap runner now emits the returned curves directly.

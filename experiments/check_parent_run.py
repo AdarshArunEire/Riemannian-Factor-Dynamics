@@ -35,6 +35,7 @@ STAGE 2 -- DID THE REPRODUCTION SUCCEED?
 from _common import header, write, ROOT, FINAL
 
 import csv
+import math
 import sys
 
 RUN = ROOT / "results" / "raw" / "parent_run"
@@ -92,6 +93,48 @@ def gap(a, b):
     return abs(a - b) / denom if denom else 0.0
 
 
+def fvu_winner(rfm, lyb):
+    if rfm < lyb:
+        return "RFM"
+    if rfm > lyb:
+        return "LYB"
+    return "tie"
+
+
+def read_rank_fvu(path):
+    """Validate the rank-specific curves written by run_parent_victory_lap.R."""
+    raw = read_csv(path)
+    required = {
+        "r", "FVU_RFM_BWS", "FVU_LYB_BWS", "FVU_RFM_Euc",
+        "FVU_LYB_Euc", "BWS_favours", "Euc_favours", "disagree",
+    }
+    if not raw or not required.issubset(raw[0]):
+        sys.exit(f"{path} does not contain the rank-specific FVU schema")
+    if len(raw) != 15:
+        sys.exit(f"{path} has {len(raw)} rows; expected ranks 1 through 15")
+
+    rows = []
+    for expected_r, item in enumerate(raw, start=1):
+        rank = int(item["r"])
+        if rank != expected_r:
+            sys.exit(f"{path} rank sequence breaks at {rank}; expected {expected_r}")
+        values = {key: float(item[key]) for key in (
+            "FVU_RFM_BWS", "FVU_LYB_BWS", "FVU_RFM_Euc", "FVU_LYB_Euc"
+        )}
+        if not all(math.isfinite(value) and value >= 0 for value in values.values()):
+            sys.exit(f"{path} contains an invalid FVU at rank {rank}")
+        bw = fvu_winner(values["FVU_RFM_BWS"], values["FVU_LYB_BWS"])
+        frob = fvu_winner(values["FVU_RFM_Euc"], values["FVU_LYB_Euc"])
+        disagree = bw != frob
+        if item["BWS_favours"] != bw or item["Euc_favours"] != frob:
+            sys.exit(f"{path} contains a stale winner label at rank {rank}")
+        if (item["disagree"].strip().upper() == "TRUE") != disagree:
+            sys.exit(f"{path} contains a stale disagreement flag at rank {rank}")
+        rows.append({"r": rank, **values, "bw": bw, "frob": frob,
+                     "disagree": disagree})
+    return rows
+
+
 def main():
     import numpy as np
 
@@ -142,13 +185,30 @@ def main():
                          "same" if ours_order == pub_order else "DIFFERENT"))
             notes.append((stat, moment, ours_order == pub_order))
 
-    fvu = RUN / "fvu_by_factor.csv"
-    if fvu.exists():
-        d = read_csv(fvu)
-        n_dis = sum(1 for r in d if r["disagree"].strip().upper() == "TRUE")
-        rows.append(("4 P1-LOSS", "RFM vs LYB", "FVU ranking", "r = 1..%d" % len(d),
-                     "", "", f"{n_dis}/{len(d)}",
-                     "BW and Frobenius disagree" if n_dis else "no disagreement"))
+    # ---- stage 4: matched-rank representation under the two losses -------
+    fvu = read_rank_fvu(RUN / "fvu_by_factor.csv")
+    bw_wins = sum(item["bw"] == "RFM" for item in fvu)
+    frob_wins = sum(item["frob"] == "RFM" for item in fvu)
+    disagreements = sum(item["disagree"] for item in fvu)
+    disagreement_ranks = [item["r"] for item in fvu if item["disagree"]]
+    mean_bw_gain = sum(
+        (item["FVU_LYB_BWS"] - item["FVU_RFM_BWS"]) / item["FVU_LYB_BWS"]
+        for item in fvu
+    ) / len(fvu)
+    mean_frob_gain = sum(
+        (item["FVU_LYB_Euc"] - item["FVU_RFM_Euc"]) / item["FVU_LYB_Euc"]
+        for item in fvu
+    ) / len(fvu)
+    for item in fvu:
+        verdict = ("same winner" if not item["disagree"] else
+                   f"DIFFERENT: BW {item['bw']}; Frob {item['frob']}")
+        rows.append((
+            "4 matched-rank FVU", "RFM vs LYB", "BW / Frobenius",
+            f"r={item['r']}",
+            f"{item['FVU_RFM_BWS']:.6f} / {item['FVU_LYB_BWS']:.6f}",
+            f"{item['FVU_RFM_Euc']:.6f} / {item['FVU_LYB_Euc']:.6f}",
+            "", verdict,
+        ))
 
     lines = header("B3.4b -- their estimator, our panel",
                    extra=["their code sourced verbatim; no upstream file modified",
@@ -170,6 +230,23 @@ def main():
         "data difference; a ranking that flips is a reproduction failure.",
         "",
         "Not corrected for: the ~20-vs-21 trading-day difference of AUDIT 2b.",
+        "",
+        f"**Stage 4: RFM has lower held-out FVU at {bw_wins}/15 ranks under BW",
+        f"and {frob_wins}/15 under Frobenius. The winners differ at",
+        f"{disagreements}/15 ranks: {', '.join(map(str, disagreement_ranks))}.**",
+        f"The mean relative RFM advantage is {100 * mean_bw_gain:.2f}% under BW",
+        f"and {100 * mean_frob_gain:.2f}% under Frobenius.",
+        "",
+        "Stage 4 is a matched-rank held-out reconstruction comparison, not a",
+        "forecasting test and not a factor-count selector. LYB predictions are",
+        "projected to SPD before BW scoring but not before Frobenius scoring, so",
+        "the five reversals combine loss geometry with that asymmetric repair.",
+        "",
+        "Provenance correction (2026-08-19): the completed shared-mean run first",
+        "stored prefix means. The rank-specific curves here were recovered exactly",
+        "as v_r = r*mean_r - (r-1)*mean_(r-1). Legacy CSV SHA-256:",
+        "5353c10b887e45eaa6c7572643af25d54db564bf3acf0063f6f091aaf3e367db.",
+        "The corrected victory-lap runner now emits the returned curves directly.",
     ]
     write("parent_reproduce", lines,
           ["stage", "model", "statistic", "moment", "published/ours",
@@ -178,6 +255,8 @@ def main():
     print(f"\nstage 1 worst harness disagreement: {worst_harness:.3e}")
     print(f"stage 2 in band: {sum(verdicts)}/{len(verdicts)}")
     print(f"stage 3 rankings preserved: {sum(ok for _, _, ok in notes)}/{len(notes)}")
+    print(f"stage 4 RFM wins: BW {bw_wins}/15, Frobenius {frob_wins}/15")
+    print(f"stage 4 loss-ranking disagreements: {disagreements}/15")
 
     if worst_harness > HARNESS_GATE:
         sys.exit("STAGE 1 FAILED -- our evaluation code disagrees with theirs on "

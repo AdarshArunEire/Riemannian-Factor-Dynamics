@@ -146,8 +146,8 @@ Paper 2 remains standalone and parked. Its cross-tangent algebra, localised conc
 ## 5. Execution order
 
 1. Preserve the closed P1-ID quotient and failure boundaries when specifying any model or application; new empirical work may test assumptions or sensitivity but does not replace the identified estimand.
-2. In the computational track, finish N-00 unchanged. The public environment and APP-FIN pipeline are audited and reproduced; the parent simulations, full notation map, and predeclared factor-count/loss-ranking loop remain. Complete those before moving-centre sensitivity modifications.
-3. Maintain one notation/conventions ledger while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
+2. In the computational track, finish N-00 unchanged. The public environment and APP-FIN pipeline are audited and reproduced, and [[notation-map|the full parent-to-project notation map]] is complete; the parent simulations and predeclared factor-count/loss-ranking loop remain. Complete those before moving-centre sensitivity modifications.
+3. Maintain [[notation-map|the notation/conventions ledger]] while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
 4. After N-00, run the separate identification diagnostics N-18/N-18a/N-18b, then N-18c's static-versus-moving phase diagram after its placebo and positive controls pass. Implement the smallest proof-faithful FRAME-2P-U extension: N-16 plus the N-17 negative controls and common-gauge test. These experiments validate assumptions and measure sensitivity; they do not alter the closed P1-ID theorem or identify empirical component dominance by themselves.
 5. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
 6. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.

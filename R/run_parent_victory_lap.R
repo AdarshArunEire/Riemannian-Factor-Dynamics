@@ -1,21 +1,21 @@
 # R/run_parent_victory_lap.R
 #
-# ONE-OFF FAST FOLLOW-UP AFTER run_parent_reproduce.R HAS ALREADY COMPLETED
-# WITH DO_FVU <- FALSE.
+# ONE-OFF FAST FOLLOW-UP AFTER run_parent_reproduce.R HAS ALREADY COMPLETED.
 #
 # This deliberately:
 #   1. keeps the already-saved Figure 3/4 CSVs;
 #   2. does NOT source all of sp500_reproduce.R;
 #   3. evaluates only its setup section (before the k=1:15 loop) to recover dta;
 #   4. computes ONE shared Frechet mean;
-#   5. passes that same mu_hat into r = 1:15.
+#   5. calls main_BWS once at r=15 and retains its four complete rank curves.
 #
-# So the 15 expensive Frechet-mean calculations from the parent reproduction
-# are NOT repeated.
+# The former version called main_BWS at every r and stored mean(FVU[1:r]).
+# Those were prefix means, not rank-r FVU values. The corrected result is the
+# vector returned by the single r=15 fit. A legacy prefix-mean file can be
+# recovered exactly by v_r = r * mean_r - (r - 1) * mean_{r-1}, provided the
+# same mu_hat was supplied to every fit, as it was in the recorded run.
 
-DO_FVU    <- TRUE
 FVU_MAX_R <- 15
-FVU_CORES <- 1
 
 # From the audited parent script: expensive k=1:15 loop begins at line 156.
 SETUP_LAST_LINE <- 155L
@@ -82,7 +82,7 @@ source("./BWS_util.R")
 # -------------------------------------------------------------------------
 # THE ONLY FRECHET-MEAN CALCULATION IN THIS SCRIPT.
 #
-# The previous DO_FVU=FALSE run did not save mu_hat to disk, so if that R
+# The previous parent reproduction did not save mu_hat to disk, so if that R
 # process is already gone there is nothing to reload. One recomputation is
 # therefore necessary. Crucially, it is done ONCE, not once per r.
 # -------------------------------------------------------------------------
@@ -106,84 +106,44 @@ cat(sprintf(
   proc.time()[["elapsed"]] - t_mu
 ))
 
-# -------------------------------------------------------------------------
-# r = 1..15 with mu_hat supplied.
-# This is the cheap r-dependent part.
-# -------------------------------------------------------------------------
-one_fit <- function(k) {
-  res <- main_BWS(
-    dta,
-    r = k,
-    test_size = 36,
-    h = 6,
-    batch_size = 30,
-    max.iter = 100,
-    return_predictions = TRUE,
-    mu_hat = mu_shared
-  )
-
-  data.frame(
-    r = k,
-    FVU_RFM_BWS = mean(res$FVU_RFM_BWS),
-    FVU_LYB_BWS = mean(res$FVU_LYB_BWS),
-    FVU_RFM_Euc = mean(res$FVU_RFM_Euc),
-    FVU_LYB_Euc = mean(res$FVU_LYB_Euc),
-    r_hat_RFM = as.numeric(res$r_hat_RFM)[1],
-    r_hat_LYB = as.numeric(res$r_hat_LYB)[1]
-  )
-}
-
-cat(sprintf(
-  "\nFVU victory lap, r = 1..%d; shared mu_hat supplied to every fit\n",
-  FVU_MAX_R
-))
+# One r=15 call returns all four curves at ranks 1,...,15. Calling once per
+# rank is both redundant and the source of the old prefix-mean reporting bug.
+cat(sprintf("\nFVU victory lap: one r=%d fit with shared mu_hat\n", FVU_MAX_R))
 t_fvu <- proc.time()[["elapsed"]]
+res <- main_BWS(
+  dta,
+  r = FVU_MAX_R,
+  test_size = 36,
+  h = 6,
+  batch_size = 30,
+  max.iter = 100,
+  return_predictions = TRUE,
+  mu_hat = mu_shared
+)
 
-if (FVU_CORES > 1) {
-  library(parallel)
+curves <- list(
+  FVU_RFM_BWS = as.numeric(res$FVU_RFM_BWS),
+  FVU_LYB_BWS = as.numeric(res$FVU_LYB_BWS),
+  FVU_RFM_Euc = as.numeric(res$FVU_RFM_Euc),
+  FVU_LYB_Euc = as.numeric(res$FVU_LYB_Euc)
+)
+curve_lengths <- vapply(curves, length, integer(1))
+if (any(curve_lengths != FVU_MAX_R))
+  stop(sprintf("unexpected FVU curve lengths: %s",
+               paste(curve_lengths, collapse = ",")))
+if (any(!is.finite(unlist(curves, use.names = FALSE))))
+  stop("main_BWS returned a non-finite FVU")
 
-  n_cores <- min(FVU_CORES, detectCores(logical = FALSE), FVU_MAX_R)
-  cat(sprintf("using %d PSOCK workers\n", n_cores))
-
-  cl <- makeCluster(n_cores)
-  clusterSetRNGStream(cl, iseed = 1)
-  clusterExport(
-    cl,
-    c("dta", "one_fit", "parent", "mu_shared"),
-    envir = environment()
-  )
-
-  clusterEvalQ(cl, {
-    Sys.setenv(
-      OMP_NUM_THREADS = "1",
-      OPENBLAS_NUM_THREADS = "1",
-      MKL_NUM_THREADS = "1"
-    )
-    setwd(parent)
-    source("./main_func.R")
-    source("./BWS_util.R")
-    NULL
-  })
-
-  out <- parLapplyLB(cl, rev(seq_len(FVU_MAX_R)), one_fit)
-  stopCluster(cl)
-
-  rows <- do.call(rbind, out)
-  rows <- rows[order(rows$r), ]
-
-} else {
-  rows <- NULL
-
-  for (k in seq_len(FVU_MAX_R)) {
-    tk <- proc.time()[["elapsed"]]
-    rows <- rbind(rows, one_fit(k))
-    cat(sprintf("  r=%2d  %.1f s\n",
-                k, proc.time()[["elapsed"]] - tk))
-  }
-}
+rows <- data.frame(
+  r = seq_len(FVU_MAX_R),
+  FVU_RFM_BWS = curves$FVU_RFM_BWS,
+  FVU_LYB_BWS = curves$FVU_LYB_BWS,
+  FVU_RFM_Euc = curves$FVU_RFM_Euc,
+  FVU_LYB_Euc = curves$FVU_LYB_Euc
+)
 
 cat(sprintf(
-  "FVU r-loop finished in %.1f s\n",
+  "FVU curve fit finished in %.1f s\n",
   proc.time()[["elapsed"]] - t_fvu
 ))
 
@@ -208,7 +168,4 @@ cat(sprintf(
 
 setwd(old_wd)
 
-cat(sprintf(
-  "\nDONE. Existing parent results were left untouched.\nFVU written -> %s\n",
-  fvu_file
-))
+cat(sprintf("\nDONE. FVU written -> %s\n", fvu_file))

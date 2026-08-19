@@ -148,7 +148,7 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 P1-ID is closed and supplies the interpretation boundary. N-18 checks its exact structural consequences; N-18c measures the target-specific static-versus-moving \(\nu\)-phase diagram. Both are sensitivity diagnostics rather than proof, and neither presumes a unique crossover.
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 is partially complete: the APP-FIN pipeline has been reproduced, while the parent simulations, notation map, and factor-count/loss-ranking loop remain before moving-centre modifications. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
+All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 is partially complete: the APP-FIN pipeline has been reproduced and [[notation-map|the notation map]] is complete, while the parent simulations and factor-count/loss-ranking loop remain before moving-centre modifications. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
 
 ## Related notes
 

@@ -30,9 +30,10 @@ The original order was written before three things were known. It is reordered, 
 | ~~1~~ | ~~**B1.4** loss module~~ | **done** — `py/rfd/eval/losses.py`, 315 tests green |
 | ~~2~~ | ~~**B3.4a** RC panel, δ and κ~~ | **done** — panel built and verified against the published LOCF/EWMA numbers |
 | ~~3~~ | ~~**B3.1** clone + audit~~ | **done** — `reference/AUDIT.md`, commit `c07d49c` |
-| 1 | **B3.2 → B3.3** — run their sims, notation map | the reproduction proper |
-| 4 | **B3.4b** — APP-FIN, loss-ranking check first | the payoff |
-| 5 | Phase 4 — the estimator stack | |
+| ~~4~~ | ~~**B3.3** notation map~~ | **done** — notes/canonical/notation-map.md, parent paper ↔ pinned code ↔ canon |
+| ~~5~~ | ~~**B3.4b** — APP-FIN reproduction and loss-ranking check~~ | **done** — forecasting order reproduced; matched-rank losses disagree at 5/15 ranks |
+| 1 | **B3.2** — run their simulations | remaining reproduction task |
+| 2 | Phase 4 — the estimator stack | |
 | — | **B2.1 → B2.3** — falsifiers | **fire overnight, any time.** Never block on these |
 
 The principle: **latency-bound work first, compute-bound work unattended, desk work when blocked.** Data acquisition and correspondence have latency measured in days. N-19 has latency measured in hours and needs nobody watching.
@@ -264,11 +265,13 @@ The wrapper must abort if either audited defect changes: exactly one bare worker
 
 ---
 
-### [ ] B3.3 — notation map (2 h)
+### [x] B3.3 — notation map (completed 2026-08-19)
 
 **Do.** `notes/canonical/notation-map.md`. Every object in their code ↔ every object in your canon.
 
 **How.** A table: their symbol, their file and line, your symbol, your canonical note. Cover at minimum $\kappa$ vs your $s_n$ and $\Delta_n$, their $\lambda_r$ vs your $\lambda_r(\mathbb L_n)$, their loading estimator vs your $\mathcal S_{X,n}$, and their raw ratio (Eq. 5) vs your threshold/ridged selectors.
+
+**Completed.** `notes/canonical/notation-map.md` pins the paper/code/project crosswalk at upstream commit `c07d49c`, accounts for every formal, returned field, and substantive local symbol in `main_func.R`, maps the supporting BW/sphere APIs, and records all non-equivalences needed by reproduction and Paper 1.
 
 **Done when.** Every symbol in their `main_func.R` has a row. **Notation-only rewriting must not change any hypothesis, norm, target or rate** — if you find yourself wanting to, that's a finding, log it.
 
@@ -276,17 +279,18 @@ The wrapper must abort if either audited defect changes: exactly one bare worker
 
 ---
 
-### [ ] B3.4b — APP-FIN (3 h)
+### [x] B3.4b — APP-FIN (completed 2026-08-19)
 
 **Do.** Run **`sp500_reproduce.R`** against the panel from B3.4a. Not `sp500_analysis.R` — same analysis, but unseeded and with older plotting. `sp500_reproduce.R` calls `set.seed(1)`, is single-threaded, and its only randomness is the mini-batch sampling in `mean_on_BWS`. It is the one that might reproduce exactly.
 
-**How — four commands, from the repo root.** Install `maotai`, `expm`, `deSolve` first, then `renv::snapshot()` (the B3.1 leftover).
+**How — five commands, from the repo root.** Install `maotai`, `expm`, `deSolve` first, then `renv::snapshot()` (the B3.1 leftover). The first three run the published application, the fourth retains the matched-rank FVU curves, and the final command validates and reports both.
 
 ```
 python experiments/export_for_parent.py      # panel + VIX -> their input dir
 Rscript R/make_panel_rdata.R                 # -> sp500_12bySector.RData
 Rscript R/run_parent_reproduce.R             # sources THEIR script verbatim
-python experiments/check_parent_run.py       # -> results/final/parent_reproduce.md
+Rscript R/run_parent_victory_lap.R            # one fit -> rank-specific FVU curves
+python experiments/check_parent_run.py       # -> integrated parent_reproduce report
 ```
 
 **The blocker nobody predicted:** `sp500_covariance/` **does not exist in their repo**, and nothing in the repo builds it. The RC panel is an *input* to their code. Step 1 supplies it; `reference/PROVENANCE.md` records that a directory was added and no upstream file touched.
@@ -297,9 +301,11 @@ python experiments/check_parent_run.py       # -> results/final/parent_reproduce
 
 **Done when.** Every divergence from the paper's reported numbers is logged rather than repaired. Bands were fixed **before** this ran — 2% bulk, 6% tail, `config/predeclaration.yaml` amendment 2026-08-18 — and were set from LOCF and EWMA, which fit nothing. Expect *approximate* reproduction only; the ~20-vs-21 trading-day difference of AUDIT §2b is **not** corrected for. The number to judge on is Stage 3, the **ranking**: a decimal outside the band with the ordering intact is a data difference, a flipped ordering is a reproduction failure.
 
-> **The highest-value check needs no new code, but it does need its own loop.** Their `k = 1:15` loop at line 156 calls `main_BWS` fifteen times and keeps only `xhat`, discarding the FVU vectors every fit returns — so `run_parent_reproduce.R` re-runs it under `DO_FVU`, at the cost of fifteen more fits. Time one with `DO_FVU <- FALSE` first. `main_BWS` already returns `FVU_RFM_BWS`, `FVU_LYB_BWS`, `FVU_RFM_Euc`, `FVU_LYB_Euc` — both metrics, both models, one call. Whether the BW-ranked and Frobenius-ranked orderings ever disagree along the factor-count axis is four vectors and a comparison.
+> **The highest-value check needs one additional fit, not a loop of fits.** Their `k = 1:15` loop at line 156 calls `main_BWS` fifteen times and discards the FVU vectors. But one `main_BWS(..., r = 15)` call already returns all four length-15 curves: `FVU_RFM_BWS`, `FVU_LYB_BWS`, `FVU_RFM_Euc`, and `FVU_LYB_Euc`. `run_parent_victory_lap.R` retains them. Whether BW and Frobenius prefer different model families is then a pointwise comparison of those curves.
 >
 > Two things to check before attributing any disagreement to P1-LOSS. LYB predictions are pushed onto the cone by `project_to_SPD(x_hat, 1e-6)` **before** the BW distance is taken but not before the Frobenius one, so the two losses are not scoring identical objects and the repair can only help the linear model on the BW side. And in the out-of-sample comparison RFM gets `r=2` while LFM gets `r=1` — not matched on capacity.
+
+**Result, corrected 2026-08-19.** The completed shared-mean run originally stored `mean(FVU[1:r])`, a prefix average. Because the same mean and deterministic rank curves were used at every `r`, the desired curve was recovered exactly by $v_r=r\bar v_r-(r-1)\bar v_{r-1}$. RFM wins 15/15 ranks under BW and 10/15 under Frobenius; the winner reverses at ranks 2, 3, 11, 14, and 15. `run_parent_victory_lap.R` now writes the returned curves directly, and `check_parent_run.py` integrates the result with the forecasting reproduction. No rerun is required.
 
 **Correction to what we assumed.** There are *two* comparisons, not one. In-sample it is RFM vs **LYB** alone. Out-of-sample it is RFM / LFM / LOCF / EWMA(0.94) over the last 36 months, scored four ways: sine-θ subspace distance on leading eigenspaces, squared BW, Frobenius (**not** squared — the arrays are stored inconsistently, see AUDIT §4), and GMV risk error under weights taken from the *previous* month's realised covariance, identically for all four models.
 
