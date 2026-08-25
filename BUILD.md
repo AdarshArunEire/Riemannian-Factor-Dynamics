@@ -11,6 +11,37 @@ reordered: 2026-08-18
 
 The theory notes live in `notes/`. This file is the other thing: **what to actually type, in what order.**
 
+## Current Paper 1 closure queue — 2026-08-25
+
+This queue supersedes the older running-order table below without deleting its
+history. B4.2/N-LS-A, B4.5/N-01, the fixed-rank diagnostic, the eleven-cell
+control matrix, the orientation phase grid, and the low-$n$ amplitude
+attribution are complete. P1-BW-CLOSE is also complete: all 496 frozen tasks
+were recorded without an ordinary error or failed verdict, the fixed-size safe
+cells stayed in their declared generated domain, and every hostile cell exposed
+or handled its intended boundary. Rank-positive synthetic recovery results use
+the known true rank; Paper 1 makes no automatic-rank claim. The amplitude result
+localizes factor-score inefficiency to the feasible centre/Log/polygon/frame row
+bundle; loading-direction estimation is not the low-sample bottleneck on the
+declared B0 DGP. P1-PARENT-SHARED is now complete as well: all 576 literal
+parent/RFD paired BW draws finished cleanly and exposed a sharp orientation
+boundary rather than universal dominance.
+
+| order | task | terminal condition |
+|---:|---|---|
+| closed | **P1-BW-CLOSE** — compact fixed-size BW matrix | **COMPLETE, QUALIFIED FIXED-RANK PASS.** See `results/final/bw_closure_adjudication/report.md` |
+| closed | **P1-PARENT-SHARED** — literal parent on common BW draws | **COMPLETE.** All 576 draws completed with zero failures/fallbacks. Parent wins every home/fixed/aligned draw; RFD wins every mixed/orthogonal/curved draw. See `results/final/parent_rfd_bw_parity_adjudication/report.md` and `notebooks/parent_rfd_bw_parity_plot_lab.ipynb` |
+| 1 | **P1-APPFIN-ID** — non-forecasting flagship illustration | On the rebuilt 240-month 12-stock BW panel, fit literal parent RFM and RFD at fixed \(r=2\); quantify centre motion, its inside/outside-parent-loading decomposition, loading-space/reconstruction sensitivity, Factor 1/VIX interpretation, and numerical/theorem diagnostics. Ranks \(1,\ldots,15\) are sensitivity only, never selected truth |
+| 2 | **P1-FREEZE** — public supplement and manuscript | canonical links updated once, package install works in a fresh environment, all figures regenerate from frozen inputs, immutable tag created |
+
+The full N-10 shrinking-margin, N-15 growing-size, FRAME-2P-U, forecasting,
+exhaustive N-18 phase, and structural time-varying-rank programmes are not
+Paper 1 gates. Forecasting is deliberately deferred until factor-score
+magnitudes and rank policy can be treated together rather than hidden behind a
+premature VAR comparator. The downstream score-filtering, structural
+adaptive-rank, online-expert, and refit-scheduling programme is canonically parked in
+[[Future application programme — factor scores, predictive rank, and online RFD]].
+
 ## What changed on 2026-08-18, and why
 
 The original order was written before three things were known. It is reordered, not corrected — the tasks were right, the sequencing assumed facts that have since been replaced by measurements.
@@ -32,9 +63,13 @@ The original order was written before three things were known. It is reordered, 
 | ~~3~~ | ~~**B3.1** clone + audit~~ | **done** — `reference/AUDIT.md`, commit `c07d49c` |
 | ~~4~~ | ~~**B3.3** notation map~~ | **done** — notes/canonical/notation-map.md, parent paper ↔ pinned code ↔ canon |
 | ~~5~~ | ~~**B3.4b** — APP-FIN reproduction and loss-ranking check~~ | **done** — forecasting order reproduced; matched-rank losses disagree at 5/15 ranks |
-| 1 | **B3.2** — run their simulations | remaining reproduction task |
-| 2 | Phase 4 — the estimator stack | |
-| — | **B2.1 → B2.3** — falsifiers | **fire overnight, any time.** Never block on these |
+| 1 | **B4.2-BWCONST** — finish the finite-sample bandwidth validation | already running; freezes the centre-estimator constant without changing its theorem |
+| 2 | **B4.5 / N-01** — bounded-energy factor-recovery baseline | first end-to-end check of the complete RFD estimator |
+| 3 | **B5-P1** — Paper 1 control matrix | identifies when RFD helps, ties, or must fail |
+| 4 | **B5.5 + B5.6** — reconstruction, forecasting, and information-gain curves | supplies the paper's positive result rather than centre estimation alone |
+| 5 | **P1-FREEZE** — manuscript, reader-facing repository, tagged release | stop expanding the first paper once the contract below is met |
+| — | **B3.2** — run the parent simulations | remaining reproduction task; run unattended and do not block estimator work |
+| — | **B2.1 → B2.3** — falsifiers | fire overnight when useful; only a falsification can reopen the Paper 1 theorem |
 
 The principle: **latency-bound work first, compute-bound work unattended, desk work when blocked.** Data acquisition and correspondence have latency measured in days. N-19 has latency measured in hours and needs nobody watching.
 
@@ -48,6 +83,150 @@ The principle: **latency-bound work first, compute-bound work unattended, desk w
 - **Anything that disagrees with a theorem gets written down, not tuned away.** That's the whole reason the numbers exist.
 
 **The one rule for the repo:** `sandbox/` may import from `py/rfd/`. Nothing ever imports from `sandbox/`. When scratch code proves useful, promote it into the package and give it a test.
+
+---
+
+## Paper 1 freeze contract — a short foundational paper
+
+This contract governs the first submission and overrides the more expansive wishlist in Phase 5. Paper 1 is not a catalogue of every proved branch. Its single story is:
+
+> A fixed-centre Riemannian factor model cannot, in general, separate centre drift from a persistent leading factor. RFD states the identification boundary, estimates the moving centre and common loading space, and recovers that space in growing tangent dimension.
+
+The scientific contribution is **identification**, not an accusation that the parent's first factor is spurious. Under the parent's centring assumptions, centre drift and a persistent leading factor can be superposed; without additional structure the split is not identified. The estimator and rates matter because they show what can be recovered once that separation is made explicit.
+
+### What belongs in the main paper
+
+Target length: approximately 20 pages before references, with technical proofs separated from the narrative.
+
+| section | purpose | rough length |
+|---|---|---:|
+| Introduction | the centre-drift/factor identification problem and the contribution | 2.5 pp |
+| Model and identification | exact equivalence classes, separability conditions, and impossibility boundary | 3.5 pp |
+| RFD estimator | three-scale centre, polygonal frame, common-reference rows, lag operator, loading space, and selectors | 4 pp |
+| Theory | the robust centre and growing-dimension loading results, with proof ideas and assumption map | 3 pp |
+| Synthetic evidence | rate checks, factor recovery, controls, and paired parent/RFD reconstruction | 5 pp |
+| APP-FIN illustration and limits | centre-motion/loading-space sensitivity on the parent panel; what it cannot identify | 2 pp |
+
+The main text must contain the exact estimand, assumptions, estimator, theorem statements, and enough proof structure for a reader to understand why the conclusions follow. Long geometric expansions, concentration lemmas, and hostile counterexamples may live in the repository supplement. We may refer readers to the parent paper for its fixed-centre RFM pipeline, lag-operator motivation, and standard background. We may **not** outsource RFD's moving-centre correction, polygon/frame error, identification theorem, growing-dimension uniformity, $n^{-3/7}$ rate, selector repair, or any place where we correct or narrow a parent claim.
+
+### Paper 1 experiment matrix
+
+Every row has a scientific job. A null is not filler: it establishes what the added flexibility does when its premise is absent.
+
+| DGP regime | expected verdict | what it diagnoses |
+|---|---|---|
+| fixed centre + persistent factors | RFM ties or beats RFD | flexibility placebo and variance cost |
+| moving centre + no factors | RFD tracks the centre and selects rank zero | drift is not automatically relabelled as a factor |
+| factors + no noise | exact or near-exact loading/factor recovery | algebraic positive control |
+| noise + no factors | no persistent factor is invented | selector null |
+| drift aligned with loading span | centre improves; loading span may change little | partially unidentifiable/easy orientation |
+| drift orthogonal to loading span | fixed RFM gains rank contamination; RFD should win | clean identification positive control |
+| mixed orientation | advantage changes gradually with overlap | phase transition rather than a cherry-picked case |
+| noncommuting curved centre path | RFD's geometric machinery is actually used | curved-manifold positive control |
+| lag-correlated noise | performance degrades or the method fails honestly | violation of the lag-orthogonality producer |
+| rough or misspecified centre path | graceful degradation, or a declared boundary | robustness beyond the smooth ideal |
+
+For each relevant row, report centre error, loading-subspace error, known
+synthetic rank, factor-score recovery up to the identified gauge,
+and reconstruction loss. Selector results remain a
+separate diagnostic rather than a condition for reading the structural recovery
+tables. The headline summary plots report the complete paired six-regime
+boundary and the centre-versus-signal contrast:
+
+fixed/home/aligned cells expose the finite-sample cost of unnecessary
+moving-centre machinery, while mixed/orthogonal/curved cells expose the gain
+when drift escapes the loading space. The broader continuous \(\nu\)-phase
+diagram remains post-freeze efficiency work rather than a prerequisite.
+
+### What does not belong in the first submission
+
+The following results remain available as proved machinery, robustness notes, or future programmes, but they do not get to enlarge Paper 1 unless a required experiment exposes a genuine dependency:
+
+- high-energy/pervasive-factor phase diagrams;
+- shrinking-margin, growing-matrix-size Bures–Wasserstein theory;
+- FRAME-2P-U root-$n$ debiasing;
+- unrestricted signed or long-memory branches;
+- exhaustive application matching and a production streaming system;
+- the full moving-loading-subbundle programme;
+- the same-programme post–Paper 1 application follow-up: score filtering,
+  structural adaptive-rank inference, event-triggered refitting, learned
+  fixed-loading RFD forecasting, predictive rank selection, and optional learned
+  centre extraction.
+
+### Post-freeze efficiency laboratory — preserve every genuine lever
+
+After the foundational paper is frozen, isolate every choice that is merely one member of a proof-valid family. This is a controlled efficiency programme, not permission to retune the first paper after seeing its evaluation losses. At minimum it includes:
+
+- number of positive scales and their ratios;
+- Richardson weights induced by those scales, plus any variance-optimised extra-scale construction whose curved remainder is newly proved;
+- positive endpoint-flat kernel family;
+- location and width of the fixed forward/backward overlap and the smooth blending family;
+- bandwidth constant, subject to a fixed asymptotic cap;
+- polygon-grid constant and nonuniform grids;
+- lag set/weights, threshold constant, and ratio ridge;
+- factor-dynamics and future-centre forecasting policies.
+
+For each lever: first state the theorem-valid domain, then tune on training/validation draws, and evaluate once on untouched draws. Do not launch the full Cartesian product: screen one lever at a time, retain interactions with a mathematical mechanism, and only then run a small joint design.
+
+**Forbidden shortcut:** choosing the largest admissible bandwidth multiplier separately at every $n$. Under the current design,
+
+$$
+c_{\max}(n)=\frac23n^{1/7},\qquad
+b_n=\frac12n^{-1/7}c_b.
+$$
+
+Thus setting $c_b\approx c_{\max}(n)$ makes $b_n\approx1/3$, so the bandwidth does not shrink and the $b_n^3$ bias need not vanish. A production rule may clip a **fixed prevalidated target constant** for small samples, but an $n$-growing boundary-hugging constant is not the estimator covered by the rate theorem and cannot generate the headline rate plot.
+
+### Paper 1 two-track bandwidth freeze
+
+Paper 1 may use its validated higher-bandwidth estimator for the strongest honest performance numbers without rewriting the rate experiment:
+
+1. **Rate/theorem track:** retain the completed multiplier $c_b=1.3$ results over $n=256,\ldots,8192$. They establish the observed $3/7$ exponent and remain the headline rate evidence.
+2. **End-to-end performance track:** freeze the bounded production rule
+
+   $$
+   c_{\mathrm{prod}}(n)=\min\{2.1,\,0.95c_{\max}(n)\}
+   $$
+
+   before B4.5 and the control matrix. This uses the larger feasible windows available at larger $n$ while eventually stopping at the independently validated target constant $2.1$. Include fixed $c_b=1.3$ on the same draws as a paired reference, not as a competing post-hoc search.
+3. **Final evaluation:** the completed tuning namespace 4201 and fresh validation namespace 4202 selected and checked the cap $2.1$. The end-to-end evaluation uses untouched namespace 4501. Once those losses are visible, neither the cap nor clipping rule changes.
+4. **Smaller-sample studies:** the clipping is part of the named production estimator, not a silent per-cell optimization. Report its actual multiplier at every $n$ and never describe the resulting curve as a fixed-$2.1$ run.
+
+This is the ordinary tune → freeze → evaluate separation. “Best Paper 1 numbers” means the best frozen configuration selected without looking at its final evaluation outcomes, not an intentionally untuned default.
+
+### Done means frozen
+
+Paper 1 is ready to draft and freeze when all of the following are true:
+
+1. B4.5 confirms the end-to-end bounded-energy loading theorem against the empirical $R_n$, $A_{2,n}$, and eigengap—not dimension as a proxy.
+2. The eleven-row control matrix has declared seeds/configuration and records failures as results.
+3. The paired parent/RFD BW matrix contains honest positive regimes, fixed-centre placebos, aligned identification controls, and curved/non-aligned alternatives.
+4. APP-FIN reports centre-motion and loading-space sensitivity at fixed published rank without presenting reconstruction as forecasting or a rank sensitivity as truth.
+5. The raw-ratio witness and repaired selectors are visible, not buried in an implementation note.
+6. The manuscript's claims trace to canonical theorem boundaries and generated result files.
+7. The reader-facing repository instructions reproduce every paper figure from frozen inputs.
+
+At that point, polish notation and prose; do not reopen optional theorem branches by appetite.
+
+### Repository as the interactive supplement
+
+The paper may link to this repository as its interactive code-and-proof home. For a working paper or preprint, that link can be the reader's entry point. For submission, also freeze the load-bearing proofs as a rendered supplementary artifact if the chosen venue requires an uploaded supplement; the mutable repository must never be the only surviving copy of a theorem's proof. Before submission, turn the current research workspace into a reader path without deleting its provenance:
+
+- root `README.md`: the paper's question, claims, preprint/citation, environment setup, and the shortest commands that reproduce the headline figures;
+- `notes/paper1/README.md`: a human-readable theorem and assumption map containing only Paper 1 material;
+- `experiments/README.md`: the experiment matrix, configs, seeds, expected outputs, and approximate runtimes;
+- `results/README.md`: what each table/figure measures and which command generated it;
+- `notes/archive/`: proof campaigns and stale branches, linked once as provenance rather than presented as the main reading route.
+
+Do this reader-facing rewrite after the results freeze, so recency does not erase older valid dependencies. The public supplement should point to an immutable Paper 1 tag and archived release, not only a mutable `main` branch.
+
+### Reuse from a later paper
+
+Reusable geometry, DGP, estimator, and loss code belongs under `py/rfd/`; paper-specific runners, prose, figures, and frozen outputs do not. A later paper repository should depend on a tagged RFD release and import it, rather than copy functions. This repository already has the `py/rfd` source layout, but `pyproject.toml` currently contains only pytest configuration, so **P1-PACKAGE** must add standard PEP 517/621 build and project metadata before `pip install` can consume it.
+
+**P1-PACKAGE done when:** a fresh temporary environment can run `python -m pip install .` and import `rfd`; local development can use `python -m pip install -e .`; the package has an explicit version; and the Paper 1 tag passes the full tests after installation rather than through pytest's current `pythonpath = ["py"]` shortcut. A later supplement can then pin an immutable Git tag with a PEP 508 dependency of the form `rfd @ git+https://...@paper1-v1.0` and write ordinary imports such as `from rfd.spd.airm import airm_log`.
+
+For Paper 1, keep the present monorepo and tag its frozen release. If a second paper needs the same core, create its own supplement repository and pin the Paper 1 tag (or a backwards-compatible later RFD tag). Split a separate `rfd-core` repository only if maintaining two supplements proves that the shared package has an independent life; doing it now would add release overhead without improving the first paper.
 
 ---
 
@@ -357,7 +536,7 @@ The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is be
 
 ## Phase 4 — the estimator stack
 
-### [ ] B4.1 — locally stationary DGP (3 h)
+### [x] B4.1 — locally stationary DGP (3 h)
 
 **Do.** `py/rfd/dgp/lsrfm.py`. Generate $X_{t,n}=\operatorname{Exp}_{\mu_n(u_t)}[\mathcal P A_n f_{t,n}+\delta_{t,n}]$ with a controllable centre path, factor rank, lag structure and noise.
 
@@ -365,11 +544,13 @@ The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is be
 
 **Done when.** With drift off and factor off, the sample Fréchet mean is constant to Monte Carlo error. With factor off and drift on, it tracks $\mu_n(u)$. Both checks pass on all three geometries.
 
+**Done 2026-08-20.** `py/rfd/dgp/lsrfm.py` now exposes centre drift, AR(1) or VAR(1) factor dynamics, loading orientation/structure, tangent-noise scale/dependence, and geometry as independent controls. The four drift/factor corners, declared path length/energy, loading orthonormality and drift overlap, transported noise norms, exact commuting SPD flats, reproducibility, and the zero-rank null pass on AIRM, BW, and the sphere. The recorded B4.2 run below deliberately sets `factor_rank=0`; it validates the centre layer only, not factor recovery or forecasting.
+
 > `random_spd_family(rng, m, cond, delta, n, shape)` in `py/rfd/dgp/spd.py` already separates conditioning from dispersion. Reuse that design here: any DGP whose knobs are confounded produces curves you cannot read.
 
 ---
 
-### [ ] B4.2 — three-scale centre estimator (3 h)
+### [x] B4.2 — three-scale centre estimator (3 h)
 
 **Do.** `py/rfd/estimators/centre.py`. The positive three-scale kernel estimator with Richardson combination, $c=(1,1/2,1/4)$, $\lambda=(1/3,-2,8/3)$.
 
@@ -377,31 +558,77 @@ The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is be
 
 **Done when.** On the B4.1 DGP with known $\mu_n(u)$, the error tracks $b_n^3+(nb_n)^{-1/2}+n^{-a}+n^{-1}$ across a bandwidth sweep, and the fitted slope of $\log(\text{error})$ against $\log n$ at $b_n=n^{-1/7}$ is near $-3/7$.
 
+**Accepted 2026-08-20, for the centre layer only.** The complete centre-path wrapper evaluates the three positive scales at every deterministic vertex, resolves signed failures through the broad positive stage, uses the proved fixed-width $C^2$ forward/backward overlap on $[1/3,2/3]$, returns the shared polygon, and records stage convergence, effective sample size, and fallback reasons. Integration tests cover constant paths on AIRM, BW, and sphere; boundary direction selection; the actual BW signed-failure fallback; and a smooth known AIRM path on which Richardson improves intrinsic RMS over the uncorrected broad stage.
+
+**Recorded adjudication.** `experiments/run_centre_rate.py` completed all 3,456 requested centre-rate rows and all 2,304 local-stationarity-discrepancy rows: zero run errors, zero nonconverged stages, and zero admissibility fallbacks. On the full DGP, the corrected path-RMS decay exponent is $0.413$ at bandwidth multiplier $1.0$ (95% bootstrap interval $0.401$–$0.435$) and $0.429$ at multiplier $1.3$ ($0.407$–$0.448$), matching the predicted $3/7=0.429$ order. The discrepancy experiment transfers injected exponents $a=(0.2,2/7,1/3,3/7,1/2,\infty)$ to observed exponents $(0.243,0.362,0.406,0.433,0.435,0.442)$: the finite-sample curve rises with $a$ and plateaus at the estimator ceiling, as the two-term $n^{-a}+n^{-3/7}$ mechanism predicts.
+
+**Richardson is a bias–variance trade, not a universal improvement.** At $n=8192$, multiplier $1.0$, the median bias-only path error falls by 99.2%; in the variance-only control the corrected error is 4.37× the ordinary local-mean error; and in the full DGP the correction changes from 14.3% harmful at $n=4096$ to 9.4% beneficial at $n=8192$. Multiplier $1.3$ is best at every tested cell, so the exponent check passes but the finite-sample bandwidth constant is not bracketed; a small unrecorded wider sweep is tuning work, not a new theorem test. Across both recorded profiles the smallest generated estimate eigenvalue is $0.398$ and the largest observed condition number is $5.38$, so the zero-fallback result applies only to this safe interior AIRM design and does not retire the signed-failure experiment N-12 or B4.2-DAMP's trigger rule.
+
+The raw tables, generated reports and example paths are under `results/intermediate/centre_rate/` and `results/intermediate/local_stationarity_discrepancy/`; the independently runnable interpretation notebook is `notebooks/experiment_plot_lab.ipynb`.
+
+> **B4.2-BWCONST — READY, finite-sample tuning only.** `config/centre_bandwidth.yaml` and `experiments/run_bandwidth_tuning.py` implement the predeclared two-stage bandwidth check. Tuning uses 32 independent full-DGP replicates at $n\in\{4096,8192\}$ and $c_b\in\{1.3,1.5,1.7,1.9,2.1\}$; the winner minimises the mean across $n$ of log cell-median path RMS, with ties going to the smaller multiplier. The script freezes that winner and the tuning-table digest before comparing it with $c_b=1.0$ on 64 fresh paired replicates from a separate seed namespace. If $2.1$ wins it is reported as a constrained boundary winner, not an interior optimum. The complete resumable command is `.\.venv\Scripts\python.exe experiments\run_bandwidth_tuning.py`; expected runtime is roughly 20–25 minutes. Its final reader-facing report and percentage plots are written under `results/intermediate/centre_bandwidth_validation/`. This changes no rate theorem.
+
+The optional unattended launcher `sandbox/run_overnight.ps1` runs `centre_rate`, waits five minutes, runs `discrepancy`, waits five minutes, then runs the parent N-00 reproduction. It stops on the first nonzero exit code and never schedules shutdown after a failure. The launcher resolves the restored project `renv` library explicitly, invokes R with `--vanilla` so automatic `.Rprofile` activation cannot hang the chain, times out stalled preflights, and prints a process/CPU/RAM/output heartbeat every 60 seconds by default. After three successful stages it requests a Windows shutdown with a 120-second cancellation window (`shutdown.exe /a`). Use `-CheckOnly` for a noncomputing preflight, `-NoShutdown` to retain the machine after a real chain, and `-HeartbeatSeconds` to change the heartbeat interval.
+
 > Watch out: this is where the signed Richardson step can push the reconstruction out of the full-rank cone. Instrument it — count how often the admissibility fallback fires, as a function of condition number. That count is a result, not a nuisance. See queue item L-8.
+
+> **B4.2-DAMP — PARKED, trigger-only contingency (not the canonical estimator and not a current queue item).** The canonical response to an invalid full Richardson tangent \(Z\) remains the broad positive stage-mean fallback, with the failure and reason recorded. Reopen a damped correction only if completed sweeps show that full-\(Z\) invalidity remains empirically non-negligible as \(n\) grows after stage convergence, bandwidth, effective-sample-size, and spectral-margin failures have been separated. The candidate sensitivity estimator chooses the largest predeclared \(\tau\in(0,1)\) for which \(\operatorname{Exp}_A(\tau Z)\) passes the same generated-domain checks. It must be reported separately: damping destroys exact first/second-order Richardson cancellation and therefore requires new bias/rate analysis before it can replace the proved estimator. Do not activate it merely because one finite-sample fallback occurs.
 
 ---
 
-### [ ] B4.3 — polygonal frame and transport (3 h)
+### [x] B4.3 — polygonal frame and transport (3 h)
 
 **Do.** `py/rfd/estimators/frame.py`. Join estimated mean vertices by geodesic chords, parallel-transport along the polygon, $M_n\asymp\ell_n^{-2/3}$ cells.
 
 **Done when.** With a known constant centre the frame is the identity. With a known moving centre on a flat, transport around a closed loop returns the identity — and on a curved one it doesn't, by an amount you can compare to the curvature. `airm_parallel_transport` in `airm.py` is already there.
 
+**Done 2026-08-19.** `py/rfd/estimators/frame.py` implements the theorem-driven cell count, deterministic polygon grid, geodesic-chord evaluation, recursive vertex-frame propagation, and paired transport to and from the common reference fibre. The tests use a constant path on all three geometries, a closed diagonal AIRM rectangle as the exact flat control, and a unit-sphere right triangle whose holonomy is exactly \(\pi/2\), matching curvature times area. Round-trip reference transport passes for AIRM, BW, and sphere. Targeted frame and geometry suite: 208 green.
+
 ---
 
-### [ ] B4.4 — lag operator, loading space, selectors (3 h)
+### [x] B4.4 — lag operator, loading space, selectors (3 h)
 
 **Do.** `py/rfd/estimators/lag.py`. $\widehat\Gamma_n(h)$, $\widehat{\mathbb L}_n=\sum_h\widehat\Gamma\widehat\Gamma^*$, the leading $r$-space, and both selectors — threshold and ridged ratio — plus the raw ratio as a negative control.
 
 **Done when.** On a DGP with known $r$: $\widehat\lambda_{r+1}\le d_n^2$ holds empirically, both proved selectors recover $r$, and you have reproduced the counterexample $\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$ where the raw ratio picks 2. That last one is the P-RATIO correction made concrete.
 
+**Done 2026-08-19.** The estimator now runs from polygon-aligned manifold observations through intrinsic common-reference coordinates, explicit lag rows, positive-semidefinite operator assembly, SVD loading recovery, factor scores, residuals, and reconstructed coordinate rows. Parent common-tail/$n$ normalization is the declared default; available-pair/$n-h$ normalization is explicit. On a seeded rank-two persistent DGP, the loading projector error is below 0.02 and both proved selectors return two. The deterministic row-error test verifies both $2A_{2,n}d_n+d_n^2$ assembly control and $\widehat\lambda_{r+1}\le d_n^2$. The raw-ratio witness selects two while threshold and ridged ratio select one. Full Python suite: 420 green.
+
+**Composed model API completed 2026-08-20.** `py/rfd/model.py` now supplies one typed `fit_rfd` call without hiding the proof objects: centre estimate, shared polygon, common-reference tangent rows, lag row/operator, spectrum, rank decision, factor fit, residuals, and the intrinsic reconstruction are all retained in `RFDFit`. Reconstruction converts fitted coordinate rows back to reference tangents, transports them to their time-specific estimated centres, and applies Exp. Fixed rank, threshold, and ridged-ratio selection are explicit configuration branches; no tuning constant is inferred silently. End-to-end tests cover exact full-rank round trips on AIRM, BW, and the sphere; the constant-path rank-zero null; intermediate operator identities; invalid rank contracts; and nonfinite observations. Full Python suite: **449 green**. This completes the reusable fitted/reconstructed model, not B4.5's theorem-rate experiment and not the separate out-of-sample forecasting policy.
+
 ---
 
-### [ ] B4.5 — N-01, the bounded-energy baseline (2.5 h)
+### [x] B4.5 — N-01, the bounded-energy baseline (qualified numerical pass)
 
 **Do.** `experiments/N01_baseline/run.py`. Fixed $R,h_0,r,\Delta>0$; increasing $n,p$.
 
 **Done when.** $d_n=O_p(n^{-1/2}+\ell_n)$, loading error $O_p(d_n/\Delta)$, null eigenvalues $O_p(d_n^2)$ — all three confirmed on a log–log plot with fitted slopes, against the **actual empirical** $R_n, A_{2,n}, \Delta_n$, never against dimension as a proxy.
+
+**Qualified pass adjudicated 2026-08-24.** Namespaces 4501 and 4502 contain 960 healthy rows from 480 paired DGP draws, with zero recorded errors, fallbacks, or nonconverged local means. Production median exponents across $n=512,\ldots,8192$ are 0.44--0.48 for the centre, 0.80--1.08 for the lag row, 0.89--1.23 for its squared operator, 0.60--0.67 for the loading projector, and 1.06--1.13 for the first null eigenvalue. Every production draw satisfies $\widehat\lambda_{r+1}\le d_n^2$, and thresholding selects rank two on every draw. At $n=8192$, loading-projector error is 0.010--0.016 (largest principal angle 0.59--0.91 degrees), whereas factor-score NRMSE remains 30--44%. The loading target is the generated DGP span on these rank-positive draws, not merely another fitted feasible estimator. The qualification is finite-sample separation: only 47--69% of the $n=8192$ draws have actual operator error below the oracle eigengap, so the run does not support a uniform finite-$n$ separation claim. Canonical tables, plots, the all-CSV integrity scan, and the verdict are in `results/final/b45_adjudication/`.
+
+**Same-draw comparator replay completed 2026-08-24.** All 480 tasks completed without error or global-mean nonconvergence. At $n=8192$, full RFD's largest loading angle is 0.59--0.91 degrees, versus 0.47--0.93 degrees with the true moving centre supplied and 7.48--17.28 degrees for one global-centre RFM-compatible AIRM fit. RFD reduces loading-projector error relative to the one-centre fit by a paired median 93--96% and wins all 32 replicates at every matrix size. Its observation reconstruction is within 0.2% of the known-centre noisy fit while reducing error relative to the one-centre fit by 10--21%; it wins 94--100% of the replicates. Factor scores expose the finite-sample cost: RFD is worse than the one-centre fit at small $n$, approaches the known-centre noise floor as centre estimation improves, and at $n=8192$ reduces factor NRMSE by a median 6--13%, winning 69--94% of replicates. This is a strong paper-eligible positive control, not a general dominance claim. The one-path/rank-two/AR(1)/white-noise/small-AIRM design still requires the fixed-centre placebo and wider control matrix. It is not described as the parent's literal implementation: parent-code parity belongs on the later BW control cells.
+
+**Outcome-independent $n=8192$ extension completed 2026-08-20.** The original runtime grid omitted the first sample size at which the production multiplier reaches its fixed $2.1$ cap. `config/end_to_end_8192.yaml` supplied 32 new replicates for each $m\in\{2,3,4\}$ under fresh namespace 4502, with every scientific and estimator setting otherwise unchanged. All 192 rows completed with zero recorded errors. Relative to $n=4096$, production centre error fell 24--31%, lag-row error 38--48%, loading-projector error 28--38%, and factor-score NRMSE 10--17%. The threshold and raw-ratio comparator selected rank two in every cell; the current ridged-ratio constant selected it in only 25--34%, so rank-two loading recovery is established for this DGP but general selector performance is not. The combined five-point centre slopes are 0.44--0.48, close to the analytical $3/7$ rate. Raw rows remain separate under `results/intermediate/end_to_end_factor_baseline_8192`; its summary concatenates namespace 4501 only for analysis.
+
+**N-RANK fixed-rank selector sweep completed 2026-08-21.** The broad oracle screen completed all 15,936 DGP tasks and 111,552 selector rows; the full feasible RFD confirmation completed all 1,056 fits and 7,392 selector rows. Both recorded zero run errors. On their common equal-strength cells, oracle versus feasible threshold accuracy was 78.4% versus 79.4% at $n=512$, 92.0% versus 92.5% at $n=2048$, and 100% versus 100% at $n=8192$; the raw ratio was 100% throughout. Thus the estimated centre, polygon and transport introduced no visible additional rank-selection boundary on this controlled DGP. The weak-tail profile exposed the real boundary instead: at $n=8192$ both threshold pipelines missed the final $0.2$-amplitude factor for every $r\ge2$, and the feasible raw ratio missed it in 97.7% of those cases. Thresholding selected rank zero in every null cell; ratio selectors cannot return zero. The full sweep did not include the oracle's gradually decaying profile and harvested spectra/selector decisions rather than general-rank loading-projector errors, so neither claim is silently promoted. [[P1-RANK — AR1 signal strength and threshold boundary]] proves the exact calibration $\chi_j=s_j^4\sum_h\rho_j^{2h}$, the event $d_n^2<\tau_n<\chi_{\min,n}-\eta_n$, and the separate fixed-total-energy rank-dilution factor. This is a fixed-rank-across-cells diagnostic and does not close N-07's growing-$r_n$ programme.
+
+**N-RANK-CLOSE deferred beyond Paper 1.** The completed selector sweep and literature audit are sufficient supporting evidence: weak-tail failure has an explicit signal interpretation, while the geometric preprocessing adds no visible boundary on the controlled cells. Synthetic structural headlines use the known true rank. A later implementation-focused study may add feasible decaying-signal cells, general-rank projector/factor errors, selector tuning, predictive-rank policy, or structural adaptive-rank inference. None is a B4.5 or Paper 1 freeze gate. APP-FIN uses fixed \(r=2\) in Paper 1 and treats other ranks only as sensitivity.
+
+**Paper 1 controls completed 2026-08-24.** All 1,056 core and 480
+drift-orientation rows completed without a recorded error, fallback, or
+nonconverged stage. The fixed-centre and rank-zero placebos behave as declared;
+mixed/orthogonal drift gains grow with drift magnitude; aligned drift remains
+a tie/loss; and the noncommuting curved cell is healthy. At $n=8192$ the
+threshold selector is correct in every core regime. The paired tables and
+figures are in `results/final/paper1_control_matrix/`.
+
+**Low-sample amplitude attribution completed 2026-08-24.** All 192 paired
+draws completed cleanly. Oracle rows with RFD loading directions remain at the
+oracle factor-score floor, whereas feasible centre/frame rows with true
+directions reproduce essentially the full low-$n$ error. The bottleneck is
+therefore the combined centre/Log/polygon/frame row construction on this DGP,
+not loading-space extraction; a scalar rescaling helps but does not repair the
+trajectory error. Artifacts are in `results/final/amplitude_diagnostic/`.
 
 ---
 
@@ -410,11 +637,12 @@ The one caveat: if a theorem in P1-LOSS or ID-8 is wrong, the reproduction is be
 Sequenced but not detailed yet; write the detail when you get here, because Phases 1–4 will change your view of what these need.
 
 - [ ] **B5.1** N-18 — the drift/factor identification diagnostic. Runs only after a clean B3.2. Validates the implementation against ID-4/ID-5 and P-DRIFT. It **cannot** determine empirical dominance; that's ID-6.
-- [ ] **B5.2** N-08, N-11, N-12 — the failure boundaries. Zero signal, rank-changing BW attack, signed Richardson collapse. These are meant to break; instrument them.
-- [ ] **B5.3** N-09, N-10, N-15 — the BW branch.
-- [ ] **B5.4** N-16, N-17 — FRAME-2P-U and its negative controls. New code, no reuse from the parent.
-- [ ] **B5.5** The forecast comparison. Frobenius and QLIKE as primary, geodesic losses reported only with the P1-LOSS §4 recalibration and the induced target stated. Diebold–Mariano or Giacomini–White for whether any difference is real. **R for this** — `multDM` and `forecast` have no clean Python equivalent.
-- [ ] **B5.6 / N-18c** The where-it-helps map. Sweep the canonical \(\nu\)-family and report the complete fixed-minus-moving risk curve, not one cherry-picked crossing. Structural and forecast risks are separate; Frobenius and QLIKE are the primary forecast losses. Include the placebo — fit both on a *provably* fixed-centre DGP and check whether the moving-centre model still wins. If it does, you've learned it is flexibility rather than structure. The positive control matters more: without it, a null on real data is uninterpretable. Test clean quadratic, linear-cross-term, aligned, orthogonal, partial and curved regimes; treat \(n^{-3/14}\) only as the clean short-memory candidate.
+- [x] **B5.2** N-08, N-11, N-12 — the compact failure boundaries. The rank-zero AIRM controls are complete; BW rank loss rejects, signed Richardson exit activates the declared fallback, and the near-identical-matrix guard remains finite and nonnegative.
+- [x] **B5.3 / P1-BW-CLOSE** — **completed 2026-08-25.** Paper 1 consumes the compact fixed-size N-09 matrix only. The frozen 496-task run completed with zero ordinary errors and zero failed verdicts. Safe commuting/noncommuting cells stayed within the declared fixed-margin domain; finite lower-margin and rank-loss attacks remain boundary cells. Full N-10 shrinking-margin and N-15 growing-size campaigns move after freeze. Rank-positive recovery uses known true rank and makes no selector claim. See `results/final/bw_closure_adjudication/report.md`.
+- [x] **B5.3a / P1-PARENT-SHARED** — **completed 2026-08-25.** All 576 immutable paired BW draws completed with zero failures, fallbacks, nonconverged RFD stages, duplicate keys, or nonfinite primary metrics. RFD lost all 288 home/fixed/aligned draws and won all 288 mixed/orthogonal/curved draws. At \(n=8192\), its median latent-signal reductions were 42.5%, 57.8%, and 55.8% in the latter three regimes, while the unnecessary/aligned penalty shrank to about 1%. The aligned cell reduced centre-path error by 60.5% yet retained a 1% parent reconstruction advantage: decomposition improved while the sum remained equally easy to fit. See `results/final/parent_rfd_bw_parity_adjudication/report.md`.
+- [ ] **B5.4** N-16, N-17 — FRAME-2P-U and its negative controls. Proved conditionally but no longer a Paper 1 empirical gate.
+- [ ] **B5.5 / P1-APPFIN-ID** — **final Paper 1 result; harness ready 2026-08-25.** `config/appfin_identification.yaml`, `experiments/run_appfin_identification.py`, `experiments/analyze_appfin_identification.py`, and `sandbox/run_appfin_identification.ps1` fit fixed-rank \(r=2\) parent RFM and RFD to the same rebuilt APP-FIN panel; measure centre motion, its projection inside/outside the parent loading span, loading/reconstruction sensitivity, Factor 1/VIX interpretation, and every BW numerical margin. Ranks \(1,\ldots,15\) are a labelled tangent-energy sensitivity envelope only. No forecast or true-rank claim. The runner uses digest-checked parent/RFD stage caches; focused tests, R preflight, and a 128-month cross-language end-to-end smoke passed. The task remains open until the full 12-stock result is run and adjudicated.
+- [ ] **B5.6 / N-18c and forecasting** — **post–Paper 1.** The continuous \(\nu\)-phase diagram, score filtering, predictive rank, future-centre policy, VAR/state-space dynamics, admissible forecast losses, and APP-FIN forecasting belong to the application follow-up. The completed six-regime paired boundary is sufficient for the foundational paper.
 
 ---
 

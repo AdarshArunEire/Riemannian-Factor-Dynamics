@@ -6,7 +6,7 @@ aliases:
   - Paper 1
 status: current-spec
 verdict: P1-ID is closed by exact identified quotients and impossibility boundaries; the robust and scoped sharper estimation theorems retain their separately adjudicated statuses
-last-audited: 2026-08-16
+last-audited: 2026-08-25 (literal parent/RFD BW parity adjudicated; final scope narrowed to a non-forecast APP-FIN identification illustration)
 area:
   - geometry
   - time-series
@@ -42,9 +42,9 @@ The estimation theorem targets the declared transported loading space only after
 
 > **Scope limit (CANON-3) — the exact FDD quotient is Gaussian and the application does not inherit it.** ID-2's classification of the full finite-dimensional-distribution quotient — loading gauge plus every feasible lag-zero allocation, with \(\Gamma_g(h)=R^{-1}\Gamma_f(h)R^{-*}\) for \(h\ne0\) and \(\Gamma_g(0)=R^{-1}\Gamma_f(0)R^{-*}+K\) — holds on the **centred jointly Gaussian minimum-representation class** with iid Gaussian noise independent of the complete factor process. Outside Gaussianity it classifies **second order only**, and ID-0 shows this is not a technicality: the stationary Rademacher three-block process matches iid Rademachers at every covariance lag while differing in a consecutive third moment. Tangent-space log-covariance data is not Gaussian — a realised covariance matrix mapped through \(\operatorname{Log}\) is a nonlinear function of returns — so APP-FIN, APP-NEURO and every covariance application inherit **second-order identification only**. Any claim about the latent factor law, as opposed to the identified span and its lag covariances, is outside the theorem.
 
-> **Scope limit (CANON-4) — evaluation. The loss used to score a forecast is not free, and the natural geometric choice is not admissible.** Paper 1's output is a reconstruction or, after a factor-score model, a covariance forecast, and it will be scored against an ex-post *proxy* — a realised covariance matrix, not the latent conditional mean. [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] proves that a loss preserves the ranking of forecasts under such a proxy **iff** it is a Bregman divergence in the coordinate in which the proxy is conditionally unbiased, and that a **symmetric** loss can be robust only if it is a fixed Mahalanobis form in that coordinate. Squared Bures–Wasserstein, AIRM and log-Euclidean distances are therefore all inadmissible for scoring — the first two because they are curved, the third because it is flat in the *wrong* coordinate. What a geodesic loss actually rewards is the Fréchet barycentre of the *proxy's* conditional law, which is strictly below the conditional mean: exactly \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case, and for a Wishart-type proxy exactly \(-\frac{\lambda_i}{M}\big[\frac14+\sum_k\frac{\lambda_k^2}{(\lambda_i+\lambda_k)^2}\big]\) per eigenvalue. That distortion is \(\Theta(m/M)\), not \(\Theta(1/M)\), so it grows with the matrix size: at the flagship configuration of \(m=12\) assets and monthly realised covariance from \(M\approx21\) daily returns it is **8.8%–35.9%** under Bures–Wasserstein and **32.9%** under AIRM. A forecaster reporting the correct conditional mean is beaten by one reporting a substantially shrunken covariance.
+> **Scope limit (CANON-4) — evaluation. The loss used to score a forecast is not free, and the natural geometric choice is not admissible.** If a later factor-score model turns RFD's reconstruction into a covariance forecast, that forecast is scored against an ex-post *proxy* — a realised covariance matrix, not the latent conditional mean. [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] proves that a loss preserves the ranking of forecasts under such a proxy **iff** it is a Bregman divergence in the coordinate in which the proxy is conditionally unbiased, and that a **symmetric** loss can be robust only if it is a fixed Mahalanobis form in that coordinate. Squared Bures–Wasserstein, AIRM and log-Euclidean distances are therefore all inadmissible for scoring — the first two because they are curved, the third because it is flat in the *wrong* coordinate. What a geodesic loss actually rewards is the Fréchet barycentre of the *proxy's* conditional law, which is strictly below the conditional mean: exactly \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case, and for a Wishart-type proxy exactly \(-\frac{\lambda_i}{M}\big[\frac14+\sum_k\frac{\lambda_k^2}{(\lambda_i+\lambda_k)^2}\big]\) per eigenvalue. That distortion is \(\Theta(m/M)\), not \(\Theta(1/M)\), so it grows with the matrix size: at the flagship configuration of \(m=12\) assets and monthly realised covariance from \(M\approx21\) daily returns it is **8.8%–35.9%** under Bures–Wasserstein and **32.9%** under AIRM. A forecaster reporting the correct conditional mean is beaten by one reporting a substantially shrunken covariance.
 >
-> **Paper 1 therefore reports squared Frobenius distance and multivariate QLIKE**, both of which are proxy-robust; QLIKE's *ranking* survives a singular proxy even though its *level* does not. If a geodesic loss is reported for comparability, its induced target is stated and the recalibration of P1-LOSS §4 is applied — for AIRM the scalar \(c=1-\frac{m+1}{2M}\) is exact, for Bures–Wasserstein a scalar correction is only partial. Recalibration restores the **location of the optimum** and never the **ranking robustness**: only the loss class does that.
+> **Any downstream forecast comparison therefore reports squared Frobenius distance and multivariate QLIKE**, both of which are proxy-robust; QLIKE's *ranking* survives a singular proxy even though its *level* does not. If a geodesic loss is reported for comparability, its induced target is stated and the recalibration of P1-LOSS §4 is applied — for AIRM the scalar \(c=1-\frac{m+1}{2M}\) is exact, for Bures–Wasserstein a scalar correction is only partial. Recalibration restores the **location of the optimum** and never the **ranking robustness**: only the loss class does that. Paper 1's APP-FIN illustration does not rank forecasts; any reconstruction loss is labelled descriptive.
 >
 > **This is a scope condition on reporting. It changes no estimand, no rate, no assumption, and no application's standing** — the proved separation is P1-LOSS §6, and the only edge into the estimation chain is a \(\Theta(m/M)\) measurement-error contribution to the existing target-defect budget \(\zeta_n\).
 
@@ -127,6 +127,20 @@ d_n=O_p(n^{-1/2}+\ell_n),\qquad
 \]
 
 The original unsafeguarded global estimator is retracted. A global/rank-changing PSD theorem is disproved. On fixed spectral, polar, Exp, normal-pair, and path-length margins, the noncommuting quotient calculus is proved uniformly in matrix size by an explicit recurrence-defined \(C_{\rm BW}(\alpha,\beta,\chi,r_0,k_0)\).
+
+The recorded fixed-size BW experiment is a qualified empirical check of this
+theorem boundary, not a proof. Its 496 frozen tasks completed with no ordinary
+error or failed verdict; all 400 safe fit rows stayed within the declared
+generated domain. Commuting/noncommuting centre exponents were \(0.41/0.42\),
+polygon exponents \(0.58/0.58\), and loading exponents \(0.55/0.57\); regular
+scientific-cell median loading-projector error at \(n=8192\) was
+\(0.0105\)–\(0.0191\). Operator assembly and beyond-rank null bounds held, but
+the conservative sufficient operator-error-below-gap certificate was not
+uniform at finite \(n\). All rank-positive recovery figures use the known
+synthetic rank. Selector outputs are diagnostic only, and Paper 1 claims no
+automatic rank selection from this campaign. The signed-exit, rank-loss,
+near-identical, incompatible-Exp, dispersion, and lower-margin controls all
+produced their declared fallback, rejection, finite, or boundary outcome.
 
 There is also a restricted shrinking-margin theorem. It requires a complete fractional-normal generated domain with strict population score-pair slack, support/energy \(O(\sqrt{\alpha_n})\), fractional-normal PF cells, and all object-count, path, lag, target, and actual-gap conditions left explicit. The active local coefficients are \(K_B=O(1+\alpha_n^{-1})\), \(K_{L2}=O(\alpha_n^{-1/2})\), and \(K_F=O(\alpha_n^{-1})\), while score coercivity and first local Log/Richardson derivatives stay \(O(1)\). A conservative rank-one corollary with \(\alpha_n\asymp m_n^{-A}\), \(m_n=n^x\), has the sufficient window \(0<x<3/(5A)\). This is not a sharp universal ceiling; a self-similar fixed active block permits arbitrary polynomial inactive dimension. Fixed/growing tangent energy is incompatible with this shrinking normal-pair branch. The fixed-basis diagonal/root-coordinate branch remains a separate flat HE intersection; it does not cover moving eigenvectors.
 
@@ -318,6 +332,60 @@ $$
 
 is consistent. A ridge-ratio selector is also consistent under a lower bound on adjacent nonzero population eigenvalue ratios. Consistency of the raw ratio **does not follow from the displayed rates alone**: for $\hat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$, the signal and null eigenvalues have the claimed orders but minimising consecutive unregularised ratios selects rank two.
 
+### Exact AR(1) signal calibration
+
+The abstract gap condition has a direct interpretation on the independent
+stationary AR(1) DGP. If factor \(j\) has marginal standard deviation \(s_j\)
+and persistence \(\rho_j\), the isometric-loading, exact-HD-L subclass has
+
+$$
+\lambda_j(\mathbb L)
+=s_j^4\sum_{h=1}^{h_0}\rho_j^{2h}
+$$
+
+up to decreasing rearrangement. Therefore the threshold selector is exactly
+correct on the finite-sample event
+
+$$
+d_n^2<\tau_n<
+\min_j\left\{s_j^4\sum_{h=1}^{h_0}\rho_j^{2h}\right\}-\eta_n.
+$$
+
+This makes the weak-factor boundary explicit: multiplying one factor's
+marginal amplitude by \(w\) multiplies its lag-operator eigenvalue by
+\(w^4\). Geometry enters this decision only through its contribution to
+\(d_n\) and \(\eta_n\); if the population signal is already below
+\(\tau_n\), an oracle centre and frame cannot rescue this threshold rule.
+The proof, fixed-total-energy dilution formula, and robust/oracle rate
+translations are [[P1-RANK — AR1 signal strength and threshold boundary]].
+They are sufficient selector boundaries, not minimax impossibility or
+selector-optimality claims.
+
+The synthetic loading and reconstruction headlines do not depend on selecting
+rank: they supply the known DGP rank so centre, frame, lag, and loading errors
+are not confounded with weak-factor detectability. The completed selector sweep
+remains supporting evidence that feasible geometry created no visible extra
+rank boundary on its controlled cells. APP-FIN has no true-rank labels. Paper 1
+therefore fixes \(r=2\), matching the parent's published forecast specification
+without presenting it as recovered truth. Ranks \(1,\ldots,15\) are a labelled
+sensitivity envelope only. Predictive rank selection remains in
+[[Future application programme — factor scores, predictive rank, and online RFD]].
+
+The use of a squared nonzero-lag covariance operator to identify a dynamic
+factor space is established time-domain ancestry, not a novelty claim:
+Lam and Yao (2012) give the finite-dimensional construction, while Bhatia,
+Yao and Ziegelmann (2010) give its functional/Hilbert-space analogue and a
+thresholded factor-number rule. Hallin and Liška (2007) provide the main
+frequency-domain information-criterion comparator, and Chang, Guo and Yao
+(2015) provide generated-residual and ridged-ratio precedent. Paper 1's
+contribution at this step is the integration of that lag signal with an
+estimated moving Fréchet centre, polygonal frame and their complete nuisance
+budget; the independent-AR(1) display above is the exact calibration of the
+project's theorem, not a claim that real factors must be AR(1). No applicable
+minimax lower bound for this weak-serial-factor boundary was located, so the
+display is not labelled optimal or necessary. The source-by-source scope is
+recorded in [[References and external claim audit]].
+
 ### Remark P-RATIO — correction to the parent paper's Eq. (5) justification
 
 The parent uses $\widehat r=\arg\min_{1\le i\le R}\widehat\lambda_{i+1}/\widehat\lambda_i$ in Eq. (5) and says Proposition 3 justifies it. The counterexample above disproves that implication from Proposition 3's displayed rates without extra post-rank separation. It does **not** show practical failure: the parent's Table 2 reports selection above 80% at $n=100$ and about 100% at $n=200$ in its simulated designs. Paper 1 therefore uses the proved threshold or ridged-ratio selector and treats the raw ratio as an empirical comparator, not a theorem-backed selector under rates alone.
@@ -349,6 +417,42 @@ In the clean flat/orthogonal/pointwise-centred branch, drift displacement is \(O
 
 Their Theorem 2 and Proposition 3 use \(\kappa\) for a factor-lag singular-value strength, obtain \(O_p(1/(\kappa^2\sqrt n))\), and state \(\lambda_r\ge\kappa^2\). Their P1 bounded-radius condition explicitly implies total factor and noise energy cannot diverge with \(p\); their theorem is not a classical pervasive-energy result. Their short-memory conditions (13)--(14) are broader than fixed finite dependence: they require trace-normalised algebraic covariance decay with \(C_\xi\) uniformly bounded and a uniform lower bound on \(d_\xi\) strictly greater than one near \(\mu\), and identify finite \(m\)-dependence as a special case. Theorem 2 is dimension-free as stated, but Example 1 verifies P3 under geometric \(\alpha\)-mixing only for \(p=o(n^\gamma/\log n)\), \(0<\gamma<1/2\), and under algebraic mixing only for fixed \(p\). The robust moving-centre theorem matches the bounded-total-energy/arbitrary-ambient-dimension character but has a slower fallback rate and presently uses fixed finite memory. Conditional FRAME-2P-U matches the root-\(n\) rate order under U2P and three colours; its added validation influence prevents a claim of oracle limit-law equivalence. The parent's realised-covariance APP-FIN and public implementation provide the numerical reproduction baseline. See [[References and external claim audit]].
 
+## Current numerical standing and final empirical gates
+
+The AIRM Paper 1 evidence is frozen at the experiment level. The centre-rate,
+bounded-energy, selector, eleven-cell control, 15-cell orientation phase, and
+low-sample amplitude runs are complete. They support accurate loading-space
+recovery and moving-centre reconstruction on the declared synthetic class,
+show no gain on the fixed-centre placebo, and localize low-$n$ factor-score
+loss to the feasible centre/Log/polygon/frame row bundle rather than loading
+directions. The compact fixed-size BW campaign is also complete with the
+qualified fixed-rank verdict stated above. The literal parent comparison then
+completed all 576 common BW draws without failure. Parent RFM won every
+home/fixed/aligned draw; RFD won every mixed/orthogonal/curved draw. At
+\(n=8192\), RFD reduced median latent-signal RMS by 42.5%, 57.8%, and 55.8% in
+the latter regimes, while the penalty in the former regimes had shrunk to about
+1%. The aligned result is the identification boundary in numerical form: RFD
+reduced centre-path error by 60.5% but remained 1% worse in reconstruction,
+because drift inside the loading space can be absorbed as common factor
+movement. These are reconstruction and identification evidence, not a
+forecasting theorem or a real-data dominance claim. Full adjudication:
+`results/final/parent_rfd_bw_parity_adjudication/report.md`.
+
+The sole remaining Paper 1 empirical gate is deliberately narrow: on the
+rebuilt 240-month, 12-stock APP-FIN BW panel, fit literal parent RFM and RFD at
+fixed \(r=2\); quantify intrinsic centre motion, its projection inside and
+outside the parent loading span, loading/reconstruction sensitivity, Factor
+1/VIX interpretation, and all numerical/theorem diagnostics. This is an
+application illustration of whether the fixed-centre assumption is empirically
+consequential. It cannot establish predictive superiority, structural factor
+amplitudes, or a true financial rank.
+
+The full growing-size BW, shrinking-margin BW, FRAME-2P-U application,
+exhaustive phase, selector-efficiency, factor-score filtering, predictive-rank,
+future-centre, and forecasting programmes are not prerequisites. A negative
+APP-FIN result narrows the empirical claim; it
+does not reopen P1-ID or any proved assumption-to-conclusion theorem.
+
 ## Claims excluded from Paper 1
 
 - fixed \(p\) as the final scope;
@@ -356,6 +460,8 @@ Their Theorem 2 and Proposition 3 use \(\kappa\) for a factor-lag singular-value
 - a centre/factor decomposition presented as identified when the baseline may be a latent stochastic process; on that class the declared frequency-band separation is a convention and must be labelled one;
 - a moving-reference, alternative-anchor, or alternative-centre-convention refit presented as a robustness check on the factor count, when reference-dependent rank inflation is a theorem in every curved geometry the project uses;
 - a selector through a nonsingleton Fréchet argmin presented as harmless; it manufactures lag-invariant drift of size \(\lambda(1-\lambda)\Delta^2\) at every lag;
+- an APP-FIN online predictive-rank path presented as identification of a
+  time-varying latent factor rank;
 - the exact Gaussian FDD quotient applied to non-Gaussian tangent log-covariance data;
 - the advertised \(n^{-3/7}\) rate under long memory; it requires \(d=0\), and \(d\in(0,\tfrac12)\) gives \(n^{-3(1-2d)/(7-2d)}\);
 - an empirical memory exponent imported from daily exchange-rate realised volatility used as a property of monthly equity realised covariance;
@@ -401,5 +507,6 @@ Their Theorem 2 and Proposition 3 use \(\kappa\) for a factor-lag singular-value
 - [[Literature review — external positioning and prior art]]
 - [[Joint HE-BW error ledger and hostile audit]]
 - [[OPEN OBLIGATIONS — current research actions]]
+- [[Paper 1 shape — identification to application]]
 
 The HD1-A/B/C and working-dossier campaign links resolve to archived proof records. FRAME, HE, and both BW size packages now have explicit canonical theorem-boundary files above; those files and the top-level ledgers govern current wording and status.

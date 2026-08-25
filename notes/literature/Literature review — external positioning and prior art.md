@@ -2,7 +2,7 @@
 type: canonical-literature-review
 title: Literature review — external positioning and prior art
 status: active
-last-audited: 2026-08-16 (§2.4–§2.8 added)
+last-audited: 2026-08-21 (§2.9 P1-RANK field map added)
 authority: field map, prior-art comparison, and the novelty-claim boundary
 ---
 
@@ -12,7 +12,7 @@ authority: field map, prior-art comparison, and the novelty-claim boundary
 
 ## 0. Status of this review
 
-Compiled 2026-08-16 from a targeted search, not an exhaustive one. Coverage is good for the Bures–Wasserstein / object-data / manifold-time-series neighbourhoods and thin for anything not indexed on arXiv. Several rows below are marked **UNVERIFIED** — they are sources identified as relevant but not yet read in full. Do not cite an UNVERIFIED row.
+Compiled from targeted searches, not an exhaustive one. Coverage is good for the Bures–Wasserstein / object-data / manifold-time-series neighbourhoods and now includes a focused primary-source audit of dynamic lag operators, weak factors and factor-number selectors. It remains thin for anything not indexed electronically. Several rows below are marked **UNVERIFIED** — they are sources identified as relevant but not yet read in full. Do not cite an UNVERIFIED row.
 
 ## 1. The four neighbourhoods
 
@@ -22,7 +22,7 @@ Paper 1 sits at the intersection of four literatures. Positioning must be done a
 |---|---|---|
 | **N1 — manifold/object-valued time series factor models** | the parent: Huang, Chen & Chen (2026), arXiv:2607.28385 | direct extension; the fixed-centre assumption (P2) is what Paper 1 relaxes |
 | **N2 — Bures–Wasserstein statistics for time-varying covariance** | Santoro & Panaretos (2024), arXiv:2310.13764; Masarotto–Panaretos–Zemel; Zemel–Panaretos (2019); Nguyen–Uribe (2026), arXiv:2604.03566; Xu–Li, JMLR 26(77) (2025) | **the principal prior-art risk** — see §2, §2.6, §2.8 |
-| **N2b — time-varying latent factor structure on a manifold** | Peng & Shen (2026), arXiv:2605.18316 | constrains **Paper 2's** moving-loading novelty, not Paper 1's — see §2.7 |
+| **N2b — time-varying latent factor structure on a manifold** | Peng & Shen (2026), arXiv:2605.18316 | constrains the parked programme's moving-loading novelty, not Paper 1's — see §2.7 |
 | **N3 — object-data change points and time-varying random objects** | Dubey & Müller (AoS 2020, JASA 2023); Change-Point Detection for Object-valued Time Series (arXiv:2606.00858) | external evidence that Fréchet centres move; **motivation source, not competition** |
 | **N4 — forecast evaluation under an imperfect proxy** | Patton (2011); Laurent–Rombouts–Violante (2013); Gneiting (2011) | producers for P1-LOSS; the matrix characterisation is LRV's |
 
@@ -168,23 +168,67 @@ That is the *same geometric fact* Nguyen–Uribe formalise: a **signed affine co
 
 **And it may be more than a citation.** The current safeguard is a *runtime* admissibility test with fallback. Theorem 3.2 is a **verifiable a-priori condition** on the spectra and weights. Whether it can supply a checkable sufficient condition for the Richardson step — replacing or supplementing the membership test — is an open question worth one afternoon. Routed to the live queue.
 
-## 2.7 Peng & Shen — the constraint on *moving-loading* novelty (Paper 2, not Paper 1)
+## 2.7 Peng & Shen — the constraint on the parked *moving-loading* programme, not Paper 1
 
 **Chuansen Peng, Xiaojing Shen, *Dynamic Elliptical Graph Factor Models via Riemannian Optimization with Geodesic Temporal Regularization*, arXiv:2605.18316v1 [cs.LG], 18 May 2026 (Sichuan University).**
 
 DEGFM models a sequence of time-varying **precision** matrices as low-rank-plus-diagonal \(\Theta_t=Y_tY_t^\top+D_t\), estimated on the product quotient manifold \(\prod_tB_{p,r}/O_r\) — the \(O_r\) gauge on the factor matrix is exactly a Grassmann-type quotient. Temporal coherence is imposed by a geodesic penalty; note that despite the abstract's "geodesic penalty defined on the Grassmann manifold", §III-C actually penalises \(d^2_{S^p_{++}}(\Theta_t,\Theta_{t+1})\), the **AIRM** distance on the reconstructed precision matrices. Theory: convergence to a stationary point (Thm V.1) and a non-asymptotic bound \(O(p_{\rm eff}\log p/n_{\min})\) with an explicit statistical-error / smoothing-bias split (Thm V.2), plus edge recovery under a beta-min condition.
 
-**Consequence, and it is real:** *"the first model with a time-varying factor subspace on a manifold"* is **no longer safe wording**. But the collision is with **[[Paper 2 — Moving loading subbundle]]**, not Paper 1 — Paper 1's loading space is covariantly constant and its moving object is the *centre*.
+**Consequence, and it is real:** *"the first model with a time-varying factor subspace on a manifold"* is **no longer safe wording**. But the collision is with the **[[Parked programme — Intrinsically moving loading subspace]]**, not Paper 1 — Paper 1's loading space is covariantly constant and its moving object is the *centre*.
 
 What they do **not** have: any Fréchet mean or barycentre; any moving base point or tangent space \(T_{\mu(u)}M\); any transport between tangent spaces; any lag operator — their factor comes from a per-window likelihood, not from autocovariance; any local-stationarity asymptotics — they observe \(n_t\) **i.i.d.** samples per window; any identification theory. It is an optimisation paper with a finite-sample bound.
 
-**Net: they are close to complementary to Paper 1** (moving subspace, fixed centre, per-window i.i.d. versus fixed subspace, moving centre, single dependent path), and directly adjacent to Paper 2.
+**Net: they are close to complementary to Paper 1** (moving subspace, fixed centre, per-window i.i.d. versus fixed subspace, moving centre, single dependent path), and directly adjacent to the parked moving-loading programme.
 
 ## 2.8 Xu & Li — BW Fréchet regression inference
 
 **H. Xu and H. Li, *Wasserstein F-tests for Fréchet regression on Bures-Wasserstein manifolds*, Journal of Machine Learning Research 26(77) (2025), 1–123** — note this is **published**, not a preprint. Covariance-matrix responses, regression target formulated as a conditional BW Fréchet mean, uniform-in-covariate rates, CLT and F-tests. Nguyen–Uribe record that Xu–Li and Kroshnin et al. "assume the existence of the regression estimator without deriving the geometric conditions required for signed weights."
 
 The statistical problem differs on the same axis as everything else in N2: i.i.d. regression pairs \((X_i,Y_i)\) versus a dependent, locally stationary array \(X_{t,n}\). **Cite as BW Fréchet-regression inference prior art; not a local-time-series result.**
+
+## 2.9 Dynamic lag operators, factor-number selection, and weak-factor language
+
+The population device used by Paper 1 after tangent alignment is standard in
+its essential form. Lam and Yao (2012) identify a finite-dimensional dynamic
+loading space from a sum of products of nonzero-lag covariance matrices;
+Bhatia, Yao and Ziegelmann (2010) give the functional/Hilbert-space analogue
+and a thresholded factor-number rule. Paper 1 must therefore describe the
+squared lag operator as inherited time-domain machinery, not as its novelty.
+
+The project's exact independent-AR(1) formula
+
+\[
+\chi_j=s_j^4\sum_{h=1}^{h_0}\rho_j^{2h}
+\]
+
+is narrower and internal. Its value is interpretive: it translates the
+abstract smallest positive lag-operator eigenvalue into factor amplitude and
+persistence, exposes the fourth-power weak-tail penalty, and shows precisely
+when an oracle centre cannot rescue a threshold set above the population
+signal. Real-data validity remains governed by the general matrix
+\(Q=\sum_hC_f(h)C_f(h)^*\); AR(1) is a calibration DGP, not a model
+requirement.
+
+Selector ancestry also narrows the claims. Hallin and Liška (2007) are the
+main spectral-information-criterion comparator. Chang, Guo and Yao (2015)
+support the general idea of ridging eigenvalue ratios when inputs are
+generated, while Caro and Peña (2024) supply a related post-rank ratio
+formulation. None makes the parent's raw Eq. (5) ratio consistent from the
+parent's displayed signal/null rates alone, so Remark P-RATIO remains a fair
+logical correction rather than a practical-failure claim.
+
+Two adjacent literatures do not close the project's boundary. Bailey,
+Kapetanios and Pesaran (2021) supply useful weak-factor language but use a
+different strength object. Lin and Yao (2019) show how an estimated manifold
+mean enters downstream tangent analysis, but not a moving local centre,
+polygon transport, or lag-row nuisance chain. A focused search found no
+applicable minimax lower bound for weak serial factors under generated
+manifold coordinates; sparse-PCA lower bounds are a scope mismatch. Paper 1
+therefore claims a **proved sufficient separation window**, not optimality,
+necessity, universality, or the first lag-based factor estimator.
+
+The source-by-source adjudication is archived as
+[[P1-RANK — weak dynamic factors and lag-rank literature audit]].
 
 
 ## 3. Open attribution checks — route to the live queue
@@ -201,6 +245,7 @@ The statistical problem differs on the same axis as everything else in N2: i.i.d
 | L-5 | arXiv:2606.00858, *Change-Point Detection for Object-valued Time Series* | motivation citation; situates itself in the statistics **and econometrics** literature | **UNVERIFIED — read for the introduction** |
 | L-6 | arXiv:2605.18316, *Dynamic Elliptical Graph Factor Models via Riemannian Optimization* | adjacent time-varying Riemannian structure; related-work only | **UNVERIFIED — skim** |
 | L-7 | arXiv:2604.03566 and arXiv:2404.03878 (Fréchet regression / F-tests on BW) | the BW inference toolkit being built concurrently; related-work only | **UNVERIFIED — skim** |
+| L-RANK | Lam–Yao; Bhatia–Yao–Ziegelmann; Hallin–Liška; Chang–Guo–Yao; Bailey–Kapetanios–Pesaran; Lin–Yao; Caro–Peña; Cai–Ma–Wu | ancestry and scope of the lag operator, selectors, weak-factor language, generated-coordinate nuisance, and rejected minimax near-match | **RESOLVED — primary-source audit integrated in §2.9 and [[References and external claim audit]]** |
 
 ## 4. The defensible novelty claim
 
@@ -218,7 +263,7 @@ Each qualifier is doing work. Remove *single realisation* and Santoro–Panareto
 - that the parent's leading empirical factor is spurious or drift-dominated — forbidden by ID-6 regardless of any literature;
 - that the moving-centre model's forecasting advantage demonstrates centre drift — see the predictive-adequacy-versus-identification separation.
 
-## 5. Competitive position, 2026-08-16
+## 5. Competitive position, 2026-08-21
 
 The parent posted **2026-07-30**. As of this audit it has **no citations** (Google Scholar, checked by hand; corroborated by negligible alphaXiv engagement). No work extending it to a moving centre was found.
 
@@ -230,4 +275,6 @@ The real signal is not that the exact problem is unclaimed — it is that **N2 i
 - [[Analytical reconstruction — proof ledger and rebuilt spec]] — theorem status
 - [[P1-ID — centre-drift and factor identification boundary]] — the identification claim this file positions
 - [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] — N4
-- [[OPEN OBLIGATIONS — current research actions]] — where L-1 to L-7 become actions
+- [[P1-RANK — AR1 signal strength and threshold boundary]] — internal signal calibration
+- [[P1-RANK — weak dynamic factors and lag-rank literature audit]] — archived source-by-source adjudication
+- [[OPEN OBLIGATIONS — current research actions]] — where unresolved attribution checks become actions

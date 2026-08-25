@@ -2,7 +2,7 @@
 type: canonical-proof-ledger
 title: Analytical reconstruction — proof ledger and rebuilt spec
 status: canonical
-last-audited: 2026-08-16
+last-audited: 2026-08-25 (BW closure and downstream causal APP-FIN rank policy integrated without changing theorem status)
 ---
 
 # Analytical reconstruction — proof ledger and rebuilt spec
@@ -55,7 +55,7 @@ No theorem changes. Every estimation result already requires a positive eigengap
 2. "loading" means the **total dynamic loading** — under a latent stochastic centre it absorbs the centre's own dynamics, and the centre/factor sub-split inside it is not identified (P1-ID §5.1, §14.3);
 3. outside the centred jointly Gaussian minimum-representation class this is **second-order** identification only (CANON-3 below).
 
-Paper 2 asks a different question—whether the loading subspace itself moves—and remains standalone.
+The parked moving-loading programme asks a different question—whether the loading subspace itself moves—and remains standalone without a reserved paper number.
 
 ### P1-ID terminal theorem register
 
@@ -128,6 +128,29 @@ Q_n=\sum_{h=1}^{h_0}C_{f,n}(h)C_{f,n}(h)^*.
 \]
 
 Thus \(\operatorname{ran}\mathbb L_n=E_n\) when \(Q_n\succ0\). One full-rank included lag implies \(\Delta_n\ge s_n^2\), but this is only a sufficient corollary. Davis–Kahan pays \(\Delta_n^{-1}\), not \(\Delta_n^{-2}\).
+
+On the independent stationary AR(1) specialization with isometric loadings,
+marginal factor standard deviations \(s_j\), and persistences \(\rho_j\),
+
+\[
+Q_n=\operatorname{diag}(\chi_j),\qquad
+\chi_j=s_j^4\sum_{h=1}^{h_0}\rho_j^{2h},
+\qquad
+\Delta_n=\min_j\chi_j
+\]
+
+when every \(\chi_j>0\). Hence the exact finite-sample threshold event is
+
+\[
+d_n^2<\tau_n<\min_j\chi_j-\eta_n.
+\]
+
+This is [[P1-RANK — AR1 signal strength and threshold boundary]]. It is a
+closed-form calibration of the general \(Q_n\)-theorem: it neither restricts
+Paper 1 to AR(1) factors nor proves a minimax detection boundary. The squared
+lag-operator construction and threshold-selector ancestry are cited
+externally; the AR(1) fourth-power formula, generated moving-frame nuisance
+budget, and fixed-total-energy dilution calculation are proved internally.
 
 If \(\mathcal G=[\Gamma_1\ \cdots\ \Gamma_{h_0}]\), then \(\mathbb L=\mathcal G\mathcal G^*\). Lag-row control gives the beyond-rank square
 
@@ -303,6 +326,16 @@ Global/rank-changing PSD claims are disproved by orthogonal rank-one endpoints w
 
 The general noncommuting HE–BW intersection is not proved. A fixed-basis diagonal/root-coordinate BW corollary is proved under an explicit positive-root DGP; one nonempty window is \(b_n=n^{-1/7}\), \(m_n=o(n^{6/7}/\log n)\), together with its boundary and tail conditions.
 
+**Numerical status, not a proof node.** The frozen 496-task fixed-size BW
+campaign gives a qualified fixed-rank pass: all 400 safe fits stayed inside the
+declared generated domain, the commuting/noncommuting centre and loading slopes
+were compatible with the robust chain, all hostile controls produced their
+declared boundary behaviour, and operator assembly/null bounds held. The
+conservative finite-sample operator-error-below-gap certificate was not uniform.
+Every rank-positive scientific recovery summary supplies the known DGP rank;
+the campaign creates no selector theorem or empirical automatic-rank claim.
+Full details are in `results/final/bw_closure_adjudication/report.md`.
+
 ## 7A. P1-LOSS — forecast evaluation (scope condition, downstream of everything above)
 
 The programme now has a theorem about how its output is **scored**, which it previously did not. It is a scope condition on reporting, not a change to the method.
@@ -314,6 +347,14 @@ A loss preserves the ranking of covariance forecasts under a conditionally unbia
 The **one real edge** is stated rather than hidden. If the observed \(X_{t,n}\) are themselves proxies of a latent covariance, the estimator's Fréchet-mean step targets the barycentre of the *observed* law, which differs from the latent one at order \(\Theta(m/M)\). CANON-1 defines the estimand from the observed law, so no theorem changes; the edge quantifies a measurement-error term the canon already budgets — a \(\zeta_n^{\rm proxy}=O(m/M)\) contribution to the existing (P1-OP-zeta) target defect, and the APP-FIN measurement-error item in the live queue. The loading rate is already stated as \(O_p\{(n^{-1/2}+\ell_n+\zeta_n)/\Delta_n^0\}\) and is unchanged.
 
 **Status: PROVED UNDER EXPLICIT ASSUMPTIONS**, with LO-2 DISPROVED as a robust loss, LO-4 SHARPLY REFORMULATED AND PROVED, routes E2 and E3 DISPROVED as escapes, and routes E1, E4, E5 REFORMULATED AND PROVED.
+
+**Downstream operational consequence, not a theorem node.** APP-FIN may compare
+a training-validation-fixed forecast rank with a predeclared causal online
+policy over nested ranks. Every candidate forecast must precede its outcome,
+and updates may use completed losses only. Such a path is predictive model
+selection, not identification of a time-varying population rank; it leaves
+P1-ID, HD1, BW, and P1-LOSS unchanged. The scope is
+[[Future application programme — factor scores, predictive rank, and online RFD]].
 
 ## 8. Dependency graph
 
@@ -447,6 +488,6 @@ Every displayed conclusion is either proved from the named baseline assumptions 
 | [[BW-SIZE-SHRINKING-MARGIN — Agent F sharpness and impossibility audit]] | archived two-pass shrinking-margin hostile record |
 | [[BW-SIZE-SHRINKING-MARGIN — lead dependency and exponent ledger]] | archived restricted-theorem adjudication ledger |
 | [[Joint HE-BW error ledger and hostile audit]] | archived typed ledger and two hostile passes |
-| [[Paper 2 — Moving loading subbundle]] | standalone Paper 2 scope |
+| [[Parked programme — Intrinsically moving loading subspace]] | standalone moving-loading programme; parked and not assigned a paper number |
 | `Archived/Proof workstreams` | citable proof and hostile-audit provenance; archive location does not determine theorem status |
 | `Archived/Historical canonical files` | superseded ledgers and queues |
