@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "py"))
 
 from rfd.estimators.lag import tangent_coordinates  # noqa: E402
 from rfd.geometry import BW_GEOMETRY  # noqa: E402
+from rfd.spd.bw import bw_clip_exp_tangent  # noqa: E402
 
 
 VIRIDIS = plt.colormaps["viridis"]
@@ -47,8 +48,8 @@ def _relative_frobenius_rms(estimate: np.ndarray, truth: np.ndarray) -> float:
 
 
 def _parent_primary_reconstruction(
-    parent: dict[str, np.ndarray], prefix: str, rank: int
-) -> np.ndarray:
+    parent: dict[str, np.ndarray], prefix: str, rank: int, step_margin: float
+) -> tuple[np.ndarray, Any]:
     tangent = (
         parent[f"{prefix}_row_mean_tangent"]
         + np.tensordot(
@@ -57,7 +58,10 @@ def _parent_primary_reconstruction(
             axes=(-1, 0),
         )
     )
-    return BW_GEOMETRY.exp(parent[f"{prefix}_mean"], tangent)
+    clipped = bw_clip_exp_tangent(
+        parent[f"{prefix}_mean"], tangent, step_margin=step_margin
+    )
+    return BW_GEOMETRY.exp(parent[f"{prefix}_mean"], clipped.tangent), clipped
 
 
 def _rank_curve(rows: np.ndarray, scores: np.ndarray, max_rank: int) -> np.ndarray:
@@ -260,8 +264,13 @@ def analyze(
     primary_rank = int(config["experiment"]["primary_rank"])
     max_rank = int(config["experiment"]["sensitivity_max_rank"])
 
-    parent_budget_primary = _parent_primary_reconstruction(parent, "budget", primary_rank)
-    parent_verified_primary = _parent_primary_reconstruction(parent, "converged", primary_rank)
+    step_margin = float(config["rfd"]["reconstruction_step_margin"])
+    parent_budget_primary, parent_budget_clip = _parent_primary_reconstruction(
+        parent, "budget", primary_rank, step_margin
+    )
+    parent_verified_primary, parent_verified_clip = _parent_primary_reconstruction(
+        parent, "converged", primary_rank, step_margin
+    )
     rfd_primary = rfd["primary_rank_reconstruction"]
 
     rank_table = pd.DataFrame({"rank": np.arange(1, max_rank + 1)})
@@ -285,6 +294,8 @@ def analyze(
         "vix_z": vix_z,
         "parent_factor1_z": parent_factor,
         "rfd_factor1_z": rfd_factor,
+        "rfd_reconstruction_clip_factor": rfd["reconstruction_clip_factors"],
+        "rfd_raw_step_min_eigenvalue": rfd["reconstruction_raw_step_min_eigenvalues"],
     })
     time_table = pd.concat([time_table, centre_table], axis=1)
 
@@ -294,9 +305,9 @@ def analyze(
         "parent_budget_centre_only": budget_fixed,
         "parent_verified_centre_only": parent_fixed,
         "rfd_centre_only": rfd["local_centres"],
-        "parent_budget_rank2": parent_budget_primary,
-        "parent_verified_rank2": parent_verified_primary,
-        "rfd_rank2": rfd_primary,
+        "parent_budget_rank2_compatible": parent_budget_primary,
+        "parent_verified_rank2_compatible": parent_verified_primary,
+        "rfd_rank2_compatible": rfd_primary,
     }
     primary_rows = []
     for name, estimate in reconstructions.items():
@@ -320,6 +331,12 @@ def analyze(
         "rfd_local_centre_minimum_eigenvalue": _minimum_eigenvalue(rfd["local_centres"]),
         "parent_verified_mean_minimum_eigenvalue": _minimum_eigenvalue(parent["converged_mean"]),
         "primary_rank_loading_angle_degrees": float(loading_table.loc[loading_table["rank"].eq(primary_rank), "largest_principal_angle_degrees"].iloc[0]),
+        "parent_budget_reconstruction_raw_exit_count": int(np.sum(parent_budget_clip.raw_step_min_eigenvalues <= 0.0)),
+        "parent_budget_reconstruction_clip_count": int(np.sum(parent_budget_clip.factors < 1.0)),
+        "parent_budget_reconstruction_min_clip_factor": float(np.min(parent_budget_clip.factors)),
+        "parent_verified_reconstruction_raw_exit_count": int(np.sum(parent_verified_clip.raw_step_min_eigenvalues <= 0.0)),
+        "parent_verified_reconstruction_clip_count": int(np.sum(parent_verified_clip.factors < 1.0)),
+        "parent_verified_reconstruction_min_clip_factor": float(np.min(parent_verified_clip.factors)),
     }
     rfd_meta = json.loads((output / "rfd_fit.meta.json").read_text(encoding="utf-8"))
     numerics.update({f"rfd_{key}": value for key, value in rfd_meta["diagnostics"].items() if key != "fallback_reasons"})
@@ -332,8 +349,12 @@ def analyze(
     _plots(output, rank_table, time_table, loading_table, primary_rank)
 
     lookup = primary_table.set_index("representation")
-    rank2_parent = float(lookup.loc["parent_verified_rank2", "bw_rms_to_observation"])
-    rank2_rfd = float(lookup.loc["rfd_rank2", "bw_rms_to_observation"])
+    rank2_parent = float(lookup.loc["parent_verified_rank2_compatible", "bw_rms_to_observation"])
+    rank2_rfd = float(lookup.loc["rfd_rank2_compatible", "bw_rms_to_observation"])
+    any_reconstruction_clipping = (
+        int(numerics["rfd_reconstruction_clip_count"]) > 0
+        or int(numerics["parent_verified_reconstruction_clip_count"]) > 0
+    )
     lines = [
         "# APP-FIN identification illustration",
         "",
@@ -345,8 +366,8 @@ def analyze(
         "",
         "## Headline measurements",
         "",
-        f"- verified-mean parent rank-2 BW reconstruction RMS: **{rank2_parent:.4g}**",
-        f"- RFD rank-2 BW reconstruction RMS: **{rank2_rfd:.4g}**",
+        f"- compatible verified-mean parent rank-2 BW reconstruction RMS: **{rank2_parent:.4g}**",
+        f"- compatible RFD rank-2 BW reconstruction RMS: **{rank2_rfd:.4g}**",
         f"- RFD relative change versus verified parent: **{100*(rank2_rfd/rank2_parent-1):+.1f}%** (negative favours RFD)",
         f"- estimated centre-motion energy inside the parent rank-2 loading space: **{centre_summary['inside_parent_rank2_energy_percent']:.1f}%**",
         f"- estimated centre-motion energy outside it: **{centre_summary['outside_parent_rank2_energy_percent']:.1f}%**",
@@ -357,12 +378,17 @@ def analyze(
         "",
         "A small loading-space angle means the two methods identify similar persistent directions after their tangent spaces are aligned. A small reconstruction error means those directions plus the fitted centre reproduce the observed matrices well. Neither statement proves that a projected score is the true structural factor amplitude: APP-FIN contains no observed latent factors, and contemporaneous noise lying inside the loading space survives projection.",
         "",
+        f"The compatible BW reconstruction safeguard used a fixed step-eigenvalue margin of {step_margin:.2f}. It activated on **{int(numerics['rfd_reconstruction_clip_count'])}/240** RFD months and **{int(numerics['parent_verified_reconstruction_clip_count'])}/240** verified-parent months. " + ("Because activation is nonzero, the reconstruction numbers describe the declared clipped estimators; no unregularized reconstruction claim is made. Loading spaces, scores, centre motion, and their decomposition are computed before this safeguard and are unaffected." if any_reconstruction_clipping else "It was inactive for both primary fits, so compatible and unregularized reconstructions coincide on this panel."),
+        "",
         "The centre decomposition answers the Paper 1 identification question empirically: it measures how much of RFD's estimated centre motion would sit inside the parent's rank-two fixed-centre loading space, where a fixed-centre analysis cannot label it separately as drift versus factor movement.",
         "",
         "## Numerical health",
         "",
         f"- RFD Richardson fallbacks: **{int(numerics['rfd_fallback_count'])}**",
         f"- nonconverged local means: **{int(numerics['rfd_nonconverged_stage_count'])}**",
+        f"- raw incompatible RFD rank-2 Exp inputs: **{int(numerics['rfd_reconstruction_raw_exit_count'])}**",
+        f"- RFD reconstruction clips: **{int(numerics['rfd_reconstruction_clip_count'])}**; smallest radial factor **{numerics['rfd_reconstruction_min_clip_factor']:.3f}**",
+        f"- verified-parent reconstruction clips: **{int(numerics['parent_verified_reconstruction_clip_count'])}**; smallest radial factor **{numerics['parent_verified_reconstruction_min_clip_factor']:.3f}**",
         f"- local-mean support count range: **{int(numerics['rfd_support_count_min'])}--{int(numerics['rfd_support_count_max'])}** months",
         f"- local-mean effective sample-size range: **{numerics['rfd_effective_sample_size_min']:.1f}--{numerics['rfd_effective_sample_size_max']:.1f}**",
         f"- smallest observed matrix eigenvalue: **{numerics['observation_minimum_eigenvalue']:.4g}**",

@@ -28,6 +28,9 @@ rfd:
   polygon_cell_constant: 1.0
   mean_tolerance: 1.0e-10
   mean_max_iterations: 200
+  # Canonical BW reconstruction safeguard. Activation is always reported;
+  # if it persists, no unregularized reconstruction claim is made.
+  reconstruction_step_margin: 0.05
   tail_mode: common
   normalization: row_size
 

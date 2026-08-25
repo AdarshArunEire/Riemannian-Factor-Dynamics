@@ -84,6 +84,38 @@ def bw_log(A, B, strict=True):
     return sym(displacement @ A + A @ displacement)
 
 
+class BWExpClipResult(NamedTuple):
+    """Radially clipped tangent inputs for the compatible BW Exp branch."""
+
+    tangent: np.ndarray
+    factors: np.ndarray
+    raw_step_min_eigenvalues: np.ndarray
+
+
+def bw_clip_exp_tangent(A, U, step_margin=0.05, strict=True):
+    """Clip BW reconstruction tangents only when their Exp lift would fail.
+
+    For ``G = L_A[U]``, the full-rank normal branch requires ``I + G`` to be
+    positive definite.  This applies the largest radial factor ``tau <= 1``
+    satisfying ``lambda_min(I + tau G) >= step_margin``.  It is the spectral
+    radial version of the canonical BW reconstruction safeguard; activation
+    must be reported because persistent clipping changes the reconstruction
+    target even though loading-space estimation is untouched.
+    """
+    A = np.asarray(A, dtype=float)
+    U = np.asarray(U, dtype=float)
+    if not np.isfinite(step_margin) or not 0.0 < step_margin < 1.0:
+        raise ValueError("step_margin must lie strictly between zero and one")
+    generator = bw_lyapunov(A, U, strict)
+    minimum = np.linalg.eigvalsh(generator)[..., 0]
+    factors = np.ones_like(minimum, dtype=float)
+    active = 1.0 + minimum < step_margin
+    factors[active] = (1.0 - step_margin) / (-minimum[active])
+    factors = np.minimum(factors, 1.0)
+    tangent = U * factors[..., None, None]
+    return BWExpClipResult(tangent, factors, 1.0 + minimum)
+
+
 def bw_exp(A, U, strict=True):
     """BW exponential on its compatible full-rank normal branch.
 

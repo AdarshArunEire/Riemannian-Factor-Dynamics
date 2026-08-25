@@ -13,6 +13,7 @@ import numpy as np
 import pytest
 
 from rfd.spd.bw import (
+    bw_clip_exp_tangent,
     bw_exp,
     bw_inner,
     bw_log,
@@ -308,6 +309,29 @@ def test_exp_rejects_the_wrong_bw_normal_branch():
     incompatible = np.diag([-3.0, 0.0])
     with pytest.raises(ValueError, match="compatible"):
         bw_exp(base, incompatible)
+
+
+def test_exp_reconstruction_clip_is_inactive_inside_the_margin():
+    base = np.eye(2)
+    tangent = np.diag([-0.4, 0.2])
+
+    clipped = bw_clip_exp_tangent(base, tangent, step_margin=0.05)
+
+    assert clipped.factors == pytest.approx(1.0)
+    np.testing.assert_allclose(clipped.tangent, tangent)
+    assert clipped.raw_step_min_eigenvalues == pytest.approx(0.8)
+
+
+def test_exp_reconstruction_clip_returns_largest_compatible_radial_step():
+    base = np.eye(2)
+    incompatible = np.diag([-4.0, 0.0])
+
+    clipped = bw_clip_exp_tangent(base, incompatible, step_margin=0.05)
+    point = bw_exp(base, clipped.tangent)
+
+    assert clipped.raw_step_min_eigenvalues == pytest.approx(-1.0)
+    assert clipped.factors == pytest.approx(0.475)
+    np.testing.assert_allclose(point, np.diag([0.05**2, 1.0]), atol=1e-14)
 
 
 def test_weighted_barycentre_uses_relative_positive_weights(rng):

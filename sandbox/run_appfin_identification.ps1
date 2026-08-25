@@ -82,7 +82,7 @@ $timer = [System.Diagnostics.Stopwatch]::StartNew()
 Write-Host ''
 Write-Host 'Running final Paper 1 APP-FIN identification fit.' -ForegroundColor Cyan
 Write-Host 'The parent and RFD stage caches are digest-checked and resumable by stage.'
-Write-Host 'Runtime guide: roughly 30--120 minutes; full noncommuting BW transport dominates.'
+Write-Host 'Runtime guide on the validated panel: roughly 3--10 minutes from scratch; a cached-parent rerun is usually under 2 minutes.'
 Write-Host "Started: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 
 try {

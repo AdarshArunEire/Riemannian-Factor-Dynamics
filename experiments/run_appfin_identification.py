@@ -38,9 +38,22 @@ sys.path.insert(0, str(ROOT / "py"))
 sys.path.insert(0, str(ROOT / "experiments"))
 
 from run_end_to_end import production_multiplier  # noqa: E402
-from rfd.estimators.frame import polygon_cell_count  # noqa: E402
+from rfd.estimators.centre import estimate_centre_path  # noqa: E402
+from rfd.estimators.frame import (  # noqa: E402
+    polygon_cell_count,
+    regular_polygon_grid,
+    transport_from_reference,
+)
+from rfd.estimators.lag import (  # noqa: E402
+    assemble_lag_operator,
+    common_reference_tangent_rows,
+    coordinate_tangents,
+    decompose_lag_operator,
+    extract_dynamic_factors,
+    lag_cross_covariances,
+)
 from rfd.geometry import BW_GEOMETRY  # noqa: E402
-from rfd.model import RFDConfig, fit_rfd  # noqa: E402
+from rfd.spd.bw import bw_clip_exp_tangent  # noqa: E402
 
 
 CONFIG_DEFAULT = ROOT / "config" / "appfin_identification.yaml"
@@ -86,6 +99,8 @@ def validate_configuration(config: dict[str, Any]) -> None:
         int(parent["verified_mean_max_iterations"]),
     ) <= 0:
         raise ValueError("all numerical controls must be positive")
+    if not 0.0 < float(rfd["reconstruction_step_margin"]) < 1.0:
+        raise ValueError("BW reconstruction step margin must lie in (0, 1)")
 
 
 def load_panel(config: dict[str, Any]) -> dict[str, np.ndarray]:
@@ -148,6 +163,7 @@ def effective_rfd_settings(config: dict[str, Any], n: int) -> dict[str, Any]:
         "broad_window_months": float(n * bandwidth),
         "half_window_months": float(n * bandwidth / 2.0),
         "quarter_window_months": float(n * bandwidth / 4.0),
+        "reconstruction_step_margin": float(source["reconstruction_step_margin"]),
     }
 
 
@@ -194,6 +210,49 @@ def experiment_digest(config: dict[str, Any]) -> str:
     ]
     joined = "\n".join(f"{path.resolve()}:{_sha256(path)}" for path in paths)
     return hashlib.sha256(joined.encode("utf-8")).hexdigest()
+
+
+def _payload_digest(payload: Any, paths: list[Path]) -> str:
+    material = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    material += "\n" + "\n".join(
+        f"{path.resolve()}:{_sha256(path)}" for path in paths
+    )
+    return hashlib.sha256(material.encode("utf-8")).hexdigest()
+
+
+def parent_stage_digest(config: dict[str, Any]) -> str:
+    experiment = config["experiment"]
+    payload = {
+        "panel_path": experiment["panel_path"],
+        "max_lag": experiment["max_lag"],
+        "sensitivity_max_rank": experiment["sensitivity_max_rank"],
+        "parent": config["parent"],
+    }
+    return _payload_digest(
+        payload,
+        [ROOT / experiment["panel_path"], R_WORKER, PARENT_SOURCE],
+    )
+
+
+def rfd_stage_digest(config: dict[str, Any]) -> str:
+    experiment = config["experiment"]
+    payload = {
+        "panel_path": experiment["panel_path"],
+        "max_lag": experiment["max_lag"],
+        "primary_rank": experiment["primary_rank"],
+        "sensitivity_max_rank": experiment["sensitivity_max_rank"],
+        "rfd": config["rfd"],
+    }
+    return _payload_digest(
+        payload,
+        [
+            ROOT / experiment["panel_path"],
+            ROOT / "py" / "rfd" / "estimators" / "centre.py",
+            ROOT / "py" / "rfd" / "estimators" / "frame.py",
+            ROOT / "py" / "rfd" / "estimators" / "lag.py",
+            ROOT / "py" / "rfd" / "spd" / "bw.py",
+        ],
+    )
 
 
 def _atomic_json(path: Path, value: Any) -> None:
@@ -310,16 +369,16 @@ def run_parent_stage(
         return result
 
 
-def _stage_diagnostics(fit) -> dict[str, Any]:
+def _stage_diagnostics(centre) -> dict[str, Any]:
     stages = []
     reasons: list[str] = []
-    for estimate in fit.centre.estimates:
+    for estimate in centre.estimates:
         reasons.extend(estimate.fallback_reasons)
         for one_sided in (estimate.forward, estimate.backward):
             if one_sided is not None:
                 stages.extend(one_sided.stages.stages)
     return {
-        "fallback_count": int(fit.centre.fallback_count),
+        "fallback_count": int(centre.fallback_count),
         "fallback_reasons": reasons,
         "nonconverged_stage_count": int(sum(not stage.converged for stage in stages)),
         "support_count_min": int(min(stage.support_count for stage in stages)),
@@ -335,21 +394,6 @@ def run_rfd_stage(observations: np.ndarray, config: dict[str, Any]) -> tuple[dic
     n = observations.shape[0]
     settings = effective_rfd_settings(config, n)
     source = config["rfd"]
-    model_config = RFDConfig(
-        bandwidth=float(settings["bandwidth"]),
-        n_cells=int(settings["n_cells"]),
-        max_lag=int(config["experiment"]["max_lag"]),
-        rank_method="fixed",
-        # Fit only the declared primary rank.  The complete spectrum below
-        # still supplies ranks 1..15 for tangent-energy sensitivity, without
-        # forcing a high-rank BW Exp that is not part of the headline model.
-        rank=int(config["experiment"]["primary_rank"]),
-        tail_mode=str(source["tail_mode"]),
-        normalization=str(source["normalization"]),
-        overlap_fractions=tuple(source["overlap_fractions"]),
-        mean_tol=float(source["mean_tolerance"]),
-        mean_max_iter=int(source["mean_max_iterations"]),
-    )
     time_values = np.arange(1, n + 1, dtype=float) / n
     print(
         "[RFD] fitting moving centres: "
@@ -359,28 +403,79 @@ def run_rfd_stage(observations: np.ndarray, config: dict[str, Any]) -> tuple[dic
         flush=True,
     )
     started = time.perf_counter()
-    fit = fit_rfd(observations, time_values, BW_GEOMETRY, model_config)
+    vertex_times = regular_polygon_grid(
+        int(settings["n_cells"]), start=float(time_values[0]), stop=float(time_values[-1])
+    )
+    centre = estimate_centre_path(
+        observations=observations,
+        time=time_values,
+        vertex_times=vertex_times,
+        bandwidth=float(settings["bandwidth"]),
+        geometry=BW_GEOMETRY,
+        overlap_fractions=tuple(source["overlap_fractions"]),
+        mean_tol=float(source["mean_tolerance"]),
+        max_iter=int(source["mean_max_iterations"]),
+    )
+    tangent_rows = common_reference_tangent_rows(
+        observations, time_values, centre.polygon
+    )
+    lag_row = lag_cross_covariances(
+        tangent_rows,
+        int(config["experiment"]["max_lag"]),
+        demean=True,
+        tail_mode=str(source["tail_mode"]),
+        normalization=str(source["normalization"]),
+    )
+    lag_operator = assemble_lag_operator(lag_row)
+    spectrum = decompose_lag_operator(lag_operator)
+    primary_rank = int(config["experiment"]["primary_rank"])
+    factors = extract_dynamic_factors(spectrum, primary_rank)
+    reference_vectors = coordinate_tangents(
+        factors.reconstructed_rows, tangent_rows.basis
+    )
+    local_vectors = transport_from_reference(
+        centre.polygon, reference_vectors, time_values
+    )
+    clipped = bw_clip_exp_tangent(
+        tangent_rows.local_centres,
+        local_vectors,
+        step_margin=float(source["reconstruction_step_margin"]),
+    )
+    primary_reconstruction = BW_GEOMETRY.exp(
+        tangent_rows.local_centres, clipped.tangent
+    )
     max_rank = int(config["experiment"]["sensitivity_max_rank"])
-    centred_rows = fit.lag_operator.lag_row.centred_rows
-    sensitivity_scores = centred_rows @ fit.spectrum.eigenvectors[:, :max_rank]
+    sensitivity_scores = lag_row.centred_rows @ spectrum.eigenvectors[:, :max_rank]
     elapsed = time.perf_counter() - started
     print(f"[RFD] complete in {elapsed:.1f}s", flush=True)
-    diagnostics = _stage_diagnostics(fit)
+    diagnostics = _stage_diagnostics(centre)
     diagnostics["elapsed_seconds"] = elapsed
+    diagnostics["reconstruction_step_margin"] = float(source["reconstruction_step_margin"])
+    diagnostics["reconstruction_raw_exit_count"] = int(
+        np.sum(clipped.raw_step_min_eigenvalues <= 0.0)
+    )
+    diagnostics["reconstruction_clip_count"] = int(np.sum(clipped.factors < 1.0))
+    diagnostics["reconstruction_clip_fraction"] = float(np.mean(clipped.factors < 1.0))
+    diagnostics["reconstruction_min_clip_factor"] = float(np.min(clipped.factors))
+    diagnostics["reconstruction_min_raw_step_eigenvalue"] = float(
+        np.min(clipped.raw_step_min_eigenvalues)
+    )
     diagnostics.update(settings)
     arrays = {
         "time": time_values,
-        "vertex_times": fit.centre.vertex_times,
-        "vertices": fit.centre.vertices,
-        "local_centres": fit.tangent_rows.local_centres,
-        "tangent_rows": fit.tangent_rows.rows,
-        "basis": fit.tangent_rows.basis,
-        "reference_point": fit.centre.polygon.reference_point,
-        "eigenvalues": fit.spectrum.eigenvalues,
-        "eigenvectors": fit.spectrum.eigenvectors,
+        "vertex_times": centre.vertex_times,
+        "vertices": centre.vertices,
+        "local_centres": tangent_rows.local_centres,
+        "tangent_rows": tangent_rows.rows,
+        "basis": tangent_rows.basis,
+        "reference_point": centre.polygon.reference_point,
+        "eigenvalues": spectrum.eigenvalues,
+        "eigenvectors": spectrum.eigenvectors,
         "scores": sensitivity_scores,
-        "row_mean": fit.factors.row_mean,
-        "primary_rank_reconstruction": fit.reconstructed_observations,
+        "row_mean": factors.row_mean,
+        "primary_rank_reconstruction": primary_reconstruction,
+        "reconstruction_clip_factors": clipped.factors,
+        "reconstruction_raw_step_min_eigenvalues": clipped.raw_step_min_eigenvalues,
     }
     return arrays, diagnostics
 
@@ -391,6 +486,30 @@ def _cache_matches(meta_path: Path, digest: str) -> bool:
     try:
         return json.loads(meta_path.read_text(encoding="utf-8")).get("digest") == digest
     except (OSError, json.JSONDecodeError):
+        return False
+
+
+def _parent_cache_has_contract(
+    path: Path, *, n: int, m: int, rank: int
+) -> bool:
+    if not path.is_file():
+        return False
+    required = {
+        "budget_mean": (m, m),
+        "budget_log_rows": (n, m * (m + 1) // 2),
+        "budget_scores": (n, rank),
+        "budget_loadings": (rank, m, m),
+        "budget_row_mean_tangent": (m, m),
+        "converged_mean": (m, m),
+        "converged_log_rows": (n, m * (m + 1) // 2),
+        "converged_scores": (n, rank),
+        "converged_loadings": (rank, m, m),
+        "converged_row_mean_tangent": (m, m),
+    }
+    try:
+        with np.load(path, allow_pickle=False) as source:
+            return all(name in source.files and source[name].shape == shape for name, shape in required.items())
+    except (OSError, ValueError):
         return False
 
 
@@ -424,19 +543,36 @@ def main() -> None:
 
     parent_cache = output / "parent_fit.npz"
     parent_meta = output / "parent_fit.meta.json"
-    if args.force or not parent_cache.is_file() or not _cache_matches(parent_meta, digest):
+    parent_digest = parent_stage_digest(config)
+    n, m, _ = panel["panel"].shape
+    max_rank = int(config["experiment"]["sensitivity_max_rank"])
+    legacy_parent_cache = (
+        not args.force
+        and not _cache_matches(parent_meta, parent_digest)
+        and _parent_cache_has_contract(parent_cache, n=n, m=m, rank=max_rank)
+    )
+    if legacy_parent_cache:
+        previous = json.loads(parent_meta.read_text(encoding="utf-8")) if parent_meta.is_file() else {}
+        _atomic_json(parent_meta, {
+            "digest": parent_digest,
+            "completed": previous.get("completed"),
+            "adopted_from_legacy_digest": previous.get("digest"),
+        })
+        print("[parent] adopted the completed pre-safeguard cache; RFD-only settings changed", flush=True)
+    if args.force or not parent_cache.is_file() or not _cache_matches(parent_meta, parent_digest):
         parent_arrays = run_parent_stage(panel["panel"], config, rscript)
         _atomic_npz(parent_cache, **parent_arrays)
-        _atomic_json(parent_meta, {"digest": digest, "completed": time.strftime("%Y-%m-%dT%H:%M:%S%z")})
+        _atomic_json(parent_meta, {"digest": parent_digest, "completed": time.strftime("%Y-%m-%dT%H:%M:%S%z")})
     else:
         print("[parent] reusing digest-matched stage cache", flush=True)
 
     rfd_cache = output / "rfd_fit.npz"
     rfd_meta = output / "rfd_fit.meta.json"
-    if args.force or not rfd_cache.is_file() or not _cache_matches(rfd_meta, digest):
+    rfd_digest = rfd_stage_digest(config)
+    if args.force or not rfd_cache.is_file() or not _cache_matches(rfd_meta, rfd_digest):
         rfd_arrays, diagnostics = run_rfd_stage(panel["panel"], config)
         _atomic_npz(rfd_cache, **rfd_arrays)
-        _atomic_json(rfd_meta, {"digest": digest, "completed": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "diagnostics": diagnostics})
+        _atomic_json(rfd_meta, {"digest": rfd_digest, "completed": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "diagnostics": diagnostics})
     else:
         print("[RFD] reusing digest-matched stage cache", flush=True)
 
