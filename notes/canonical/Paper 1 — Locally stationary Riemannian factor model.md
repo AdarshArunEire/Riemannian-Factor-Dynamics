@@ -438,20 +438,28 @@ movement. These are reconstruction and identification evidence, not a
 forecasting theorem or a real-data dominance claim. Full adjudication:
 `results/final/parent_rfd_bw_parity_adjudication/report.md`.
 
-The sole remaining Paper 1 empirical gate is deliberately narrow: on the
-rebuilt 240-month, 12-stock APP-FIN BW panel, fit literal parent RFM and RFD at
-fixed \(r=2\); quantify intrinsic centre motion, its projection inside and
-outside the parent loading span, loading/reconstruction sensitivity, Factor
-1/VIX interpretation, and all numerical/theorem diagnostics. This is an
-application illustration of whether the fixed-centre assumption is empirically
-consequential. It cannot establish predictive superiority, structural factor
-amplitudes, or a true financial rank.
+The final APP-FIN gate is complete. Its fixed-rank parent/RFD comparison remains
+an identification sensitivity illustration, not forecasting or structural
+factor truth. The separate predeclared centre diagnostic found global,
+positive-local, and full Richardson BW RMS 5.033, 4.954, and 8.479 across 20
+leave-one-year-out folds. Positive local lowered aggregate squared BW loss by
+3.1% but won exactly half the years; full Richardson raised it by 183.8%.
+Observed local-motion energy exceeded the fixed-centre block-null median but
+not its 95th percentile (\(p=0.07\), 99 replicates). Both alternating tuning
+halves selected 0.2 retention of the global-to-Richardson displacement, but
+the opposite-half BW intervals still crossed zero. Hence monthly APP-FIN
+weakly supports regularised centre motion and strongly exposes the unshrunk
+signed correction's finite-sample variance boundary. It does not establish
+predictive superiority, structural amplitudes, a true financial rank, or
+absence of centre motion. Full adjudication:
+`results/intermediate/appfin_centre_diagnostic/report.md`.
 
 The full growing-size BW, shrinking-margin BW, FRAME-2P-U application,
 exhaustive phase, selector-efficiency, factor-score filtering, predictive-rank,
 future-centre, and forecasting programmes are not prerequisites. A negative
-APP-FIN result narrows the empirical claim; it
-does not reopen P1-ID or any proved assumption-to-conclusion theorem.
+APP-FIN has narrowed the empirical claim without reopening P1-ID or any proved
+assumption-to-conclusion theorem. Coefficient/scale design, regularised centre
+extraction, higher-frequency panels, and causal forecast use are post--Paper 1.
 
 ## Claims excluded from Paper 1
 

@@ -1,0 +1,42 @@
+# Post–Paper 1 APP-MONTHLY-VAR implementation bridge.
+# The comparison fixes the parent's rank, lag horizon, VAR(1), forecast origins,
+# and realised-covariance panel. It is not rank selection or factor-score truth.
+
+experiment:
+  id: APP-MONTHLY-VAR
+  panel_path: results/raw/rc_panel_adjusted.npz
+  expected_months: 240
+  expected_first_month: 2000-01
+  expected_last_month: 2019-12
+  expected_tickers: [MSFT, AAPL, ORCL, CSCO, JPM, BAC, WFC, GS, XOM, CVX, COP, EOG]
+  initial_train_months: 204
+  forecast_months: 36
+  rank: 2
+  max_lag: 6
+
+rfd:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+  forecast_step_margin: 0.05
+  tail_mode: common
+  normalization: row_size
+  future_centre_policy: carry_terminal
+
+parent:
+  batch_size: 30
+  max_iterations: 100
+  seed: 1
+
+baselines:
+  ewma_lambda: 0.94
+
+output:
+  directory: results/intermediate/appfin_forecast
+  smoke_directory: results/intermediate/appfin_forecast_smoke

@@ -22,8 +22,11 @@ now complete with a qualified fixed-rank pass: 496 frozen tasks, no ordinary
 error or failed verdict, safe-domain rate evidence, and honest hostile-boundary
 behaviour. Rank-positive synthetic cells use the known true rank, so no
 automatic-rank claim is made. The literal parent comparison on common BW draws
-is now complete. The sole remaining Paper 1 empirical gate is a non-forecasting
-APP-FIN identification illustration; predictive rank, score dynamics, and
+is now complete. The non-forecasting APP-FIN identification illustration and
+its centre-detectability gate are also complete with a qualified boundary:
+suggestive regularised centre motion, no 5% rejection of a dependent
+constant-centre null, and severe full-Richardson variance at monthly
+\(n=240\). Predictive rank, score dynamics, finite-sample centre redesign, and
 forecasting move together to the application follow-up. The
 repository also contains audited SPD geometry and loss
 primitives, a rebuilt realised-covariance panel, an APP-FIN parent-pipeline
@@ -91,7 +94,7 @@ All rate plots use the actual empirical \(R_n,A_{2,n},\Delta_n\) and the theorem
 | N-15 | noncommuting fixed-margin growing-size BW | fixed compatible spectral/polar/Exp/normal/path margins, growing \(m\) | the proved geometric producer has no direct matrix-size factor; statistical error follows the separately supplied energy, dependence, row, and gap budgets | detect hidden implementation dimension costs, generated-domain escape, energy growth, or gap dilution rather than attributing every failure to geometry | **POST–PAPER 1; FIXED-SIZE N-09 COMPLETED** |
 | N-16 | FRAME-2P-U curved oracle branch | three exactly separated colours; \(b=n^{-1/7}\), \(M\asymp n^{2/7}\), \(c=n^{-\gamma}\); sweep \(\gamma\) below, inside, and above \((1/6,3/14)\) | inside the window the corrected row is root-\(n\), its post-influence nuisance remainder is sub-root-\(n\), and null eigenvalues are \(O_p(n^{-1})\) when U2P and the actual gap hold | separate validation influence from nuisance remainder; record U2P/tube/mask failures rather than treating bounded energy as sufficient | **PLANNED** |
 | N-17 | FRAME correction negative controls | compare the valid two-path correction with direct \(\Omega\) plug-in, same-band score/Richardson, invariant-only redesign, and the robust uncorrected row | same-band retains a generic curved \(n^{-3/7}\) bias; invariant-only changes the estimand; direct plug-in succeeds only when its extra frame producer is verified | use a noncommuting curved witness and a common-gauge conjugation check | **PLANNED** |
-| N-18 | centre-drift/factor identification diagnostic | controlled drift-only, factor-only, aligned, orthogonal, mixed, cross-term, and curved-reference rank-inflation DGPs; then the APP-FIN fixed-centre baseline versus moving-centre fits | verify implementation against ID-4/ID-5 and Corollary P-DRIFT: stable aligned span, clean orthogonal rank addition of exactly \(\dim P_{\mathcal S_X^\perp}D\), partial rotation/cancellation, and exact sphere reference-rank change | validates code and reports sensitivity; it cannot determine empirical component dominance without the canonical identifying assumptions | **PLANNED; RUN ONLY AFTER CLEAN N-00 REPRODUCTION** |
+| N-18 | centre-drift/factor identification diagnostic | controlled drift-only, factor-only, aligned, orthogonal, mixed, cross-term, and curved-reference rank-inflation DGPs; then the APP-FIN fixed-centre baseline versus moving-centre fits | verify implementation against ID-4/ID-5 and Corollary P-DRIFT: stable aligned span, clean orthogonal rank addition of exactly \(\dim P_{\mathcal S_X^\perp}D\), partial rotation/cancellation, and exact sphere reference-rank change | validates code and reports sensitivity; it cannot determine empirical component dominance without the canonical identifying assumptions | **PAPER 1 DISCRETE CONTROLS AND APP-FIN CENTRE GATE COMPLETE; EXHAUSTIVE CONTINUOUS PHASE POST-FREEZE** |
 | N-18a | ID-8 rank-inflation witnesses | reproduce the three exact analytic constructions as code checks: BW \({\rm SPD}(2)\) with \(x=\operatorname{diag}(a,1)\), \(V\) off-diagonal, \(a\ne1\); AIRM \({\rm SPD}(2)\) noncommuting; \(H^2\); plus the diagonal-BW rigid control | the three curved cases inflate affine dimension \(1\to2\) and the diagonal-BW control does not; the BW defect matches the closed form for every \(a\ne1\), \(0<\vert b\vert<1+a\) | a **code-verification** diagnostic against theorems already proved analytically; agreement confirms the implementation, disagreement indicts the code, and neither outcome can alter ID-8 | **PLANNED** |
 | N-18b | ID-7/ID-10 persistence diagnostic | sweep the frozen-factor persistence: short memory, \(\rho_n=1-n^{-\theta}\) for \(\theta\) inside and outside \([0,1)\), and ARFIMA with \(d\in\{0,0.1,0.25,0.4\}\); at each, record \(\psi^+(nb_n)\) against \(b_n^3\) and the realised mean/loading error | the mean error tracks \(\ell_n(\psi)=b_n^3+\psi^+(nb_n)+n^{-a}+n^{-1}\); the re-optimised bandwidth \(n^{-(1-2d)/(7-2d)}\) beats \(n^{-1/7}\) for \(d>0\); separation degrades as \(x_n=(1-\rho_n)nb_n\to O(1)\) | measures the **constant and the finite-\(n\) onset**, not the exponent, which is proved. It cannot establish the memory exponent of any real dataset; APP-FIN's \(d\) remains an assumption under test | **PLANNED** |
 | N-18c | static-centre breakdown phase diagram | \(\mu_\nu(u)=\operatorname{Exp}_{\mu_0}\{\nu g(u)V\}\); sweep \(\nu,n,\Delta\), noise/energy, persistence, drift shape/speed/orientation, geometry and SPD conditioning; compare fixed- and moving-centre estimators | estimate the complete structural- and forecast-risk advantage sets. In the clean flat/orthogonal/centred branch, the first row defect is \(O(\nu^2)\) and the candidate onset is \(\nu_{\rm est}^\star\asymp(n^{-1/2}+\ell_n)^{1/2}\), hence \(n^{-3/14}\) when short-memory \(\ell_n\) dominates | no universal exponent or unique crossover is presumed: surviving cross/curved terms may be \(O(\nu)\), aligned drift may preserve the loading span, and forecasting depends on horizon and a P1-LOSS-admissible loss | **PLANNED; AFTER N-00 AND THE N-18 POSITIVE/PLACEBO CONTROLS** |
@@ -442,6 +445,32 @@ mean sensitivity was negligible. The adjudication is
 `results/final/parent_rfd_bw_parity_adjudication/report.md`; the executed plot
 lab is `notebooks/parent_rfd_bw_parity_plot_lab.ipynb`.
 
+### 3G. Post-freeze causal bridge and declared home application
+
+These experiments do not enter Paper 1's theorem or empirical claims. They
+begin only after the Paper 1 result/configuration freeze and follow the
+authoritative contract in
+[[Home application — hourly crypto realised covariance]].
+
+| ID | design | fixed controls | primary outputs | terminal interpretation |
+|---|---|---|---|---|
+| APP-MONTHLY-VAR | existing 240-month, 12-stock APP-FIN panel; initial months \(1{:}204\), then 36 expanding one-step forecasts | fixed \(r=2\), lag horizon \(h=6\), and the same OLS VAR(1) with intercept, covariance inputs, origins, and losses; parent global centre frozen from the initial window; RFD expanding-prefix path with one-sided terminal-centre carry | squared Frobenius, multivariate QLIKE, labelled parent BW/risk diagnostics, convergence/fallbacks, centre motion, and wall time | **COMPLETE — 36/36 CAUSAL FORECASTS.** Parent/RFD mean Frobenius²: 206.48/241.34; mean QLIKE: 11.12/1717.40. The RFD decoder produced two clips, minimum eigenvalue \(4.16\times10^{-6}\), and 69 centre fallbacks. This is an instability diagnosis, not a dominance or factor-score claim |
+| APP-BW-SCORE-FILTER | identical regular BW synthetic draws; \(n\in\{240,512,2048,8192\}\), six fixed/moving/noiseless/noisy controls, 16 replicates; known rank two supplied | oracle, fixed-centre RFM-compatible, and feasible RFD representations each feed a frozen OLS VAR(1) and identity-observation linear Gaussian/Kalman head; first 80% fits, final 20% is revealed sequentially; every BW decode uses the same compatibility guard | observed/filtered score NRMSE, one-step factor forecast NRMSE, KF/VAR ratio, latent-signal and observation reconstruction, clips, eigenvalue/condition margins, convergence and transition radii | **MACHINERY + TWO-DRAW REAL SMOKE COMPLETE; 384-DRAW RECORD PENDING.** The smoke is plumbing evidence only; the recorded run decides whether filtering lowers the projected-noise floor without buying unsafe reconstruction |
+| APP-MONTHLY-HEADS | same 204/36 APP-FIN expanding origins and fixed rank as APP-MONTHLY-VAR | literal parent and RFD representations each feed VAR and Kalman heads; the representation is held fixed within each pair; all controls frozen before evaluation | same forecast losses plus head transition radii, inferred measurement fraction, convergence, clips, minimum eigenvalue, condition number, and exact parent-R parity | **MACHINERY + REAL ONE-ORIGIN SMOKE COMPLETE; 36-MONTH RECORD PENDING.** Parent VAR score/forecast parity errors were \(1.83\times10^{-15}\)/\(5.18\times10^{-14}\); both KF fits converged and no arm clipped. One origin cannot establish a forecast verdict |
+| APP-HF-0 | 20 predeclared liquid spot crypto assets; official one-second bars synchronized to ten-second returns; non-overlapping hourly realised covariance | one venue/quote; fixed asset, missingness, regularisation, seasonality, and split rules | valid returns per hour, stale/missing fractions, eigenvalue/condition/ridge distributions, proxy-noise diagnostics, and data exclusions | pass fixes the observation process; failure changes or rejects the application before model comparison |
+| APP-HF-1 | blocked centre comparison plus dependent fixed-centre null | global, positive-local, Richardson, and predeclared global/local shrinkage; training-only tuning | proxy-robust held-out loss, path stability, effective sample size, correction/fallback events, and null-calibrated motion | global wins: reject RFD on panel; jumps dominate: reject smooth path; regularised local wins: continue with that centre and record Richardson boundary |
+| APP-HF-2 | literal parent RFM versus RFD on identical hourly matrices | one validation-chosen fixed rank; identical lags, coordinate conventions, and reconstruction targets | loading stability, reconstruction, lag spectra/gaps, residual dependence, margins, and centre/loading sensitivity | establishes a representation gain, tie, or cost before forecasting |
+| APP-HF-3 | projected-score observation model | direct projected scores and parent VAR(1) baseline versus a frozen linear state-space/Kalman treatment | score innovation diagnostics, residual serial structure, reconstruction, and forecast-origin state uncertainty | isolates whether filtering addresses the in-span projected-noise floor |
+| APP-HF-4 | sequential one-hour covariance forecasts over a frozen evaluation year | frozen centre, rank, filter, future-centre rule, and refit schedule; causal updates only | Frobenius and QLIKE primary; labelled geodesic and economic diagnostics; LOCF/EWMA, HAR/SPD, covariance-dynamics, factor/state-space, parent RFM, and reproducible geometric comparators | application verdict; no post-test tuning |
+| APP-HF-5 | frozen transfer to 20 US equities | explicit market-hours, asynchronous-trading, intraday-seasonality, and overnight policies | same primary losses and health diagnostics | external validation, not a second tuning panel |
+
+The first monthly bridge deliberately uses the parent's forecast model. RFD
+changes the centre/frame construction, not the VAR. Its completed instability
+diagnosis motivates, but does not prejudge, two frozen follow-ups. The synthetic
+score-filter gate first measures hidden-factor amplitude recovery under known
+truth. The APP-FIN four-arm replay then changes only VAR versus Kalman within
+each fixed representation. Adaptive rank remains absent from both.
+
 ## 4. Estimator and selector comparisons
 
 For each eligible regime, plan the following estimators:
@@ -488,6 +517,9 @@ Forecasting outputs are separately labelled:
 - these are post–Paper 1 outputs. APP-FIN forecasting eventually issues every
   candidate before its outcome and distinguishes a causal policy from a
   retrospective oracle, but the foundational paper does not consume that run.
+- the first post-freeze bridge instead holds \(r=2\) fixed and matches the
+  parent's 204/36 expanding VAR(1) loop. The hourly home initially keeps one
+  validation-chosen rank fixed; predictive-rank adaptation enters only later.
 
 No reconstruction theorem is described as a forecasting guarantee.
 
@@ -510,10 +542,12 @@ compact fixed-size N-09 closure and the 576-draw literal parent/RFD BW parity
 matrix are complete with qualified fixed-rank verdicts. The public environment
 and APP-FIN parent pipeline have been audited and reproduced and
 [[notation-map|the notation map]] is complete; the long parent simulations are
-optional unattended reproduction work. The sole remaining Paper 1 empirical
-gate is the fixed-rank non-forecasting APP-FIN identification illustration.
-Predictive rank, factor-score dynamics, future-centre policy, and forecasting
-are one post-freeze programme. Infinite-memory
+optional unattended reproduction work. The fixed-rank non-forecasting APP-FIN
+illustration and its centre gate are complete; Paper 1 now proceeds to freeze.
+Predictive rank, factor-score dynamics, finite-sample centre redesign,
+future-centre policy, and forecasting are one post-freeze programme, now
+ordered as APP-MONTHLY-VAR followed by APP-HF-0 through APP-HF-5 in
+[[Home application — hourly crypto realised covariance]]. Infinite-memory
 cancellation, signed-AIRM, higher positive smoothing, selector efficiency,
 FRAME implementation, and BW exponent-sharpness are not prerequisites unless a
 required compact comparison exposes a genuine dependency.

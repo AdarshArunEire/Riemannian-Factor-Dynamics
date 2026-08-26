@@ -1,0 +1,19 @@
+# APP-FIN closure tournament: centre construction x score head.
+# All arms use the same panel, causal origins, supplied rank, lag horizon,
+# decoder guard, and losses from the frozen APP-FIN score-filter experiment.
+
+experiment:
+  id: P1-APPFIN-CENTRE-HEAD-TOURNAMENT
+  source_score_filter_config: config/appfin_score_filter.yaml
+  centre_methods: [broad_positive, segmented_6, segmented_12, richardson]
+  workers: 8
+
+acceptance:
+  # Operational, deliberately transparent definitions of "no catastrophic
+  # blow-up". They do not define statistical superiority.
+  maximum_qlike_multiple_of_parent_var: 10.0
+  maximum_forecast_condition_number: 10000.0
+
+output:
+  directory: results/intermediate/appfin_centre_head_tournament
+  smoke_directory: results/intermediate/appfin_centre_head_tournament_smoke

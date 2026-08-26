@@ -31,8 +31,8 @@ boundary rather than universal dominance.
 |---:|---|---|
 | closed | **P1-BW-CLOSE** — compact fixed-size BW matrix | **COMPLETE, QUALIFIED FIXED-RANK PASS.** See `results/final/bw_closure_adjudication/report.md` |
 | closed | **P1-PARENT-SHARED** — literal parent on common BW draws | **COMPLETE.** All 576 draws completed with zero failures/fallbacks. Parent wins every home/fixed/aligned draw; RFD wins every mixed/orthogonal/curved draw. See `results/final/parent_rfd_bw_parity_adjudication/report.md` and `notebooks/parent_rfd_bw_parity_plot_lab.ipynb` |
-| 1 | **P1-APPFIN-ID** — non-forecasting flagship illustration | On the rebuilt 240-month 12-stock BW panel, fit literal parent RFM and RFD at fixed \(r=2\); quantify centre motion, its inside/outside-parent-loading decomposition, loading-space/reconstruction sensitivity, Factor 1/VIX interpretation, and numerical/theorem diagnostics. Ranks \(1,\ldots,15\) are sensitivity only, never selected truth |
-| 2 | **P1-FREEZE** — public supplement and manuscript | canonical links updated once, package install works in a fresh environment, all figures regenerate from frozen inputs, immutable tag created |
+| closed | **P1-APPFIN-ID** — non-forecasting flagship illustration | **COMPLETE, SCOPE-BOUNDING VERDICT.** Positive local centre motion was modest and suggestive; the full Richardson correction was variance dominated at monthly \(n=240\). See `results/intermediate/appfin_centre_diagnostic/report.md` |
+| 1 | **P1-FREEZE** — public supplement and manuscript | canonical links updated once, package install works in a fresh environment, all figures regenerate from frozen inputs, immutable tag created |
 
 The full N-10 shrinking-margin, N-15 growing-size, FRAME-2P-U, forecasting,
 exhaustive N-18 phase, and structural time-varying-rank programmes are not
@@ -41,6 +41,45 @@ magnitudes and rank policy can be treated together rather than hidden behind a
 premature VAR comparator. The downstream score-filtering, structural
 adaptive-rank, online-expert, and refit-scheduling programme is canonically parked in
 [[Future application programme — factor scores, predictive rank, and online RFD]].
+
+## Post-freeze application queue — declared, gated, and not Paper 1
+
+The fixed-loading application follow-up has one declared home rather than a
+new application wishlist. Its authoritative design is
+[[Home application — hourly crypto realised covariance]].
+
+| order | task | terminal condition |
+|---:|---|---|
+| 1 | **APP-MONTHLY-VAR** — parent-protocol forecast bridge | **complete:** 36 causal origins expose an RFD score/decoder instability while the parent remains regular |
+| 2 | **APP-SCORE-HEAD-GATE** — known-truth then APP-FIN replay | run APP-BW-SCORE-FILTER, then APP-MONTHLY-HEADS; the synthetic gate must establish amplitude benefit before APP-FIN supplies the stability/application verdict |
+| 3 | **APP-HF-0** — frozen hourly crypto panel | 20 predeclared liquid spot assets, one venue/quote, synchronized ten-second returns, non-overlapping hourly realised covariances, fixed regularisation, complete missingness/spectral/proxy audit |
+| 4 | **APP-HF-1** — centre gate | global, positive-local, Richardson, and predeclared shrinkage centres compared on blocked validation with a dependent fixed-centre null; global or jump-dominated verdict stops smooth moving-centre RFD |
+| 5 | **APP-HF-2** — matched representation | parent RFM and RFD use identical matrices, fixed validation rank, lag convention, and reconstruction targets; centre, loadings, lag spectra, residual dependence, and numerical margins reported |
+| 6 | **APP-HF-3** — score observation model | projected-noise floor measured; parent-style projected-score VAR(1) compared with a declared state-space/Kalman treatment without confusing loading recovery with score recovery |
+| 7 | **APP-HF-4** — one-hour forecast | all choices frozen before a causal evaluation year; squared Frobenius and multivariate QLIKE primary; LOCF, EWMA, HAR/SPD, covariance-dynamics, factor/state-space, parent RFM, and reproducible geometric competitors included |
+| 8 | **APP-HF-5** — equity validation | frozen protocol transferred to 20 US equities with explicit market-hours, asynchronous-trading, seasonality, and overnight rules; no crypto-driven retuning |
+
+The monthly bridge and score-head gates are deliberately bounded: they validate
+the forecast plumbing and adjudicate one linear filtering repair before the
+higher-frequency panel is built. They are not allowed to reopen or delay the
+Paper 1 freeze.
+
+**APP-MONTHLY-VAR completed 2026-08-25.** The frozen 36-origin bridge gives
+parent/RFD mean Frobenius² 206.48/241.34 and mean QLIKE 11.12/1717.40. RFD
+records two compatibility clips, a minimum forecast eigenvalue
+\(4.16\times10^{-6}\), maximum condition number about \(5.69\times10^5\), and
+69 centre-stage fallbacks. Stable fitted VAR radii rule out simple coefficient
+explosion; the projected-score/decoder chain is the diagnosed boundary.
+
+**APP-SCORE-HEAD-GATE machinery completed 2026-08-25; recorded runs pending.**
+`py/rfd/forecast.py` now contains the frozen identity-observation linear
+state-space/Kalman head. `config/score_filter_bw.yaml` and
+`sandbox/run_score_filter_bw.ps1` define the 384-task known-truth BW gate.
+`config/appfin_score_filter.yaml` and
+`sandbox/run_appfin_score_filter.ps1` define the literal four-arm APP-FIN
+replay. The real one-origin smoke reproduces the parent's R VAR score and
+forecast to \(1.83\times10^{-15}\) and \(5.18\times10^{-14}\), both Kalman
+fits converge, and no arm clips. The complete Python suite is 558 green.
 
 ## What changed on 2026-08-18, and why
 
@@ -641,7 +680,7 @@ Sequenced but not detailed yet; write the detail when you get here, because Phas
 - [x] **B5.3 / P1-BW-CLOSE** — **completed 2026-08-25.** Paper 1 consumes the compact fixed-size N-09 matrix only. The frozen 496-task run completed with zero ordinary errors and zero failed verdicts. Safe commuting/noncommuting cells stayed within the declared fixed-margin domain; finite lower-margin and rank-loss attacks remain boundary cells. Full N-10 shrinking-margin and N-15 growing-size campaigns move after freeze. Rank-positive recovery uses known true rank and makes no selector claim. See `results/final/bw_closure_adjudication/report.md`.
 - [x] **B5.3a / P1-PARENT-SHARED** — **completed 2026-08-25.** All 576 immutable paired BW draws completed with zero failures, fallbacks, nonconverged RFD stages, duplicate keys, or nonfinite primary metrics. RFD lost all 288 home/fixed/aligned draws and won all 288 mixed/orthogonal/curved draws. At \(n=8192\), its median latent-signal reductions were 42.5%, 57.8%, and 55.8% in the latter three regimes, while the unnecessary/aligned penalty shrank to about 1%. The aligned cell reduced centre-path error by 60.5% yet retained a 1% parent reconstruction advantage: decomposition improved while the sum remained equally easy to fit. See `results/final/parent_rfd_bw_parity_adjudication/report.md`.
 - [ ] **B5.4** N-16, N-17 — FRAME-2P-U and its negative controls. Proved conditionally but no longer a Paper 1 empirical gate.
-- [ ] **B5.5 / P1-APPFIN-ID** — **final Paper 1 result; harness ready 2026-08-25.** `config/appfin_identification.yaml`, `experiments/run_appfin_identification.py`, `experiments/analyze_appfin_identification.py`, and `sandbox/run_appfin_identification.ps1` fit fixed-rank \(r=2\) parent RFM and RFD to the same rebuilt APP-FIN panel; measure centre motion, its projection inside/outside the parent loading span, loading/reconstruction sensitivity, Factor 1/VIX interpretation, and every BW numerical margin. Ranks \(1,\ldots,15\) are a labelled tangent-energy sensitivity envelope only. No forecast or true-rank claim. The runner uses digest-checked parent/RFD stage caches; focused tests, R preflight, and a 128-month cross-language end-to-end smoke passed. The first full user run correctly exposed an unsafeguarded rank-two BW reconstruction-domain exit after completing and caching the parent arm. The canonical fixed-margin spectral radial reconstruction safeguard is now explicit and counted for both methods; a full-size unrecorded validation completed with finite outputs and all plots, while leaving centre, lag, loading and score estimates unchanged. The task remains open until the user reruns and adjudicates the recorded 12-stock result.
+- [x] **B5.5 / P1-APPFIN-ID** — **completed with a scope-bounding verdict 2026-08-25.** The fixed-rank \(r=2\) parent/RFD identification run completed cleanly after applying the canonical, counted fixed-margin radial reconstruction safeguard. The predeclared centre diagnostic then completed 20 leave-one-year-out folds and 99 twelve-month fixed-centre block-bootstrap replicates. Against the global centre's BW RMS 5.033, the positive local path reached 4.954 (3.1% lower squared loss) while the full Richardson path reached 8.479 (183.8% higher squared loss). Positive local won 10 of 20 years and its median annual improvement was approximately zero. Observed local-motion energy was 2.984 versus null median 1.058 and null 95th percentile 3.630, giving \(p=0.07\): suggestive motion, not a 5% rejection of a constant centre. Both alternating tuning halves selected Richardson/global geodesic retention 0.2; opposite-half BW improvements were 6.3% and 15.7%, but paired year-block intervals crossed zero. Five annual fits used the declared Richardson domain fallback, no positive stage failed to converge, and catastrophic unshrunk losses also occurred without fallback. Paper 1 therefore reports a real-data finite-sample boundary, not APP-FIN dominance: monthly \(n=240\) weakly supports regularised centre motion and strongly rejects the unshrunk signed correction as an application default. Coefficient/scale/kernel/regularisation design and higher-frequency panels move to the fixed-loading application follow-up. Authoritative executed report: `results/intermediate/appfin_centre_diagnostic/report.md`.
 - [ ] **B5.6 / N-18c and forecasting** — **post–Paper 1.** The continuous \(\nu\)-phase diagram, score filtering, predictive rank, future-centre policy, VAR/state-space dynamics, admissible forecast losses, and APP-FIN forecasting belong to the application follow-up. The completed six-regime paired boundary is sufficient for the foundational paper.
 
 ---

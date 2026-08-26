@@ -356,6 +356,16 @@ selection, not identification of a time-varying population rank; it leaves
 P1-ID, HD1, BW, and P1-LOSS unchanged. The scope is
 [[Future application programme — factor scores, predictive rank, and online RFD]].
 
+**APP-FIN finite-sample boundary, not a theorem node.** The completed
+240-month centre diagnostic weakly favours regularised local motion but does
+not reject a dependent constant-centre null at 5%; full three-scale Richardson
+is severely variance dominated. This changes no HD1 or BW implication because
+the theorem is asymptotic and assumption-conditional. It bounds the real-data
+claim and routes scale ratios, kernels, extra-scale minimum-variance weights,
+causal damping, and higher-frequency validation to [[Future application
+programme — factor scores, predictive rank, and online RFD]] §8.2. Executed
+adjudication: `results/intermediate/appfin_centre_diagnostic/report.md`.
+
 ## 8. Dependency graph
 
 The scientific and estimation dependencies are deliberately different. P1-ID is a closed identification/interpretation theorem, not an unproved lemma hidden inside HD1; it determines the interpretation of the estimand that the estimation machinery targets.

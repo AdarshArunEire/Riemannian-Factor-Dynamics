@@ -2,7 +2,7 @@
 type: canonical-literature-review
 title: Literature review — external positioning and prior art
 status: active
-last-audited: 2026-08-21 (§2.9 P1-RANK field map added)
+last-audited: 2026-08-25 (§2.10 hourly-crypto home, data contract, and competitor field integrated)
 authority: field map, prior-art comparison, and the novelty-claim boundary
 ---
 
@@ -229,6 +229,168 @@ necessity, universality, or the first lag-based factor estimator.
 
 The source-by-source adjudication is archived as
 [[P1-RANK — weak dynamic factors and lag-rank literature audit]].
+
+## 2.10 Does the centre actually move? Application-evidence audit
+
+The application question is stricter than whether observed covariance matrices
+move. Paper 1 needs the local or conditional Fréchet centre of the SPD-valued
+law to move after persistent residual variation has been separated. No domain
+assumption proves that empirical fact. It must either be part of a declared
+data-generating model or be tested against a constant-centre alternative.
+
+### 2.10.1 Direct precedents
+
+1. **Realised financial covariance is the closest single-path precedent.**
+   Opschoor, Lucas and coauthors model a realised-covariance time series with an
+   explicitly autoregressive, time-varying conditional matrix mean
+   \(V_t=E(X_t\mid\mathcal F_{t-1})\). Their empirical study uses 45 S&P 500
+   equities, 4,696 trading days from 2001--2019, and five-minute returns. This
+   establishes that a changing central covariance is standard, operational,
+   and forecast-relevant in the target field. It does **not** establish that
+   \(V_t\) equals a BW Fréchet centre, nor identify its split from persistent
+   factors. Source: [Conditional Autoregressive F-Riesz Model for Realized
+   Covariance Matrices](https://academic.oup.com/jfec/article/23/2/nbae023/7815431).
+
+2. **Developmental brain covariance supplies an exact moving-Fréchet
+   precedent.** Petersen, Deoni and Müller estimate an age-indexed covariance
+   or correlation function by local Fréchet smoothing and prove consistency;
+   the scientific target is regional co-evolution of myelination. The moving
+   covariance centre is therefore the estimand, not a post-hoc interpretation.
+   Their observations are sparse and cross-sectional across children, however,
+   so independent subjects provide the replication that Paper 1 lacks. Source:
+   [Fréchet Estimation of Time-Varying Covariance Matrices From Sparse
+   Data](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-13/issue-1/Fr%c3%a9chet-estimation-of-time-varying-covariance-matrices-from-sparse-data/10.1214/18-AOAS1195.full).
+
+3. **BW regression now provides a formal no-movement test template.** Xu and Li
+   formulate covariance-matrix regression through a conditional BW Fréchet mean
+   and test the null of no covariate association, with applications showing
+   age-related changes in gene co-expression networks. Their calibration uses
+   independent regression samples and cannot be imported unchanged into one
+   dependent market path, but the null they test is exactly the population
+   question that the application diagnostic must adapt. Source: [Wasserstein
+   F-tests for Fréchet regression on Bures-Wasserstein
+   manifolds](https://jmlr.org/papers/v26/24-0493.html).
+
+4. **Dynamic functional connectivity and covariance flows are strong adjacent
+   evidence, not a clean Paper 1 design.** Covariance trajectories are used to
+   represent changing fMRI connectivity, and Santoro--Panaretos define BW
+   Fréchet mean flows for replicated covariance flows. Sliding-window overlap,
+   state switching, few longitudinal visits, or independent replicate flows
+   separate these designs from Paper 1's smooth single dependent path. Sources:
+   [dynamic functional-connectivity trajectories](https://arxiv.org/abs/1904.05449),
+   [longitudinal Riemannian connectivity](https://pmc.ncbi.nlm.nih.gov/articles/PMC7526985/),
+   and [Statistical Inference for Bures-Wasserstein
+   Flows](https://arxiv.org/abs/2310.13764).
+
+5. **Industrial sensor covariance is a plausible regime-detection application.**
+   Covariance matrices of multivariate process streams are routinely used
+   because faults change relationships between channels. The best-supported
+   target there is often a jump or regime change rather than the smooth centre
+   path consumed by the headline theorem. Source: [Riemannian SPD data analysis
+   in chemical engineering](https://doi.org/10.1016/j.compchemeng.2022.108023).
+
+### 2.10.2 Verdict for the application programme
+
+There are real domains in which a moving covariance centre is already a named
+scientific estimand. The strongest match to Paper 1's **sampling scheme** is
+high-frequency realised covariance; the strongest match to its **Fréchet-centre
+language** is developmental brain covariance. Neither source proves that the
+rebuilt monthly APP-FIN panel has detectable BW centre motion. The project's
+completed diagnostic now answers only for that panel and resolution: motion is
+suggestive but does not reject a dependent constant-centre null at 5%, while
+the full signed correction is strongly variance dominated.
+
+The required centre-detectability package compares, on identical blocked
+holdouts:
+
+1. one global BW centre;
+2. ordinary positive local BW centres;
+3. the three-scale Richardson centres;
+4. a predeclared global/local geodesic shrinkage family.
+
+For each construction it records its own vertices and polygon, held-out BW and
+proxy-robust losses under their declared targets, centre-path stability,
+effective local sample size, Richardson fallback/compatibility diagnostics,
+and motion relative to residual dispersion. A dependence-preserving
+constant-centre bootstrap supplies the empirical null. Projection of estimated
+centre motion into the parent loading span remains an identification-sensitivity
+diagnostic, not proof of which component is scientifically true.
+
+The decision rule is causal:
+
+- global wins: no detectable centre motion at the available resolution;
+- positive local wins but Richardson loses: motion is detectable, but the
+  signed correction is too variable;
+- intermediate shrinkage wins: motion is detectable but full local movement
+  overfits;
+- Richardson wins stably: the complete moving-centre construction is supported;
+- blockwise reversals or sharp jumps dominate: smooth local stationarity is the
+  wrong application description.
+
+The observed monthly APP-FIN verdict is deliberately qualified. Positive
+local reduced aggregate squared BW loss by 3.1% but won 10 of 20 held-out
+years; full Richardson increased it by 183.8%. The motion statistic was 2.984
+against fixed-centre null median 1.058 and 95th percentile 3.630
+(\(p=0.07\), 99 block replicates). Both alternating tuning halves selected
+0.2 retention of the global-to-Richardson displacement, but held-out BW
+intervals crossed zero. This is the ``intermediate shrinkage / unstable full
+correction'' branch, not a clean detection of structural drift. The result
+motivates the higher-frequency and regularised-centre programme; it does not
+alter the literature-derived existence of scientifically moving covariance
+centres.
+
+### 2.10.3 High-frequency design warning
+
+Continuous trading does not remove seasonality. Crypto volatility and volume
+have documented hour-of-day, day-of-week, and within-hour periodicities; these
+must be modelled or removed before a slowly moving centre is interpreted.
+Source: [Hansen, Kim and Kimbrough, *Periodicity in Cryptocurrency Volatility
+and Liquidity*](https://academic.oup.com/jfec/article/22/1/224/6582291).
+US equities add the market closure and a strong intraday cycle. Repeated
+within-day oscillation is not a fixed-smooth path in rescaled time as the sample
+horizon grows. An hourly equity experiment must therefore stratify or
+deseasonalise clock time, rather than presenting the raw cycle as centre drift.
+
+The declared scalable target is consequently **20 assets**, not because 20 is
+geometrically privileged, but because it gives tangent dimension
+\(p=20(21)/2=210\). Official one-second bars are synchronized and aggregated
+to ten-second returns before constructing one non-overlapping covariance per
+hour, giving roughly 360 intrahour returns and a materially wider
+covariance-sampling margin than the earlier one-minute design. One continuous
+year gives about 8,760 matrices. Larger panels tighten the covariance margin
+and increase the dense \(p\times p\) lag-operator cost quadratically in \(p\).
+The public-data starting point is the
+[Binance public market-data archive](https://github.com/binance/binance-public-data/blob/master/README.md);
+venue, quote currency, assets, bar integrity, missingness, and historical
+availability remain APP-HF-0 facts to verify rather than assumptions.
+
+### 2.10.4 Competitive field and declared home
+
+This is not an application without competitors. Realised-covariance forecasting
+already includes direct persistence baselines, HAR-style models, factor and
+state-space models, and positive-definite covariance dynamics such as
+[conditional autoregressive Wishart models](https://www.sciencedirect.com/science/article/pii/S0304407611002582).
+Recent geometric and network approaches provide additional comparators where
+their data and causal protocol can be reproduced, including
+[geometry-aware deep covariance prediction](https://arxiv.org/abs/2412.09517)
+and [graph-HAR realised-volatility forecasting](https://academic.oup.com/jfec/article/23/2/nbae026/7889003).
+
+RFD's distinct question is narrower: does separating a slowly moving geometric
+baseline from lag-persistent tangent co-movement improve representation and
+one-hour covariance forecasts enough to justify the additional centre/frame
+machinery? The answer is allowed to be no. The declared sequence is therefore:
+
+1. fixed-rank 204/36 monthly APP-FIN VAR bridge;
+2. hourly crypto data/proxy audit;
+3. centre-detectability gate;
+4. matched fixed-rank parent/RFD representation;
+5. projected-score filtering; and
+6. frozen one-hour forecast, followed by an equity transfer.
+
+The exact observation contract, losses, competitors, and stop rules are in
+[[Home application — hourly crypto realised covariance]]. This literature
+map supports the application choice; it does not certify the P1-ID separation,
+BW theorem margins, local-stationarity assumptions, or forecast superiority.
 
 
 ## 3. Open attribution checks — route to the live queue

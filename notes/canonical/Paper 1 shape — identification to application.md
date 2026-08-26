@@ -87,13 +87,50 @@ can show that the fixed-centre assumption is empirically consequential; it
 cannot establish that RFD predicts better or that either decomposition is
 economically causal.
 
+The completed centre-detectability adjudication supplies the application
+boundary rather than a real-data victory. Across 20 leave-one-year-out folds,
+the global, positive-local, and full Richardson BW RMS errors were 5.033,
+4.954, and 8.479. Thus the ordinary local path lowered squared BW loss by
+3.1%, but won only 10 of 20 years and had approximately zero median annual
+improvement. Full Richardson increased squared BW loss by 183.8%, with severe
+losses concentrated around 2004--2010. This was not merely a solver failure:
+five annual fits invoked the declared domain fallback, no positive stage was
+nonconvergent, and catastrophic losses also occurred in no-fallback folds.
+
+The fixed-centre block null was suggestive but not rejected at 5%: observed
+motion energy 2.984, null median 1.058, null 95th percentile 3.630, and
+\(p=0.07\) from 99 replicates. Both alternating tuning halves selected 0.2
+retention of the global-to-Richardson displacement. The corresponding
+opposite-half BW improvements were 6.3% and 15.7%, but paired year-block
+intervals crossed zero. Therefore Paper 1 says:
+
+> On monthly APP-FIN, centre movement is plausible and modestly useful after
+> regularisation, but the sample does not decisively distinguish it from a
+> dependent fixed-centre null and the full signed correction is
+> finite-sample variance dominated.
+
+This does not retract the assumption-to-conclusion Richardson theorem or the
+controlled large-\(n\) synthetic evidence. It bounds the flagship application
+claim at \(n=240\). Exact scale/coefficient redesign, causal regularisation,
+and higher-frequency panels belong to [[Future application programme — factor
+scores, predictive rank, and online RFD]]. Executed report:
+`results/intermediate/appfin_centre_diagnostic/report.md`.
+
 ## 5. Freeze
 
-After APP-FIN, stop adding scientific branches. Freeze the manuscript claims,
+After this APP-FIN boundary, stop adding scientific branches. Freeze the manuscript claims,
 notation, configurations, generated tables, plots, environment, and public
 supplement. Forecasting, score filtering, predictive rank, state-space/VAR
 dynamics, future-centre estimation, continuous drift phase diagrams, and
 streaming implementation form the next application paper.
+
+The first post-freeze experiment is intentionally small: APP-MONTHLY-VAR
+reuses the parent's 240-month panel and exact 204/36 expanding VAR(1) forecast
+protocol at fixed \(r=2\), adding only a causal one-sided RFD centre path and a
+one-month terminal-centre carry. It validates the forecasting bridge without
+being imported back into Paper 1. The declared application home after that is
+the gated 20-asset hourly crypto study in
+[[Home application — hourly crypto realised covariance]].
 
 ## Proposed main-text allocation
 

@@ -3,7 +3,7 @@ type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
 verdict: application matching begins with the P1-ID drift/factor estimand; after that split is declared, FRAME-2P-U, HE, and the scoped BW packages retain their separately adjudicated statuses
-last-audited: 2026-08-25 (APP-FIN score interpretation and causal predictive-rank protocol integrated)
+last-audited: 2026-08-25 (monthly forecast bridge and declared hourly-crypto home integrated)
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
@@ -406,7 +406,20 @@ belong to the downstream programme
 [[Future application programme — factor scores, predictive rank, and online RFD]].
 The first arrow has its own measurement-error, dependence, and target budget. The RFM theorem does not prove that layer, and reconstruction error is not a forecasting theorem.
 
+The declared post-freeze home is now a 20-asset, one-hour-ahead crypto
+realised-covariance application, preceded by a fixed-\(r=2\) monthly APP-FIN
+VAR bridge. This does not upgrade finance from a conditional match. The hourly
+panel must separately pass data/proxy, centre, representation, score, and
+forecast gates, and any failed gate narrows or rejects the application. The
+exact observation process, competitors, losses, future-centre rule, and stop
+conditions are canonical in
+[[Home application — hourly crypto realised covariance]].
+
 ## 9. Ranked programme
+
+The generic analytical ranking below is not the application execution order.
+The actual execution order is the gated APP-MONTHLY-VAR then APP-HF-0 through
+APP-HF-5 chain in [[Home application — hourly crypto realised covariance]].
 
 1. **HE application verification:** instantiate either the proved bounded-tail \((R_n,A_{2,n},\Delta_n)\) ledger or the expanding-domain truncation ledger for asset, sensor, gene, imaging, and connectivity systems rather than normalising by fiat.
 2. **BW application verification and covariance-measurement layer:** use the proved fixed-margin or restricted fractional-normal theorem only when its complete support/slack/path/row/gap package is verified; separately quantify preliminary covariance estimation.

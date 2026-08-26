@@ -6,7 +6,7 @@ aliases:
   - Adaptive-rank RFD
   - Fixed-loading RFD application follow-up
 status: parked-after-paper-1
-verdict: Paper 1 stops before forecasting; factor-score filtering, predictive rank, future-centre policy, state-space/VAR dynamics, and learned refit scheduling form one later application programme
+verdict: Paper 1 stops before forecasting; a fixed-rank monthly VAR bridge precedes the declared hourly-crypto home, after which factor-score filtering, predictive rank, future-centre policy, state-space dynamics, and learned refit scheduling form one application programme
 last-audited: 2026-08-25
 area:
   - geometry
@@ -45,17 +45,17 @@ rank fixed within each synthetic series.
   it cannot return rank zero and its consistency does not follow from the
   displayed parent rates alone.
 - Paper 1 makes no general claim of latent time-varying-rank recovery.
-- Reconstruction and genuine out-of-sample forecast losses are reported;
-  loading-space accuracy alone is not an application result.
+- Reconstruction is reported as reconstruction, not forecasting; loading-space
+  accuracy alone is not an application result.
 
-APP-FIN has no known true rank. Paper 1 therefore reports both:
+APP-FIN has no known true rank. Paper 1 therefore uses:
 
-1. a rank fixed by training-era validation; and
-2. one **frozen causal online rank policy** that may change its predictive rank
-   after observing completed forecast losses.
+1. the parent's published \(r=2\) as a fixed comparison convention; and
+2. ranks \(1,\ldots,15\) only as a labelled sensitivity envelope.
 
-The second item is online forecast-model selection, not a theorem that the
-latent scientific rank changed.
+Forecasting and predictive rank are post-freeze. The first forecast bridge also
+holds \(r=2\) fixed so it tests the centre and forecast plumbing rather than a
+rank policy.
 
 ## 2. What the completed rank sweep established
 
@@ -266,9 +266,9 @@ Choosing the rank that minimises loss over the complete final 36-month block
 and reporting that same loss is leakage. That path is a **retrospective oracle**
 and must be labelled as such.
 
-### Minimal Paper 1 protocol
+### Minimal later adaptive-rank protocol
 
-Paper 1 keeps this compact:
+When adaptive rank is eventually tested, keep it compact:
 
 1. **Fixed baseline:** choose one rank on training-era rolling validation,
    refit through month 204, and keep that rank for the final 36 months.
@@ -298,8 +298,8 @@ loss boundedness/scaling and comparator class used by that theorem; QLIKE is
 not silently treated as bounded.
 
 With only 36 final observations, a complicated learned selector is not
-credible. The fixed baseline and one simple frozen online policy are enough for
-Paper 1.
+credible. A fixed baseline and one simple frozen online policy are enough for
+the first adaptive-rank study.
 
 ## 8. Retrospective diagnostics before a larger adaptive programme
 
@@ -323,6 +323,161 @@ Possible verdicts:
 
 These concern **predictive effective rank**. They do not identify a
 time-varying population factor rank.
+
+### 8.1 Fixed-rank monthly VAR implementation bridge
+
+Before the high-frequency application, reproduce the parent's causal forecast
+loop on the existing APP-FIN panel:
+
+- 240 monthly covariance matrices, with months \(1{:}204\) supplying the
+  initial fit and months \(205{:}240\) supplying 36 expanding one-step
+  forecasts;
+- fixed \(r=2\), lag horizon \(h=6\), and the same OLS VAR(1) with
+  intercept for parent RFM and RFD;
+- parent RFM estimates its global BW centre on the initial training window and
+  holds it fixed, exactly as the published code does;
+- RFD uses only observations available at each origin, reconstructs an
+  expanding-prefix centre path, and carries its one-sided terminal centre one
+  month ahead;
+- identical forecast origins, covariance inputs, score-dynamics code, and
+  losses in both arms.
+
+This is **APP-MONTHLY-VAR**, an implementation and low-sample diagnostic. It is
+not a rank experiment, factor-score truth experiment, or final application.
+The authoritative protocol and its non-claims are in
+[[Home application — hourly crypto realised covariance]].
+
+The 36-origin run is complete. Parent RFM versus RFD produced mean
+Frobenius-squared losses 206.48 versus 241.34 and mean QLIKE 11.12 versus
+1717.40. RFD required two guarded decodes, reached a minimum forecast
+eigenvalue \(4.16\times10^{-6}\), and accumulated 69 centre-stage fallbacks.
+Its fitted VAR transition radii remained below one. The evidence therefore
+localises the severe loss to noisy projected scores interacting with the
+moving-centre/frame row and BW decoder, rather than an explosive VAR fit.
+
+### 8.1.1 Frozen VAR-versus-Kalman score-head gates
+
+The next experiment changes one component at a time. Within either the parent
+or RFD representation, the centre, tangent rows, loading directions, rank,
+forecast origins, and BW decoder are identical. Only the score head changes:
+
+\[
+\text{projected scores}\longrightarrow
+\begin{cases}
+\text{OLS VAR(1)},\\
+\text{identity-observation linear state space/Kalman filter}.
+\end{cases}
+\]
+
+APP-BW-SCORE-FILTER runs first because its factors are known. It uses regular
+BW draws at \(n=240,512,2048,8192\), true rank two, six fixed/moving and
+noise controls, an 80/20 causal split, and oracle, fixed-centre, and feasible
+RFD score representations. It measures filtered-amplitude and one-step factor
+forecast NRMSE separately from guarded matrix reconstruction.
+
+APP-MONTHLY-HEADS then replays all 36 APP-FIN origins with four arms:
+parent–VAR, parent–Kalman, RFD–VAR, and RFD–Kalman. APP-FIN has no latent-score
+truth, so its verdict is forecast loss and numerical stability only. The
+literal parent one-origin smoke is exact: Python reproduces the R VAR score to
+\(1.83\times10^{-15}\) and the parent forecast to \(5.18\times10^{-14}\).
+Both Kalman fits converged and no smoke arm clipped. These are integrity facts,
+not evidence that Kalman wins.
+
+The decision rule is predeclared. Filtering advances only if it lowers known
+synthetic factor-forecast error and then improves or materially stabilises the
+APP-FIN replay without systematic compatibility clipping. Failure on either
+gate is a useful terminal verdict: the in-span noise is not repaired by this
+linear state model, so the hourly application must retain VAR as a baseline
+and investigate a different observation/dynamics model on validation data.
+
+### 8.2 Declared high-frequency home and external validation
+
+The declared home uses **20 observed markets**, hence \(p=210\) symmetric
+tangent coordinates. Twenty is a computational and covariance-sampling
+compromise, not a model constant.
+
+Two panels are ordered as follows:
+
+1. **Continuous crypto panel:** 20 liquid, predeclared assets on one venue,
+   one quote currency, synchronized ten-second returns aggregated from official
+   one-second bars, and non-overlapping hourly realised covariances. Each matrix
+   then uses about 360 intrahour returns; one year supplies about 8,760 matrices.
+   Asset inclusion, venue, quote currency, delistings, stablecoins, missing
+   bars, regularisation, and survivorship handling must be frozen before the
+   evaluation panel is read. Hour/day/week periodicity must be estimated using
+   training data only and removed, modelled, or retained in a labelled raw
+   robustness run.
+2. **Six-year US-equity panel:** 20 predeclared S&P names, regular-session
+   minute returns, with equal non-overlapping intraday blocks. Raw clock-time
+   seasonality and overnight discontinuities make this the less clean RFD
+   design; stratification or a frozen deseasonalisation is mandatory. Daily
+   realised covariances are the literature-standard alternative but produce
+   only about 1,500 observations in six years, not the desired \(n\approx8192\).
+
+Before forecasting or adaptive rank enters, both panels receive the
+centre-detectability package recorded in [[Literature review — external
+positioning and prior art]] §2.10: global, positive-local, Richardson, and
+global/local-shrunk centre paths on blocked holdouts. Only after that gate do
+literal parent RFM and RFD receive the same fixed-rank representation task.
+LOCF and EWMA enter only when the task becomes causal forecasting.
+
+The crypto sequence is APP-HF-0 data/proxy preflight, APP-HF-1 centre gate,
+APP-HF-2 matched representation, APP-HF-3 projected-score filtering, and
+APP-HF-4 one-hour causal forecasting. APP-HF-5 transfers the frozen protocol
+to US equities. See [[Home application — hourly crypto realised covariance]]
+for the observation contract, competitors, losses, stop rules, and non-claims.
+
+### 8.3 Finite-sample centre extraction after the monthly APP-FIN boundary
+
+The monthly \(n=240\) diagnostic established the problem, not its solution.
+Full Richardson raised cross-fitted squared BW loss by 183.8%, whereas positive
+local lowered it by 3.1%. Both alternating tuning halves selected 0.2 retention
+of the global-to-Richardson displacement. The constant-centre block null gave
+\(p=0.07\). This is evidence of a bias--variance boundary: possible centre
+motion, insufficient evidence for a structural split, and an unusably noisy
+full extrapolation at this resolution.
+
+For scale ratio \(q\in(0,1)\), exact cancellation at bandwidths
+\(b,qb,q^2b\) fixes the three coefficients uniquely:
+
+\[
+\lambda_1=\frac{q^3}{(1-q)^2(1+q)},\qquad
+\lambda_2=-\frac{q}{(1-q)^2},\qquad
+\lambda_3=\frac{1}{(1-q)^2(1+q)}.
+\]
+
+At \(q=1/2\) these are \((1/3,-2,8/3)\), with absolute mass five. They
+remove the first two formal bias powers but amplify stage noise and stage
+disagreement; the smallest window is also the noisiest. Moving \(q\) towards
+one makes the extrapolation system ill-conditioned. Moving it towards zero
+reduces coefficient mass but makes the smallest window drastically shorter.
+Therefore ``choose different coefficients'' is not a free repair.
+
+The Paper 2 investigation is ordered:
+
+1. derive the joint bias and covariance expansion of the nested positive
+   stages, including the BW Log/Exp anchor and noncommuting curvature terms;
+2. map admissible \(q\), bandwidth, kernel, and minimum-effective-sample-size
+   regions before looking at predictive outcomes;
+3. add at least four scales and solve the covariance-aware minimum-variance
+   weights under the same three moment constraints; keep data-dependent weight
+   estimation on a separate training colour;
+4. compare exact two-bias cancellation with a two-scale/positive-local route
+   that accepts more bias for much less variance;
+5. study causal damping of the correction and global/local shrinkage. A fixed
+   damping below one generally restores lower-order bias, so it needs its own
+   rate theorem; a sequence tending to one may preserve the asymptotic rate
+   only under an explicit speed condition;
+6. rerun the frozen centre gate on the 20-market high-frequency crypto and
+   equity panels, reporting BW, QLIKE, and Frobenius targets separately; and
+7. only after those analytical baselines compare a state-space or learned
+   causal centre head.
+
+Possible verdicts are equally useful: a minimum-variance exact-cancellation
+design survives; positive-local dominates throughout and Richardson is only a
+theoretical device; regularisation is essential but prediction improves; or
+high-frequency data restores the full correction by increasing every local
+effective sample size. No branch is preselected.
 
 ## 9. Score filtering and learned refit scheduling
 
@@ -357,15 +512,23 @@ enough to justify its cost.
 
 ## 10. Future programme order
 
-1. finish Paper 1 with fixed-rank synthetic recovery, completed literal parent
-   parity, and the non-forecasting APP-FIN identification illustration;
-2. diagnose projected-score noise, construct the future-centre policy, and compare direct VAR with latent
-   state-space filtering;
-3. construct retrospective rank paths on longer or higher-frequency data;
-4. compare fixed, rolling, switching-penalised, and online-expert policies;
-5. measure when full geometric refitting is useful;
-6. develop a causal event-triggered refit policy; and
-7. only then test supervised or learned refit scheduling.
+1. freeze Paper 1 with its completed synthetic recovery, literal parent parity,
+   and qualified non-forecasting APP-FIN boundary;
+2. run APP-MONTHLY-VAR, the fixed-\(r=2\) 204/36 parent-protocol forecast
+   bridge, with a causal RFD centre path;
+3. close APP-HF-0 and APP-HF-1: the frozen hourly crypto data/proxy audit and
+   moving-centre gate;
+4. derive and test the finite-sample centre-extraction alternatives in §8.3
+   only if that gate supports a moving centre;
+5. run APP-HF-2, the matched fixed-rank representation comparison;
+6. diagnose projected-score noise, construct the future-centre policy, and
+   compare direct VAR with latent state-space filtering;
+7. run the frozen one-hour forecast and external equity validation;
+8. construct retrospective predictive-rank paths and compare fixed, rolling,
+   switching-penalised, and online-expert policies;
+9. measure when full geometric refitting is useful and develop a causal
+   event-triggered policy; and
+10. only then test supervised or learned refit scheduling.
 
 The strongest later-paper theme is:
 
@@ -380,6 +543,8 @@ The strongest later-paper theme is:
 - Fixed-rank signal boundary:
   [[P1-RANK — AR1 signal strength and threshold boundary]]
 - Paper 1 scope and order: BUILD.md
+- Declared application contract:
+  [[Home application — hourly crypto realised covariance]]
 
 This note adds no theorem. It does not claim time-varying latent-rank
 identification, APP-FIN factor-score truth, general selector optimality, or a

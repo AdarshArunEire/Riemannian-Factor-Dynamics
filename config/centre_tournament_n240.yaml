@@ -1,0 +1,28 @@
+# Low-sample APP-FIN centre tournament.  The completed cross-fitted centre
+# diagnostic supplies the global, positive-local and Richardson candidates;
+# this experiment adds low-variance path families without altering that run.
+
+experiment:
+  id: P1-CENTRE-TOURNAMENT-N240
+  panel_path: results/raw/rc_panel_adjusted.npz
+  source_directory: results/intermediate/appfin_centre_diagnostic
+  expected_months: 240
+  expected_matrix_size: 12
+
+tournament:
+  holdout_block_months: 12
+  shrinkage_lambdas: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  graph_strengths: [0.25, 1.0, 4.0]
+  piecewise_segments: [2, 3, 4, 6]
+  bw_step_margin: 0.05
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+  graph_iterations: 12
+  graph_tolerance: 1.0e-8
+  bootstrap_replicates: 20000
+  bootstrap_seed: 20260826
+  workers: 4
+
+output:
+  directory: results/intermediate/centre_tournament_n240
+  smoke_directory: results/intermediate/centre_tournament_n240_smoke

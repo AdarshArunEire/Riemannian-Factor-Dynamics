@@ -1,0 +1,134 @@
+# Causal score-head gate on regular Bures--Wasserstein synthetic panels.
+#
+# Geometry and loading spaces are fitted on the first 80% of each draw.  The
+# final 20% is revealed sequentially.  Both heads see identical projected
+# scores; the Kalman head must improve latent-amplitude recovery without buying
+# that improvement through hidden test tuning or unsafe BW reconstruction.
+
+experiment:
+  id: APP-BW-SCORE-FILTER
+  root_seed: 20260826
+  geometry: bw
+  matrix_size: 3
+  base_condition: 1.6
+  factor_rank: 2
+  factor_persistence: [0.80, 0.55]
+  factor_scale: [0.10, 0.075]
+  noise_scale: 0.06
+  noise_constant_norm: true
+  loading_structure: dense
+
+estimator:
+  bandwidth_constant: 0.5
+  bandwidth_multiplier: 1.3
+  bandwidth_exponent: 0.14285714285714285
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  mean_tolerance: 1.0e-10
+  mean_max_iter: 150
+  max_lag: 2
+  tail_mode: common
+  normalization: row_size
+
+head:
+  train_fraction: 0.80
+  state_max_iterations: 60
+  state_tolerance: 3.0e-4
+  covariance_floor: 1.0e-6
+  maximum_transition_radius: 0.995
+  bw_step_margin: 0.05
+
+scenarios:
+  R-FIXED:
+    label: fixed centre, regular noise
+    class: fixed_control
+    path: commuting
+    drift_scale: 0.0
+    rank: 2
+    noise_scale: 0.06
+    noise_persistence: 0.0
+    loading_orientation: random
+    loading_structure: dense
+
+  M-ALIGNED:
+    label: moving centre aligned with loading space
+    class: moving
+    path: commuting
+    drift_scale: 0.20
+    rank: 2
+    noise_scale: 0.06
+    noise_persistence: 0.0
+    loading_orientation: aligned
+    drift_overlap: 1.0
+    loading_structure: dense
+
+  M-ORTHOGONAL:
+    label: moving centre orthogonal to loading space
+    class: moving
+    path: commuting
+    drift_scale: 0.20
+    rank: 2
+    noise_scale: 0.06
+    noise_persistence: 0.0
+    loading_orientation: orthogonal
+    drift_overlap: 0.0
+    loading_structure: dense
+
+  M-CURVED:
+    label: noncommuting moving centre, regular noise
+    class: moving_curved
+    path: curved
+    drift_scale: 0.20
+    rank: 2
+    noise_scale: 0.06
+    noise_persistence: 0.0
+    loading_orientation: random
+    loading_structure: dense
+
+  M-CURVED-NOISELESS:
+    label: noncommuting moving centre, no observation noise
+    class: negative_filter_control
+    path: curved
+    drift_scale: 0.20
+    rank: 2
+    noise_scale: 0.0
+    noise_persistence: 0.0
+    loading_orientation: random
+    loading_structure: dense
+
+  M-CURVED-NOISY:
+    label: noncommuting moving centre, high observation noise
+    class: positive_filter_control
+    path: curved
+    drift_scale: 0.20
+    rank: 2
+    noise_scale: 0.12
+    noise_persistence: 0.0
+    loading_orientation: random
+    loading_structure: dense
+
+profiles:
+  smoke:
+    recorded: false
+    seed_namespace: 5000
+    output_dir: tmp/score_filter_bw_smoke
+    n_values: [160]
+    replicates: 1
+    scenarios: [R-FIXED, M-CURVED-NOISY]
+
+  calibration:
+    recorded: false
+    seed_namespace: 5001
+    output_dir: tmp/score_filter_bw_calibration
+    n_values: [240, 512]
+    replicates: 2
+    scenarios: [R-FIXED, M-CURVED, M-CURVED-NOISY]
+
+  overnight:
+    recorded: true
+    seed_namespace: 5010
+    output_dir: results/intermediate/score_filter_bw
+    n_values: [240, 512, 2048, 8192]
+    replicates: 16
+    scenarios: [R-FIXED, M-ALIGNED, M-ORTHOGONAL, M-CURVED, M-CURVED-NOISELESS, M-CURVED-NOISY]
