@@ -1,0 +1,107 @@
+# APP-HF-0: frozen hourly crypto realised-covariance data/proxy preflight.
+#
+# Protocol amendment 2026-08-27: the original one-second -> ten-second design
+# was replaced before data inspection by official one-minute klines.  This cuts
+# the two-year raw panel from roughly 1.26 billion asset-second rows to roughly
+# 21 million asset-minute rows.  The target remains a non-overlapping hourly
+# covariance and a one-hour-ahead primary forecast in APP-HF-4.
+
+experiment:
+  id: P1-APP-HF-0
+  source: binance_public_data
+  market: spot
+  quote_asset: USDT
+  raw_interval: 1m
+  timezone: UTC
+  selection_start: "2023-10-01"
+  selection_end: "2023-12-31"
+  panel_start: "2024-01-01"
+  panel_end: "2025-12-31"
+  primary_forecast_horizon_hours: 1
+  sensitivity_horizons_hours: [6, 24]
+
+selection:
+  # Candidates were declared before 2024--2025 centre or forecast outcomes
+  # were inspected. Stablecoins, wrapped duplicates, leveraged tokens, and
+  # assets with a known symbol migration over the target period are absent.
+  candidate_symbols:
+    - BTCUSDT
+    - ETHUSDT
+    - BNBUSDT
+    - XRPUSDT
+    - SOLUSDT
+    - ADAUSDT
+    - DOGEUSDT
+    - TRXUSDT
+    - LINKUSDT
+    - LTCUSDT
+    - BCHUSDT
+    - AVAXUSDT
+    - DOTUSDT
+    - UNIUSDT
+    - ATOMUSDT
+    - ETCUSDT
+    - FILUSDT
+    - NEARUSDT
+    - APTUSDT
+    - ARBUSDT
+    - OPUSDT
+    - INJUSDT
+    - RUNEUSDT
+    - IMXUSDT
+    - LDOUSDT
+    - SUIUSDT
+    - SEIUSDT
+    - MKRUSDT
+    - AAVEUSDT
+    - ICPUSDT
+    - ALGOUSDT
+    - VETUSDT
+    - XLMUSDT
+    - HBARUSDT
+    - SANDUSDT
+    - MANAUSDT
+    - GALAUSDT
+    - SHIBUSDT
+    - PEPEUSDT
+    - CRVUSDT
+  minimum_selection_days: 80
+  liquidity_pool_size: 30
+  selected_assets: 20
+  liquidity_measure: median_daily_quote_volume
+  volatility_measure: standard_deviation_daily_log_return
+  rule: highest_volatility_within_liquidity_pool
+
+construction:
+  returns_scale: 100.0
+  minutes_per_covariance: 60
+  maximum_forward_fill_minutes: 5
+  minimum_complete_returns_per_hour: 40
+  # For m=20, floor >= 2e-5 times mean variance guarantees condition <= 1e6.
+  relative_eigenvalue_floor: 2.0e-5
+
+acquisition:
+  workers: 8
+  timeout_seconds: 120
+  retries: 3
+  pilot_month: "2024-01"
+
+acceptance:
+  minimum_selected_assets: 20
+  minimum_raw_minute_coverage: 0.90
+  minimum_constructible_hour_fraction: 0.95
+  minimum_median_complete_returns: 55
+  # Corrected after the first full preflight, before APP-HF-1: an unchanged
+  # close with positive trades is a zero return, not an unavailable bar. The
+  # 25% threshold is unchanged and now gates missing-or-no-trade minutes only.
+  maximum_p99_missing_or_no_trade_fraction: 0.25
+  maximum_condition_number: 1.0e6
+
+source:
+  base_url: https://data.binance.vision/data/spot/monthly/klines
+  checksum_suffix: .CHECKSUM
+
+output:
+  raw_directory: results/raw/hf0_crypto
+  pilot_directory: results/intermediate/hf0_crypto_pilot
+  full_directory: results/intermediate/hf0_crypto

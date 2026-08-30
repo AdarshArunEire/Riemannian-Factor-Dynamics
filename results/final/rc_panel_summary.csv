@@ -5,7 +5,7 @@ adjusted,kappa max,1.4838e+04
 adjusted,delta,5.2279
 adjusted,months,240
 adjusted,trading days min/max,15/23
-adjusted,check: shape is (240, 12, 12),PASS
+adjusted,"check: shape is (240, 12, 12)",PASS
 adjusted,check: first month is 2000-01,PASS
 adjusted,check: last month is 2019-12,PASS
 adjusted,check: every RC is positive definite,PASS
@@ -18,7 +18,7 @@ raw,kappa max,1.0237e+04
 raw,delta,5.2106
 raw,months,240
 raw,trading days min/max,15/23
-raw,check: shape is (240, 12, 12),PASS
+raw,"check: shape is (240, 12, 12)",PASS
 raw,check: first month is 2000-01,PASS
 raw,check: last month is 2019-12,PASS
 raw,check: every RC is positive definite,PASS

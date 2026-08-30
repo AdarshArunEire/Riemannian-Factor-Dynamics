@@ -1,0 +1,49 @@
+# APP-HF-3: observable score diagnostics on the frozen 2024 crypto development year.
+#
+# HF-3 does not select a centre, rank, lag set, or forecasting head. It
+# materialises the cross-fitted scores implied by the completed HF-2 caches and
+# checks whether a parent-style VAR(1) is a defensible simple primary head.
+# All of 2025 remains sealed for APP-HF-4.
+
+experiment:
+  id: P1-APP-HF-3
+  development_year: 2024
+  sealed_evaluation_year: 2025
+  complete_weeks: 52
+  hours_per_block: 168
+
+source:
+  hf2_config: config/hf2_representation.yaml
+  hf2_output: results/intermediate/hf2_crypto_representation
+  methods: [parent_rfm, rfd_piecewise6]
+  frozen_ranks:
+    parent_rfm: 19
+    rfd_piecewise6: 19
+  mechanism_rank: 1
+  max_lag: 6
+
+materialization:
+  anchor_phase: tuning
+  anchor_fold: 0
+  smoke_heldout_weeks_per_phase: 2
+
+head_policy:
+  primary: parent_var1_with_intercept
+  kalman: inherited_non_promoted_sensitivity
+  # The prior synthetic/monthly audits already tested this frozen Kalman head.
+  # HF-3 does not tune or promote it on the crypto development year.
+  state_max_iterations: 60
+  state_tolerance: 3.0e-4
+  covariance_floor: 1.0e-6
+  maximum_transition_radius: 0.995
+
+diagnostics:
+  ranks: [1, 19]
+  residual_lags: 6
+
+runtime:
+  workers: 2
+
+output:
+  directory: results/intermediate/hf3_crypto_scores
+  smoke_directory: results/intermediate/hf3_crypto_scores_smoke
