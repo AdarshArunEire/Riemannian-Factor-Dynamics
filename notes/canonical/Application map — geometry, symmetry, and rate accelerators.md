@@ -3,7 +3,7 @@ type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
 verdict: application matching begins with the P1-ID drift/factor estimand; after that split is declared, FRAME-2P-U, HE, and the scoped BW packages retain their separately adjudicated statuses
-last-audited: 2026-08-25 (monthly forecast bridge and declared hourly-crypto home integrated)
+last-audited: 2026-08-27 (APP-FIN forecast boundary closed; compact hourly-crypto home moved inside Paper 1)
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
@@ -401,25 +401,27 @@ additional structural condition is supplied. Paper 1 uses fixed \(r=2\),
 matching the parent's published specification, and treats ranks \(1,\ldots,15\)
 only as a sensitivity envelope. It asks whether the estimated centre moves and
 whether that motion lies inside or outside the parent loading span; it does not
-claim predictive superiority or a true rank. Forecasting and predictive rank
-belong to the downstream programme
-[[Future application programme — factor scores, predictive rank, and online RFD]].
+claim predictive superiority or a true rank. Its completed fixed-rank forecast
+tournament is a finite-sample boundary only. Predictive/adaptive rank, learned
+heads, and online selection belong to [[Future application programme — factor
+scores, predictive rank, and online RFD]].
 The first arrow has its own measurement-error, dependence, and target budget. The RFM theorem does not prove that layer, and reconstruction error is not a forecasting theorem.
 
-The declared post-freeze home is now a 20-asset, one-hour-ahead crypto
-realised-covariance application, preceded by a fixed-\(r=2\) monthly APP-FIN
-VAR bridge. This does not upgrade finance from a conditional match. The hourly
-panel must separately pass data/proxy, centre, representation, score, and
-forecast gates, and any failed gate narrows or rejects the application. The
-exact observation process, competitors, losses, future-centre rule, and stop
-conditions are canonical in
+The final Paper 1 empirical gate is a compact 20-asset, one-hour-ahead crypto
+realised-covariance application, preceded by the completed fixed-\(r=2\) monthly
+APP-FIN boundary. This does not upgrade finance from a conditional match. The
+hourly panel must separately pass data/proxy, centre, representation, and
+forecast gates; APP-HF-3 is diagnostic only, and any failed gate narrows or
+rejects the application. The exact observation process, competitors, losses,
+terminal-centre rule, and stop conditions are canonical in
 [[Home application — hourly crypto realised covariance]].
 
 ## 9. Ranked programme
 
 The generic analytical ranking below is not the application execution order.
-The actual execution order is the gated APP-MONTHLY-VAR then APP-HF-0 through
-APP-HF-5 chain in [[Home application — hourly crypto realised covariance]].
+The actual Paper 1 execution order is the completed APP-MONTHLY boundary then
+APP-HF-0/1/2/4. APP-HF-5 and adaptive extensions are post-freeze; see [[Home
+application — hourly crypto realised covariance]].
 
 1. **HE application verification:** instantiate either the proved bounded-tail \((R_n,A_{2,n},\Delta_n)\) ledger or the expanding-domain truncation ledger for asset, sensor, gene, imaging, and connectivity systems rather than normalising by fiat.
 2. **BW application verification and covariance-measurement layer:** use the proved fixed-margin or restricted fractional-normal theorem only when its complete support/slack/path/row/gap package is verified; separately quantify preliminary covariance estimation.

@@ -142,7 +142,7 @@ def test_exp_log_roundtrip(rng, m, cond):
 def test_barycentre_affine_equivariance(rng, m, cond):
     """bary({M S_i M'}) == M bary({S_i}) M'.
 
-    BUILD.md's done-when, and it earns the billing: it constrains the whole
+    The original test contract's done-when, and it earns the billing: it constrains the whole
     iteration -- initialisation, gradient, retraction, stopping rule -- in
     one line, and it holds for arbitrary invertible M rather than only
     rotations.

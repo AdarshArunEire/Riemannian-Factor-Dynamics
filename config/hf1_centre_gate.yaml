@@ -1,0 +1,57 @@
+# APP-HF-1: frozen centre gate for the hourly crypto home application.
+#
+# Only the first 52 complete UTC weeks of 2024 are used.  The remaining
+# 48 hours of leap-year 2024 are not used for selection, and all of 2025 is
+# sealed for APP-HF-4.  Every complete week is held out once by the two
+# complementary blocked folds.
+
+experiment:
+  id: P1-APP-HF-1
+  panel_path: results/intermediate/hf0_crypto/hourly_covariances.npz
+  development_year: 2024
+  sealed_evaluation_year: 2025
+  complete_weeks: 52
+  hours_per_block: 168
+  expected_matrix_size: 20
+  expected_assets: 20
+
+crossfit:
+  folds: 2
+  embargo_hours_each_training_edge: 24
+  smoke_complete_weeks: 16
+
+candidates:
+  selectable: [global, broad_positive, piecewise6, piecewise12]
+  negative_control: richardson
+  piecewise_segments: [6, 12]
+
+rfd:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+
+selection:
+  primary_losses: [frobenius2, qlike]
+  require_improvement_beyond_standard_errors: 1.0
+  prefer_piecewise6_within_standard_errors: 1.0
+  maximum_single_edge_energy_share: 0.5
+
+dependent_null:
+  method: piecewise6
+  block_hours: 168
+  replicates: 49
+  smoke_replicates: 3
+  seed: 20260827
+  significance_level: 0.05
+  workers: 8
+
+output:
+  directory: results/intermediate/hf1_crypto_centre_gate
+  smoke_directory: results/intermediate/hf1_crypto_centre_gate_smoke
+

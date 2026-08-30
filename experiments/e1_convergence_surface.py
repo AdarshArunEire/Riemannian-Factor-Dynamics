@@ -1,6 +1,6 @@
 """E1 -- what actually drives the BW barycentre's iteration count.
 
-BUILD.md asks for iterations as a function of condition number. That alone
+The numerical test contract asks for iterations as a function of condition number. That alone
 would be confounded: `random_spd` at higher cond produces matrices that are
 both worse conditioned AND further apart, and the fixed point converges
 instantly on a stack of identical matrices however ill-conditioned each one

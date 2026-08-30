@@ -5,9 +5,9 @@ aliases:
   - Online RFD
   - Adaptive-rank RFD
   - Fixed-loading RFD application follow-up
-status: parked-after-paper-1
-verdict: Paper 1 stops before forecasting; a fixed-rank monthly VAR bridge precedes the declared hourly-crypto home, after which factor-score filtering, predictive rank, future-centre policy, state-space dynamics, and learned refit scheduling form one application programme
-last-audited: 2026-08-25
+status: parked-beyond-compact-paper-1-home
+verdict: Paper 1 now includes a compact fixed-rank hourly-crypto forecast gate; this programme begins where that frozen gate ends, with structural score models, predictive rank, learned centre dynamics, online refitting, streaming, and external transfer
+last-audited: 2026-08-27
 area:
   - geometry
   - time-series
@@ -27,6 +27,9 @@ tags:
 > [[Parked programme — Intrinsically moving loading subspace]]. The expanded
 > masked-learning brainstorm remains archived in
 > [[Future programme ideation — identifiable geometric learning for RFD]].
+> Paper 1's APP-HF-0/1/2/4 crypto gate is not duplicated here; APP-HF-3 becomes
+> substantive only if a later structural score model is developed, and APP-HF-5
+> external transfer belongs here.
 
 ## 1. What Paper 1 may claim
 
@@ -53,9 +56,9 @@ APP-FIN has no known true rank. Paper 1 therefore uses:
 1. the parent's published \(r=2\) as a fixed comparison convention; and
 2. ranks \(1,\ldots,15\) only as a labelled sensitivity envelope.
 
-Forecasting and predictive rank are post-freeze. The first forecast bridge also
-holds \(r=2\) fixed so it tests the centre and forecast plumbing rather than a
-rank policy.
+Paper 1 permits only fixed-rank forecasting: the completed APP-FIN bridge and
+the compact hourly-crypto gate. Predictive/adaptive rank, learned score or
+centre heads, online selection, and structural amplitude claims are post-freeze.
 
 ## 2. What the completed rank sweep established
 
@@ -355,9 +358,9 @@ Its fitted VAR transition radii remained below one. The evidence therefore
 localises the severe loss to noisy projected scores interacting with the
 moving-centre/frame row and BW decoder, rather than an explosive VAR fit.
 
-### 8.1.1 Frozen VAR-versus-Kalman score-head gates
+### 8.1.1 Completed VAR-versus-Kalman score-head gates
 
-The next experiment changes one component at a time. Within either the parent
+The experiment changed one component at a time. Within either the parent
 or RFD representation, the centre, tangent rows, loading directions, rank,
 forecast origins, and BW decoder are identical. Only the score head changes:
 
@@ -383,14 +386,17 @@ literal parent one-origin smoke is exact: Python reproduces the R VAR score to
 Both Kalman fits converged and no smoke arm clipped. These are integrity facts,
 not evidence that Kalman wins.
 
-The decision rule is predeclared. Filtering advances only if it lowers known
-synthetic factor-forecast error and then improves or materially stabilises the
-APP-FIN replay without systematic compatibility clipping. Failure on either
-gate is a useful terminal verdict: the in-span noise is not repaired by this
-linear state model, so the hourly application must retain VAR as a baseline
-and investigate a different observation/dynamics model on validation data.
+The recorded verdict is negative for promotion. Filtering changed amplitude
+error but did not yield a sufficiently consistent forecast improvement, and it
+did not rescue the unstable Richardson representation. The broader 36-origin
+centre/head tournament found all positive polygon arms finite and SPD;
+piecewise-6/12 improved BW but not both primary losses, while Richardson
+remained unstable under VAR and Kalman. Paper 1 therefore retains VAR as
+primary and Kalman as a labelled sensitivity. A genuinely structural score
+observation model remains a follow-up question. Executed report:
+`results/intermediate/appfin_centre_head_tournament/report.md`.
 
-### 8.2 Declared high-frequency home and external validation
+### 8.2 Paper 1's compact high-frequency home and the later external validation
 
 The declared home uses **20 observed markets**, hence \(p=210\) symmetric
 tangent coordinates. Twenty is a computational and covariance-sampling
@@ -398,10 +404,14 @@ compromise, not a model constant.
 
 Two panels are ordered as follows:
 
-1. **Continuous crypto panel:** 20 liquid, predeclared assets on one venue,
-   one quote currency, synchronized ten-second returns aggregated from official
-   one-second bars, and non-overlapping hourly realised covariances. Each matrix
-   then uses about 360 intrahour returns; one year supplies about 8,760 matrices.
+1. **Continuous crypto panel:** 20 assets selected causally on 2023-Q4 by a
+   liquid-first/volatile-second rule, one venue, one quote currency, official
+   synchronized one-minute spot klines, and non-overlapping hourly realised
+   covariances. Each matrix then uses at most 60 intrahour returns; the frozen
+   2024--2025 panel supplies at most 17,544 matrices before exclusions.
+   The original one-second-to-ten-second, about-360-return plan was replaced
+   before data inspection on 2026-08-27 for tractable storage and computation;
+   the home-application amendment ledger preserves the reason and scope change.
    Asset inclusion, venue, quote currency, delistings, stablecoins, missing
    bars, regularisation, and survivorship handling must be frozen before the
    evaluation panel is read. Hour/day/week periodicity must be estimated using
@@ -414,18 +424,27 @@ Two panels are ordered as follows:
    realised covariances are the literature-standard alternative but produce
    only about 1,500 observations in six years, not the desired \(n\approx8192\).
 
-Before forecasting or adaptive rank enters, both panels receive the
-centre-detectability package recorded in [[Literature review — external
-positioning and prior art]] §2.10: global, positive-local, Richardson, and
-global/local-shrunk centre paths on blocked holdouts. Only after that gate do
-literal parent RFM and RFD receive the same fixed-rank representation task.
-LOCF and EWMA enter only when the task becomes causal forecasting.
+The crypto panel receives the centre-detectability package in Paper 1: global,
+broad-positive, piecewise-6, piecewise-12, and Richardson negative control on
+blocked holdouts. Only after that gate do literal parent RFM and RFD receive the
+same fixed-rank representation and one-hour causal forecast tasks. The equity
+panel is not part of this first execution; it later receives the entire frozen
+protocol without crypto-driven retuning.
 
-The crypto sequence is APP-HF-0 data/proxy preflight, APP-HF-1 centre gate,
-APP-HF-2 matched representation, APP-HF-3 projected-score filtering, and
-APP-HF-4 one-hour causal forecasting. APP-HF-5 transfers the frozen protocol
-to US equities. See [[Home application — hourly crypto realised covariance]]
-for the observation contract, competitors, losses, stop rules, and non-claims.
+The Paper 1 crypto sequence is APP-HF-0 data/proxy preflight, APP-HF-1 centre
+gate, APP-HF-2 matched representation, and APP-HF-4 one-hour causal forecasting.
+APP-HF-3 is only a VAR/Kalman diagnostic sensitivity. This follow-up programme
+owns APP-HF-5 and every adaptive, learned, streaming, or structural-score
+extension. See [[Home application — hourly crypto realised covariance]] for the
+observation contract, competitors, losses, stop rules, and non-claims.
+
+The completed coordinatewise OLS HAR and ridge-VHAR score-head augmentation is
+also owned here, not by Paper 1. At rank 19, coordinate HAR improved RFD's
+Frobenius and BW losses relative to RFD/VAR but worsened QLIKE and GMV realised
+variance; ridge VHAR worsened those financial losses sharply. The rows are
+useful negative design evidence for future predictive operators and
+regularisation, but supply no Paper 1 claim. Raw provenance remains under
+`results/intermediate/hf4_crypto_forecast/`.
 
 ### 8.3 Finite-sample centre extraction after the monthly APP-FIN boundary
 
@@ -453,7 +472,8 @@ one makes the extrapolation system ill-conditioned. Moving it towards zero
 reduces coefficient mass but makes the smallest window drastically shorter.
 Therefore ``choose different coefficients'' is not a free repair.
 
-The Paper 2 investigation is ordered:
+The post-freeze centre-efficiency investigation is ordered only after the
+compact Paper 1 candidate set has been frozen and adjudicated:
 
 1. derive the joint bias and covariance expansion of the nested positive
    stages, including the BW Log/Exp anchor and noncommuting curvature terms;
@@ -468,8 +488,8 @@ The Paper 2 investigation is ordered:
    damping below one generally restores lower-order bias, so it needs its own
    rate theorem; a sequence tending to one may preserve the asymptotic rate
    only under an explicit speed condition;
-6. rerun the frozen centre gate on the 20-market high-frequency crypto and
-   equity panels, reporting BW, QLIKE, and Frobenius targets separately; and
+6. use the completed crypto gate to motivate, not retune, the expanded design;
+   transfer the final frozen protocol to equities as APP-HF-5; and
 7. only after those analytical baselines compare a state-space or learned
    causal centre head.
 
@@ -512,23 +532,19 @@ enough to justify its cost.
 
 ## 10. Future programme order
 
-1. freeze Paper 1 with its completed synthetic recovery, literal parent parity,
-   and qualified non-forecasting APP-FIN boundary;
-2. run APP-MONTHLY-VAR, the fixed-\(r=2\) 204/36 parent-protocol forecast
-   bridge, with a causal RFD centre path;
-3. close APP-HF-0 and APP-HF-1: the frozen hourly crypto data/proxy audit and
-   moving-centre gate;
-4. derive and test the finite-sample centre-extraction alternatives in §8.3
-   only if that gate supports a moving centre;
-5. run APP-HF-2, the matched fixed-rank representation comparison;
-6. diagnose projected-score noise, construct the future-centre policy, and
-   compare direct VAR with latent state-space filtering;
-7. run the frozen one-hour forecast and external equity validation;
-8. construct retrospective predictive-rank paths and compare fixed, rolling,
+1. preserve Paper 1's now-complete APP-HF-0/1/2/4 fixed-rank crypto gate and
+   formal-tie verdict without retuning it;
+2. preserve APP-HF-3's completed Kalman result as a diagnostic rather than
+   promoting it, then formulate a structural score observation model only if
+   the Paper 1 outcome motivates one;
+3. transfer the frozen protocol to US equities as APP-HF-5 without retuning;
+4. derive and test the expanded centre-efficiency alternatives in §8.3 without
+   rewriting the Paper 1 centre choice;
+5. construct retrospective predictive-rank paths and compare fixed, rolling,
    switching-penalised, and online-expert policies;
-9. measure when full geometric refitting is useful and develop a causal
+6. measure when full geometric refitting is useful and develop a causal
    event-triggered policy; and
-10. only then test supervised or learned refit scheduling.
+7. only then test supervised or learned score, centre, or refit policies.
 
 The strongest later-paper theme is:
 

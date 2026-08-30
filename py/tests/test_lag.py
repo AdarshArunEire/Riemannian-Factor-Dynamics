@@ -74,6 +74,33 @@ def test_tangent_coordinate_round_trip_is_exact_in_the_metric_basis(
     np.testing.assert_allclose(recovered_rows, expected_rows, atol=3e-13)
 
 
+def test_tangent_coordinate_batching_matches_individual_bw_rows():
+    point = np.diag([1.0, 1.5, 2.0])
+    basis = BW_GEOMETRY.tangent_basis(point)
+    rng = np.random.default_rng(812)
+    raw = rng.standard_normal((17, 3, 3))
+    vectors = 0.5 * (raw + raw.mT)
+
+    batched = tangent_coordinates(
+        vectors, point, basis, BW_GEOMETRY, batch_size=4
+    )
+    individual = np.stack([
+        tangent_coordinates(vector, point, basis, BW_GEOMETRY)
+        for vector in vectors
+    ])
+
+    np.testing.assert_array_equal(batched, individual)
+
+
+def test_tangent_coordinates_rejects_invalid_batch_size():
+    point = np.eye(2)
+    basis = BW_GEOMETRY.tangent_basis(point)
+    with pytest.raises(ValueError, match="batch_size"):
+        tangent_coordinates(
+            np.zeros((2, 2, 2)), point, basis, BW_GEOMETRY, batch_size=0
+        )
+
+
 @pytest.mark.parametrize(
     ("geometry", "vertices"),
     (

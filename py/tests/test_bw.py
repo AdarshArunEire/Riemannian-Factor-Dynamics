@@ -241,7 +241,7 @@ def test_barycentre_stationarity(rng, m, cond):
     SEMI-TAUTOLOGICAL and labelled as such: the loop terminates on exactly
     this residual, so it mostly re-reports the stopping rule. Kept because
     it would catch a residual computed on the wrong iterate, and because
-    BUILD.md's done-when names it. The Frechet test above is the one doing
+    The original test contract names it. The Frechet test above is the one doing
     real work.
     """
     S = random_spd(rng, m=m, cond=cond, n=N_BARY)
@@ -254,7 +254,7 @@ def test_barycentre_stationarity(rng, m, cond):
 
 @pytest.mark.parametrize("m", MS)
 def test_barycentre_iterations_well_conditioned(rng, m):
-    """BUILD.md done-when: under 50 iterations for well-conditioned input.
+    """Test contract: under 50 iterations for well-conditioned input.
 
     Only asserted at cond=1e1. At 1e5 it legitimately needs ~75 -- that
     slowdown is the phenomenon, not a failure, and belongs in experiments/.

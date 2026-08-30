@@ -4,9 +4,9 @@ title: Paper 1 — Locally stationary Riemannian factor model
 aliases:
   - Moving-centre RFM, covariantly constant loadings
   - Paper 1
-status: current-spec
-verdict: P1-ID is closed by exact identified quotients and impossibility boundaries; the robust and scoped sharper estimation theorems retain their separately adjudicated statuses
-last-audited: 2026-08-25 (literal parent/RFD BW parity adjudicated; final scope narrowed to a non-forecast APP-FIN identification illustration)
+status: frozen-scientific-spec
+verdict: Identification, estimation and the final empirical gate are closed; remaining Paper 1 work is manuscript and release engineering
+last-audited: 2026-08-29 (complete result hierarchy reconciled; matched VAR is the sole RFD/RFM Paper 1 forecast head)
 area:
   - geometry
   - time-series
@@ -44,7 +44,7 @@ The estimation theorem targets the declared transported loading space only after
 
 > **Scope limit (CANON-4) — evaluation. The loss used to score a forecast is not free, and the natural geometric choice is not admissible.** If a later factor-score model turns RFD's reconstruction into a covariance forecast, that forecast is scored against an ex-post *proxy* — a realised covariance matrix, not the latent conditional mean. [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] proves that a loss preserves the ranking of forecasts under such a proxy **iff** it is a Bregman divergence in the coordinate in which the proxy is conditionally unbiased, and that a **symmetric** loss can be robust only if it is a fixed Mahalanobis form in that coordinate. Squared Bures–Wasserstein, AIRM and log-Euclidean distances are therefore all inadmissible for scoring — the first two because they are curved, the third because it is flat in the *wrong* coordinate. What a geodesic loss actually rewards is the Fréchet barycentre of the *proxy's* conditional law, which is strictly below the conditional mean: exactly \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case, and for a Wishart-type proxy exactly \(-\frac{\lambda_i}{M}\big[\frac14+\sum_k\frac{\lambda_k^2}{(\lambda_i+\lambda_k)^2}\big]\) per eigenvalue. That distortion is \(\Theta(m/M)\), not \(\Theta(1/M)\), so it grows with the matrix size: at the flagship configuration of \(m=12\) assets and monthly realised covariance from \(M\approx21\) daily returns it is **8.8%–35.9%** under Bures–Wasserstein and **32.9%** under AIRM. A forecaster reporting the correct conditional mean is beaten by one reporting a substantially shrunken covariance.
 >
-> **Any downstream forecast comparison therefore reports squared Frobenius distance and multivariate QLIKE**, both of which are proxy-robust; QLIKE's *ranking* survives a singular proxy even though its *level* does not. If a geodesic loss is reported for comparability, its induced target is stated and the recalibration of P1-LOSS §4 is applied — for AIRM the scalar \(c=1-\frac{m+1}{2M}\) is exact, for Bures–Wasserstein a scalar correction is only partial. Recalibration restores the **location of the optimum** and never the **ranking robustness**: only the loss class does that. Paper 1's APP-FIN illustration does not rank forecasts; any reconstruction loss is labelled descriptive.
+> **Any forecast comparison therefore reports squared Frobenius distance and multivariate QLIKE**, both of which are proxy-robust; QLIKE's *ranking* survives a singular proxy even though its *level* does not. If a geodesic loss is reported for comparability, its induced target is stated and the recalibration of P1-LOSS §4 is applied — for AIRM the scalar \(c=1-\frac{m+1}{2M}\) is exact, for Bures–Wasserstein a scalar correction is only partial. Recalibration restores the **location of the optimum** and never the **ranking robustness**: only the loss class does that. Reconstruction losses remain descriptive; the compact APP-FIN and hourly-crypto forecast comparisons obey this loss boundary.
 >
 > **This is a scope condition on reporting. It changes no estimand, no rate, no assumption, and no application's standing** — the proved separation is P1-LOSS §6, and the only edge into the estimation chain is a \(\Theta(m/M)\) measurement-error contribution to the existing target-defect budget \(\zeta_n\).
 
@@ -438,9 +438,9 @@ movement. These are reconstruction and identification evidence, not a
 forecasting theorem or a real-data dominance claim. Full adjudication:
 `results/final/parent_rfd_bw_parity_adjudication/report.md`.
 
-The final APP-FIN gate is complete. Its fixed-rank parent/RFD comparison remains
-an identification sensitivity illustration, not forecasting or structural
-factor truth. The separate predeclared centre diagnostic found global,
+The APP-FIN identification gate is complete. Its fixed-rank parent/RFD
+comparison remains an identification sensitivity illustration rather than
+structural factor truth. The separate predeclared centre diagnostic found global,
 positive-local, and full Richardson BW RMS 5.033, 4.954, and 8.479 across 20
 leave-one-year-out folds. Positive local lowered aggregate squared BW loss by
 3.1% but won exactly half the years; full Richardson raised it by 183.8%.
@@ -454,12 +454,31 @@ predictive superiority, structural amplitudes, a true financial rank, or
 absence of centre motion. Full adjudication:
 `results/intermediate/appfin_centre_diagnostic/report.md`.
 
+The completed 36-origin centre/head tournament then supplies a low-sample
+forecast boundary, not a new theorem. All positive polygon arms remained finite
+and SPD. Piecewise-6/VAR and piecewise-12/VAR improved squared BW loss over the
+literal parent by 6.3% and 5.7%, but neither dominated under the primary
+Frobenius and QLIKE losses. Full Richardson remained catastrophically unstable
+under VAR and Kalman; Kalman produced no consistent benefit and is not promoted.
+Paper 1 therefore uses piecewise-6 as the predeclared one-standard-error
+practical centre, piecewise-12 as sensitivity, and VAR as the primary score
+head. Full report:
+`results/intermediate/appfin_centre_head_tournament/report.md`.
+
+The compact hourly-crypto gate is complete. APP-HF-1 selected piecewise-6 and
+its movement cleared the weekly-block null; APP-HF-2 found no operational
+rank-19 reconstruction gain but retained a rank-1 compression benefit;
+APP-HF-4's 8,760 matched rank-19 VAR forecasts gave lower RFD mean loss by
+2.48% Frobenius, 13.26% QLIKE, 2.18% BW and 7.69% GMV realised variance. Both
+primary paired intervals crossed zero, so the formal verdict is a tie. Later
+coordinate-HAR/VHAR score-head rows are retained only as internal diagnostics
+and are excluded from Paper 1; log-SPD HAR remains an external baseline.
+
 The full growing-size BW, shrinking-margin BW, FRAME-2P-U application,
-exhaustive phase, selector-efficiency, factor-score filtering, predictive-rank,
-future-centre, and forecasting programmes are not prerequisites. A negative
-APP-FIN has narrowed the empirical claim without reopening P1-ID or any proved
-assumption-to-conclusion theorem. Coefficient/scale design, regularised centre
-extraction, higher-frequency panels, and causal forecast use are post--Paper 1.
+exhaustive phase, selector-efficiency, structural factor-score filtering,
+predictive/adaptive rank, learned future-centre rules, online refitting, and
+equity transfer are not prerequisites. No scientific experiment remains on the
+Paper 1 critical path. The authoritative result hierarchy is [[Paper 1 final result ledger]]; application scope remains [[Paper 1 shape — identification to application]] and [[Home application — hourly crypto realised covariance]].
 
 ## Claims excluded from Paper 1
 

@@ -1,9 +1,9 @@
 ---
 title: Numerical suite — theorem-driven design matrix
 type: numerical-design
-status: active
+status: paper-1-recorded-frozen
 authority: canonical-design-only
-updated: 2026-08-25
+updated: 2026-08-29
 ---
 
 # Numerical suite — theorem-driven design matrix
@@ -22,12 +22,14 @@ now complete with a qualified fixed-rank pass: 496 frozen tasks, no ordinary
 error or failed verdict, safe-domain rate evidence, and honest hostile-boundary
 behaviour. Rank-positive synthetic cells use the known true rank, so no
 automatic-rank claim is made. The literal parent comparison on common BW draws
-is now complete. The non-forecasting APP-FIN identification illustration and
-its centre-detectability gate are also complete with a qualified boundary:
+is now complete. The APP-FIN identification illustration and its
+centre-detectability gate are also complete with a qualified boundary:
 suggestive regularised centre motion, no 5% rejection of a dependent
 constant-centre null, and severe full-Richardson variance at monthly
-\(n=240\). Predictive rank, score dynamics, finite-sample centre redesign, and
-forecasting move together to the application follow-up. The
+\(n=240\). Its causal centre/head tournament is now complete as a low-sample
+forecast boundary. Paper 1 next consumes only APP-HF-0/1/2/4; predictive rank,
+learned score dynamics, expanded centre redesign, and online operation remain
+the application follow-up. The
 repository also contains audited SPD geometry and loss
 primitives, a rebuilt realised-covariance panel, an APP-FIN parent-pipeline
 reproduction whose Python/R harness agrees to roundoff and whose published
@@ -445,31 +447,30 @@ mean sensitivity was negligible. The adjudication is
 `results/final/parent_rfd_bw_parity_adjudication/report.md`; the executed plot
 lab is `notebooks/parent_rfd_bw_parity_plot_lab.ipynb`.
 
-### 3G. Post-freeze causal bridge and declared home application
+### 3G. Paper 1 causal boundary and final home application
 
-These experiments do not enter Paper 1's theorem or empirical claims. They
-begin only after the Paper 1 result/configuration freeze and follow the
-authoritative contract in
+These experiments do not enter or alter any Paper 1 theorem. The completed
+monthly bridge supplies a low-sample empirical boundary; APP-HF-0/1/2/4 form
+the final compact Paper 1 application gate under the authoritative contract in
 [[Home application — hourly crypto realised covariance]].
 
 | ID | design | fixed controls | primary outputs | terminal interpretation |
 |---|---|---|---|---|
 | APP-MONTHLY-VAR | existing 240-month, 12-stock APP-FIN panel; initial months \(1{:}204\), then 36 expanding one-step forecasts | fixed \(r=2\), lag horizon \(h=6\), and the same OLS VAR(1) with intercept, covariance inputs, origins, and losses; parent global centre frozen from the initial window; RFD expanding-prefix path with one-sided terminal-centre carry | squared Frobenius, multivariate QLIKE, labelled parent BW/risk diagnostics, convergence/fallbacks, centre motion, and wall time | **COMPLETE — 36/36 CAUSAL FORECASTS.** Parent/RFD mean Frobenius²: 206.48/241.34; mean QLIKE: 11.12/1717.40. The RFD decoder produced two clips, minimum eigenvalue \(4.16\times10^{-6}\), and 69 centre fallbacks. This is an instability diagnosis, not a dominance or factor-score claim |
-| APP-BW-SCORE-FILTER | identical regular BW synthetic draws; \(n\in\{240,512,2048,8192\}\), six fixed/moving/noiseless/noisy controls, 16 replicates; known rank two supplied | oracle, fixed-centre RFM-compatible, and feasible RFD representations each feed a frozen OLS VAR(1) and identity-observation linear Gaussian/Kalman head; first 80% fits, final 20% is revealed sequentially; every BW decode uses the same compatibility guard | observed/filtered score NRMSE, one-step factor forecast NRMSE, KF/VAR ratio, latent-signal and observation reconstruction, clips, eigenvalue/condition margins, convergence and transition radii | **MACHINERY + TWO-DRAW REAL SMOKE COMPLETE; 384-DRAW RECORD PENDING.** The smoke is plumbing evidence only; the recorded run decides whether filtering lowers the projected-noise floor without buying unsafe reconstruction |
-| APP-MONTHLY-HEADS | same 204/36 APP-FIN expanding origins and fixed rank as APP-MONTHLY-VAR | literal parent and RFD representations each feed VAR and Kalman heads; the representation is held fixed within each pair; all controls frozen before evaluation | same forecast losses plus head transition radii, inferred measurement fraction, convergence, clips, minimum eigenvalue, condition number, and exact parent-R parity | **MACHINERY + REAL ONE-ORIGIN SMOKE COMPLETE; 36-MONTH RECORD PENDING.** Parent VAR score/forecast parity errors were \(1.83\times10^{-15}\)/\(5.18\times10^{-14}\); both KF fits converged and no arm clipped. One origin cannot establish a forecast verdict |
-| APP-HF-0 | 20 predeclared liquid spot crypto assets; official one-second bars synchronized to ten-second returns; non-overlapping hourly realised covariance | one venue/quote; fixed asset, missingness, regularisation, seasonality, and split rules | valid returns per hour, stale/missing fractions, eigenvalue/condition/ridge distributions, proxy-noise diagnostics, and data exclusions | pass fixes the observation process; failure changes or rejects the application before model comparison |
-| APP-HF-1 | blocked centre comparison plus dependent fixed-centre null | global, positive-local, Richardson, and predeclared global/local shrinkage; training-only tuning | proxy-robust held-out loss, path stability, effective sample size, correction/fallback events, and null-calibrated motion | global wins: reject RFD on panel; jumps dominate: reject smooth path; regularised local wins: continue with that centre and record Richardson boundary |
-| APP-HF-2 | literal parent RFM versus RFD on identical hourly matrices | one validation-chosen fixed rank; identical lags, coordinate conventions, and reconstruction targets | loading stability, reconstruction, lag spectra/gaps, residual dependence, margins, and centre/loading sensitivity | establishes a representation gain, tie, or cost before forecasting |
-| APP-HF-3 | projected-score observation model | direct projected scores and parent VAR(1) baseline versus a frozen linear state-space/Kalman treatment | score innovation diagnostics, residual serial structure, reconstruction, and forecast-origin state uncertainty | isolates whether filtering addresses the in-span projected-noise floor |
-| APP-HF-4 | sequential one-hour covariance forecasts over a frozen evaluation year | frozen centre, rank, filter, future-centre rule, and refit schedule; causal updates only | Frobenius and QLIKE primary; labelled geodesic and economic diagnostics; LOCF/EWMA, HAR/SPD, covariance-dynamics, factor/state-space, parent RFM, and reproducible geometric comparators | application verdict; no post-test tuning |
-| APP-HF-5 | frozen transfer to 20 US equities | explicit market-hours, asynchronous-trading, intraday-seasonality, and overnight policies | same primary losses and health diagnostics | external validation, not a second tuning panel |
+| APP-BW-SCORE-FILTER | identical regular BW synthetic draws; \(n\in\{240,512,2048,8192\}\), six fixed/moving/noiseless/noisy controls, 16 replicates; known rank two supplied | oracle, fixed-centre RFM-compatible, and feasible RFD representations each feed a frozen OLS VAR(1) and identity-observation linear Gaussian/Kalman head; first 80% fits, final 20% is revealed sequentially; every BW decode uses the same compatibility guard | observed/filtered score NRMSE, one-step factor forecast NRMSE, KF/VAR ratio, latent-signal and observation reconstruction, clips, eigenvalue/condition margins, convergence and transition radii | **COMPLETE — NEGATIVE PROMOTION VERDICT.** Filtering changed score error but did not deliver a sufficiently consistent forecast improvement to become the Paper 1 primary head |
+| APP-MONTHLY-HEADS | same 204/36 APP-FIN expanding origins and fixed rank as APP-MONTHLY-VAR, extended to global, broad-positive, piecewise-6, piecewise-12, and Richardson centres | every centre representation feeds the same VAR and Kalman heads; controls frozen before evaluation | same forecast losses plus head transition radii, convergence, clips, minimum eigenvalue, condition number, and exact parent-R parity | **COMPLETE — 360 LOSS + 360 DIAGNOSTIC ROWS.** Positive polygon paths remained finite/SPD. Piecewise-6/12 improved BW but not Frobenius/QLIKE; Richardson was unstable under both heads; Kalman was not promoted. See `results/intermediate/appfin_centre_head_tournament/report.md` |
+| APP-HF-0 | 20 spot crypto assets selected on 2023-Q4 only by a liquid-first/volatile-second rule; official one-minute klines; non-overlapping hourly realised covariance with at most 60 returns | one venue/USDT quote; 2024--2025 panel; fixed candidates, selection, missingness, regularisation, seasonality, and split rules; the pre-data frequency amendment and post-preflight availability-metric correction are logged in the home spec | valid returns per hour, missing-or-no-trade and unchanged-close fractions separately, eigenvalue/condition/ridge distributions, split-half proxy disagreement, seasonality/dependence, and data exclusions | **COMPLETE — PASS.** 17,544 hourly (20\times20) matrices; corrected availability, proxy, and spectral gates passed |
+| APP-HF-1 | blocked centre comparison plus dependent fixed-centre null | global, broad-positive, piecewise-6, piecewise-12, and Richardson negative control; training/validation-only selection with piecewise-6 as the one-standard-error lower-complexity rule | proxy-robust held-out loss, path stability, effective sample size, correction/fallback events, and null-calibrated motion | **COMPLETE — PIECEWISE-6 FROZEN.** Positive local centres beat global and movement cleared the weekly-block null; the PEPE edge-share finding remains a proxy-resolution diagnostic, not a smoothness rejection |
+| APP-HF-2 | literal parent RFM versus RFD on identical hourly matrices | independently validation-selected ranks, identical lags, coordinate conventions, and reconstruction targets; mandatory same-rank curve | loading stability, reconstruction, lag spectra/gaps, residual dependence, margins, and centre/loading sensitivity | **COMPLETE — QUALIFIED COST/COMPRESSION VERDICT.** Both arms selected rank 19. Parent had a modest Frobenius advantage; QLIKE/BW were unresolved. At rank 1, RFD reduced all losses by 6.74--12.12%. Rank 19 is reconstruction dimension, not structural factor count |
+| APP-HF-3 | projected-score observation model on 2024 only | frozen global/piecewise-6 centres, rank 19, coordinates, six lags, and direct projected scores; parent VAR(1) primary; frozen linear state-space/Kalman sensitivity; exact arm parity | score innovation covariance and serial structure, transition radius, reconstruction residuals, and forecast-origin state uncertainty | **COMPLETE — RECORDED DIAGNOSTIC.** All 17,472 rank-19 score rows materialised. Parent/RFD blocked-VAR variance explained was 52.36%/40.65%, innovation share 47.64%/59.35%, transition radius 0.942/0.836, and maximum residual lag dependence 0.0547/0.0569. Both were stable; parent scores were more one-step predictable. No structural-amplitude claim or head reselection; 2025 remained sealed |
+| APP-HF-4 | all 8,760 sequential one-hour covariance forecasts in 2025; 14 four-week blocks, each refit on the trailing 26 weeks | parent global RFM and piecewise-6 RFD use identical six-lag OLS VAR(1) heads; rank 19 is the sole operational headline; ranks 1--18 are sensitivities; terminal centre carried within each block; LOCF, 2024-tuned EWMA, and log-SPD HAR are external baselines | squared Frobenius and QLIKE primary; paired rank-19 differences receive 168-lag Bartlett Newey--West intervals; BW and GMV realised variance/calibration descriptive; SPD, clipping, conditioning, transition, cache, and exact causal-origin diagnostics | **COMPLETE — FORMAL TIE.** Rank-19 RFD reductions were 2.48% Frobenius, 13.26% QLIKE, 2.18% BW and 7.69% GMV realised variance, while both primary paired intervals crossed zero. Later matched coordinate-HAR/VHAR score-head rows remain internal diagnostics and are excluded from Paper 1. `config/hf4_forecast.yaml`; `sandbox/run_hf4_forecast.ps1` |
+| APP-HF-5 | frozen transfer to 20 US equities | explicit market-hours, asynchronous-trading, intraday-seasonality, and overnight policies | same primary losses and health diagnostics | post-freeze external validation, not a second tuning panel |
 
-The first monthly bridge deliberately uses the parent's forecast model. RFD
-changes the centre/frame construction, not the VAR. Its completed instability
-diagnosis motivates, but does not prejudge, two frozen follow-ups. The synthetic
-score-filter gate first measures hidden-factor amplitude recovery under known
-truth. The APP-FIN four-arm replay then changes only VAR versus Kalman within
-each fixed representation. Adaptive rank remains absent from both.
+The monthly work is closed. Its initial Richardson instability was reproduced
+under Kalman and removed by positive polygon centres, while no positive arm
+dominated the parent under both primary losses. The result fixes VAR as the
+Paper 1 primary head, preserves Kalman only as sensitivity, and motivates the
+larger hourly panel without promising a win. Adaptive rank remains absent.
 
 ## 4. Estimator and selector comparisons
 
@@ -514,12 +515,11 @@ Forecasting outputs are separately labelled:
 - covariance or functional reconstruction from forecast scores;
 - comparison with direct covariance and linear-factor forecasts;
 - calibration and loss appropriate to the stated metric.
-- these are post–Paper 1 outputs. APP-FIN forecasting eventually issues every
-  candidate before its outcome and distinguishes a causal policy from a
-  retrospective oracle, but the foundational paper does not consume that run.
-- the first post-freeze bridge instead holds \(r=2\) fixed and matches the
-  parent's 204/36 expanding VAR(1) loop. The hourly home initially keeps one
-  validation-chosen rank fixed; predictive-rank adaptation enters only later.
+- Paper 1 consumes only the completed fixed-\(r=2\) APP-FIN boundary and the
+  frozen fixed-rank APP-HF-4 hourly comparison. Every candidate forecast is
+  issued before its outcome; retrospective oracle selection is forbidden.
+- predictive-rank adaptation, learned heads, online experts, and APP-HF-5 enter
+  only after the Paper 1 freeze.
 
 No reconstruction theorem is described as a forecasting guarantee.
 
@@ -542,12 +542,12 @@ compact fixed-size N-09 closure and the 576-draw literal parent/RFD BW parity
 matrix are complete with qualified fixed-rank verdicts. The public environment
 and APP-FIN parent pipeline have been audited and reproduced and
 [[notation-map|the notation map]] is complete; the long parent simulations are
-optional unattended reproduction work. The fixed-rank non-forecasting APP-FIN
-illustration and its centre gate are complete; Paper 1 now proceeds to freeze.
-Predictive rank, factor-score dynamics, finite-sample centre redesign,
-future-centre policy, and forecasting are one post-freeze programme, now
-ordered as APP-MONTHLY-VAR followed by APP-HF-0 through APP-HF-5 in
-[[Home application — hourly crypto realised covariance]]. Infinite-memory
+optional unattended reproduction work. The APP-FIN identification, centre,
+forecast, and score-head boundaries are complete. Paper 1 now runs only
+APP-HF-0/1/2/4 and then freezes. Predictive rank, learned score dynamics,
+finite-sample centre redesign beyond the declared positive candidates, online
+future-centre/refit policy, and APP-HF-5 form the post-freeze programme.
+Infinite-memory
 cancellation, signed-AIRM, higher positive smoothing, selector efficiency,
 FRAME implementation, and BW exponent-sharpness are not prerequisites unless a
 required compact comparison exposes a genuine dependency.

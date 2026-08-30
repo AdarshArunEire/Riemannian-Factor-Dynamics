@@ -2,7 +2,7 @@
 type: canonical-literature-review
 title: Literature review — external positioning and prior art
 status: active
-last-audited: 2026-08-25 (§2.10 hourly-crypto home, data contract, and competitor field integrated)
+last-audited: 2026-08-27 (§2.10 compact Paper 1 crypto gate and post-freeze boundary integrated)
 authority: field map, prior-art comparison, and the novelty-claim boundary
 ---
 
@@ -380,12 +380,16 @@ baseline from lag-persistent tangent co-movement improve representation and
 one-hour covariance forecasts enough to justify the additional centre/frame
 machinery? The answer is allowed to be no. The declared sequence is therefore:
 
-1. fixed-rank 204/36 monthly APP-FIN VAR bridge;
+1. completed fixed-rank 204/36 monthly APP-FIN boundary;
 2. hourly crypto data/proxy audit;
-3. centre-detectability gate;
-4. matched fixed-rank parent/RFD representation;
-5. projected-score filtering; and
-6. frozen one-hour forecast, followed by an equity transfer.
+3. centre-detectability gate over frozen positive candidates plus Richardson
+   negative control;
+4. matched fixed-rank parent/RFD representation; and
+5. frozen one-hour forecast with VAR primary and Kalman sensitivity.
+
+Those five items close Paper 1. Projected-score model redesign, adaptive rank,
+online refitting, the broad modern comparator field, and equity transfer remain
+the follow-up rather than expanding the first empirical claim.
 
 The exact observation contract, losses, competitors, and stop rules are in
 [[Home application — hourly crypto realised covariance]]. This literature

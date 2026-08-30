@@ -73,6 +73,213 @@ def forecast_var1(scores: Array) -> tuple[Array, VAR1Fit]:
 
 
 @dataclass(frozen=True)
+class RidgeVHARFit:
+    """Ridge vector-HAR fit for a low-dimensional score history.
+
+    The regressors are an intercept, the latest score, its trailing daily
+    average and its trailing weekly average. Non-intercept regressors are
+    standardised on the training block, making the fixed ridge strength
+    comparable across ranks and across the parent/RFD score gauges.
+    """
+
+    coefficients: Array
+    feature_mean: Array
+    feature_scale: Array
+    residuals: Array
+    daily_window: int
+    weekly_window: int
+    ridge: float
+
+    @property
+    def rank(self) -> int:
+        return int(self.coefficients.shape[1])
+
+    @property
+    def hourly_transition(self) -> Array:
+        """Effective coefficient matrix on the most recent score."""
+        block = self.coefficients[1:1 + self.rank]
+        return (block / self.feature_scale[:self.rank, None]).T
+
+    def forecast(self, history: Array) -> Array:
+        """Issue one forecast from a history ending at the forecast origin."""
+        history = _validate_scores(history, minimum_rows=self.weekly_window)
+        if history.shape[1] != self.rank:
+            raise ValueError("history and fitted HAR rank disagree")
+        raw = np.concatenate((
+            history[-1],
+            history[-self.daily_window:].mean(axis=0),
+            history[-self.weekly_window:].mean(axis=0),
+        ))
+        standardised = (raw - self.feature_mean) / self.feature_scale
+        return np.concatenate(([1.0], standardised)) @ self.coefficients
+
+
+def _score_har_design(
+    scores: Array,
+    *,
+    daily_window: int,
+    weekly_window: int,
+) -> tuple[Array, Array]:
+    scores = _validate_scores(scores, minimum_rows=weekly_window + 1)
+    if not 1 <= daily_window < weekly_window:
+        raise ValueError("HAR windows must satisfy 1 <= daily < weekly")
+    starts = range(weekly_window, scores.shape[0])
+    features = np.asarray([
+        np.concatenate((
+            scores[index - 1],
+            scores[index - daily_window:index].mean(axis=0),
+            scores[index - weekly_window:index].mean(axis=0),
+        ))
+        for index in starts
+    ])
+    return features, scores[weekly_window:]
+
+
+def fit_ridge_vhar(
+    scores: Array,
+    *,
+    daily_window: int = 24,
+    weekly_window: int = 168,
+    ridge: float = 1e-3,
+) -> RidgeVHARFit:
+    """Fit a scale-normalised ridge vector HAR to projected scores.
+
+    ``ridge`` multiplies the number of training responses, so it is the
+    penalty in a mean-squared-error objective rather than a sample-size-
+    dependent raw normal-equation constant. The intercept is not penalised.
+    """
+    if not np.isfinite(ridge) or ridge < 0.0:
+        raise ValueError("ridge must be finite and nonnegative")
+    features, response = _score_har_design(
+        scores, daily_window=daily_window, weekly_window=weekly_window
+    )
+    mean = features.mean(axis=0)
+    scale = features.std(axis=0)
+    scale = np.where(scale > np.sqrt(np.finfo(float).eps), scale, 1.0)
+    design = np.column_stack((np.ones(features.shape[0]), (features - mean) / scale))
+    penalty = np.eye(design.shape[1]) * (float(ridge) * design.shape[0])
+    penalty[0, 0] = 0.0
+    coefficients = np.linalg.solve(
+        design.T @ design + penalty,
+        design.T @ response,
+    )
+    residuals = response - design @ coefficients
+    return RidgeVHARFit(
+        coefficients=coefficients,
+        feature_mean=mean,
+        feature_scale=scale,
+        residuals=residuals,
+        daily_window=int(daily_window),
+        weekly_window=int(weekly_window),
+        ridge=float(ridge),
+    )
+
+
+def forecast_ridge_vhar(
+    fit: RidgeVHARFit,
+    training_scores: Array,
+    revealed_scores: Array,
+) -> Array:
+    """Issue causal forecasts, revealing each target only after forecasting it."""
+    training = _validate_scores(
+        training_scores, minimum_rows=fit.weekly_window
+    )
+    revealed = _validate_scores(revealed_scores, minimum_rows=1)
+    if training.shape[1] != fit.rank or revealed.shape[1] != fit.rank:
+        raise ValueError("training, revealed and fitted HAR ranks disagree")
+    forecasts = np.empty_like(revealed)
+    history = np.concatenate((training, revealed), axis=0)
+    training_rows = training.shape[0]
+    for offset in range(revealed.shape[0]):
+        forecasts[offset] = fit.forecast(history[:training_rows + offset])
+    return forecasts
+
+
+@dataclass(frozen=True)
+class CoordinateHARFit:
+    """Independent OLS HAR fit for every retained score coordinate."""
+
+    coefficients: Array
+    residuals: Array
+    daily_window: int
+    weekly_window: int
+
+    @property
+    def rank(self) -> int:
+        return int(self.coefficients.shape[1])
+
+    @property
+    def hourly_transition(self) -> Array:
+        """Diagonal latest-score coefficient matrix."""
+        return np.diag(self.coefficients[1])
+
+    def forecast(self, history: Array) -> Array:
+        """Forecast each coordinate from only its own three HAR summaries."""
+        history = _validate_scores(history, minimum_rows=self.weekly_window)
+        if history.shape[1] != self.rank:
+            raise ValueError("history and fitted coordinate HAR rank disagree")
+        features = np.vstack((
+            np.ones(self.rank),
+            history[-1],
+            history[-self.daily_window:].mean(axis=0),
+            history[-self.weekly_window:].mean(axis=0),
+        ))
+        return np.sum(features * self.coefficients, axis=0)
+
+
+def fit_coordinate_har(
+    scores: Array,
+    *,
+    daily_window: int = 24,
+    weekly_window: int = 168,
+) -> CoordinateHARFit:
+    """Fit the honest coordinatewise OLS counterpart to matrix Log-HAR."""
+    features, response = _score_har_design(
+        scores, daily_window=daily_window, weekly_window=weekly_window
+    )
+    rank = response.shape[1]
+    coefficients = np.empty((4, rank))
+    fitted = np.empty_like(response)
+    for coordinate in range(rank):
+        design = np.column_stack((
+            np.ones(features.shape[0]),
+            features[:, coordinate],
+            features[:, rank + coordinate],
+            features[:, 2 * rank + coordinate],
+        ))
+        coefficients[:, coordinate] = np.linalg.lstsq(
+            design, response[:, coordinate], rcond=None
+        )[0]
+        fitted[:, coordinate] = design @ coefficients[:, coordinate]
+    return CoordinateHARFit(
+        coefficients=coefficients,
+        residuals=response - fitted,
+        daily_window=int(daily_window),
+        weekly_window=int(weekly_window),
+    )
+
+
+def forecast_coordinate_har(
+    fit: CoordinateHARFit,
+    training_scores: Array,
+    revealed_scores: Array,
+) -> Array:
+    """Issue causal coordinate-HAR forecasts over a revealed target block."""
+    training = _validate_scores(
+        training_scores, minimum_rows=fit.weekly_window
+    )
+    revealed = _validate_scores(revealed_scores, minimum_rows=1)
+    if training.shape[1] != fit.rank or revealed.shape[1] != fit.rank:
+        raise ValueError("training, revealed and coordinate HAR ranks disagree")
+    forecasts = np.empty_like(revealed)
+    history = np.concatenate((training, revealed), axis=0)
+    training_rows = training.shape[0]
+    for offset in range(revealed.shape[0]):
+        forecasts[offset] = fit.forecast(history[:training_rows + offset])
+    return forecasts
+
+
+@dataclass(frozen=True)
 class StateSpaceFit:
     """Fitted identity-observation linear Gaussian score model.
 

@@ -50,7 +50,7 @@ MD5 check in this file still applies unchanged.
 
 ## Files present
 
-12 R scripts and 2 Jupyter notebooks. **Not 15** — BUILD.md said 15 before
+12 R scripts and 2 Jupyter notebooks. **Not 15** — an early internal build ledger said 15 before
 anyone counted.
 
     BWS_simulation.R  BWS_util.R  Sim_summary_sphere.R  Sphere_simulation.R

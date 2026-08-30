@@ -2,7 +2,7 @@
 type: canonical-proof-ledger
 title: Analytical reconstruction — proof ledger and rebuilt spec
 status: canonical
-last-audited: 2026-08-25 (BW closure and downstream causal APP-FIN rank policy integrated without changing theorem status)
+last-audited: 2026-08-29 (Paper 1 empirical gate closed; theorem status unchanged)
 ---
 
 # Analytical reconstruction — proof ledger and rebuilt spec
@@ -362,9 +362,23 @@ not reject a dependent constant-centre null at 5%; full three-scale Richardson
 is severely variance dominated. This changes no HD1 or BW implication because
 the theorem is asymptotic and assumption-conditional. It bounds the real-data
 claim and routes scale ratios, kernels, extra-scale minimum-variance weights,
-causal damping, and higher-frequency validation to [[Future application
-programme — factor scores, predictive rank, and online RFD]] §8.2. Executed
+causal damping, and higher-frequency validation to [[Future application programme — factor scores, predictive rank, and online RFD]] §8.2. Executed
 adjudication: `results/intermediate/appfin_centre_diagnostic/report.md`.
+
+**APP-FIN forecast boundary and revised Paper 1 scope, still not theorem nodes.**
+The completed 36-origin centre/head tournament shows that positive polygon
+paths remove the observed numerical blow-up but do not dominate literal parent
+RFM under both proxy-robust losses; full Richardson remains unstable and Kalman
+filtering is not promoted. This is an operational finite-sample verdict only.
+The compact fixed-rank APP-HF-0/1/2/4 hourly-crypto sequence is now complete
+and Paper 1's scientific layer is frozen. It consumes no new analytical
+producer: P1-ID governs interpretation, the existing BW package governs the
+declared full-rank domain, and P1-LOSS governs evaluation. Its matched VAR
+comparison has a formal tie; later coordinate-HAR/VHAR score-head rows are
+internal diagnostics outside Paper 1. Adaptive rank, learned heads, streaming,
+and APP-HF-5 remain downstream. Authoritative scope and results:
+[[Paper 1 shape — identification to application]] and [[Paper 1 final result ledger]]. Executed APP-FIN report:
+`results/intermediate/appfin_centre_head_tournament/report.md`.
 
 ## 8. Dependency graph
 

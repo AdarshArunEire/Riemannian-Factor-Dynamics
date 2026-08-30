@@ -1,0 +1,53 @@
+# APP-HF-2: matched representation on the frozen hourly crypto panel.
+#
+# The first 26 complete weeks of 2024 select rank independently for parent RFM
+# and piecewise-6 RFD.  The selected ranks are then frozen for the final 26
+# complete weeks.  Complementary weekly folds keep each scored observation out
+# of its arm's centre and lag fit.  All of 2025 remains sealed for APP-HF-4.
+
+experiment:
+  id: P1-APP-HF-2
+  panel_path: results/intermediate/hf0_crypto/hourly_covariances.npz
+  development_year: 2024
+  sealed_evaluation_year: 2025
+  complete_weeks: 52
+  rank_tuning_weeks: 26
+  representation_evaluation_weeks: 26
+  hours_per_block: 168
+  expected_matrix_size: 20
+  expected_assets: 20
+
+crossfit:
+  folds: 2
+  embargo_hours_each_training_edge: 24
+  smoke_weeks_per_phase: 8
+
+representation:
+  methods: [parent_rfm, rfd_piecewise6]
+  piecewise_segments: 6
+  max_lag: 6
+  tail_mode: common
+  normalization: row_size
+  reconstruction_step_margin: 0.05
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+
+rank_selection:
+  candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+  primary_losses: [frobenius2, qlike]
+  rule: arm_specific_one_standard_error
+  reference: centre_only
+
+acceptance:
+  # There is no forced win gate.  These thresholds classify the result while
+  # preserving an honest tie or loss as a valid terminal Paper 1 outcome.
+  practical_tie_percent: 2.0
+  maximum_reconstruction_clip_fraction: 0.01
+  maximum_residual_lag_ratio: 1.0
+
+runtime:
+  workers: 2
+
+output:
+  directory: results/intermediate/hf2_crypto_representation
+  smoke_directory: results/intermediate/hf2_crypto_representation_smoke

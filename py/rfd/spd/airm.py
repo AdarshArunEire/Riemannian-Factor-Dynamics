@@ -6,7 +6,7 @@ B1.3. The contrast with bw.py is the whole point of having both:
   AIRM  invariant under congruence by ANY invertible M: d(MSM', MBM') = d(S,B)
 
 That one extra symmetry is what makes the affine-equivariance test so sharp.
-Almost no implementation error survives it, which is why BUILD.md singles it
+Almost no implementation error survives it, which is why the test contract singles it
 out as the done-when.
 
 Geometrically AIRM makes the cone a Hadamard space -- complete, simply

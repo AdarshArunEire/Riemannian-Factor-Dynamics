@@ -1,0 +1,64 @@
+# APP-HF-4: final one-hour-ahead causal forecast on the frozen 2025 panel.
+#
+# 2024 is development only. The 2025 evaluation year is scored once under this
+# frozen protocol. Rank 19 remains the original operational headline. The
+# complete ranks 1--18 curve is an exploratory compression diagnostic. Paper 1
+# publishes the matched VAR(1) RFD/RFM head only; score-HAR rows are retained
+# post-freeze diagnostics.
+
+experiment:
+  id: P1-APP-HF-4
+  panel_path: results/intermediate/hf0_crypto/hourly_covariances.npz
+  development_year: 2024
+  evaluation_year: 2025
+  matrix_size: 20
+  forecast_horizon_hours: 1
+  training_weeks: 26
+  refit_every_hours: 672       # four weeks
+  max_lag: 6
+
+representation:
+  methods: [parent_rfm, rfd_piecewise6]
+  piecewise_segments: 6
+  max_lag: 6
+  primary_rank: 19
+  sensitivity_ranks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+  tail_mode: common
+  normalization: row_size
+  forecast_step_margin: 0.05
+  future_centre_policy: carry_terminal_until_refit
+
+score_heads:
+  methods: [var1, har_ols, vhar_ridge]
+  har_daily_hours: 24
+  har_weekly_hours: 168
+  vhar_ridge: 1.0e-3
+  vhar_feature_scaling: training_standard_deviation
+  scope: paper1_var1_only_score_har_heads_internal_postfreeze_diagnostics
+
+baselines:
+  methods: [locf, ewma, loghar_spd]
+  ewma_candidates: [0.50, 0.70, 0.85, 0.94, 0.97, 0.99]
+  ewma_tuning_burn_hours: 168
+  har_daily_hours: 24
+  har_weekly_hours: 168
+  har_parameterization: coordinatewise_log_euclidean
+
+evaluation:
+  primary_losses: [frobenius2, qlike]
+  descriptive_losses: [bw2]
+  economic_diagnostics: [gmv_realized_variance, gmv_variance_calibration]
+
+smoke:
+  training_weeks: 4
+  refit_blocks: 2
+  hours_per_block: 24
+
+runtime:
+  workers: 8
+
+output:
+  directory: results/intermediate/hf4_crypto_forecast
+  smoke_directory: results/intermediate/hf4_crypto_forecast_smoke

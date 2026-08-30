@@ -118,8 +118,15 @@ def tangent_coordinates(
     point: Array,
     basis: Array,
     geometry: GeometryOps,
+    *,
+    batch_size: int = 64,
 ) -> Array:
-    """Coordinates of tangent vectors in an intrinsic orthonormal basis."""
+    """Coordinates of tangent vectors in an intrinsic orthonormal basis.
+
+    Coordinate rows are independent. Evaluate them in bounded sample batches
+    so an ``n x p x m x m`` broadcast is never materialised for long SPD
+    panels. Batching changes only workspace size, not the estimator.
+    """
     vectors = np.asarray(vectors, dtype=float)
     basis = np.asarray(basis, dtype=float)
     point_shape = np.asarray(point).shape
@@ -129,19 +136,24 @@ def tangent_coordinates(
         raise ValueError("basis must contain tangent vectors at the point")
     if not np.isfinite(vectors).all() or not np.isfinite(basis).all():
         raise ValueError("vectors and basis must be finite")
+    if not isinstance(batch_size, (int, np.integer)) or batch_size < 1:
+        raise ValueError("batch_size must be a positive integer")
 
     vector_leading = vectors.shape[: -len(point_shape)]
-    expanded_vectors = vectors.reshape(
-        vector_leading + (1,) + point_shape
-    )
-    expanded_basis = basis.reshape(
-        (1,) * len(vector_leading) + basis.shape
-    )
-    return geometry.inner(
-        point,
-        expanded_vectors,
-        expanded_basis,
-    )
+    if not vector_leading:
+        return geometry.inner(point, vectors, basis)
+
+    flat_vectors = vectors.reshape((-1,) + point_shape)
+    rows = np.empty((flat_vectors.shape[0], basis.shape[0]), dtype=float)
+    expanded_basis = basis[None]
+    for start in range(0, flat_vectors.shape[0], int(batch_size)):
+        stop = min(start + int(batch_size), flat_vectors.shape[0])
+        rows[start:stop] = geometry.inner(
+            point,
+            flat_vectors[start:stop, None],
+            expanded_basis,
+        )
+    return rows.reshape(vector_leading + (basis.shape[0],))
 
 
 def coordinate_tangents(rows: Array, basis: Array) -> Array:
