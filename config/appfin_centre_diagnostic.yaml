@@ -1,0 +1,41 @@
+# Paper 1 APP-FIN centre-detectability diagnostic.
+#
+# This is interpolation/cross-fitting, not forecasting.  Each twelve-month
+# block is omitted before its centres are estimated.  Alternating years tune
+# the shrinkage coefficient and evaluate it; the assignment is then swapped
+# to expose calendar/recency sensitivity.
+
+experiment:
+  id: P1-APPFIN-CENTRE-DET
+  panel_path: results/raw/rc_panel_adjusted.npz
+  expected_months: 240
+  expected_first_month: 2000-01
+  expected_last_month: 2019-12
+  expected_tickers: [MSFT, AAPL, ORCL, CSCO, JPM, BAC, WFC, GS, XOM, CVX, COP, EOG]
+  covariance_scale: 10000.0
+
+rfd:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+  # Retained because the shared APP-FIN settings contract is complete, even
+  # though this centre-only diagnostic performs no factor reconstruction.
+  reconstruction_step_margin: 0.05
+
+diagnostic:
+  holdout_block_months: 12
+  shrinkage_lambdas: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  bootstrap_block_months: 12
+  bootstrap_replicates: 99
+  bootstrap_seed: 20260825
+  workers: 4
+
+output:
+  directory: results/intermediate/appfin_centre_diagnostic
+  smoke_directory: results/intermediate/appfin_centre_diagnostic_smoke

@@ -1,0 +1,18 @@
+# APP-FIN score-head adjudication.  The geometric representations and the
+# 36 expanding origins are inherited from APP-MONTHLY-VAR.  Only the score
+# forecast head changes; no evaluation loss tunes these fixed controls.
+
+experiment:
+  id: APP-MONTHLY-SCORE-FILTER
+  source_config: config/appfin_forecast.yaml
+
+head:
+  state_max_iterations: 60
+  state_tolerance: 3.0e-4
+  covariance_floor: 1.0e-6
+  maximum_transition_radius: 0.995
+  bw_step_margin: 0.05
+
+output:
+  directory: results/intermediate/appfin_score_filter
+  smoke_directory: results/intermediate/appfin_score_filter_smoke

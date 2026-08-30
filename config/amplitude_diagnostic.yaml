@@ -1,0 +1,36 @@
+# Low-n factor-amplitude attribution on the frozen Paper 1 B0 DGP.
+#
+# Every variant is evaluated on the same draw.  The diagnostic crosses
+# oracle/feasible tangent rows with true/feasible loading directions, so the
+# paired contrasts assign the low-n score error without changing RFD.
+
+experiment:
+  id: P1-AMP-DIAG
+  source_config: config/paper1_controls.yaml
+  source_regime: B0
+
+analysis:
+  bootstrap_replicates: 2000
+  bootstrap_seed: 2026082501
+
+profiles:
+  smoke:
+    recorded: false
+    seed_namespace: 4800
+    output_dir: tmp/amplitude_diagnostic_smoke
+    n_values: [128]
+    replicates: 2
+
+  calibration:
+    recorded: false
+    seed_namespace: 4801
+    output_dir: tmp/amplitude_diagnostic_calibration
+    n_values: [240, 512, 2048]
+    replicates: 2
+
+  diagnostic:
+    recorded: true
+    seed_namespace: 4810
+    output_dir: results/intermediate/amplitude_diagnostic
+    n_values: [240, 512, 2048]
+    replicates: 64

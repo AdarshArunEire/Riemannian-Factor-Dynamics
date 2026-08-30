@@ -3,12 +3,12 @@ type: canonical-application-map
 title: Application map — geometry, symmetry, and rate accelerators
 status: canonical-proof
 verdict: application matching begins with the P1-ID drift/factor estimand; after that split is declared, FRAME-2P-U, HE, and the scoped BW packages retain their separately adjudicated statuses
-last-audited: 2026-08-12
+last-audited: 2026-08-27 (APP-FIN forecast boundary closed; compact hourly-crypto home moved inside Paper 1)
 ---
 
 # Application map — geometry, symmetry, and rate accelerators
 
-> **Authority and scope.** [[P1-ID — centre-drift and factor identification boundary]] governs whether centre drift and persistent factors are distinct scientific estimands. Once a split is declared, [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust estimator and this file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as citable proof provenance, while current status is governed here. Paper 2 is out of scope.
+> **Authority and scope.** [[P1-ID — centre-drift and factor identification boundary]] governs whether centre drift and persistent factors are distinct scientific estimands. Once a split is declared, [[HD1 — growing-dimension Paper 1 proof dossier]] remains the proof source for the robust estimator and this file is the canonical source for property-to-application matching. APP-A, APP-B, and APP-C are preserved under `Archived/Proof workstreams` as citable proof provenance, while current status is governed here. The parked moving-loading programme is out of scope.
 
 ## 0. Current conclusions
 
@@ -378,7 +378,7 @@ These labels govern application claims after the HE/BW proof campaign. They clas
 | Functional/Hilbert data | **CONDITIONAL MATCH — CHECKS LISTED** | direct Hilbert-valued observations with flat geometry | total rather than coordinatewise energy, product-process dependence, mean/frame budget, lag target, and eigengap |
 | Expanding sensor arrays | **CONDITIONAL MATCH — CHECKS LISTED** | direct high-dimensional observations under the bounded-tail or expanding-domain truncation HE theorem | effective energy/truncation scale, \(A_{2,n},\Delta_n\), product dependence, tail integrals, generated-tube closure, contamination, and selector window |
 | Gene-expression panels | **CONDITIONAL MATCH — CHECKS LISTED** | direct panel observations under the bounded-tail or expanding-domain truncation HE theorem | preprocessing/normalisation must preserve the estimand; verify energy/tails, dependence, pervasive versus localised signal, target contamination, and gap |
-| Realised covariance/correlation finance | **CONDITIONAL MATCH — CHECKS LISTED** | full-rank BW analysis of a fixed- or growing-size covariance-matrix series after construction, using the fixed-margin or restricted fractional-normal package as applicable; parent APP-FIN and public code supply a 12-stock monthly baseline | reproduce/audit the parent RFM/LFM/LOCF/EWMA pipeline, then check sampling/noise/asynchronicity covariance-estimation error, regularisation target, complete generated-domain margins, support/energy regime, temporal dependence, object counts, and actual lag gap |
+| Realised covariance/correlation finance | **CONDITIONAL MATCH — CHECKS LISTED** | full-rank BW analysis of a fixed- or growing-size covariance-matrix series after construction, using the fixed-margin or restricted fractional-normal package as applicable; parent APP-FIN and public code supply a 12-stock monthly baseline | reproduce/audit the parent pipeline; distinguish loading recovery from projected-score truth; for Paper 1 check centre motion, its inside/outside-loading decomposition, sampling/noise/asynchronicity covariance-estimation error, regularisation target, complete generated-domain margins, support/energy regime, temporal dependence, object counts, and actual lag gap at fixed \(r=2\); defer causal predictive-rank evaluation |
 | Functional-connectivity covariance/diffusion | **CONDITIONAL MATCH — CHECKS LISTED** | fixed- or growing-size regularised SPD series under local AIRM or the applicable BW package | window-overlap dependence, preliminary covariance error, regularisation bias, spectral/polar/Exp/normal margins, support/energy, signal dilution, generated-domain reach, and estimand-specific gap |
 | Nearly fixed-axis covariance | **APPROXIMATE MATCH — DEFECT PENALTY DISPLAYED** | a fixed-basis diagonal/root model plus controlled off-basis motion | add the measured off-algebra, frame, connector, and target-contamination defects to \(q_{R,n}\) and \(d_n\); require \(\eta_n=o(\Delta_n)\) |
 | Rank-changing or globally singular BW covariance | **REJECTED MATCH — ESTIMAND OR ASSUMPTIONS NOT DEFENSIBLE** | none under the present theorem | continuum alignments/geodesics/means and singular Log/lift behaviour invalidate the claimed construction |
@@ -393,9 +393,35 @@ For covariance applications the scientific pipeline is explicitly
 \]
 
 For APP-FIN this pipeline has a concrete starting implementation: the parent repository contains BW utilities, simulation code, and S&P 500 analysis/reproduction scripts. That lowers engineering cost and fixes a comparison baseline; it does not verify the project's moving-centre, HE, selector-repair, or FRAME assumptions.
+
+APP-FIN contains no ground-truth factor scores or rank. Loading directions may
+therefore be interpreted as persistent co-movement directions, while projected
+scores remain those directions plus in-span contemporaneous noise unless an
+additional structural condition is supplied. Paper 1 uses fixed \(r=2\),
+matching the parent's published specification, and treats ranks \(1,\ldots,15\)
+only as a sensitivity envelope. It asks whether the estimated centre moves and
+whether that motion lies inside or outside the parent loading span; it does not
+claim predictive superiority or a true rank. Its completed fixed-rank forecast
+tournament is a finite-sample boundary only. Predictive/adaptive rank, learned
+heads, and online selection belong to [[Future application programme — factor
+scores, predictive rank, and online RFD]].
 The first arrow has its own measurement-error, dependence, and target budget. The RFM theorem does not prove that layer, and reconstruction error is not a forecasting theorem.
 
+The final Paper 1 empirical gate is a compact 20-asset, one-hour-ahead crypto
+realised-covariance application, preceded by the completed fixed-\(r=2\) monthly
+APP-FIN boundary. This does not upgrade finance from a conditional match. The
+hourly panel must separately pass data/proxy, centre, representation, and
+forecast gates; APP-HF-3 is diagnostic only, and any failed gate narrows or
+rejects the application. The exact observation process, competitors, losses,
+terminal-centre rule, and stop conditions are canonical in
+[[Home application — hourly crypto realised covariance]].
+
 ## 9. Ranked programme
+
+The generic analytical ranking below is not the application execution order.
+The actual Paper 1 execution order is the completed APP-MONTHLY boundary then
+APP-HF-0/1/2/4. APP-HF-5 and adaptive extensions are post-freeze; see [[Home
+application — hourly crypto realised covariance]].
 
 1. **HE application verification:** instantiate either the proved bounded-tail \((R_n,A_{2,n},\Delta_n)\) ledger or the expanding-domain truncation ledger for asset, sensor, gene, imaging, and connectivity systems rather than normalising by fiat.
 2. **BW application verification and covariance-measurement layer:** use the proved fixed-margin or restricted fractional-normal theorem only when its complete support/slack/path/row/gap package is verified; separately quantify preliminary covariance estimation.

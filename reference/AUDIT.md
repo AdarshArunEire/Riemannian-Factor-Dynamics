@@ -505,6 +505,6 @@ No complex leakage on any finite case, so the `Re(...)` wrappers in their
    returned curves directly.
 5. **The competitor set was mis-stated in our notes.** In-sample it is RFM vs
    **LYB**, one competitor. Out-of-sample it is RFM vs LFM vs LOCF vs EWMA.
-   BUILD.md and the predeclaration both said LFM/LOCF/EWMA throughout.
+   The internal build ledger and the predeclaration both said LFM/LOCF/EWMA throughout.
 6. **VIX is a second data dependency** — FRED `VIXCLS`, monthly means over
    2000–2019 — used for the Factor 1 overlay, not for estimation.

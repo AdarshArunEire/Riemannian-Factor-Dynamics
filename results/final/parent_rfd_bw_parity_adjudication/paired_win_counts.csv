@@ -1,0 +1,25 @@
+scenario,n,RFD wins,paired draws
+parent home,240,0,24
+fixed control,240,0,24
+aligned,240,0,24
+mixed,240,24,24
+orthogonal,240,24,24
+curved,240,24,24
+parent home,512,0,24
+fixed control,512,0,24
+aligned,512,0,24
+mixed,512,24,24
+orthogonal,512,24,24
+curved,512,24,24
+parent home,2048,0,24
+fixed control,2048,0,24
+aligned,2048,0,24
+mixed,2048,24,24
+orthogonal,2048,24,24
+curved,2048,24,24
+parent home,8192,0,24
+fixed control,8192,0,24
+aligned,8192,0,24
+mixed,8192,24,24
+orthogonal,8192,24,24
+curved,8192,24,24

@@ -1,0 +1,213 @@
+# Paper 1 control matrix: frozen synthetic validity and boundary experiment.
+#
+# Core cells use m=3 because B4.5 already checked m=2,3,4.  Every method sees
+# the same generated draw.  Component RNG streams are keyed by (n, replicate,
+# component), not regime, so compatible regimes share factor/noise innovations.
+
+experiment:
+  id: P1-CONTROL-MATRIX
+  root_seed: 20260824
+  geometry: airm
+  matrix_size: 3
+  base_condition: 1.6
+  default_drift_scale: 0.35
+  factor_rank: 2
+  factor_persistence: [0.80, 0.55]
+  factor_scale: [0.35, 0.25]
+  noise_scale: 0.20
+  noise_constant_norm: true
+  loading_structure: dense
+
+estimator:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  mean_tolerance: 1.0e-10
+  mean_max_iter: 100
+  max_lag: 2
+  tail_mode: common
+  normalization: row_size
+  selector_constant: 0.01
+  selector_exponent: 0.42857142857142855
+  selector_max_rank: 5
+
+analysis:
+  bootstrap_replicates: 2000
+  bootstrap_seed: 2026082401
+
+core_regimes:
+  B0:
+    label: smooth moving-centre reference
+    class: reference
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: reproduce the qualified B4.5 positive regime on paired control seeds
+
+  C0:
+    label: fixed-centre placebo
+    class: null
+    path: radial
+    drift_scale: 0.0
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: fixed centre ties or beats RFD
+
+  C1:
+    label: moving centre, no factors
+    class: null
+    path: radial
+    drift_scale: 0.35
+    rank: 0
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: RFD tracks the centre and threshold selects rank zero
+
+  C2:
+    label: factors without observation noise
+    class: positive_control
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.0
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: RFD approaches the exact loading and factor target
+
+  C3:
+    label: fixed centre, noise only
+    class: null
+    path: radial
+    drift_scale: 0.0
+    rank: 0
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: threshold selects rank zero
+
+  I-A:
+    label: aligned centre drift
+    class: identification
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: aligned
+    drift_overlap: 1.0
+    expected: fixed-centre loading may remain competitive
+
+  I-M:
+    label: mixed centre drift
+    class: identification
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: mixed
+    drift_overlap: 0.7071067811865476
+    expected: advantage lies between aligned and orthogonal controls
+
+  I-O:
+    label: orthogonal centre drift
+    class: identification
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: orthogonal
+    drift_overlap: 0.0
+    expected: fixed-centre row gains rank contamination and RFD wins
+
+  G-C:
+    label: two-direction noncommuting curved path
+    class: geometry
+    path: curved
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: RFD remains healthy when the centre is genuinely curved
+
+  V-L:
+    label: lag-correlated tangent noise
+    class: violation
+    path: radial
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.60
+    loading_orientation: random
+    expected: loading and rank targets degrade under lag contamination
+
+  V-R:
+    label: kinked centre path
+    class: violation
+    path: rough
+    drift_scale: 0.35
+    rank: 2
+    noise_scale: 0.20
+    noise_persistence: 0.0
+    loading_orientation: random
+    expected: centre error increases without numerical dishonesty
+
+phase_curve:
+  # This profile has its own common-random-number namespace, so nu=0.35 is
+  # repeated here rather than spliced in from the independently seeded core.
+  drift_scales: [0.0, 0.10, 0.20, 0.35, 0.50]
+  orientations:
+    aligned:
+      code: A
+      drift_overlap: 1.0
+    mixed:
+      code: M
+      drift_overlap: 0.7071067811865476
+    orthogonal:
+      code: O
+      drift_overlap: 0.0
+
+profiles:
+  smoke:
+    recorded: false
+    regime_group: core
+    seed_namespace: 4700
+    output_dir: tmp/paper1_controls_smoke_v4
+    n_values: [128]
+    replicates: 1
+
+  phase_smoke:
+    recorded: false
+    regime_group: phase
+    seed_namespace: 4701
+    output_dir: tmp/paper1_phase_smoke_v4
+    n_values: [128]
+    replicates: 1
+
+  control_core:
+    recorded: true
+    regime_group: core
+    seed_namespace: 4710
+    output_dir: results/intermediate/paper1_control_core
+    n_values: [512, 2048, 8192]
+    replicates: 32
+
+  phase_curve:
+    recorded: true
+    regime_group: phase
+    seed_namespace: 4711
+    output_dir: results/intermediate/paper1_phase_curve
+    n_values: [8192]
+    replicates: 32

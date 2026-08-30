@@ -1,0 +1,101 @@
+# N-RANK: fixed-rank selector and loading-space stress test.
+#
+# Every generated time series has one constant loading rank.  The profiles vary
+# that fixed rank across independent DGP cells; no time-varying-rank model is
+# introduced.  Factor scales are L2-normalised within each cell so increasing
+# rank does not silently leave the bounded-total-energy Paper 1 regime.
+
+experiment:
+  id: N-RANK-fixed-rank-sweep
+  root_seed: 20260822
+  geometry: airm
+  base_condition: 1.6
+  drift_scale: 0.35
+  total_factor_scale: 0.45
+  noise_scale: 0.20
+  noise_persistence: 0.0
+  noise_constant_norm: true
+  loading_orientation: random
+  loading_structure: dense
+  signal_profiles:
+    equal:
+      scale_weights: equal
+      persistence_high: 0.80
+      persistence_low: 0.80
+      weak_tail_multiplier: 1.0
+    decaying:
+      scale_weights: geometric
+      persistence_high: 0.85
+      persistence_low: 0.55
+      weak_tail_multiplier: 1.0
+    weak_tail:
+      scale_weights: equal
+      persistence_high: 0.80
+      persistence_low: 0.80
+      weak_tail_multiplier: 0.20
+
+estimator:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  mean_tolerance: 1.0e-10
+  mean_max_iter: 100
+  max_lag: 2
+  tail_mode: common
+  normalization: row_size
+  threshold_constant: 0.01
+  threshold_exponent: 0.42857142857142855
+  selector_max_rank: 10
+  ridge_multipliers: [0.1, 0.3, 1.0, 3.0, 10.0]
+
+analysis:
+  minimum_success_fraction: 0.95
+
+profiles:
+  smoke:
+    recorded: false
+    mode: oracle
+    seed_namespace: 4600
+    output_dir: tmp/rank_sweep_smoke
+    n_values: [128]
+    matrix_sizes: [2]
+    rank_values: [0, 1, 2]
+    signal_profiles: [equal]
+    replicates: 1
+
+  feasible_smoke:
+    recorded: false
+    mode: feasible
+    seed_namespace: 4601
+    output_dir: tmp/rank_sweep_feasible_smoke
+    n_values: [128]
+    matrix_sizes: [2]
+    rank_values: [0, 1, 2]
+    signal_profiles: [equal]
+    replicates: 1
+
+  rank_oracle:
+    recorded: true
+    mode: oracle
+    seed_namespace: 4610
+    output_dir: results/intermediate/rank_sweep_oracle
+    n_values: [512, 2048, 8192]
+    matrix_sizes: [2, 3, 4, 6, 8]
+    rank_values: [0, 1, 2, 3, 4, 6, 8, 10]
+    signal_profiles: [equal, decaying, weak_tail]
+    replicates: 64
+
+  rank_feasible:
+    recorded: true
+    mode: feasible
+    seed_namespace: 4611
+    output_dir: results/intermediate/rank_sweep_feasible
+    n_values: [512, 2048, 8192]
+    matrix_sizes: [3, 4]
+    rank_values: [0, 1, 2, 3, 4, 6, 8]
+    signal_profiles: [equal, weak_tail]
+    replicates: 16

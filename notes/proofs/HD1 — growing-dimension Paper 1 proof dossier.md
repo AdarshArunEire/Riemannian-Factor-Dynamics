@@ -8,7 +8,7 @@ last-audited: 2026-08-12
 
 # HD1 — growing-dimension Paper 1 proof dossier
 
-> This is the complete proof dossier for the robust bounded-total-energy growing-dimension theorem. Paper 2 is out of scope. Growing-energy HE and restricted moving-centre Bures–Wasserstein extensions now have separate proved packages in the canonical ledger; they are not silently consumed by the baseline theorem here. Unrestricted nonlocal BW sharp powers remain optional and open. Only claims proved here, proved in a cited canonical dependency with all hypotheses verified, or explicitly assumed as model primitives may enter the final theorem.
+> This is the complete proof dossier for the robust bounded-total-energy growing-dimension theorem. The parked moving-loading programme is out of scope. Growing-energy HE and restricted moving-centre Bures–Wasserstein extensions now have separate proved packages in the canonical ledger; they are not silently consumed by the baseline theorem here. Unrestricted nonlocal BW sharp powers remain optional and open. Only claims proved here, proved in a cited canonical dependency with all hypotheses verified, or explicitly assumed as model primitives may enter the final theorem.
 
 ## 0. Migration map before canonical edits
 
@@ -321,6 +321,52 @@ $\inf_{j<r}\lambda_{j+1,n}/\lambda_{j,n}\ge c_*>0$, the ridged ratio
 
 is consistent. The common bound $\widehat\lambda_j\le d_n^2$ for every $j>r$ makes this uniform even when $R_n$ grows. Raw-ratio consistency does not follow from these displayed rates alone: the rate-valid matrix
 $\widehat{\mathbb L}=\operatorname{diag}(1,d_n^2,0)$ selects two factors because the later ratio is zero. This disproves the rate-to-consistency implication, not favourable behaviour in particular finite-sample designs.
+
+### Corollary P1-AR1-SIG — exact weak-factor calibration
+
+On the independent stationary AR(1) subclass
+
+\[
+f_{j,t}=\rho_jf_{j,t-1}+s_j\sqrt{1-\rho_j^2}\,\xi_{j,t},
+\qquad |\rho_j|<1,
+\]
+
+where \(s_j\) is the marginal standard deviation, \(A^*A=I_r\), and HD-L
+holds, the factor lag matrices are diagonal and the nonzero population
+lag-operator eigenvalues are the decreasing rearrangement of
+
+\[
+\boxed{\chi_j=s_j^4\sum_{h=1}^{h_0}\rho_j^{2h}.}
+\tag{AR1-SIG}
+\]
+
+Hence \(\Delta_n=\chi_{\min,n}:=\min_j\chi_{j,n}\) whenever every
+coordinate has positive scale and nonzero persistence. On the event (EV),
+the threshold selector is exactly correct under the finite-sample separation
+
+\[
+\boxed{d_n^2<\tau_n<\chi_{\min,n}-\eta_n.}
+\tag{AR1-THR}
+\]
+
+Indeed, every signal eigenvalue is then above \(\tau_n\), whereas every
+beyond-rank eigenvalue is below it. If \(\tau_n\ge\chi_{\min,n}\), even the
+exact population threshold rule underselects. Thus TAU specialises to
+\(d_n^2=o_p(\tau_n)\) and
+\((\tau_n+\eta_n)/\chi_{\min,n}\to_p0\). A final factor whose marginal
+amplitude is multiplied by \(w\) while persistence is held fixed has its
+operator signal multiplied by exactly \(w^4\). Under the N-RANK fixed-total-
+scale convention \(F\), its exact signal is
+
+\[
+\chi_{\rm tail}
+=\frac{F^4w^4}{(r-1+w^2)^2}
+\sum_{h=1}^{h_0}\rho^{2h}.
+\]
+
+This is a proved DGP-to-theorem calibration, not a minimax lower bound or a
+growing-rank theorem. The complete derivation and rate translation are
+[[P1-RANK — AR1 signal strength and threshold boundary]].
 
 ## 4. Final loading-space theorem
 

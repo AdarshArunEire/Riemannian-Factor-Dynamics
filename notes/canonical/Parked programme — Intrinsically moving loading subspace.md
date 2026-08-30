@@ -1,11 +1,12 @@
 ---
 type: idea
-title: Paper 2 — Moving loading subbundle
+title: Parked programme — Intrinsically moving loading subspace
 aliases:
   - Paper 2
+  - Paper 2 — Moving loading subbundle
   - Intrinsically moving factor space
 status: current-spec
-verdict: distinct conditional paper candidate; core geometry proved, estimator and bootstrap theory open
+verdict: parked research programme; core geometry proved, estimator and bootstrap theory open; not assigned a paper number
 last-audited: 2026-08-08
 area:
   - geometry
@@ -16,15 +17,15 @@ tags:
   - paper-spec
 ---
 
-# Paper 2 — Moving loading subbundle
+# Parked programme — Intrinsically moving loading subspace
 
-> Parent: [[Time-varying Fréchet mean Riemannian factor model]]. Sibling: [[Paper 1 — Locally stationary Riemannian factor model]]. Current statuses are governed by [[Analytical reconstruction — proof ledger and rebuilt spec]]. Paper 2 remains standalone and parked after the Paper 1 HE and fixed-size BW closure campaign; no HE/BW result changes Paper 2 mathematics.
+> Former working name: “Paper 2 — Moving loading subbundle.” Parent: [[Time-varying Fréchet mean Riemannian factor model]]. Sibling: [[Paper 1 — Locally stationary Riemannian factor model]]. Current statuses are governed by [[Analytical reconstruction — proof ledger and rebuilt spec]]. This remains a standalone parked programme after the Paper 1 HE and fixed-size BW closure campaign; no HE/BW result changes its mathematics. It is deliberately **not assigned a paper number** until its estimator and bootstrap boundaries close and an application earns that role.
 
 ## Current verdict
 
-The former “fold Paper 2 into Paper 1” verdict is **RETRACTED**. Its two supporting claims failed: the ribbon theorem is substantive and required a typed repair, and the crossover is not a structural constant but shrinks with $n$. Paper 2 remains a distinct paper candidate, but no publication decision is forced because three load-bearing nodes remain open: cross-tangent operator algebra, localised concentration, and estimated-frame bootstrap validity.
+The former “fold this programme into Paper 1” verdict is **RETRACTED**. Its two supporting claims failed: the ribbon theorem is substantive and required a typed repair, and the crossover is not a structural constant but shrinks with $n$. The moving-loading problem remains a distinct paper candidate, but no publication decision is forced because three load-bearing nodes remain open: cross-tangent operator algebra, localised concentration, and estimated-frame bootstrap validity.
 
-The current Paper 2 theory is fixed-$p$ only. Growing-$p$ is downstream of unresolved fixed-$p$ nodes.
+The current moving-loading theory is fixed-$p$ only. Growing-$p$ is downstream of unresolved fixed-$p$ nodes.
 
 ## Model and estimand
 
@@ -36,7 +37,7 @@ with projector $\Pi(u)=A(u)A(u)^*$. The defining alternative is
 $$
 \frac D{du}\Pi(u)\ne0.
 $$
-Paper 1 is the null branch $D\Pi/du=0$; Paper 2 estimates a genuinely moving loading subbundle.
+Paper 1 is the null branch $D\Pi/du=0$; this programme estimates a genuinely moving loading subbundle.
 
 ## Proved pullback/frame machinery
 
@@ -64,7 +65,7 @@ Let $R(u)=\hat P(u)P(u)^{-1}$ after inserting the connector maps required to com
 $$
 R(u)\tilde\Pi_0R(u)^\top,
 $$
-which is non-constant when $R$ is. Thus frame error manufactures exactly the alternative tested by Paper 2.
+which is non-constant when $R$ is. Thus frame error manufactures exactly the alternative tested by the moving-loading programme.
 
 The correct ribbon bound is
 $$
@@ -81,7 +82,7 @@ T55-A is an **algebraic compatibility result**, not a bootstrap theorem. Conditi
 
 G1$_{L^2}$ does not justify replacing the uniform error in this comparison or inside a multiplier-bootstrap proof. The bootstrap's functional topology and anti-concentration/remainder steps must be checked directly.
 
-## Current Paper 2 dependency chain
+## Current dependency chain
 
 ```mermaid
 flowchart TD
@@ -124,11 +125,11 @@ Ignoring a loading rotation of size $\omega$ produces global bias of order $\ome
 $$
 \omega^*\asymp(nh)^{-1/2},
 $$
-and for $h\asymp n^{-1/5}$ it is $n^{-2/5}\to0$. The former numerical value near $0.44$ is not structural. Any publication case for Paper 2 must rest on its theorem and application, not that constant.
+and for $h\asymp n^{-1/5}$ it is $n^{-2/5}\to0$. The former numerical value near $0.44$ is not structural. Any publication case for this programme must rest on its theorem and application, not that constant.
 
 ## Fixed p versus growing p
 
-Current classification: **FIXED-p NODES STILL OPEN**. The frame identities themselves are dimension-free algebra. The following are not proved even for the complete Paper 2 theorem at fixed $p$: P2-XT, P2-LOC, and P2-BOOT. Consequently all growing-$p$ claims, factor-number selection, and high-dimensional power calculations remain OPEN.
+Current classification: **FIXED-p NODES STILL OPEN**. The frame identities themselves are dimension-free algebra. The following are not proved even for a complete moving-loading theorem at fixed $p$: P2-XT, P2-LOC, and P2-BOOT. Consequently all growing-$p$ claims, factor-number selection, and high-dimensional power calculations remain OPEN.
 
 ## Claims this paper must not make
 
@@ -143,7 +144,7 @@ Current classification: **FIXED-p NODES STILL OPEN**. The frame identities thems
 
 ## Paper status
 
-The geometry and scientific distinction are real: the formulation separates coordinate motion induced by a moving centre from intrinsic motion of the loading subspace. That is enough to retain Paper 2 as a distinct candidate. It is not enough to call the estimator or test theorem complete.
+The geometry and scientific distinction are real: the formulation separates coordinate motion induced by a moving centre from intrinsic motion of the loading subspace. That is enough to retain this as a distinct research programme. It is not enough to call the estimator or test theorem complete, and it is not enough to reserve the label “Paper 2.”
 
 ## Related notes
 

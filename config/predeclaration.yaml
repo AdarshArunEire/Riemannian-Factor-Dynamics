@@ -506,3 +506,253 @@ forecast_comparison:
         BEFORE touching the data whether the flagship application can
         resolve anything at all.
     deferred: [drift pattern, magnitude grid, persistence grid, split dates, panel, horizon]
+
+
+# ---------------------------------------------------------------------
+# B4.2 — three-scale moving-centre rate
+# ---------------------------------------------------------------------
+B42_centre_rate:
+  status: predeclared
+  date: 2026-08-20
+  implementation_config: config/centre_rate.yaml
+  purpose: >
+    Verify or falsify the implementation-level prediction that the complete
+    positive three-scale, fixed-overlap, polygonal moving-centre estimator has
+    intrinsic path RMS of order b^3 + (nb)^(-1/2) on a clean theorem-faithful
+    AIRM design.  This numerical result cannot prove G1-HD-L2 or Theorem PF.
+
+  theorem_faithful_design:
+    geometry: AIRM SPD(3) on a fixed, comfortably interior spectral band
+    centre_profile: g(u) = u + 0.5*u^3
+    drift_scale: 0.35 intrinsic units
+    tangent_noise: independent, symmetric, constant intrinsic norm 0.25
+    factors: rank zero, so centre estimation is isolated
+    energy_and_memory: bounded total energy and zero dependence length
+
+  controls:
+    bias_only: moving centre with zero tangent noise; activates the b^3 channel
+    variance_only: constant centre with random noise; activates the (nb)^(-1/2) channel
+    full: moving centre with random noise; primary mixed regime
+
+  estimator:
+    bandwidth: b_n = 0.5 * n^(-1/7)
+    bandwidth_multipliers: [0.7, 1.0, 1.3]
+    scales: [1.0, 0.5, 0.25]
+    richardson_coefficients: [0.3333333333333333, -2.0, 2.6666666666666665]
+    polygon_cells: ceil(n^(2/7))
+    overlap: fixed C2 blend on [1/3, 2/3]
+    signed_failure: broad positive stage fallback, always counted and retained
+
+  workload:
+    n_values: [256, 512, 1024, 2048, 4096, 8192]
+    replicates_per_cell: 64
+    slope_fit_n_min: 1024
+    bootstrap_replicates: 2000
+    common_draws: >
+      Bandwidth multipliers use the same DGP draw within each regime, n and
+      replication.  Independent DGP streams are derived from root seed
+      20260816 through numpy SeedSequence.spawn.
+
+  primary_analysis:
+    metric: intrinsic path RMS over all observation times
+    aggregation: report mean, median, standard deviation, IQR, and 5/95 percentiles
+    slope: OLS slope of log cell-median RMS on log n for n >= 1024
+    uncertainty: percentile interval from resampling replications within each n
+    reference: -3/7
+    compatibility_band: [-0.50, -0.36]
+    adjudication: >
+      Compatible means the bootstrap slope interval intersects the declared
+      band and at least 95 percent of requested rows completed.  An interval
+      wholly below -0.50 is reported as faster/special-cancellation or
+      finite-range behaviour, not a theorem failure.  An interval wholly
+      above -0.36 is reported as slower/not-yet-asymptotic or an implementation
+      or DGP problem.  No failed row is silently deleted.
+
+  secondary_outputs:
+    - vertex-grid RMS and path supremum error (the supremum is descriptive, not judged at pure n^(-3/7))
+    - uncorrected broad-stage RMS and Richardson improvement ratio
+    - scaled RMS n^(3/7) E_n and adjacent-n local slopes
+    - fallback frequency and reason, convergence, effective sample size, spectral margin, and runtime
+    - pointwise path-error examples retained for the largest n
+
+
+# ---------------------------------------------------------------------
+# N-LS-A — controlled local-stationarity discrepancy
+# ---------------------------------------------------------------------
+NLSA:
+  status: predeclared
+  date: 2026-08-20
+  implementation_config: config/centre_rate.yaml
+  purpose: >
+    Activate and measure the n^(-a) channel with paired actual/frozen draws.
+    This is a controlled calibration of the theorem term, not an estimate of
+    a from one real series.
+
+  construction: >
+    Starting from the same reference-tangent effects, displace the actual
+    centre from the frozen target centre along the declared drift direction by
+    0.5*n^(-a)*h(u), h(u)=1+0.25*sin(2*pi*u).  Reconstruct the paired frozen
+    observations with the same effects, so their intrinsic paired RMS is
+    directly observable.
+  exponents: [0.2, 0.2857142857142857, 0.3333333333333333, 0.42857142857142855, 0.5, infinity]
+  workload:
+    n_values: [256, 512, 1024, 2048, 4096, 8192]
+    replicates_per_cell: 64
+    bandwidth_multiplier: 1.0
+    slope_fit_n_min: 1024
+    bootstrap_replicates: 2000
+  predictions:
+    paired_discrepancy_slope: -a for finite a; numerical zero for infinity
+    centre_error_slope: -min(a, 3/7) when the coherent discrepancy is active
+    transition: a = 3/7
+  adjudication: >
+    Report the fitted paired-discrepancy and centre-error slopes with percentile
+    intervals and the complete curves.  Faster decay is allowed because the
+    theorem is an upper bound.  Failure of the paired discrepancy itself to
+    track n^(-a) indicts the construction or geometry implementation before it
+    says anything about the estimator.
+
+
+# ---------------------------------------------------------------------
+# B4.2-BWCONST — finite-sample bandwidth constant
+# ---------------------------------------------------------------------
+B42_bandwidth_constant:
+  status: predeclared
+  date: 2026-08-20
+  implementation_config: config/centre_bandwidth.yaml
+  purpose: >
+    Bracket and validate the finite-sample multiplicative constant in
+    b_n = 0.5*c_b*n^(-1/7) after the original grid ended with c_b=1.3 best.
+    This may improve finite-sample error and the Richardson crossover; it
+    cannot change or re-establish the analytical n^(-3/7) exponent.
+
+  tuning:
+    seed_namespace: 4201
+    regime: full
+    n_values: [4096, 8192]
+    replicates_per_cell: 32
+    candidates: [1.3, 1.5, 1.7, 1.9, 2.1]
+    metric: median intrinsic path RMS
+    score: arithmetic mean across n of log cell-median path RMS
+    tie_break: choose the smaller multiplier
+    boundary_rule: >
+      If 2.1 wins, report it as the constrained winner rather than claiming an
+      interior optimum.  Larger values are not added silently because at
+      n=4096 they approach the fixed-overlap bandwidth boundary.
+
+  freeze:
+    selection_record: results/intermediate/centre_bandwidth_selection.json
+    rule: >
+      Write the winning multiplier and tuning raw-file digest before opening
+      the validation results.  A rerun must reproduce the same frozen record.
+
+  validation:
+    seed_namespace: 4202
+    independence: distinct SeedSequence entropy from tuning and original B4.2
+    regime: full
+    n_values: [4096, 8192]
+    replicates_per_cell: 64
+    multipliers: [1.0, frozen_tuning_winner]
+    primary_contrast: >
+      Paired percent reduction in corrected path RMS of the frozen winner
+      relative to multiplier 1.0; positive means improvement.
+    secondary_contrasts:
+      - ordinary broad local mean versus corrected winner
+      - fallback, convergence, effective-sample-size, and spectral health
+    reporting: >
+      Percentages and direct baseline multipliers are primary.  Log axes are
+      used only for rate or genuine order-of-magnitude displays.
+
+
+# ---------------------------------------------------------------------
+# B4.5 / N-01 — complete bounded-energy RFD baseline
+# ---------------------------------------------------------------------
+B45_end_to_end:
+  status: implementation-ready / evaluation-not-run
+  date: 2026-08-20
+  implementation_config: config/end_to_end.yaml
+  purpose: >
+    Exercise the complete observable RFD chain on bounded-energy AIRM factor
+    data: moving-centre estimation, polygonal frame, common-reference rows,
+    lag row and operator, loading recovery, factor scores, selectors, and
+    intrinsic reconstruction.  This is numerical evidence, not a proof of
+    the HD1 rates.
+
+  pairing: >
+    Each DGP draw is fitted twice.  The production and fixed-1.3 reference
+    variants have the identical seed, observations, true centre, factors,
+    loadings, and noise.  Only the bandwidth rule differs.
+
+  bandwidth_rules:
+    reference: c_ref(n) = 1.3
+    production: >
+      c_prod(n) = min(2.1, 0.95*c_max(n)), where
+      c_max(n)=(2/3)n^(1/7) for the fixed overlap [1/3,2/3].
+    reason_for_cap: >
+      The fixed cap preserves b_n=O(n^(-1/7)).  Following c_max(n) without a
+      cap would keep b_n near 1/3 and could prevent smoothing bias from
+      vanishing.
+
+  recorded_profile:
+    seed_namespace: 4501
+    n_values: [512, 1024, 2048, 4096]
+    SPD_matrix_sizes: [2, 3, 4]
+    tangent_dimensions: [3, 6, 10]
+    replicates_per_cell: 32
+    fits_per_draw: [production, fixed_1.3_reference]
+    requested_rows: 768
+
+  target_and_measurements:
+    target: >
+      The realised factor-only lag row in the true base tangent space.  It has
+      exact rank at most r; finite idiosyncratic lag products, mean/frame
+      estimation, and sampling error remain in the measured feasible-row
+      discrepancy d_n.
+    required:
+      - intrinsic centre-path RMS
+      - empirical total-energy radius R_n
+      - empirical oracle lag-row size A_2,n
+      - empirical oracle eigengap Delta_n
+      - lag-row error d_n and exact assembly bound 2*A_2,n*d_n+d_n^2
+      - loading-projector error and factor-score NRMSE up to orthogonal gauge
+      - first beyond-rank eigenvalue and its d_n^2 bound
+      - threshold, ridged-ratio, and raw-ratio factor counts
+      - observation and latent-signal intrinsic reconstruction RMS
+      - fallback, convergence, spectral, and runtime health
+
+  rank_separation: >
+    Reconstruction uses the declared true rank so selector error cannot be
+    misreported as loading-estimation error.  On the same spectrum, threshold,
+    ridged-ratio, and raw-ratio ranks are reported separately.  The threshold
+    and ridge are tau_n=0.01*n^(-3/7); this is a predeclared finite-sample
+    diagnostic and does not replace the theorem's measured separation checks.
+
+  evaluation_lock: >
+    Namespace 4500 is smoke only.  Namespace 4501 is untouched final
+    evaluation.  Once any namespace-4501 loss is visible, the DGP, bandwidth
+    rule, lag set, selector constant, grid, and metrics are not retuned.
+
+  outcome_independent_extension_2026_08_20:
+    status: predeclared / not run
+    reason: >
+      The original grid stopped at n=4096 for runtime, not mathematics.  The
+      production rule first reaches its fixed 2.1 cap at n=8192, and the
+      completed centre-rate experiment already uses that sample size.  The
+      omission was identified from the design before interpreting the B4.5
+      result tables; it is not a response to a favourable or unfavourable
+      numerical cell.
+    implementation_config: config/end_to_end_8192.yaml
+    seed_namespace: 4502
+    n: 8192
+    SPD_matrix_sizes: [2, 3, 4]
+    replicates_per_cell: 32
+    fits_per_draw: [production_2.1, fixed_1.3_reference]
+    requested_rows: 192
+    invariants: >
+      DGP, geometry, rank, factor/noise law, centre path, lag set, selectors,
+      metrics, overlap, polygon rule, tolerances, and both bandwidth formulas
+      are byte-for-byte scientific copies of the namespace-4501 design.
+    reporting: >
+      Namespace-4502 raw rows remain separate.  Its summary and plots may
+      concatenate the completed namespace-4501 raw table to display the full
+      n=512,...,8192 curve, with provenance retained.

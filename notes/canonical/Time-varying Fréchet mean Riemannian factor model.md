@@ -5,8 +5,8 @@ aliases:
   - Moving-centre RFM
   - Locally stationary Riemannian factor model
 status: current-programme
-verdict: P1-ID is closed by exact quotients and impossibility boundaries; Paper 1 has scoped estimation branches and Paper 2 remains separate and parked
-last-audited: 2026-08-12
+verdict: P1-ID is closed by exact quotients and impossibility boundaries; Paper 1 has scoped estimation branches and the moving-loading programme remains separate, unnumbered, and parked
+last-audited: 2026-08-25 (parent/RFD BW parity and narrowed non-forecast Paper 1 application scope integrated)
 area:
   - geometry
   - time-series
@@ -54,7 +54,7 @@ $$
 
 After parallel transport to $T_{\mu(u_0)}M$, the loading map $A$ is constant. The robust theorem permits arbitrary $p_n\to\infty$ under bounded total tangent energy, explicit uniform geometry, exact included-lag noise orthogonality, and the polygonal estimator. [[Application map — geometry, symmetry, and rate accelerators]] adds an exact flat/common-commuting split-oracle branch, oracle-order known/parametric-centre branches, a Hilbert physical-dependence extension, fixed-band AIRM differential verification, and a structured signed growing-\(p_n\) mean route.
 
-### M2 / Paper 2 — moving centre, genuinely moving loading subbundle
+### M2 — moving centre, genuinely moving loading subbundle (parked programme)
 
 $$
 X_{t,n}=\operatorname{Exp}_{\mu(u_t)}[A(u_t)f_{t,n}+\delta_{t,n}],
@@ -109,8 +109,8 @@ For the final growing-$p_n$ theorem, the live mean inputs are level/grid RMS G1 
 | Noncommuting BW fixed-margin growing-size geometry | PROVED UNDER EXPLICIT COMPATIBLE GENERATED-DOMAIN ASSUMPTIONS | dimension-free quotient/G1/PF producer with application-supplied statistics; see [[BW-FIXED-MARGIN — canonical local and size-uniform theorem boundary]] |
 | BW shrinking-margin statistical propagation | PROVED UNDER RESTRICTED FRACTIONAL-NORMAL ASSUMPTIONS | sufficient \(x<3/(5A)\) corollary; see [[BW-SHRINKING-MARGIN — canonical restricted theorem boundary]] |
 | Fixed-basis diagonal HE–BW | PROVED UNDER EXPLICIT ASSUMPTIONS | positive-root flat DGP; moving eigenvectors excluded |
-| Paper 2 frame/subbundle identities | PROVED | dimension-free algebra |
-| Paper 2 cross-tangent estimator and bootstrap | OPEN | fixed $p$ first, then growing $p$ |
+| Moving-loading frame/subbundle identities | PROVED | dimension-free algebra |
+| Moving-loading cross-tangent estimator and bootstrap | OPEN | fixed $p$ first, then growing $p$ |
 
 ## High-dimensional scope
 
@@ -126,19 +126,123 @@ It proves nonempty localised, pervasive, matrix, and growing-rank regimes under 
 
 ## Paper split
 
-Paper 1 and Paper 2 answer different questions.
+Paper 1 and the parked moving-loading programme answer different questions.
 
 - **Paper 1:** when are centre drift and persistent factors separately identified, and—under that split—can the moving centre be removed without losing the fixed loading space and its lag-factor interpretation?
-- **Paper 2:** after removing the moving centre, does the loading subspace itself move intrinsically?
+- **Moving-loading programme:** after removing the moving centre, does the loading subspace itself move intrinsically?
 
-The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's publication status remains conditional on its open estimator/bootstrap nodes; it is neither dismissed nor declared complete.
+The stale instruction to fold the moving-loading programme into Paper 1 has been withdrawn. Its publication status remains conditional on its open estimator/bootstrap nodes; it is neither dismissed nor declared complete, and it does not reserve the number of the next paper.
+
+### Parked same-programme application follow-up — current Paper 2 candidate
+
+The natural application paper after Paper 1 stays on the **same fixed-loading RFD branch**. It is not the moving-loading-subbundle programme. Paper 1 first installs a minimal causal forecasting policy and a compact fixed-versus-online predictive-rank comparison. The later application programme preserves the interpretable extraction pipeline while developing score filtering, online rank experts, and event-triggered geometric refitting:
+
+$$
+(\widehat\mu_{1:t},\widehat f_{1:t})
+\longmapsto
+(\widehat\mu_{t+1:t+h},\widehat f_{t+1:t+h})
+\longmapsto
+\widehat X_{t+1:t+h},
+$$
+
+where reconstruction still uses the fitted fixed loading space, polygon transport, and Exp map. Masked or future-block prediction supplies self-supervision; a real application may add a supervised task loss. The learner must remain common-gauge equivariant and cannot claim to separate centre drift from persistent factors beyond the P1-ID quotient.
+
+The current DGP evidence supports **keeping lag extraction fixed in the first learned application model**. In the completed 768-row bounded-energy evaluation, the feasible lag-row error decreases across every tested sample size. At $n=4096$ its median is about $0.01$ for $m\in\{2,3,4\}$, roughly $7$–$9\%$ of the oracle-row magnitude, and median loading-projector error is about $0.01$–$0.02$. The broader selector sweep found no visible extra geometry-induced detectability boundary on equal-strength cells; weak signal was the boundary. Synthetic structural headlines nevertheless use known rank, and APP-FIN online rank is treated as predictive model selection rather than latent-rank recovery. These are simulation results, not a real-data guarantee.
+
+#### Parked amplitude bottleneck and two separate adaptive modules
+
+The completed core-control stage exposes a forecasting-relevant finite-sample
+bottleneck that loading recovery alone hides. On the smooth moving-centre B0
+control at $n=512$, feasible RFD has a $4.44$-degree loading angle versus
+$15.50$ degrees for the one-centre ablation and reduces reconstruction error
+by a paired median $17.5\%$, yet its factor-score NRMSE is $0.777$ versus
+$0.364$ for the one-centre fit. The factor-score disadvantage remains about
+$23\%$ at $n=2048$ and reverses only at $n=8192$, where RFD is about $10\%$
+better. Thus the persistent subspace can be structurally accurate while its
+time-specific amplitudes remain too noisy for efficient forecasting. This is
+recorded as a **Paper 2 forecasting bottleneck**, not a reason to change the
+Paper 1 loading theorem.
+
+The same-draw attribution is now complete on 192 B0 draws at
+$n\in\{240,512,2048\}$. It crosses oracle/feasible rows with true/feasible
+loading directions and retains an oracle-estimated-loading benchmark. Median
+complete RFD factor-score NRMSE is respectively $0.962$, $0.747$, and $0.476$,
+against oracle noisy-row floors $0.276$, $0.279$, and $0.278$. Replacing only
+the oracle rows by feasible centre/frame rows adds $0.683$, $0.465$, and
+$0.204$ NRMSE. Replacing only the true loading directions by RFD directions
+adds essentially zero at every sample size, with all paired-bootstrap
+intervals containing zero; the row/loading interaction is also negligible.
+
+Thus the finite-sample bottleneck is localized to the **feasible-row bundle**:
+local-centre estimation, base-Log recentering, polygon interpolation, and
+non-rigid frame transport. This experiment does not separate those four
+subchannels and therefore must not be shortened to “the centre estimator is
+the cause.” Loading-space and lag-eigenspace estimation are exonerated on this
+declared DGP only. One scalar rescaling removes some error but leaves NRMSE
+$0.736$, $0.624$, and $0.440$; the estimated score norms are inflated rather
+than uniformly damped. Scalar calibration is not a remedy for the remaining
+trajectory error. The authoritative numerical artifacts are
+`results/final/amplitude_diagnostic/`.
+
+With that attribution complete, the application follow-up may compare two
+different adaptive modules:
+
+- **fixed-to-moving centre shrinkage:** interpolate between a global centre
+  and the feasible moving path with a validation-selected coefficient
+  $0\le\lambda\le1$. This learns how much dynamic centring improves untouched
+  forecast loss; it does not identify how much the true centre moves and is
+  not, by itself, an amplitude correction;
+- **dynamic amplitude filtering:** condition on the extracted loading space
+  and estimate the score trajectory jointly with a linear state-space,
+  Kalman/Wiener, or later gauge-equivariant learned transition model. This
+  directly trades the noisy pointwise projection against temporal
+  persistence and is the first candidate remedy if the four-way decomposition
+  places the loss in score extraction rather than centre estimation.
+
+Both modules require causal training/validation/evaluation separation. A
+scalar score damping coefficient is only a calibration baseline: it cannot
+repair factor-specific persistence, phase delay, leakage, or correlated
+noise. The first learned experiment should therefore benchmark an explicit
+linear state-space amplitude filter before a deeper forecasting head.
+
+APP-FIN can already use one much smaller adaptive component without importing
+this full future programme. All ranks \(0,\ldots,15\) share the expensive
+geometric fit. If every rank-specific forecast is issued before the next
+outcome, a frozen online policy may update its predictive rank from completed
+losses. The rank path is allowed to move; the update rule is frozen. With only
+36 test months, Paper 1 compares a validation-selected fixed rank with one
+simple online policy and labels the whole-block best path a retrospective
+oracle. Structural score filtering, time-varying population-rank inference,
+and learned refit scheduling remain later work. The authoritative scope is
+[[Future application programme — factor scores, predictive rank, and online RFD]].
+
+Richardson centre extraction is now an evidence-backed application follow-up rather than a generic replacement idea. On monthly APP-FIN, full Richardson raised cross-fitted squared BW loss by 183.8%; the narrowest held-out stage reached effective sample size about 4.5, and both alternating tuning halves preferred only 0.2 of the global-to-Richardson displacement. Positive local was stable but modest. This does not disprove exact asymptotic bias cancellation: the signed weights have absolute mass five, amplify the joint stage-noise/curvature remainder, and operate here with very small local samples. The follow-up must first compare predeclared scale ratios, kernels, extra-scale covariance-aware weights, and causal regularisation; only later compare a learned **causal** centre head using identical masks and untouched future blocks. Every alternative must preserve SPD/generated-domain validity and smoothness and be hostile-tested on P1-ID-equivalent laws; apparent recovery of an impossible centre/factor split is leakage or an undeclared convention. See [[Future application programme — factor scores, predictive rank, and online RFD]].
+
+The parked order is therefore
+
+$$
+\text{fixed Paper 1 RFD extraction and causal APP-FIN rank policy}
+\rightarrow
+\text{latent-score filtering and online predictive rank}
+\rightarrow
+\text{event-triggered geometric refitting}
+\rightarrow
+\text{optional learned centre extraction}.
+$$
+
+This is the current **Paper 2 candidate**, not a reserved publication label.
+Its canonical scope is
+[[Future application programme — factor scores, predictive rank, and online RFD]].
+The expanded masked-learning brainstorm remains archived at
+`notes/archive/Future programme ideation — identifiable geometric learning for RFD.md`
+and is not a separate canonical programme.
 
 ## Main current risks
 
 - P1-ID proves generic weakened-reference rigidity false and identifies the compatible-chart orbit, with an exact curved rank-inflation boundary. Its fixed-centre theorem supports superposition/non-separation, not claims that Factor 1 is spurious or drift-dominated.
 - The robust growing-\(p_n\) rate remains slower than the parent fixed-centre oracle rate. FRAME-2P-U matches the oracle numerator's root-\(n\) **order** only under U2P; its added validation influence changes the limit variance, and no genuinely growing-curvature application has yet been verified.
 - Cross-fitting alone does not restore quadratic curved recentering. Same-band score correction is disproved; the successful route needs an independently undersmoothed validation path with \(1/6<\gamma<3/14\), exact local law or \(a>1/2\), and dimension-uniform composed-action/replacement control.
-- Paper 2 cannot inherit a Euclidean bootstrap merely by changing frame or substituting an $L^2$ mean rate.
+- The moving-loading programme cannot inherit a Euclidean bootstrap merely by changing frame or substituting an $L^2$ mean rate.
 - Bures–Wasserstein boundary distance and rank loss require the proved local/regularized estimator; the global PSD theorem is false.
 - The parent’s covariance demonstration can consume the fixed-size BW theorem only after its covariance-estimation measurement layer and generated-domain margins are checked.
 - Growing energy can be offset by growing signal only through the proved assembly/gap phase conditions; rescaling can erase localised factors.
@@ -146,9 +250,21 @@ The stale instruction to fold Paper 2 into Paper 1 has been withdrawn. Paper 2's
 
 ## Live work
 
-P1-ID is closed and supplies the interpretation boundary. N-18 checks its exact structural consequences; N-18c measures the target-specific static-versus-moving \(\nu\)-phase diagram. Both are sensitivity diagnostics rather than proof, and neither presumes a unique crossover.
+P1-ID is closed and supplies the interpretation boundary. The AIRM centre,
+bounded-energy, selector, scientific-control, orientation-phase, amplitude, and
+compact fixed-size BW diagnostics are complete. Paper 1 now closes through
+two empirical steps: the now-completed literal parent parity on common BW
+synthetic draws, followed by a fixed-rank non-forecasting APP-FIN identification
+illustration. The exact order and terminal conditions are in
+[[OPEN OBLIGATIONS — current research actions]], [[Numerical suite — theorem-driven design matrix]]
+§3F, and [[Paper 1 shape — identification to application]].
 
-All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 is partially complete: the APP-FIN pipeline has been reproduced and [[notation-map|the notation map]] is complete, while the parent simulations and factor-count/loss-ranking loop remain before moving-centre modifications. FRAME-2P-U application verification beyond fixed-active-curvature padding remains open. Infinite-memory conditional splitting, unrestricted full-AIRM signed Hessians, higher positive smoothing, and optional unrestricted BW exponent sharpness remain secondary. Paper 2 is parked and standalone.
+The full N-10 shrinking-margin, N-15 growing-size, FRAME-2P-U application,
+exhaustive N-18 phase, learned forecasting, infinite-memory conditional
+splitting, unrestricted full-AIRM signed Hessian, higher positive smoothing,
+and unrestricted BW exponent-sharpness programmes are secondary rather than
+Paper 1 gates. The unattended parent simulations may finish independently.
+The moving-loading programme is parked, standalone, and unnumbered.
 
 ## Related notes
 
@@ -156,7 +272,8 @@ All live work is in [[OPEN OBLIGATIONS — current research actions]]. N-00 is p
 - [[P1-ID — centre-drift and factor identification boundary]]
 - [[G1 audit — resolution of the uniform local Fréchet rate]]
 - [[Paper 1 — Locally stationary Riemannian factor model]]
-- [[Paper 2 — Moving loading subbundle]]
+- [[Parked programme — Intrinsically moving loading subspace]]
 - [[Application map — geometry, symmetry, and rate accelerators]]
+- [[Future application programme — factor scores, predictive rank, and online RFD]]
 - [[Numerical suite — theorem-driven design matrix]]
 - [[OPEN OBLIGATIONS — current research actions]]

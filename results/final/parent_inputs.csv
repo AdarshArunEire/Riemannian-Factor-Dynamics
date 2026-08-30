@@ -3,15 +3,15 @@ variant,adjusted
 months,240
 scale applied on export,1/10000
 max |Sigma| after unscaling,2.8719e-02
-  where,2000-09 -- AAPL, the -52% day of 2000-09-29
-median diagonal, unscaled,2.2512e-04
+  where,"2000-09 -- AAPL, the -52% day of 2000-09-29"
+"median diagonal, unscaled",2.2512e-04
   as annualised vol,23.8%
 median diagonal x 10000,2.2512
 vix rows,5217
 vix missing blanked,185
 check: the CSV bitwise round-trips the unscaled panel,PASS
-check: median asset-month annualises to equity-like vol (5%-100%),PASS
+"check: median asset-month annualises to equity-like vol (5%-100%)",PASS
 check: their aperm+reshape returns chronological order,PASS
-check: 240 months, 12 assets,PASS
+"check: 240 months, 12 assets",PASS
 check: every RC still positive definite,PASS
 check: VIX fetched,PASS

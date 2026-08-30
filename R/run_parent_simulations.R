@@ -28,7 +28,8 @@ if (length(unknown))
 check_only <- "--check" %in% args
 
 root <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
-if (!file.exists(file.path(root, "BUILD.md")))
+root_markers <- c("pyproject.toml", "R", "py", "reference")
+if (!all(file.exists(file.path(root, root_markers))))
   stop("run from the repository root: Rscript R/run_parent_simulations.R")
 
 parent <- file.path(root, "reference", "Riemannian_factor_model-main")

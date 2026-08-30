@@ -16,6 +16,10 @@ sandbox/**/__pycache__/
 sandbox/**/*.pkl
 sandbox/**/*.npy
 
+# --- private research workspace ------------------------------------------
+# Internal theorem ledgers, proof campaigns, prompts, and working notes.
+notes/
+
 # --- python --------------------------------------------------------------
 __pycache__/
 *.py[cod]

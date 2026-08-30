@@ -12,6 +12,14 @@ entrywise-relative when the bound is on the norm.
 import numpy as np
 import pytest
 
+from rfd.spd.bw import (
+    bw_clip_exp_tangent,
+    bw_exp,
+    bw_inner,
+    bw_log,
+    bw_parallel_transport,
+)
+
 from rfd.dgp.spd import random_spd, random_Q
 from rfd.spd.linalg import rebuild_spd, sym, spd_sqrt
 from rfd.spd.bw import bw_dist2, trace, bw_barycentre, bw_frechet
@@ -233,7 +241,7 @@ def test_barycentre_stationarity(rng, m, cond):
     SEMI-TAUTOLOGICAL and labelled as such: the loop terminates on exactly
     this residual, so it mostly re-reports the stopping rule. Kept because
     it would catch a residual computed on the wrong iterate, and because
-    BUILD.md's done-when names it. The Frechet test above is the one doing
+    The original test contract names it. The Frechet test above is the one doing
     real work.
     """
     S = random_spd(rng, m=m, cond=cond, n=N_BARY)
@@ -246,7 +254,7 @@ def test_barycentre_stationarity(rng, m, cond):
 
 @pytest.mark.parametrize("m", MS)
 def test_barycentre_iterations_well_conditioned(rng, m):
-    """BUILD.md done-when: under 50 iterations for well-conditioned input.
+    """Test contract: under 50 iterations for well-conditioned input.
 
     Only asserted at cond=1e1. At 1e5 it legitimately needs ~75 -- that
     slowdown is the phenomenon, not a failure, and belongs in experiments/.
@@ -255,3 +263,90 @@ def test_barycentre_iterations_well_conditioned(rng, m):
     res = bw_barycentre(S, tol=BARY_TOL)
     assert res.converged
     assert res.n_iter < 50
+
+
+def test_exp_log_distance_and_metric_agree_on_compatible_branch():
+    """The new DGP primitives share the established BW distance convention."""
+    base = np.diag([1.0, 1.5, 2.0])
+    tangent = np.array(
+        [[0.08, 0.02, 0.0], [0.02, -0.04, 0.01], [0.0, 0.01, 0.03]]
+    )
+    point = bw_exp(base, tangent)
+
+    np.testing.assert_allclose(bw_log(base, point), tangent, rtol=2e-12, atol=2e-12)
+    np.testing.assert_allclose(
+        bw_dist2(base, point),
+        bw_inner(base, tangent, tangent),
+        rtol=2e-11,
+        atol=2e-13,
+    )
+
+
+def test_parallel_transport_preserves_bw_inner_product():
+    """The numerical Christoffel ODE is an isometry, not an SPD congruence."""
+    start = np.diag([1.0, 1.4, 2.0])
+    endpoint_tangent = np.array(
+        [[0.06, 0.015, 0.0], [0.015, -0.03, 0.01], [0.0, 0.01, 0.02]]
+    )
+    end = bw_exp(start, endpoint_tangent)
+    first = np.array([[0.1, 0.02, 0.0], [0.02, -0.04, 0.01], [0.0, 0.01, 0.03]])
+    second = np.array([[-0.02, 0.01, 0.015], [0.01, 0.05, 0.0], [0.015, 0.0, 0.04]])
+    moved_first = bw_parallel_transport(first, start, end)
+    moved_second = bw_parallel_transport(second, start, end)
+
+    np.testing.assert_allclose(moved_first, moved_first.T, atol=2e-13)
+    np.testing.assert_allclose(
+        bw_inner(end, moved_first, moved_second),
+        bw_inner(start, first, second),
+        rtol=3e-8,
+        atol=3e-10,
+    )
+
+
+def test_exp_rejects_the_wrong_bw_normal_branch():
+    base = np.eye(2)
+    # L_I[U] = U/2, so I + L_I[U] has a negative first eigenvalue.
+    incompatible = np.diag([-3.0, 0.0])
+    with pytest.raises(ValueError, match="compatible"):
+        bw_exp(base, incompatible)
+
+
+def test_exp_reconstruction_clip_is_inactive_inside_the_margin():
+    base = np.eye(2)
+    tangent = np.diag([-0.4, 0.2])
+
+    clipped = bw_clip_exp_tangent(base, tangent, step_margin=0.05)
+
+    assert clipped.factors == pytest.approx(1.0)
+    np.testing.assert_allclose(clipped.tangent, tangent)
+    assert clipped.raw_step_min_eigenvalues == pytest.approx(0.8)
+
+
+def test_exp_reconstruction_clip_returns_largest_compatible_radial_step():
+    base = np.eye(2)
+    incompatible = np.diag([-4.0, 0.0])
+
+    clipped = bw_clip_exp_tangent(base, incompatible, step_margin=0.05)
+    point = bw_exp(base, clipped.tangent)
+
+    assert clipped.raw_step_min_eigenvalues == pytest.approx(-1.0)
+    assert clipped.factors == pytest.approx(0.475)
+    np.testing.assert_allclose(point, np.diag([0.05**2, 1.0]), atol=1e-14)
+
+
+def test_weighted_barycentre_uses_relative_positive_weights(rng):
+    S = random_spd(rng, m=3, cond=10.0, n=3)
+    weights = np.array([1.0, 2.0, 4.0])
+    first = bw_barycentre(S, weights=weights)
+    scaled = bw_barycentre(S, weights=11.0 * weights)
+
+    assert first.converged and scaled.converged
+    np.testing.assert_allclose(first.X, scaled.X, rtol=2e-11, atol=2e-12)
+
+
+def test_weighted_barycentre_one_hot_returns_selected_observation(rng):
+    S = random_spd(rng, m=3, cond=10.0, n=3)
+    result = bw_barycentre(S, weights=np.array([0.0, 1.0, 0.0]))
+
+    assert result.converged
+    np.testing.assert_allclose(result.X, S[1], rtol=2e-11, atol=2e-12)

@@ -142,7 +142,7 @@ def test_exp_log_roundtrip(rng, m, cond):
 def test_barycentre_affine_equivariance(rng, m, cond):
     """bary({M S_i M'}) == M bary({S_i}) M'.
 
-    BUILD.md's done-when, and it earns the billing: it constrains the whole
+    The original test contract's done-when, and it earns the billing: it constrains the whole
     iteration -- initialisation, gradient, retraction, stopping rule -- in
     one line, and it holds for arbitrary invertible M rather than only
     rotations.
@@ -211,3 +211,21 @@ def test_barycentre_of_one(rng, m, cond):
     S = random_spd(rng, m=m, cond=cond, n=1)
     r = airm_barycentre(S, tol=BARY_TOL)
     assert fro(r.X - S[0]) / fro(S[0]) < num_tol(amplification=cond)
+
+
+def test_weighted_barycentre_uses_relative_positive_weights(rng):
+    S = random_spd(rng, m=3, cond=10.0, n=3)
+    weights = np.array([1.0, 2.0, 4.0])
+    first = airm_barycentre(S, weights=weights)
+    scaled = airm_barycentre(S, weights=11.0 * weights)
+
+    assert first.converged and scaled.converged
+    np.testing.assert_allclose(first.X, scaled.X, rtol=2e-11, atol=2e-12)
+
+
+def test_weighted_barycentre_one_hot_returns_selected_observation(rng):
+    S = random_spd(rng, m=3, cond=10.0, n=3)
+    result = airm_barycentre(S, weights=np.array([0.0, 1.0, 0.0]))
+
+    assert result.converged
+    np.testing.assert_allclose(result.X, S[1], rtol=2e-11, atol=2e-12)

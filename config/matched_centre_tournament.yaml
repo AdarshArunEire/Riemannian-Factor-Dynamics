@@ -1,0 +1,47 @@
+# Oracle centre tournament with APP-FIN-like matrix size, spectrum, centre
+# motion and finite-window covariance-proxy noise.
+
+experiment:
+  id: P1-MATCHED-CENTRE-TOURNAMENT
+  panel_path: results/raw/rc_panel_adjusted.npz
+  centre_source: results/intermediate/appfin_centre_diagnostic/full_fit.npz
+  matrix_size: 12
+  latent_graph_strength: 1.0
+  latent_global_retention: 0.4
+  student_degrees_of_freedom: 6.0
+  base_seed: 20260827
+
+rfd:
+  bandwidth_exponent: 0.14285714285714285
+  bandwidth_constant: 0.5
+  production_multiplier_cap: 2.1
+  admissible_boundary_fraction: 0.95
+  overlap_fractions: [0.3333333333333333, 0.6666666666666666]
+  polygon_rate_exponent: 0.42857142857142855
+  polygon_cell_constant: 1.0
+  mean_tolerance: 1.0e-10
+  mean_max_iterations: 200
+  reconstruction_step_margin: 0.05
+
+candidates:
+  positive_shrinkage: 0.6
+  richardson_shrinkage: 0.2
+  graph_strength: 1.0
+  piecewise_segments: 6
+  bw_step_margin: 0.05
+
+profiles:
+  n240:
+    n_values: [240]
+    replicates: 16
+    distributions: [gaussian, student_t]
+  n8192:
+    n_values: [8192]
+    replicates: 8
+    distributions: [gaussian, student_t]
+
+runtime:
+  workers: 8
+
+output:
+  root: results/intermediate/matched_centre_tournament

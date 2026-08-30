@@ -2,7 +2,7 @@
 type: canonical-literature-review
 title: Literature review — external positioning and prior art
 status: active
-last-audited: 2026-08-16 (§2.4–§2.8 added)
+last-audited: 2026-08-27 (§2.10 compact Paper 1 crypto gate and post-freeze boundary integrated)
 authority: field map, prior-art comparison, and the novelty-claim boundary
 ---
 
@@ -12,7 +12,7 @@ authority: field map, prior-art comparison, and the novelty-claim boundary
 
 ## 0. Status of this review
 
-Compiled 2026-08-16 from a targeted search, not an exhaustive one. Coverage is good for the Bures–Wasserstein / object-data / manifold-time-series neighbourhoods and thin for anything not indexed on arXiv. Several rows below are marked **UNVERIFIED** — they are sources identified as relevant but not yet read in full. Do not cite an UNVERIFIED row.
+Compiled from targeted searches, not an exhaustive one. Coverage is good for the Bures–Wasserstein / object-data / manifold-time-series neighbourhoods and now includes a focused primary-source audit of dynamic lag operators, weak factors and factor-number selectors. It remains thin for anything not indexed electronically. Several rows below are marked **UNVERIFIED** — they are sources identified as relevant but not yet read in full. Do not cite an UNVERIFIED row.
 
 ## 1. The four neighbourhoods
 
@@ -22,7 +22,7 @@ Paper 1 sits at the intersection of four literatures. Positioning must be done a
 |---|---|---|
 | **N1 — manifold/object-valued time series factor models** | the parent: Huang, Chen & Chen (2026), arXiv:2607.28385 | direct extension; the fixed-centre assumption (P2) is what Paper 1 relaxes |
 | **N2 — Bures–Wasserstein statistics for time-varying covariance** | Santoro & Panaretos (2024), arXiv:2310.13764; Masarotto–Panaretos–Zemel; Zemel–Panaretos (2019); Nguyen–Uribe (2026), arXiv:2604.03566; Xu–Li, JMLR 26(77) (2025) | **the principal prior-art risk** — see §2, §2.6, §2.8 |
-| **N2b — time-varying latent factor structure on a manifold** | Peng & Shen (2026), arXiv:2605.18316 | constrains **Paper 2's** moving-loading novelty, not Paper 1's — see §2.7 |
+| **N2b — time-varying latent factor structure on a manifold** | Peng & Shen (2026), arXiv:2605.18316 | constrains the parked programme's moving-loading novelty, not Paper 1's — see §2.7 |
 | **N3 — object-data change points and time-varying random objects** | Dubey & Müller (AoS 2020, JASA 2023); Change-Point Detection for Object-valued Time Series (arXiv:2606.00858) | external evidence that Fréchet centres move; **motivation source, not competition** |
 | **N4 — forecast evaluation under an imperfect proxy** | Patton (2011); Laurent–Rombouts–Violante (2013); Gneiting (2011) | producers for P1-LOSS; the matrix characterisation is LRV's |
 
@@ -168,23 +168,233 @@ That is the *same geometric fact* Nguyen–Uribe formalise: a **signed affine co
 
 **And it may be more than a citation.** The current safeguard is a *runtime* admissibility test with fallback. Theorem 3.2 is a **verifiable a-priori condition** on the spectra and weights. Whether it can supply a checkable sufficient condition for the Richardson step — replacing or supplementing the membership test — is an open question worth one afternoon. Routed to the live queue.
 
-## 2.7 Peng & Shen — the constraint on *moving-loading* novelty (Paper 2, not Paper 1)
+## 2.7 Peng & Shen — the constraint on the parked *moving-loading* programme, not Paper 1
 
 **Chuansen Peng, Xiaojing Shen, *Dynamic Elliptical Graph Factor Models via Riemannian Optimization with Geodesic Temporal Regularization*, arXiv:2605.18316v1 [cs.LG], 18 May 2026 (Sichuan University).**
 
 DEGFM models a sequence of time-varying **precision** matrices as low-rank-plus-diagonal \(\Theta_t=Y_tY_t^\top+D_t\), estimated on the product quotient manifold \(\prod_tB_{p,r}/O_r\) — the \(O_r\) gauge on the factor matrix is exactly a Grassmann-type quotient. Temporal coherence is imposed by a geodesic penalty; note that despite the abstract's "geodesic penalty defined on the Grassmann manifold", §III-C actually penalises \(d^2_{S^p_{++}}(\Theta_t,\Theta_{t+1})\), the **AIRM** distance on the reconstructed precision matrices. Theory: convergence to a stationary point (Thm V.1) and a non-asymptotic bound \(O(p_{\rm eff}\log p/n_{\min})\) with an explicit statistical-error / smoothing-bias split (Thm V.2), plus edge recovery under a beta-min condition.
 
-**Consequence, and it is real:** *"the first model with a time-varying factor subspace on a manifold"* is **no longer safe wording**. But the collision is with **[[Paper 2 — Moving loading subbundle]]**, not Paper 1 — Paper 1's loading space is covariantly constant and its moving object is the *centre*.
+**Consequence, and it is real:** *"the first model with a time-varying factor subspace on a manifold"* is **no longer safe wording**. But the collision is with the **[[Parked programme — Intrinsically moving loading subspace]]**, not Paper 1 — Paper 1's loading space is covariantly constant and its moving object is the *centre*.
 
 What they do **not** have: any Fréchet mean or barycentre; any moving base point or tangent space \(T_{\mu(u)}M\); any transport between tangent spaces; any lag operator — their factor comes from a per-window likelihood, not from autocovariance; any local-stationarity asymptotics — they observe \(n_t\) **i.i.d.** samples per window; any identification theory. It is an optimisation paper with a finite-sample bound.
 
-**Net: they are close to complementary to Paper 1** (moving subspace, fixed centre, per-window i.i.d. versus fixed subspace, moving centre, single dependent path), and directly adjacent to Paper 2.
+**Net: they are close to complementary to Paper 1** (moving subspace, fixed centre, per-window i.i.d. versus fixed subspace, moving centre, single dependent path), and directly adjacent to the parked moving-loading programme.
 
 ## 2.8 Xu & Li — BW Fréchet regression inference
 
 **H. Xu and H. Li, *Wasserstein F-tests for Fréchet regression on Bures-Wasserstein manifolds*, Journal of Machine Learning Research 26(77) (2025), 1–123** — note this is **published**, not a preprint. Covariance-matrix responses, regression target formulated as a conditional BW Fréchet mean, uniform-in-covariate rates, CLT and F-tests. Nguyen–Uribe record that Xu–Li and Kroshnin et al. "assume the existence of the regression estimator without deriving the geometric conditions required for signed weights."
 
 The statistical problem differs on the same axis as everything else in N2: i.i.d. regression pairs \((X_i,Y_i)\) versus a dependent, locally stationary array \(X_{t,n}\). **Cite as BW Fréchet-regression inference prior art; not a local-time-series result.**
+
+## 2.9 Dynamic lag operators, factor-number selection, and weak-factor language
+
+The population device used by Paper 1 after tangent alignment is standard in
+its essential form. Lam and Yao (2012) identify a finite-dimensional dynamic
+loading space from a sum of products of nonzero-lag covariance matrices;
+Bhatia, Yao and Ziegelmann (2010) give the functional/Hilbert-space analogue
+and a thresholded factor-number rule. Paper 1 must therefore describe the
+squared lag operator as inherited time-domain machinery, not as its novelty.
+
+The project's exact independent-AR(1) formula
+
+\[
+\chi_j=s_j^4\sum_{h=1}^{h_0}\rho_j^{2h}
+\]
+
+is narrower and internal. Its value is interpretive: it translates the
+abstract smallest positive lag-operator eigenvalue into factor amplitude and
+persistence, exposes the fourth-power weak-tail penalty, and shows precisely
+when an oracle centre cannot rescue a threshold set above the population
+signal. Real-data validity remains governed by the general matrix
+\(Q=\sum_hC_f(h)C_f(h)^*\); AR(1) is a calibration DGP, not a model
+requirement.
+
+Selector ancestry also narrows the claims. Hallin and Liška (2007) are the
+main spectral-information-criterion comparator. Chang, Guo and Yao (2015)
+support the general idea of ridging eigenvalue ratios when inputs are
+generated, while Caro and Peña (2024) supply a related post-rank ratio
+formulation. None makes the parent's raw Eq. (5) ratio consistent from the
+parent's displayed signal/null rates alone, so Remark P-RATIO remains a fair
+logical correction rather than a practical-failure claim.
+
+Two adjacent literatures do not close the project's boundary. Bailey,
+Kapetanios and Pesaran (2021) supply useful weak-factor language but use a
+different strength object. Lin and Yao (2019) show how an estimated manifold
+mean enters downstream tangent analysis, but not a moving local centre,
+polygon transport, or lag-row nuisance chain. A focused search found no
+applicable minimax lower bound for weak serial factors under generated
+manifold coordinates; sparse-PCA lower bounds are a scope mismatch. Paper 1
+therefore claims a **proved sufficient separation window**, not optimality,
+necessity, universality, or the first lag-based factor estimator.
+
+The source-by-source adjudication is archived as
+[[P1-RANK — weak dynamic factors and lag-rank literature audit]].
+
+## 2.10 Does the centre actually move? Application-evidence audit
+
+The application question is stricter than whether observed covariance matrices
+move. Paper 1 needs the local or conditional Fréchet centre of the SPD-valued
+law to move after persistent residual variation has been separated. No domain
+assumption proves that empirical fact. It must either be part of a declared
+data-generating model or be tested against a constant-centre alternative.
+
+### 2.10.1 Direct precedents
+
+1. **Realised financial covariance is the closest single-path precedent.**
+   Opschoor, Lucas and coauthors model a realised-covariance time series with an
+   explicitly autoregressive, time-varying conditional matrix mean
+   \(V_t=E(X_t\mid\mathcal F_{t-1})\). Their empirical study uses 45 S&P 500
+   equities, 4,696 trading days from 2001--2019, and five-minute returns. This
+   establishes that a changing central covariance is standard, operational,
+   and forecast-relevant in the target field. It does **not** establish that
+   \(V_t\) equals a BW Fréchet centre, nor identify its split from persistent
+   factors. Source: [Conditional Autoregressive F-Riesz Model for Realized
+   Covariance Matrices](https://academic.oup.com/jfec/article/23/2/nbae023/7815431).
+
+2. **Developmental brain covariance supplies an exact moving-Fréchet
+   precedent.** Petersen, Deoni and Müller estimate an age-indexed covariance
+   or correlation function by local Fréchet smoothing and prove consistency;
+   the scientific target is regional co-evolution of myelination. The moving
+   covariance centre is therefore the estimand, not a post-hoc interpretation.
+   Their observations are sparse and cross-sectional across children, however,
+   so independent subjects provide the replication that Paper 1 lacks. Source:
+   [Fréchet Estimation of Time-Varying Covariance Matrices From Sparse
+   Data](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-13/issue-1/Fr%c3%a9chet-estimation-of-time-varying-covariance-matrices-from-sparse-data/10.1214/18-AOAS1195.full).
+
+3. **BW regression now provides a formal no-movement test template.** Xu and Li
+   formulate covariance-matrix regression through a conditional BW Fréchet mean
+   and test the null of no covariate association, with applications showing
+   age-related changes in gene co-expression networks. Their calibration uses
+   independent regression samples and cannot be imported unchanged into one
+   dependent market path, but the null they test is exactly the population
+   question that the application diagnostic must adapt. Source: [Wasserstein
+   F-tests for Fréchet regression on Bures-Wasserstein
+   manifolds](https://jmlr.org/papers/v26/24-0493.html).
+
+4. **Dynamic functional connectivity and covariance flows are strong adjacent
+   evidence, not a clean Paper 1 design.** Covariance trajectories are used to
+   represent changing fMRI connectivity, and Santoro--Panaretos define BW
+   Fréchet mean flows for replicated covariance flows. Sliding-window overlap,
+   state switching, few longitudinal visits, or independent replicate flows
+   separate these designs from Paper 1's smooth single dependent path. Sources:
+   [dynamic functional-connectivity trajectories](https://arxiv.org/abs/1904.05449),
+   [longitudinal Riemannian connectivity](https://pmc.ncbi.nlm.nih.gov/articles/PMC7526985/),
+   and [Statistical Inference for Bures-Wasserstein
+   Flows](https://arxiv.org/abs/2310.13764).
+
+5. **Industrial sensor covariance is a plausible regime-detection application.**
+   Covariance matrices of multivariate process streams are routinely used
+   because faults change relationships between channels. The best-supported
+   target there is often a jump or regime change rather than the smooth centre
+   path consumed by the headline theorem. Source: [Riemannian SPD data analysis
+   in chemical engineering](https://doi.org/10.1016/j.compchemeng.2022.108023).
+
+### 2.10.2 Verdict for the application programme
+
+There are real domains in which a moving covariance centre is already a named
+scientific estimand. The strongest match to Paper 1's **sampling scheme** is
+high-frequency realised covariance; the strongest match to its **Fréchet-centre
+language** is developmental brain covariance. Neither source proves that the
+rebuilt monthly APP-FIN panel has detectable BW centre motion. The project's
+completed diagnostic now answers only for that panel and resolution: motion is
+suggestive but does not reject a dependent constant-centre null at 5%, while
+the full signed correction is strongly variance dominated.
+
+The required centre-detectability package compares, on identical blocked
+holdouts:
+
+1. one global BW centre;
+2. ordinary positive local BW centres;
+3. the three-scale Richardson centres;
+4. a predeclared global/local geodesic shrinkage family.
+
+For each construction it records its own vertices and polygon, held-out BW and
+proxy-robust losses under their declared targets, centre-path stability,
+effective local sample size, Richardson fallback/compatibility diagnostics,
+and motion relative to residual dispersion. A dependence-preserving
+constant-centre bootstrap supplies the empirical null. Projection of estimated
+centre motion into the parent loading span remains an identification-sensitivity
+diagnostic, not proof of which component is scientifically true.
+
+The decision rule is causal:
+
+- global wins: no detectable centre motion at the available resolution;
+- positive local wins but Richardson loses: motion is detectable, but the
+  signed correction is too variable;
+- intermediate shrinkage wins: motion is detectable but full local movement
+  overfits;
+- Richardson wins stably: the complete moving-centre construction is supported;
+- blockwise reversals or sharp jumps dominate: smooth local stationarity is the
+  wrong application description.
+
+The observed monthly APP-FIN verdict is deliberately qualified. Positive
+local reduced aggregate squared BW loss by 3.1% but won 10 of 20 held-out
+years; full Richardson increased it by 183.8%. The motion statistic was 2.984
+against fixed-centre null median 1.058 and 95th percentile 3.630
+(\(p=0.07\), 99 block replicates). Both alternating tuning halves selected
+0.2 retention of the global-to-Richardson displacement, but held-out BW
+intervals crossed zero. This is the ``intermediate shrinkage / unstable full
+correction'' branch, not a clean detection of structural drift. The result
+motivates the higher-frequency and regularised-centre programme; it does not
+alter the literature-derived existence of scientifically moving covariance
+centres.
+
+### 2.10.3 High-frequency design warning
+
+Continuous trading does not remove seasonality. Crypto volatility and volume
+have documented hour-of-day, day-of-week, and within-hour periodicities; these
+must be modelled or removed before a slowly moving centre is interpreted.
+Source: [Hansen, Kim and Kimbrough, *Periodicity in Cryptocurrency Volatility
+and Liquidity*](https://academic.oup.com/jfec/article/22/1/224/6582291).
+US equities add the market closure and a strong intraday cycle. Repeated
+within-day oscillation is not a fixed-smooth path in rescaled time as the sample
+horizon grows. An hourly equity experiment must therefore stratify or
+deseasonalise clock time, rather than presenting the raw cycle as centre drift.
+
+The declared scalable target is consequently **20 assets**, not because 20 is
+geometrically privileged, but because it gives tangent dimension
+\(p=20(21)/2=210\). Official one-second bars are synchronized and aggregated
+to ten-second returns before constructing one non-overlapping covariance per
+hour, giving roughly 360 intrahour returns and a materially wider
+covariance-sampling margin than the earlier one-minute design. One continuous
+year gives about 8,760 matrices. Larger panels tighten the covariance margin
+and increase the dense \(p\times p\) lag-operator cost quadratically in \(p\).
+The public-data starting point is the
+[Binance public market-data archive](https://github.com/binance/binance-public-data/blob/master/README.md);
+venue, quote currency, assets, bar integrity, missingness, and historical
+availability remain APP-HF-0 facts to verify rather than assumptions.
+
+### 2.10.4 Competitive field and declared home
+
+This is not an application without competitors. Realised-covariance forecasting
+already includes direct persistence baselines, HAR-style models, factor and
+state-space models, and positive-definite covariance dynamics such as
+[conditional autoregressive Wishart models](https://www.sciencedirect.com/science/article/pii/S0304407611002582).
+Recent geometric and network approaches provide additional comparators where
+their data and causal protocol can be reproduced, including
+[geometry-aware deep covariance prediction](https://arxiv.org/abs/2412.09517)
+and [graph-HAR realised-volatility forecasting](https://academic.oup.com/jfec/article/23/2/nbae026/7889003).
+
+RFD's distinct question is narrower: does separating a slowly moving geometric
+baseline from lag-persistent tangent co-movement improve representation and
+one-hour covariance forecasts enough to justify the additional centre/frame
+machinery? The answer is allowed to be no. The declared sequence is therefore:
+
+1. completed fixed-rank 204/36 monthly APP-FIN boundary;
+2. hourly crypto data/proxy audit;
+3. centre-detectability gate over frozen positive candidates plus Richardson
+   negative control;
+4. matched fixed-rank parent/RFD representation; and
+5. frozen one-hour forecast with VAR primary and Kalman sensitivity.
+
+Those five items close Paper 1. Projected-score model redesign, adaptive rank,
+online refitting, the broad modern comparator field, and equity transfer remain
+the follow-up rather than expanding the first empirical claim.
+
+The exact observation contract, losses, competitors, and stop rules are in
+[[Home application — hourly crypto realised covariance]]. This literature
+map supports the application choice; it does not certify the P1-ID separation,
+BW theorem margins, local-stationarity assumptions, or forecast superiority.
 
 
 ## 3. Open attribution checks — route to the live queue
@@ -201,6 +411,7 @@ The statistical problem differs on the same axis as everything else in N2: i.i.d
 | L-5 | arXiv:2606.00858, *Change-Point Detection for Object-valued Time Series* | motivation citation; situates itself in the statistics **and econometrics** literature | **UNVERIFIED — read for the introduction** |
 | L-6 | arXiv:2605.18316, *Dynamic Elliptical Graph Factor Models via Riemannian Optimization* | adjacent time-varying Riemannian structure; related-work only | **UNVERIFIED — skim** |
 | L-7 | arXiv:2604.03566 and arXiv:2404.03878 (Fréchet regression / F-tests on BW) | the BW inference toolkit being built concurrently; related-work only | **UNVERIFIED — skim** |
+| L-RANK | Lam–Yao; Bhatia–Yao–Ziegelmann; Hallin–Liška; Chang–Guo–Yao; Bailey–Kapetanios–Pesaran; Lin–Yao; Caro–Peña; Cai–Ma–Wu | ancestry and scope of the lag operator, selectors, weak-factor language, generated-coordinate nuisance, and rejected minimax near-match | **RESOLVED — primary-source audit integrated in §2.9 and [[References and external claim audit]]** |
 
 ## 4. The defensible novelty claim
 
@@ -218,7 +429,7 @@ Each qualifier is doing work. Remove *single realisation* and Santoro–Panareto
 - that the parent's leading empirical factor is spurious or drift-dominated — forbidden by ID-6 regardless of any literature;
 - that the moving-centre model's forecasting advantage demonstrates centre drift — see the predictive-adequacy-versus-identification separation.
 
-## 5. Competitive position, 2026-08-16
+## 5. Competitive position, 2026-08-21
 
 The parent posted **2026-07-30**. As of this audit it has **no citations** (Google Scholar, checked by hand; corroborated by negligible alphaXiv engagement). No work extending it to a moving centre was found.
 
@@ -230,4 +441,6 @@ The real signal is not that the exact problem is unclaimed — it is that **N2 i
 - [[Analytical reconstruction — proof ledger and rebuilt spec]] — theorem status
 - [[P1-ID — centre-drift and factor identification boundary]] — the identification claim this file positions
 - [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]] — N4
-- [[OPEN OBLIGATIONS — current research actions]] — where L-1 to L-7 become actions
+- [[P1-RANK — AR1 signal strength and threshold boundary]] — internal signal calibration
+- [[P1-RANK — weak dynamic factors and lag-rank literature audit]] — archived source-by-source adjudication
+- [[OPEN OBLIGATIONS — current research actions]] — where unresolved attribution checks become actions

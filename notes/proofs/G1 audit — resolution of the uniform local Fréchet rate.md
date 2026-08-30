@@ -335,6 +335,6 @@ The growing-$p_n$ positive route is **PROVED UNDER EXPLICIT ASSUMPTIONS** in HD1
 
 - [[Analytical reconstruction — proof ledger and rebuilt spec]]
 - [[Paper 1 — Locally stationary Riemannian factor model]]
-- [[Paper 2 — Moving loading subbundle]]
+- [[Parked programme — Intrinsically moving loading subspace]]
 - [[Time-varying Fréchet mean Riemannian factor model]]
 - [[OPEN OBLIGATIONS — current research actions]]

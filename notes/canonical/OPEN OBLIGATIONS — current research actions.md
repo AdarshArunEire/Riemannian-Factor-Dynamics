@@ -1,13 +1,17 @@
 ---
 type: canonical-research-queue
 title: STATUS AND OPEN OBLIGATIONS — current research actions
-status: active
-last-audited: 2026-08-16
+status: paper-1-science-frozen-release-queue-active
+last-audited: 2026-08-29 (HF-4 VAR adjudicated; HAR score heads parked outside Paper 1)
 ---
 
 # STATUS AND OPEN OBLIGATIONS — current research actions
 
-> **Status plus live queue.** Sections 0–2 record closed context; Sections 3–5 contain the live queue and execution order; Section 6 states the repository rule. [[Analytical reconstruction — proof ledger and rebuilt spec]] governs theorem status. Numerical evidence cannot close an analytical item.
+> **Status plus release queue.** Paper 1's analytical and empirical science is
+> frozen in [[Paper 1 final result ledger]]. Sections 0–4 preserve closed and
+> post-freeze context; Section 5 now separates release work from optional future
+> research. [[Analytical reconstruction — proof ledger and rebuilt spec]]
+> governs theorem status. Numerical evidence cannot close an analytical item.
 
 ## 0. Closed analytical campaigns
 
@@ -27,6 +31,7 @@ The campaign closed, under explicit assumptions:
 13. P1-LOSS: the forecast-evaluation boundary. The proxy-robust loss class is exactly the Bregman divergences in the proxy's coordinate of unbiasedness; a **symmetric** loss is robust only if it is a fixed Mahalanobis form there, so no non-flat geodesic distance is admissible **and flatness alone is not sufficient** — log-Euclidean is flat and still fails. Squared Bures–Wasserstein instead rewards the Fréchet barycentre of the proxy's law, exactly \(\mathbb E[x]-\operatorname{Var}(\sqrt x)\) in the scalar case and \(\Theta(m/M)\) in the matrix case, with the eigenvector distortion exactly zero for a Wishart-type proxy and nonzero in general. All five escape routes are terminal, and the separation from every closed estimation theorem is proved. Canonical boundary: [[P1-LOSS — forecast-evaluation geometry and proxy-robustness boundary]]. **It is a scope condition on reporting; it changes no estimand, rate, assumption, application standing, or queue item.**
 
 12. P1-ID-CLOSE: the constructive separation theorem ID-7 with its ergodic-average modulus and gap-free match to ID-3's floor; the universal-in-curvature rank-inflation theorem ID-8 with exact \(H^2\), AIRM and Bures–Wasserstein witnesses and the flat-only rigidity converse; the ID-9 sharpness verdict on the ID-1 gate across all five escape routes, including BW existence and uniqueness, the sphere selector cost, and the latent-stochastic-centre crack with its band-separation repair; the ID-10 persistence windows in \(d\) and \(\theta\); and the CANON-1 estimand correction.
+14. P1-RANK: the exact independent-AR(1) lag spectrum \(\chi_j=s_j^4\sum_h\rho_j^{2h}\), finite-sample threshold event \(d_n^2<\tau_n<\chi_{\min,n}-\eta_n\), fixed-total-energy dilution formula, and the focused primary-source audit. The lag-operator ancestry is external; the calibration and moving-frame nuisance translation are internal. No minimax boundary is claimed or consumed.
 
 The following are not open tasks because they are false or non-binding: that reference-dependent rank inflation is a cut-locus artefact; that a Bures–Wasserstein Fréchet mean can escape the open cone or fail to be unique when the law charges that cone; that a centre convention change is a robustness check on factor count; that ID-1 or ID-2 constrains a latent-stochastic-centre model; that \(a\ge3/7\) is a primitive assumption; and that the \(n^{-3/7}\) rate survives long memory.
 
@@ -82,6 +87,31 @@ This boundary is not minimax. A self-similar fixed-active-block construction adm
 
 The analytical packages are closed, but empirical application claims still require model-specific checks.
 
+### P1-BW-CLOSE — compact fixed-size BW robust-rate closure
+
+**CLOSED WITH A QUALIFIED FIXED-RANK PASS (2026-08-25).** The frozen
+496-task campaign contains 496 unique rows, zero ordinary errors, and zero
+failed/unknown verdicts. All 400 safe fit rows stayed in the declared generated
+domain without fallback or nonconvergence. Commuting/noncommuting centre slopes
+were \(0.41/0.42\), polygon slopes \(0.58/0.58\), lag-row slopes \(0.68/0.75\),
+and loading slopes \(0.55/0.57\). Median regular-cell loading-projector error at
+\(n=8192\) was \(0.0105\)–\(0.0191\). Operator assembly and beyond-rank null
+bounds held throughout.
+
+The finite-sample sufficient separation certificate did not hold uniformly:
+median assembly/gap ratios at \(n=8192\) were about \(1.45\)–\(1.82\). This is
+recorded as a qualification rather than hidden by the good projector errors.
+Rank-positive scientific summaries supply the known DGP rank; selector columns
+are retained only as diagnostics and Paper 1 makes no automatic-rank claim.
+
+Every hostile cell had its declared outcome: signed Richardson exit activated
+fallback; rank loss and incompatible Exp input rejected; near-identical
+matrices remained finite/nonnegative; dispersion barycentres converged; and
+the 16 lower-margin fits were recorded explicitly outside the fixed-margin
+theorem. They do not invoke full N-10 or N-15 claims. The result source is
+`results/intermediate/bw_closure`; the adjudication is
+`results/final/bw_closure_adjudication/report.md`.
+
 ### APP-FRAME — FRAME-2P-U verification and implementation
 
 - construct or disprove a genuinely growing-active-curvature family satisfying U2P; flat inactive padding does not close this item;
@@ -94,8 +124,13 @@ The analytical packages are closed, but empirical application claims still requi
 
 ### APP-FIN — realised covariance and correlation dynamics
 
-- clone, environment-freeze, audit, and reproduce the parent's public implementation at <https://github.com/shuochieh/Riemannian_factor_model> before altering the estimator;
-- reproduce the 12-stock monthly realised-covariance construction and the RFM/LFM/LOCF/EWMA forecasting comparisons where the upstream Yahoo data remain available; record the VIX-factor comparison as interpretation, not a theorem;
+- **baseline complete:** the pinned parent implementation is cloned, environment-audited, and mapped to project notation; no upstream source file is silently repaired;
+- **baseline complete:** the rebuilt 12-stock monthly realised-covariance panel reproduces LOCF/EWMA bulk statistics within the declared bands, and the parent RFM/LFM/LOCF/EWMA ordering is preserved; the VIX-factor comparison remains interpretation, not a theorem;
+- **paired synthetic bridge complete:** all 576 literal parent/RFD BW draws completed cleanly. Parent won every home/fixed/aligned draw; RFD won every mixed/orthogonal/curved draw. At \(n=8192\), median RFD latent-signal error reductions were 42.5%, 57.8%, and 55.8% in the latter regimes, while its home/fixed/aligned penalty was about 1%. The parent verified-mean sensitivity changed median latent-signal RMS by 0.0007% (95th percentile 0.0095%). See `results/final/parent_rfd_bw_parity_adjudication/report.md`;
+- **centre gate complete with a qualified negative boundary:** 20 annual cross-fits and 99 fixed-centre block-null replicates found a 3.1% aggregate squared-BW gain for positive local, a 183.8% loss for full Richardson, and \(p=0.07\) against the constant-centre null. Both alternating training halves selected Richardson/global retention 0.2, but their held-out BW intervals crossed zero. Paper 1 reports this as suggestive regularised motion and severe finite-sample signed-correction variance at monthly \(n=240\), not as proof of stationarity or RFD dominance. See `results/intermediate/appfin_centre_diagnostic/report.md`;
+- **Paper 1 APP-FIN scope:** fit literal parent RFM and RFD at fixed \(r=2\), matching the parent's published rank convention without claiming it is the true rank. Quantify intrinsic centre motion, its projection inside/outside the parent loading span, loading-space and reconstruction sensitivity, Factor 1/VIX interpretation, and BW numerical/theorem diagnostics;
+- APP-FIN has no true factor rank. Ranks \(1,\ldots,15\) may be shown as a sensitivity envelope only: no final-block winner, selector success, or recovered population rank is claimed;
+- distinguish reconstruction from forecasting throughout. Paper 1 now includes the completed fixed-rank APP-FIN forecast boundary and one compact fixed-rank hourly-crypto causal gate. Structural score recovery, predictive/adaptive rank, learned dynamics, online selection, and streaming remain in [[Future application programme — factor scores, predictive rank, and online RFD]];
 - preserve the original fixed-centre fit as the N-00 baseline, then separately test how the leading factor changes under declared moving-centre fits; report this as an identification sensitivity analysis, not evidence that the original factor is spurious or that drift dominates;
 - declare which P1-ID information set is available, verify existence and uniqueness of the marginal Fréchet centre and a single Log branch on the observed support, and distinguish the minimum dynamic loading space from a larger raw factor parameterisation. Existence and uniqueness are **automatic** on the full-rank BW cone — a **cited** result (Kroshnin–Spokoiny–Suvorikova 2021 Thm 2.1; Santoro–Panaretos arXiv:2305.15592 Thm 1), not internal; see P1-ID §14.2 and C-AUDIT-11 — so the burden here is the declaration, not a proof;
 - **declare whether the baseline volatility level is treated as deterministic in rescaled time or as a latent stochastic process.** If latent, state the frequency-band separation explicitly, label it a convention, and do not report the centre/factor split as identified — P1-ID §14.3 proves nothing beyond the observed law is identified without it;
@@ -104,13 +139,68 @@ The analytical packages are closed, but empirical application claims still requi
 - justify both factor–noise cross-lag directions and temporally white residual noise before interpreting the nonzero-lag row as a factor row; otherwise report only the identified contaminated row;
 - for a weakened reference, report the compatible-chart orbit and test whether the full score/observation support lies on a common injective geodesic or totally geodesic flat before invoking rank preservation;
 - for a fixed-centre fit under a moving-centre alternative, retain the score-mean term, both cross-lag directions, noise lag, and nonlinear geometry remainder rather than assigning the whole change to drift;
-- run N-18c as a target-specific \(\nu\)-phase diagram: report intrinsic centre motion and the complete fixed-minus-moving risk curve; separate structural and forecast risks; do not export the clean \(n^{-3/14}\) candidate beyond the quadratic flat/orthogonal/centred regime;
+- the full N-18c \(\nu\)-phase diagram is post–Paper 1. The completed paired six-regime BW boundary supplies the foundational positive/placebo/aligned/curved evidence; do not export its discrete results into a universal crossover exponent;
 - specify the raw-return sampling scheme, covariance estimator, regularisation, and overlap;
 - quantify the covariance-estimation measurement error, dependence, and included-lag contamination. P1-LOSS §6 now gives this item an explicit order for the Fréchet-centre component: a proxy of effective sampling depth \(M\) contributes \(\zeta_n^{\rm proxy}=O(m/M)\) times the energy scale to the existing (P1-OP-zeta) budget, which at \(m=12\), \(M\approx21\) is not negligible;
-- **declare the evaluation loss, target and proxy** per [[Application map — geometry, symmetry, and rate accelerators]] §0A. Report squared Frobenius and multivariate QLIKE; do not rank forecasts by squared Bures–Wasserstein, AIRM or log-Euclidean distance without stating the induced target and applying the P1-LOSS §4 recalibration. Do not use a global-minimum-variance evaluation alone: it is exactly blind to a scalar covariance distortion;
+- if descriptive reconstruction losses are reported, declare their target and do not present them as forecast risk. Every included forecast comparison must follow the P1-LOSS proxy-robust protocol;
 - decide whether covariance dynamics, rather than the full return distribution, is the estimand;
 - use the fixed-size, fixed-margin growing-size, or restricted shrinking-margin BW package only when its complete generated-domain, support/energy, object-count, dependence, target, and gap conditions are defensible;
 - use the diagonal HE–BW branch only when fixed axes are scientific structure.
+
+### APP-MONTHLY-VAR and APP-HF-CRYPTO — final Paper 1 application chain
+
+- **APP-MONTHLY-VAR first:** use the existing 240-month APP-FIN panel, months
+  \(1{:}204\) for the initial fit and months \(205{:}240\) for 36 expanding
+  one-step forecasts. Hold \(r=2\) and lag horizon \(h=6\) fixed. Parent RFM
+  and RFD must share the same projected-score OLS VAR(1), forecast origins,
+  inputs, and losses;
+- preserve the parent's published centre policy: estimate its global centre
+  once on the initial training window and hold it fixed. RFD must use an
+  expanding-prefix path available at the origin and a declared one-month
+  future-centre rule; the initial bridge carries its one-sided terminal centre
+  forward;
+- treat this as a low-power implementation bridge, not evidence of true rank,
+  factor-score recovery, or population forecast dominance;
+- **monthly bridge and score-head audit complete:** positive broad,
+  piecewise-6, and piecewise-12 polygon paths remained finite and SPD across 36
+  origins. Neither positive path dominated parent RFM under Frobenius/QLIKE;
+  Richardson remained catastrophically unstable; Kalman did not consistently
+  improve losses and is not promoted. Piecewise-6 is the predeclared
+  one-standard-error practical rule and piecewise-12 is sensitivity. See
+  `results/intermediate/appfin_centre_head_tournament/report.md`;
+- **APP-HF-CRYPTO is the declared home:** 20 spot assets chosen causally by a
+  liquid-first/volatile-second 2023-Q4 rule, one venue/quote, synchronized
+  official one-minute returns, one non-overlapping hourly covariance from at
+  most 60 returns, and a frozen SPD regulariser. This 2026-08-27 pre-data
+  amendment replaces—but does not erase—the original one-second-to-ten-second,
+  approximately-360-return plan; the reason and consequences are logged in
+  [[Home application — hourly crypto realised covariance]];
+- **APP-HF-0/1/2 are complete.** HF-2 selected rank 19 in both arms. It found
+  no operational representation gain: parent RFM had a modest, week-consistent
+  Frobenius advantage while QLIKE/BW were unresolved. The same-rank curve
+  retained a genuine rank-1 RFD compression benefit of 6.74--12.12% across the
+  three losses. Rank 19 is a reconstruction dimension, not nineteen stable
+  structural factors;
+- **APP-HF-3 and APP-HF-4 are recorded complete.** All 17,472 parent/RFD rank-19 score rows
+  materialised from 2024 only. Parent/RFD blocked-VAR variance explained was
+  52.36%/40.65%; both transition radii were stable and residual lag dependence
+  was small. The frozen 8,760-hour HF-4 VAR run gave lower RFD rank-19 means on
+  all four losses but primary intervals crossing zero, hence a formal tie.
+  That matched VAR comparison is the sole RFD/RFM forecast result in Paper 1.
+  Later coordinate-HAR/VHAR rows remain internal follow-up diagnostics and do
+  not reopen the global/piecewise-6 centres, rank 19, six lags, or VAR-primary
+  decision. APP-HF-5 remains post-freeze;
+- stop or narrow the application when a gate fails. Global-centre victory
+  rejects moving-centre RFD for the panel. The exploratory edge-share guard is
+  descriptive after the recorded PEPE proxy-resolution diagnosis; a coarse
+  continuous polygon edge is not itself a changepoint test. Positive-local
+  victory with Richardson failure selects a regularised centre and records the
+  finite-sample theorem/application boundary;
+- score covariance forecasts primarily by squared Frobenius and multivariate
+  QLIKE. Geodesic scores are descriptive unless their P1-LOSS induced target
+  and recalibration are stated;
+- authoritative observation contract, competitors, stop rules, and non-claims:
+  [[Home application — hourly crypto realised covariance]].
 
 ### APP-NEURO — functional connectivity and diffusion
 
@@ -141,21 +231,45 @@ These do not block robust HD1, the conditional FRAME-2P-U implication, HE packag
 - **BW-U-D3:** smallest higher nonlocal Richardson/blend/ruled-map powers;
 - **BW-U-D4:** minimized closed polynomial for every higher endpoint-PT derivative.
 
-Paper 2 remains standalone and parked. Its cross-tangent algebra, localised concentration, and estimated-frame bootstrap stay in [[Paper 2 — Moving loading subbundle]].
+The moving-loading programme remains standalone and parked, without a reserved paper number. Its cross-tangent algebra, localised concentration, and estimated-frame bootstrap stay in [[Parked programme — Intrinsically moving loading subspace]].
 
 ## 5. Execution order
 
 1. Preserve the closed P1-ID quotient and failure boundaries when specifying any model or application; new empirical work may test assumptions or sensitivity but does not replace the identified estimand.
-2. In the computational track, finish N-00 unchanged. The public environment and APP-FIN pipeline are audited and reproduced, and [[notation-map|the full parent-to-project notation map]] is complete; the parent simulations and predeclared factor-count/loss-ranking loop remain. Complete those before moving-centre sensitivity modifications.
-3. Maintain [[notation-map|the notation/conventions ledger]] while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates and is not an N-00 prerequisite.
-4. After N-00, run the separate identification diagnostics N-18/N-18a/N-18b, then N-18c's static-versus-moving phase diagram after its placebo and positive controls pass. Implement the smallest proof-faithful FRAME-2P-U extension: N-16 plus the N-17 negative controls and common-gauge test. These experiments validate assumptions and measure sensitivity; they do not alter the closed P1-ID theorem or identify empirical component dominance by themselves.
-5. Run application checks only against the proved packages, including FRAME-2P-U's U2P producers, the restricted BW support/slack conditions, and the explicit HE truncation conditions where unbounded data are claimed.
-6. Treat CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, and BW-U-D1--U-D4 as optional branches; no proved theorem consumes them.
-7. Implement the remaining numerical suite only from [[Numerical suite — theorem-driven design matrix]], which now records N-00 as partial and leaves every extension-specific row explicitly planned.
+2. **AIRM numerical stack closed with qualified evidence.** N-01/B4.5, its 480-draw comparator replay, the 1,536-row scientific control/phase matrix, and the 192-draw amplitude attribution are complete with no recorded scientific errors. Loading and reconstruction evidence is strong on the declared DGPs; the sufficient assembly-error-below-gap event is not uniform by $n=8192$, and low-$n$ factor-score loss is localized to the feasible-row bundle. Treat this as paper-eligible conditional evidence, not general dominance or forecasting evidence.
+3. **P1-BW-CLOSE closed with qualified fixed-rank evidence.** Preserve the complete primitive ledger, the finite-gap qualification, and the hostile boundary verdicts in [[Numerical suite — theorem-driven design matrix]] §3E. Do not expand into N-10 or N-15 before freeze.
+4. **P1-PARENT-SHARED closed.** Preserve the complete 576-draw paired verdict and its known-rank/reconstruction boundary from [[Numerical suite — theorem-driven design matrix]] §3F. Do not relabel it forecasting or universal dominance.
+5. **P1-APPFIN-ID and its centre gate are complete.** Preserve the qualified real-data result: suggestive regularised centre motion, no 5% rejection of a dependent constant-centre null, and an unshrunk Richardson failure at monthly \(n=240\). Do not retune it into a positive result.
+6. **P1-APPFIN-FORECAST is complete.** Preserve the 36-origin centre/head
+   tournament as a low-sample boundary: positive polygon paths were safe,
+   Richardson was unstable, and Kalman was not promoted. It does not reopen
+   P1-ID or the proved estimation theorems.
+7. **APP-MONTHLY-VAR is complete.** Preserve the uncomfortable 36-origin
+   verdict rather than tuning it away: parent/RFD mean Frobenius² is
+   206.48/241.34 and mean QLIKE is 11.12/1717.40; RFD records two guarded
+   decodes, minimum forecast eigenvalue \(4.16\times10^{-6}\), maximum
+   condition number about \(5.69\times10^5\), and 69 centre-stage fallbacks.
+   The fitted VAR radii are stable; the failure is the projected-score/decoder
+   chain, not a coefficient explosion.
+8. **APP-HF-4 is complete and Paper 1 science is frozen.** Rank-19 matched
+   VAR(1) gives the formal tie recorded in [[Home application — hourly crypto realised covariance]] and [[Paper 1 final result ledger]]. The later
+   coordinate-HAR/VHAR score-head rows are retained only as internal diagnostic
+   fuel; they are not manuscript results or a freeze dependency. Log-SPD HAR
+   remains an external classical baseline.
+9. **Complete the Paper 1 release.** Refresh result links once, create the
+   reader-facing theorem/experiment path, package `rfd`, regenerate every
+   publication figure from frozen inputs, finish citation-only checks, tag the
+   release, and draft. None of these tasks authorises a new scientific branch.
+10. Finish the long N-00 parent simulations unattended when convenient. The public environment, APP-FIN pipeline, matched-rank loss check, and notation map are already complete; the remaining simulation reproduction is not on the critical path.
+11. Maintain [[notation-map|the notation/conventions ledger]] while reading the project; notation-only rewriting must not change hypotheses, norms, targets, or rates.
+12. Treat APP-HF-5, N-18a/N-18b, the exhaustive N-18c phase programme, FRAME-2P-U implementation, N-RANK-CLOSE, selector tuning, minimax weak-factor detection, structural adaptive/time-varying-rank inference, predictive rank, learned refit scheduling, N-10, N-15, CF-PD, AIRM-SIGNED, G1-Q4, GEO-N/GEO-AV, MIX-SHARP, and BW-U-D1--U-D4 as post–Paper 1 or optional unless a required compact control exposes a genuine dependency.
+13. Implement remaining experiments only from [[Numerical suite — theorem-driven design matrix]]. Numerical evidence may validate code and expose boundaries; it does not close analytical nodes.
 
 ## 5A. Literature and attribution actions — added 2026-08-16
 
 Opened by the prior-art audit in [[Literature review — external positioning and prior art]]. These block **citation and novelty wording only**; none blocks code.
+
+- **L-RANK — CLOSED.** The focused lag-operator, weak-factor and selector audit is integrated into the canon. Lam–Yao and Bhatia–Yao–Ziegelmann supply squared-lag-operator ancestry; Hallin–Liška, Chang–Guo–Yao and Caro–Peña are selector comparisons; Bailey–Kapetanios–Pesaran and Lin–Yao are adjacent scope. No applicable minimax lower bound was found, and sparse-PCA bounds were rejected as a scope mismatch. The archived adjudication is [[P1-RANK — weak dynamic factors and lag-rank literature audit]].
 
 - **L-2b** read Kroshnin–Spokoiny–Suvorikova (2021), *Ann. Appl. Probab.* 31(3), Theorem 2.1 in full before the ID-9 appendix remark is written;
 - **L-3** read and cite Zemel–Panaretos (2019), *Bernoulli* 25(2), and Masarotto–Panaretos–Zemel (2022), arXiv:2212.04797;
@@ -164,7 +278,7 @@ Opened by the prior-art audit in [[Literature review — external positioning an
 - **L-6/L-7/L-2d** skim arXiv:2605.18316, arXiv:2604.03566, arXiv:2404.03878, Chewi–Maunu–Rigollet–Stromme (COLT 2020), Ahidar-Coutrix–Le Gouic–Paris (arXiv:1806.02740) for related work;
 - **L-8 (NEW, actionable — not just a citation).** Nguyen–Uribe Theorem 3.2 gives a **verifiable a-priori** spectral-dominance condition for existence of a *signed* BW barycentre. The project's three-scale mean uses signed Richardson coefficients \(\lambda=(1/3,-2,8/3)\), and the canon already records that unsafeguarded Richardson images are disproved, that the fixed-size BW estimator needs a generated-set membership test with deterministic fallback, and that N-12 exists precisely because signed extrapolation can exit the cone. **Test whether Theorem 3.2 supplies a checkable sufficient condition that replaces or supplements the runtime admissibility test.** One afternoon; a positive result improves the estimator, a negative result is a citation. See [[Literature review — external positioning and prior art]] §2.6.2;
 - **L-9.** Check Nguyen–Uribe Lemma 3.5 (\(K\le3/(2\lambda_{\min})\)) and Lemma 3.6 (\(\operatorname{inj}=\sqrt{\lambda}\)) against the BW-FIXED-MARGIN generated-domain margins before either is claimed as internal;
-- **L-10 (Paper 2, parked but record it now).** Peng & Shen, arXiv:2605.18316, model a time-varying low-rank factor structure on a Grassmann-type quotient. Any wording of the form "first time-varying factor subspace on a manifold" is **unsafe** for [[Paper 2 — Moving loading subbundle]]. Paper 1 is unaffected — their centre is fixed and there is no Fréchet mean, transport, or lag operator anywhere in it;
+- **L-10 (moving-loading programme, parked but record it now).** Peng & Shen, arXiv:2605.18316, model a time-varying low-rank factor structure on a Grassmann-type quotient. Any wording of the form "first time-varying factor subspace on a manifold" is **unsafe** for [[Parked programme — Intrinsically moving loading subspace]]. Paper 1 is unaffected — their centre is fixed and there is no Fréchet mean, transport, or lag operator anywhere in it;
 - **scope caveat, load-bearing:** Theorem SW-AS is a **Hadamard** result (it consumes \(H_{P_u}\succeq\mathrm{Id}\)). BW is nonnegatively curved. The signed local-polynomial route must not be presented as covering the flagship covariance application;
 - **terminology lock:** the project says *moving Fréchet centre* or *centre path* \(\mu_n(u)\). "Fréchet mean flow" denotes Santoro–Panaretos's object — an i.i.d.-replicate-flow datum — and must not be used for this project's centre.
 

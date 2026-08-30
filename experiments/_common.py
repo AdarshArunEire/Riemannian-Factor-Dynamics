@@ -1,5 +1,6 @@
 """Shared plumbing for the experiment scripts. Not an experiment itself."""
 
+import csv
 import platform
 import sys
 from datetime import datetime, timezone
@@ -36,7 +37,7 @@ def write(name, lines, cols, rows):
     """Write results/final/<name>.md and .csv from the same rows."""
     FINAL.mkdir(parents=True, exist_ok=True)
     md = FINAL / f"{name}.md"
-    csv = FINAL / f"{name}.csv"
+    csv_path = FINAL / f"{name}.csv"
 
     body = ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
     for r in rows:
@@ -44,10 +45,9 @@ def write(name, lines, cols, rows):
 
     md.write_text("\n".join(lines[:-1] + ["## Measured", ""] + body + ["", lines[-1]]),
                   encoding="utf-8")
-    csv.write_text(
-        ",".join(cols) + "\n"
-        + "\n".join(",".join(str(x) for x in r) for r in rows) + "\n",
-        encoding="utf-8",
-    )
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(cols)
+        writer.writerows(rows)
     print(f"\nwritten -> {md.relative_to(ROOT)}")
-    print(f"written -> {csv.relative_to(ROOT)}")
+    print(f"written -> {csv_path.relative_to(ROOT)}")
