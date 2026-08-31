@@ -271,5 +271,11 @@ selection.
 
 RFD is research software. The core fitting interface is usable; a public PyPI
 release and standalone manuscript are not yet available. The parent RFM code
-is fetched separately and remains unmodified. A licence for this repository
-has not yet been selected.
+is fetched separately and remains unmodified.
+
+## Licence
+
+Copyright © 2026 Adarsh Arun. Riemannian Factor Dynamics is licensed under the
+[GNU Affero General Public License v3.0 only](LICENSE). Modified versions made
+available over a network must offer their corresponding source to the users of
+that service under the terms of the licence.

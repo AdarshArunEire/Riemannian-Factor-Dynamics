@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,6 +7,9 @@ name = "riemannian-factor-dynamics"
 version = "0.1.0"
 description = "Moving-centre factor models for manifold-valued time series"
 readme = "README.md"
+authors = [{name = "Adarsh Arun"}]
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "scipy>=1.10"]
 
