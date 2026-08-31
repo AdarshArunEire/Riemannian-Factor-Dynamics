@@ -4,8 +4,22 @@
 
 A market's covariance structure moves. A factor model built around one fixed
 baseline can mix that movement with the persistent co-movement it is trying
-to recover. Riemannian Factor Dynamics (RFD) estimates a moving geometric
-centre and extracts dynamic factors around it.
+to recover. **Riemannian Factor Dynamics (RFD) is an extension of the
+[Riemannian Factor Model (RFM)](https://github.com/shuochieh/Riemannian_factor_model),
+the parent model throughout this repository.**
+
+RFM already brings something a Euclidean factor model misses: it treats
+covariance matrices as geometric, positive-definite objects. Treating their
+entries as ordinary Euclidean coordinates ignores that geometry, and an
+unconstrained linear reconstruction can produce an invalid covariance matrix. RFD keeps
+the parent's geometric foundation and its use of lagged dependence to recover
+persistent common movement.
+
+The extension replaces RFM's single global centre with an estimated moving
+centre path. As that baseline moves, RFD transports deviations into a shared
+tangent frame so they can be compared across time. This lets the model track
+baseline drift while extracting the dynamic factors around it, and then
+reconstruct the covariance sequence in its original geometry.
 
 The project combines a Python implementation, controlled simulations and a
 20-asset crypto forecasting study. Its central question is simple:
@@ -24,8 +38,6 @@ centre is fixed or its drift lies inside that space.
 ![RFD reduces signal error by 42.5%, 57.8% and 55.8% in the mixed, orthogonal and curved regimes, with about a 1% penalty in the controls.](results/figures/readme/synthetic_boundary.png)
 
 Both methods receive the same observations, known rank two and two lags.
-Parent RFM is the fixed-centre baseline from the
-[original implementation](https://github.com/shuochieh/Riemannian_factor_model).
 Across four sample sizes and 576 paired draws, RFD wins every
 mixed/orthogonal/curved comparison; parent RFM wins every home/fixed/aligned
 comparison. These are in-sample recovery results.
@@ -72,25 +84,28 @@ RFD models observations on a Riemannian state space. For covariance matrices,
 that means working with their positive-definite geometry throughout the fit.
 The implementation also supports directional observations on a sphere.
 
-```mermaid
-flowchart LR
-    X[Covariance sequence] --> C[Estimate a moving centre]
-    C --> T[Map deviations into a common tangent frame]
-    T --> F[Extract factors from lagged dependence]
-    F --> R[Reconstruct on the manifold]
-```
+1. **Follow the baseline.** Estimate local geometric means and join them into
+   a centre path. This describes the slowly changing covariance structure.
+2. **Put deviations in a common frame.** Map each observation to a tangent
+   deviation around its local centre, then parallel-transport it to a shared
+   reference. The coordinates stay comparable as the baseline moves.
+3. **Find what persists.** Use covariance at nonzero time lags to extract a
+   small set of dynamic factors. The target is persistent co-movement, rather
+   than simply the directions with the most variance.
+4. **Reconstruct the matrices.** Transport the fitted factor component back
+   along the centre path and apply the exponential map to return to the
+   manifold.
 
 The model writes an observation as
 
 $$
-X_t = \operatorname{Exp}_{\mu(t)}\!\left(P_t A f_t + \delta_t\right).
+X_t = \mathrm{Exp}_{\mu(t)}\!\left(P_t A f_t + \delta_t\right).
 $$
 
 Here $\mu(t)$ is the moving centre, $A f_t$ is the low-dimensional dynamic
 component, $P_t$ transports it along the centre path, and $\delta_t$ is tangent
 noise. The exponential map returns the observation to the manifold. RFD
-estimates the centre path, transports local deviations to a shared reference
-frame, and uses nonzero-lag covariance to find persistent directions.
+estimates both the baseline and the factor structure around it.
 
 Three analytical ideas motivate the construction:
 
@@ -163,9 +178,9 @@ centre_path = fit.centre.polygon
 ```
 
 Bandwidth is measured in the supplied time units; `n_cells` controls the
-polygonal centre path, `max_lag` controls the lag operator, and `rank` is the
-requested factor count. The values above illustrate the API, not a tuning
-rule for arbitrary data. Use the observation timestamps, rescaled if needed,
+polygonal centre path, `max_lag` sets how many lags enter factor extraction,
+and `rank` is the requested factor count. The values above illustrate the API,
+not a tuning rule for arbitrary data. Use the observation timestamps, rescaled if needed,
 when sampling is uneven; lags count observation steps, not elapsed time.
 
 Choose `AIRM_GEOMETRY` or `BW_GEOMETRY` for positive-definite matrices, or
