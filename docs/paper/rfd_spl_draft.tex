@@ -1,0 +1,273 @@
+% =====================================================================
+% RFD -- IEEE Signal Processing Letters scaffold draft
+% =====================================================================
+% PURPOSE: structural scaffold only. The author rewrites every sentence.
+% Do not polish this file; it exists so the section order, claim order
+% and evidence placement are fixed before the prose is written.
+%
+% Venue:   IEEE Signal Processing Letters -- 4 pages of technical
+%          content (two-column) + 1 page of references only. Optional
+%          supplementary pages for proofs / reproduction.
+% Model:   G. Maman, O. Yair, D. Eytan, R. Talmon, "Domain adaptation
+%          using Riemannian geometry of SPD matrices," ICASSP 2019.
+%          Borrowed moves: (i) intro names a single-mean PT method's
+%          shortcoming in one sentence, then proposes the complement;
+%          (ii) short "Riemannian geometry of SPD" section before the
+%          method; (iii) one experiment section; (iv) org paragraph.
+%
+% All numbers below come from results/final/ (see % SRC tags).
+% % TODO(author) marks anything that must be checked or decided.
+% =====================================================================
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+
+\newcommand{\Exp}{\mathrm{Exp}}
+\newcommand{\Log}{\mathrm{Log}}
+\newcommand{\PT}{\Gamma}
+
+\begin{document}
+
+\title{Riemannian Factor Dynamics: Factor Models for\\
+Covariance Sequences with a Moving Baseline}
+% TODO(author): title. Alternative: "When Does a Moving Baseline Matter?
+% Factor Models for Covariance Sequences on the Bures--Wasserstein Manifold"
+
+\author{Adarsh Arun% TODO(author): full name, affiliation, contact
+}
+
+\maketitle
+
+% ---------------------------------------------------------------------
+\begin{abstract}
+% MOVE 1: field + object. MOVE 2: parent's single-baseline assumption.
+% MOVE 3: what RFD does (moving centre + transport). MOVE 4: the boundary
+% result with numbers. MOVE 5: honest real-data result.
+Factor models for sequences of covariance matrices that respect their
+positive-definite geometry measure every observation against a single
+Fr\'echet mean. When the baseline covariance drifts, that drift is either
+absorbed into the factors or left unexplained. We propose Riemannian
+Factor Dynamics (RFD), which replaces the global mean with an estimated
+polygonal centre path and parallel-transports tangent deviations along it
+into a common reference frame before extracting factors from lagged
+autocovariances. In 576 paired Bures--Wasserstein simulations, RFD reduces
+median latent-signal error by 42.5--57.8\% when the drift has components
+outside the factor space, and costs about 1\% when the centre is fixed or
+its drift lies inside that space. On hourly $20\times 20$ crypto-asset
+covariances over 2025, RFD lowers mean forecast loss relative to the
+fixed-centre model on four measures, but the paired difference is not
+statistically significant.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Covariance matrices, Riemannian manifolds, Bures--Wasserstein metric,
+parallel transport, factor models, time series.
+\end{IEEEkeywords}
+
+% ---------------------------------------------------------------------
+\section{Introduction}
+% P1: covariance sequences are everywhere in SP/finance; they are SPD,
+% Euclidean treatment breaks positivity. Cite tangent-space methods.
+Sequences of covariance matrices arise in array processing, EEG, and
+financial risk. Because covariance matrices are symmetric positive-definite
+(SPD), treating their entries as Euclidean coordinates ignores their
+geometry and can yield invalid reconstructions. A common remedy maps each
+matrix to the tangent space at a Fr\'echet mean and works linearly
+there~\cite{pennec2006,maman2019}.
+
+% P2: the parent model, stated fairly. Its assumption (P2).
+The Riemannian factor model (RFM)~\cite{huang2026rfm} extends this idea to
+time series: deviations from a global Fr\'echet mean are modelled by a
+small number of latent factors identified from lagged
+autocovariances~\cite{lamyao2012}, with convergence guarantees in high
+dimension. Its theory assumes that the Fr\'echet mean of every observation
+equals the same point.
+
+% P3: the shortcoming in ONE sentence (Maman-style move), then why it bites.
+When the baseline covariance itself drifts, a single reference point must
+attribute that drift to the factors. Drift that lies inside the factor
+space is absorbed at little cost, but drift outside it either consumes
+factor capacity or remains as structured error.
+
+% P4: contributions as a short list.
+This letter makes three contributions:
+\begin{itemize}
+\item a factor model with an estimated moving centre path, whose tangent
+deviations are parallel-transported along that path into a common frame;
+\item a paired simulation study that locates exactly when the moving centre
+helps and when it costs, including an identification boundary;
+\item a causal hourly forecasting study on 20 crypto assets against the
+fixed-centre model and classical baselines.
+\end{itemize}
+% TODO(author): decide whether the identification point (bandwidth
+% decides the centre/factor split) is a contribution or a limitation.
+
+% P5: organisation paragraph (model paper does this; cut if space tight).
+Section~\ref{sec:geom} reviews the geometry, Section~\ref{sec:method}
+presents RFD, Section~\ref{sec:exp} reports experiments, and
+Section~\ref{sec:conc} concludes.
+
+% ---------------------------------------------------------------------
+\section{Geometry of SPD Matrices}\label{sec:geom}
+% Keep to ~1/3 column. Define only what Sec. III uses:
+% tangent space, metric, Exp/Log, Frechet mean, parallel transport.
+Let $\mathcal{S}_{++}^{p}$ denote the $p\times p$ SPD matrices. The tangent
+space at any $P$ is the space of symmetric matrices, of dimension
+$d=p(p+1)/2$. Under the Bures--Wasserstein (BW) metric~\cite{bhatia2019},
+\begin{equation}
+\langle U,V\rangle_P=\tfrac12\operatorname{tr}\!\big(\mathcal{L}_P[U]\,V\big),
+\quad P\,\mathcal{L}_P[U]+\mathcal{L}_P[U]\,P=U .
+\end{equation}
+The inner product depends on $P$, so tangent vectors at different base
+points cannot be compared directly. The Levi-Civita connection of the
+metric defines both geodesics, with maps $\Exp_P$ and $\Log_P$, and the
+parallel transport $\PT_{P\to Q}$, a linear isometry between tangent
+spaces. On a curved manifold, transport depends on the path taken.
+% TODO(author): one sentence on WHY BW (parent's optimal-transport
+% argument) or state it is inherited; mention AIRM is supported.
+
+% ---------------------------------------------------------------------
+\section{Riemannian Factor Dynamics}\label{sec:method}
+% Mirror the README's four steps. One equation for the model, one
+% sentence per step, one paragraph on identification.
+
+\subsection{Model}
+RFD writes an observation $X_t\in\mathcal{S}_{++}^{p}$ as
+\begin{equation}\label{eq:model}
+X_t=\Exp_{\mu(t)}\!\big(P_t A f_t+\delta_t\big),
+\end{equation}
+where $\mu(t)$ is a moving centre, $A\in\mathbb{R}^{d\times r}$ holds the
+loadings in a reference tangent frame, $f_t\in\mathbb{R}^{r}$ are dynamic
+factors, $P_t$ transports from the reference frame to $\mu(t)$ along the
+centre path, and $\delta_t$ is tangent noise without lagged dependence.
+RFM is the special case $\mu(t)\equiv\mu$.
+
+\subsection{Estimation}
+% Step 1: centre path
+\emph{Centre path.} Local Fr\'echet means are estimated with temporal
+bandwidth $h$ and joined by geodesic segments into a polygonal path with
+$K$ cells.
+% Step 2: transport
+\emph{Common frame.} Each deviation $\Log_{\hat\mu(t)}(X_t)$ is transported
+along the polygon to the reference point, giving coordinates
+$y_t\in\mathbb{R}^{d}$ measured with one inner product.
+% Step 3: factors
+\emph{Factors.} As in~\cite{lamyao2012,huang2026rfm}, the loading space is
+the leading eigenspace of $\sum_{k=1}^{k_0}\hat\Sigma_y(k)\hat\Sigma_y(k)^\top$,
+where $\hat\Sigma_y(k)$ is the lag-$k$ autocovariance.
+% Step 4: reconstruction
+\emph{Reconstruction.} Fitted components are transported back along the
+path and mapped to the manifold with $\Exp_{\hat\mu(t)}$.
+% TODO(author): check the eigen-operator matches py/rfd/model.py exactly.
+
+\subsection{Identification}
+% The key honest paragraph. Bandwidth = identifying assumption.
+A slowly drifting centre and a highly persistent factor can generate the
+same observations. RFD separates them by construction: movement slower
+than the bandwidth $h$ is assigned to the centre, faster persistent
+movement to the factors. As $h\to\infty$ with $K=1$, RFD reduces to RFM;
+as $h\to0$, the centre interpolates the data and no factor structure
+remains. Drift inside the loading space is therefore only weakly
+identified, as the experiments confirm.
+
+% ---------------------------------------------------------------------
+\section{Experiments}\label{sec:exp}
+
+\subsection{Paired Synthetic Study}
+% SRC results/final/parent_rfd_bw_parity_adjudication/report.md
+% Setup in 2-3 sentences, then Table I, then 2 findings.
+We compare RFD with the parent implementation on 576 paired BW draws:
+six centre regimes, sample sizes $n\in\{240,512,2048,8192\}$, and 24
+replicates each. Both methods receive the same data, the true rank $r=2$
+and two lags.
+% TODO(author): add p, h, K used in the campaign (config/parent_rfd_bw_parity.yaml).
+
+\begin{table}[t]
+\centering
+\caption{Median reduction in latent-signal error, RFD vs.\ RFM.}
+\label{tab:synth}
+\begin{tabular}{lrrr}
+\toprule
+Regime & $n=240$ & $n=8192$ & RFD wins \\
+\midrule
+Parent home & $-11.7\%$ & $-1.0\%$ & 0/96 \\
+Fixed control & $-11.8\%$ & $-1.0\%$ & 0/96 \\
+Aligned drift & $-13.0\%$ & $-1.0\%$ & 0/96 \\
+Mixed drift & $+38.7\%$ & $+42.5\%$ & 96/96 \\
+Orthogonal drift & $+49.8\%$ & $+57.8\%$ & 96/96 \\
+Curved drift & $+45.0\%$ & $+55.8\%$ & 96/96 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Finding 1: the boundary.
+RFD wins every paired draw when drift has components outside the factor
+space, and its loading-projector error falls by 96--98\% at $n=8192$. In
+the three controls it loses, but the penalty shrinks from about 12\% at
+$n=240$ to 1\% at $n=8192$.
+% Finding 2: identification.
+In the aligned regime RFD estimates the centre path 60.5\% more accurately,
+yet RFM still reconstructs slightly better, because drift inside the
+loading space is absorbed as common movement. Better centre estimation
+alone does not establish a better decomposition.
+% TODO(author): figure -- results/figures/readme/synthetic_boundary.png
+% fits one column; decide figure vs table (not both).
+
+\subsection{Hourly Crypto Covariance Forecasting}
+% SRC results/final/crypto_forecast/report.md
+We forecast hourly $20\times20$ realised covariances built from one-minute
+returns for all 8,760 hours of 2025, with tuning on 2024. RFD and RFM share
+a rank-19 VAR(1) score head and refit every four weeks on a trailing 26-week
+window; forecasts use only information available at each origin. Baselines
+are last observation, EWMA and log-SPD HAR.
+
+% Result, stated at the strength the evidence allows.
+RFD lowers mean loss relative to RFM by 2.48\% (squared Frobenius),
+13.26\% (QLIKE), 2.18\% (squared BW) and 7.69\% (minimum-variance portfolio
+variance). However, the 95\% Newey--West intervals for both primary paired
+losses cross zero, so the comparison is a statistical tie. Log-SPD HAR has
+the lowest mean Frobenius, BW and portfolio losses, and EWMA the lowest
+QLIKE. Median losses rise under three measures, which suggests the mean
+gain comes from a minority of large-error hours.
+% TODO(author): one table or bar figure here, not both
+% (results/figures/readme/crypto_benchmarks.png).
+% TODO(author): connect to alignment hypothesis -- real drift may lie
+% largely inside the factor space (r/d = 19/210 ~ 9% for random drift).
+% Only include if the alignment test is actually run.
+
+% ---------------------------------------------------------------------
+\section{Conclusion}\label{sec:conc}
+% 3 sentences: what RFD is; the boundary; the limitation + next step.
+RFD relaxes the fixed-baseline assumption of Riemannian factor models by
+estimating a moving centre and transporting deviations along it. The
+moving centre matters when baseline drift leaves the factor space and
+costs little otherwise. RFD gives up the parent's asymptotic guarantees,
+and on real data the centre/factor split is set by the bandwidth; testing
+how much real drift lies outside the factor space is the natural next step.
+
+% ---------------------------------------------------------------------
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{9}
+\bibitem{huang2026rfm}
+S.-C. Huang, R. Chen, and Y. Chen, ``A Riemannian factor model for
+manifold-valued time series,'' arXiv:2607.28385, 2026.
+\bibitem{lamyao2012}
+C. Lam and Q. Yao, ``Factor modeling for high-dimensional time series:
+Inference for the number of factors,'' \emph{Ann. Statist.}, vol.~40,
+no.~2, pp.~694--726, 2012.
+\bibitem{pennec2006}
+X. Pennec, P. Fillard, and N. Ayache, ``A Riemannian framework for tensor
+computing,'' \emph{Int. J. Comput. Vis.}, vol.~66, no.~1, pp.~41--66, 2006.
+\bibitem{bhatia2019}
+R. Bhatia, T. Jain, and Y. Lim, ``On the Bures--Wasserstein distance between
+positive definite matrices,'' \emph{Expo. Math.}, vol.~37, no.~2,
+pp.~165--191, 2019.
+\bibitem{maman2019}
+G. Maman, O. Yair, D. Eytan, and R. Talmon, ``Domain adaptation using
+Riemannian geometry of SPD matrices,'' in \emph{Proc. IEEE ICASSP}, 2019.
+% TODO(author): verify every reference against the source before submitting.
+\end{thebibliography}
+
+\end{document}
