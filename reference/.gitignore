@@ -1,0 +1,4 @@
+# The parent implementation is cloned here and never committed.
+*
+!.gitignore
+!README.md
