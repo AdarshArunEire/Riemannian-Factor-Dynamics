@@ -1,61 +1,73 @@
 # Riemannian Factor Dynamics
 
-How do the risks of a group of assets move together, when the market's
-"normal" level of risk is itself changing?
+A portfolio's risk depends less on how much each asset moves than on how the
+assets move together. That information sits in a covariance matrix, and every
+risk number built on it (portfolio variance, hedge ratios, the weights of a
+minimum-variance portfolio) is only as good as the forecast of that matrix.
 
-A covariance matrix records how much each asset moves and how assets move
-together. Watching one over time, two things happen at once: a slow drift in
-what counts as normal, and shorter-lived swings around it that many assets
-share. Factor models try to pull out those shared swings.
+Covariance does not sit still. Markets spend long stretches in a calm regime
+and then shift into a stressed one, where volatilities rise and assets start
+moving as one. On top of that slow shift sit shorter shocks that many assets
+share. A risk model that confuses the two will misread both: it treats a
+regime change as a string of shocks, or a shock as a new normal.
 
-The [Riemannian factor model (RFM)](https://arxiv.org/abs/2607.28385) of
-Huang, Chen and Chen does this while respecting the geometry of covariance
-matrices, but it measures every swing against one fixed "normal". If normal
-drifts, that drift gets mixed into the factors.
+Factor models describe those shared shocks with a few common drivers. The
+[Riemannian factor model (RFM)](https://arxiv.org/abs/2607.28385) of Huang,
+Chen and Chen does this for whole covariance matrices, and keeps every
+estimate a valid covariance matrix. It measures each period against one fixed
+baseline: the average covariance over the sample.
 
-**RFD lets the baseline move.** It tracks a path of baselines over time,
-measures each observation against the baseline at that moment, and lines
-those measurements up so they can be compared before finding the factors.
+**RFD lets that baseline move.** It estimates a path for the normal level of
+risk over time, measures each period against the baseline of that moment, and
+only then looks for the common drivers. A slow change of regime goes into the
+baseline; the shocks around it go into the factors.
 
-The question here is simple: when does letting the baseline move make a
-difference?
+This repository asks when that separation pays off.
 
-## Results
+## What we found
 
-### When the baseline drifts somewhere the factors can't reach, RFD helps a lot
+### In simulations, a moving baseline matters when the regime shifts in a new direction
 
 ![Signal error reduction of RFD versus parent RFM in six simulated settings.](results/figures/synthetic_boundary.png)
 
-*Simulated covariance series where the truth is known. When the baseline
-drifts in a direction the factors cannot describe, RFD's error is 42–58%
-lower, and it wins every one of 288 paired runs. When the baseline is fixed,
-or drifts in a direction the factors can absorb, the parent model is about 1%
-better. Median at 8,192 observations, true number of factors given to both.
+*Simulated covariance series with a known answer. When the baseline drifts in
+a direction the common drivers cannot describe, RFD recovers the true signal
+with 42 to 58% less error, and it wins all 288 paired runs across every sample
+size. When the baseline is
+fixed, or drifts along a direction the drivers already cover, the fixed-baseline
+model is about 1% better. Median over 24 runs per setting at 8,192
+observations, with the true number of factors given to both models.
 [Full report](results/synthetic/report.md)*
 
-The "drift inside factor space" row is the subtle one: RFD finds the baseline
-60% more accurately there, yet reconstructs no better, because the parent's
-factors quietly absorb the drift. Which movement counts as baseline and which
-as factor is partly a modelling choice, set here by how smoothly the baseline
-may move.
+The third row is the subtle case. There, RFD tracks the baseline 60% more
+accurately, yet reconstructs no better, because the fixed-baseline model
+absorbs the drift into its factors. Real markets may often look like this:
+in the parent paper's stock data, the main factor itself tracks the VIX. Which
+movement counts as "regime" and which as "shock" is partly a modelling
+choice, set here by how smoothly the baseline is allowed to move.
 
-### On real crypto data, RFD beats the parent on average, but simple methods still win
+### On crypto markets, RFD lowers average risk-forecast error but does not beat simple methods
 
 ![Next-hour forecast loss of each method relative to the best, on four measures.](results/figures/crypto_benchmarks.png)
 
-*One-hour-ahead forecasts of 20 × 20 covariance matrices for 20 crypto assets,
-every hour of 2025, with all choices made on 2024 data. RFD (teal) has lower
-average loss than the parent RFM (purple) on all four measures, but the
-difference is within noise, so formally it is a tie. Classical methods (grey)
-lead every measure. [Full report](results/crypto/report.md)*
+*Forecasts of the next hour's 20 × 20 covariance matrix for 20 crypto assets,
+for every hour of 2025, with all modelling choices fixed on 2024 data. Losses
+are shown as the percentage above the best method on each measure. The last
+panel is the most practical one: build a minimum-variance portfolio from each
+forecast and measure how much it actually moved. RFD (teal) has lower average
+loss than the fixed-baseline model (purple) on all four measures, including
+7.7% less realised portfolio variance, but the difference is within
+statistical noise. Classical methods (grey) still lead every measure.
+[Full report](results/crypto/report.md)*
 
 ![RFD versus parent RFM on average and typical hours.](results/figures/crypto_mean_median.png)
 
-*RFD wins on the average hour but loses slightly on the typical hour for three
-of the four measures. That
-pattern means its gains come from a minority of hours where the parent makes
-large errors. These compare each model's own mean and median, not hour-by-hour
-differences.*
+*RFD wins the average hour but loses slightly on the typical hour for three of
+the four measures. Its gains come from a minority of hours where the
+fixed-baseline model makes large errors. For risk management those are the
+hours that matter most, but this result alone does not show they are the
+stressed ones. These compare each model's own mean and median, not
+hour-by-hour differences.*
 
 ## Install and try it
 
