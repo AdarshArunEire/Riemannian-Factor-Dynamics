@@ -1,42 +1,61 @@
 # Riemannian Factor Dynamics
 
-Factor models for sequences of covariance matrices whose baseline moves over
-time.
+How do the risks of a group of assets move together, when the market's
+"normal" level of risk is itself changing?
 
-RFD extends the Riemannian factor model (RFM) of
-[Huang, Chen and Chen (2026)](https://arxiv.org/abs/2607.28385). RFM measures
-every observation against one Fréchet mean and extracts factors from the
-lagged dependence of the deviations. RFD replaces that single centre with an
-estimated centre path, transports the deviations along the path into a common
-tangent frame, and then extracts the factors in the same way.
+A covariance matrix records how much each asset moves and how assets move
+together. Watching one over time, two things happen at once: a slow drift in
+what counts as normal, and shorter-lived swings around it that many assets
+share. Factor models try to pull out those shared swings.
 
-The question this repository studies is when that change matters.
+The [Riemannian factor model (RFM)](https://arxiv.org/abs/2607.28385) of
+Huang, Chen and Chen does this while respecting the geometry of covariance
+matrices, but it measures every swing against one fixed "normal". If normal
+drifts, that drift gets mixed into the factors.
+
+**RFD lets the baseline move.** It tracks a path of baselines over time,
+measures each observation against the baseline at that moment, and lines
+those measurements up so they can be compared before finding the factors.
+
+The question here is simple: when does letting the baseline move make a
+difference?
 
 ## Results
 
-**Synthetic data.** On paired Bures–Wasserstein simulations with known rank,
-RFD reduces median latent-signal error by 42.5–57.8% at n = 8,192 when the
-centre drifts outside the factor space. When the centre is fixed, or its drift
-lies inside the factor space, the parent model is about 1% better. These are
-in-sample recovery results.
+### When the baseline drifts somewhere the factors can't reach, RFD helps a lot
 
-![RFD reduces signal error when the centre drift leaves the factor space and costs about 1% otherwise.](results/figures/synthetic_boundary.png)
+![Signal error reduction of RFD versus parent RFM in six simulated settings.](results/figures/synthetic_boundary.png)
 
-In the aligned case RFD estimates the centre path 60.5% more accurately, yet
-the parent still reconstructs slightly better: drift inside the factor space
-can be absorbed by the factors. Separating the baseline from the factors needs
-an assumption, here the bandwidth of the centre path.
-[Full report](results/synthetic/report.md)
+*Simulated covariance series where the truth is known. When the baseline
+drifts in a direction the factors cannot describe, RFD's error is 42–58%
+lower, and it wins every one of 288 paired runs. When the baseline is fixed,
+or drifts in a direction the factors can absorb, the parent model is about 1%
+better. Median at 8,192 observations, true number of factors given to both.
+[Full report](results/synthetic/report.md)*
 
-**Hourly crypto covariances.** One-hour-ahead forecasts of 20 × 20 realised
-covariance matrices for every hour of 2025, with all choices made on 2024.
-RFD's mean loss is lower than the parent's on four measures, but the paired
-intervals cross zero, so the comparison is a statistical tie. Log-SPD HAR and
-EWMA remain the strongest methods.
+The "drift inside factor space" row is the subtle one: RFD finds the baseline
+60% more accurately there, yet reconstructs no better, because the parent's
+factors quietly absorb the drift. Which movement counts as baseline and which
+as factor is partly a modelling choice, set here by how smoothly the baseline
+may move.
 
-![Average forecast losses relative to the best method.](results/figures/crypto_benchmarks.png)
+### On real crypto data, RFD beats the parent on average, but simple methods still win
 
-[Full report](results/crypto/report.md)
+![Next-hour forecast loss of each method relative to the best, on four measures.](results/figures/crypto_benchmarks.png)
+
+*One-hour-ahead forecasts of 20 × 20 covariance matrices for 20 crypto assets,
+every hour of 2025, with all choices made on 2024 data. RFD (teal) has lower
+average loss than the parent RFM (purple) on all four measures, but the
+difference is within noise, so formally it is a tie. Classical methods (grey)
+lead every measure. [Full report](results/crypto/report.md)*
+
+![RFD versus parent RFM on average and typical hours.](results/figures/crypto_mean_median.png)
+
+*RFD wins on the average hour but loses slightly on the typical hour for three
+of the four measures. That
+pattern means its gains come from a minority of hours where the parent makes
+large errors. These compare each model's own mean and median, not hour-by-hour
+differences.*
 
 ## Install and try it
 

@@ -1,7 +1,9 @@
-"""Generate the public README figures from small, tracked result extracts.
+"""Draw the README figures from the tracked result tables in results/.
 
-Run from any directory: python experiments/generate_readme_figures.py
-No raw market data, R installation or intermediate experiment caches are needed.
+python experiments/figures.py
+
+Colours are two viridis steps: teal for RFD, purple for the parent RFM, grey for
+the classical baselines. Explanations live in the README captions.
 """
 
 from pathlib import Path
@@ -10,7 +12,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 from matplotlib.ticker import PercentFormatter
 import numpy as np
 import pandas as pd
@@ -18,9 +20,9 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "results" / "figures"
-GREEN = "#147D64"
-NAVY = "#344A76"
-RUST = "#B65D3C"
+RFD = "#20a386"      # viridis 0.58
+PARENT = "#3e4c8a"   # viridis 0.23
+BASELINE = "#a7afb2"
 INK = "#232A2D"
 GREY = "#7E898E"
 GRID = "#E4E7E5"
@@ -80,8 +82,8 @@ def arrow(axis, y: float, value: float, colour: str, *, label: str,
         axis.plot(value, y, "o", color=colour, ms=4)
     axis.annotate(label, (value, y), xytext=(offset if value >= 0 else -offset, 0),
                   textcoords="offset points", va="center",
-                  ha="left" if value >= 0 else "right", color=colour,
-                  fontsize=11, fontweight="bold")
+                  ha="left" if value >= 0 else "right", color=INK,
+                  fontsize=10.5)
 
 
 def grid(axis) -> None:
@@ -91,42 +93,40 @@ def grid(axis) -> None:
     axis.xaxis.set_major_formatter(PercentFormatter(xmax=100, decimals=0))
 
 
+def title(fig, text: str) -> None:
+    fig.text(0.03, 0.96, text, fontsize=15, fontweight="bold", va="top")
+
+
 def synthetic_boundary() -> None:
     source = ROOT / "results/synthetic"
     headline = pd.read_csv(source / "headline_8192.csv").set_index("scenario")
     wins = pd.read_csv(source / "paired_win_counts.csv")
     order = ["parent home", "fixed control", "aligned", "mixed", "orthogonal", "curved"]
-    labels = ["Fixed centre · identity", "Fixed centre · conditioned",
+    labels = ["Fixed centre", "Fixed centre, conditioned",
               "Drift inside factor space", "Drift partly outside",
-              "Drift orthogonal to factors", "Curved centre path"]
+              "Drift orthogonal to factors", "Curved drift"]
     if set(headline.index) != set(order) or wins["paired draws"].sum() != 576:
         raise ValueError("The recorded synthetic comparison changed")
     values = headline.loc[order, "signal gain (%)"].to_numpy()
     if not np.isfinite(values).all():
         raise ValueError("Nonfinite synthetic gains")
 
-    fig, axis = plt.subplots(figsize=(11.8, 5.8))
-    fig.subplots_adjust(left=0.28, right=0.96, top=0.78, bottom=0.20)
-    fig.text(0.03, 0.95, "The moving centre helps when drift escapes the factor space",
-             fontsize=18, fontweight="bold", va="top")
-    fig.text(0.03, 0.88, "Latent-signal reconstruction · paired synthetic covariance series",
-             fontsize=11.5, color=GREY)
+    fig, axis = plt.subplots(figsize=(10.5, 4.8))
+    fig.subplots_adjust(left=0.25, right=0.96, top=0.84, bottom=0.15)
+    title(fig, "Signal error reduction versus parent RFM")
     axis.axvline(0, color=INK, lw=1)
-    axis.axhspan(2.5, 5.5, color=GREEN, alpha=0.045)
+    axis.axhspan(2.5, 5.5, color=RFD, alpha=0.06)
     for y, value in enumerate(values):
-        arrow(axis, y, value, GREEN if value > 0 else RUST, label=f"{value:+.1f}%")
+        arrow(axis, y, value, RFD if value > 0 else PARENT, label=f"{value:+.1f}%")
     axis.set_yticks(range(6), labels)
     axis.set_ylim(5.6, -0.6)
     axis.set_xlim(-13, 70)
     axis.set_xticks([0, 20, 40, 60])
-    axis.set_xlabel("Reduction in signal RMS versus parent RFM  →", labelpad=10)
+    axis.set_xlabel("Reduction in signal error  →", labelpad=8)
     grid(axis)
-    fig.text(0.03, 0.07,
-             "Shown: median paired reduction at n = 8,192; known rank 2; 24 draws per regime.",
-             fontsize=10, color=GREY)
-    fig.text(0.03, 0.025,
-             "Across all sample sizes: RFD wins 288/288 mixed, orthogonal and curved draws; parent wins 288/288 controls.",
-             fontsize=10, color=INK)
+    fig.legend(handles=[Patch(color=RFD, label="RFD better"),
+                        Patch(color=PARENT, label="Parent RFM better")],
+               loc="upper right", bbox_to_anchor=(0.97, 0.97), frameon=False, ncol=2)
     finish(fig, "synthetic_boundary")
 
 
@@ -134,76 +134,58 @@ def crypto_benchmarks() -> None:
     losses = pd.read_csv(ROOT / "results/crypto/headline_losses.csv").set_index("method")
     if set(losses.index) != set(METHODS) or not (losses["hours"] == 8760).all():
         raise ValueError("Expected the five frozen 8,760-hour headline rows")
-    fig, axes = plt.subplots(2, 2, figsize=(13.2, 9.0))
-    fig.subplots_adjust(left=0.15, right=0.95, top=0.80, bottom=0.13,
-                        hspace=0.58, wspace=0.52)
-    fig.text(0.035, 0.96, "RFD improves on parent RFM; classical baselines still lead",
-             fontsize=19, fontweight="bold", va="top")
-    fig.text(0.035, 0.895,
-             "20 crypto assets · 8,760 next-hour forecasts · lower average loss is better",
-             fontsize=12, color=GREY)
-    for axis, (metric, title) in zip(axes.flat, METRICS.items()):
+    colours = {"rfd_piecewise6": RFD, "parent_rfm": PARENT}
+    fig, axes = plt.subplots(2, 2, figsize=(12, 7.6))
+    fig.subplots_adjust(left=0.14, right=0.96, top=0.82, bottom=0.07,
+                        hspace=0.55, wspace=0.5)
+    title(fig, "Next-hour forecast loss above the best method")
+    for axis, (metric, name) in zip(axes.flat, METRICS.items()):
         excess = (100 * (losses[metric] / losses[metric].min() - 1)).sort_values()
         for y, (method, value) in enumerate(excess.items()):
-            colour = GREEN if method == "rfd_piecewise6" else RUST if method == "parent_rfm" else GREY
-            arrow(axis, y, value, colour,
+            arrow(axis, y, value, colours.get(method, BASELINE),
                   label="best" if value < 1e-9 else f"+{value:.1f}%",
-                  linewidth=3 if method == "rfd_piecewise6" else 1.9)
+                  linewidth=3 if method in colours else 2)
         axis.set_yticks(range(5), [METHODS[m] for m in excess.index])
-        for tick in axis.get_yticklabels():
-            if tick.get_text() == "RFD":
-                tick.set_color(GREEN)
-                tick.set_fontweight("bold")
         axis.set_ylim(4.6, -0.6)
         limit, ticks = {
             "frobenius2": (115, [0, 25, 50, 75, 100]),
             "qlike": (220, [0, 50, 100, 150, 200]),
-            "bw2": (65, [0, 10, 20, 30, 40, 50, 60]),
+            "bw2": (65, [0, 20, 40, 60]),
             "gmv_realized_variance": (80, [0, 20, 40, 60, 80]),
         }[metric]
         axis.set_xlim(-0.01 * limit, limit)
         axis.set_xticks(ticks)
-        axis.set_title(title, loc="left", pad=14, fontsize=12)
-        axis.set_xlabel("Extra loss versus the best  →", fontsize=10, labelpad=8)
+        axis.set_title(name, loc="left", pad=10, fontsize=11.5)
         grid(axis)
-    fig.text(0.035, 0.058,
-             "Matched rank-19 VAR(1); 2025 evaluation, with tuning on 2024. Each panel uses its own scale.",
-             fontsize=10, color=GREY)
-    fig.text(0.035, 0.022,
-             "Primary RFD–parent loss intervals cross zero: the formal comparison is a tie.",
-             fontsize=10, color=INK)
+    fig.legend(handles=[Patch(color=RFD, label="RFD"), Patch(color=PARENT, label="Parent RFM"),
+                        Patch(color=BASELINE, label="Classical baselines")],
+               loc="upper left", bbox_to_anchor=(0.022, 0.935), frameon=False, ncol=3)
     finish(fig, "crypto_benchmarks")
 
 
 def crypto_mean_median() -> None:
     contrast = pd.read_csv(ROOT / "results/crypto/rfd_vs_parent.csv").set_index("metric")
-    fig, axis = plt.subplots(figsize=(12.6, 6.2))
-    fig.subplots_adjust(left=0.29, right=0.96, top=0.74, bottom=0.22)
-    fig.text(0.035, 0.95, "Lower average loss, despite higher median forecast error",
-             fontsize=18, fontweight="bold", va="top")
-    fig.text(0.035, 0.88, "RFD versus parent RFM · the mean and median tell different stories",
-             fontsize=11.5, color=GREY)
-    axis.axvline(0, color=INK, lw=1)
-    for y, metric in enumerate(METRICS):
-        for offset, column, colour in [(-0.17, "mean_reduction_percent", GREEN),
-                                       (0.17, "median_reduction_percent", NAVY)]:
+    names = {"frobenius2": "Frobenius", "qlike": "QLIKE", "bw2": "Bures–Wasserstein",
+             "gmv_realized_variance": "Portfolio variance"}
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2), sharey=True)
+    fig.subplots_adjust(left=0.17, right=0.97, top=0.76, bottom=0.17, wspace=0.12)
+    title(fig, "RFD versus parent RFM: average hour and typical hour")
+    for axis, column, name in [(axes[0], "mean_reduction_percent", "Average (mean) loss"),
+                               (axes[1], "median_reduction_percent", "Typical (median) loss")]:
+        axis.axvline(0, color=INK, lw=1)
+        for y, metric in enumerate(names):
             value = float(contrast.loc[metric, column])
-            arrow(axis, y + offset, value, colour, label=f"{value:+.2f}%")
-    axis.set_yticks(range(4), list(METRICS.values()))
-    axis.set_ylim(3.6, -0.6)
-    axis.set_xlim(-9.5, 17)
-    axis.set_xticks([-5, 0, 5, 10, 15])
-    axis.set_xlabel("← Parent lower loss          RFD lower loss →", labelpad=10)
-    grid(axis)
-    fig.legend(handles=[Line2D([0], [0], color=GREEN, lw=2.5, label="Mean loss"),
-                        Line2D([0], [0], color=NAVY, lw=2.5, label="Median loss")],
-               loc="upper right", bbox_to_anchor=(0.97, 0.835), frameon=False, ncol=2)
-    fig.text(0.035, 0.056,
-             "Percent reductions compare the methods' separate means or medians; they are not median paired hourly gains.",
-             fontsize=9.5, color=GREY)
-    fig.text(0.035, 0.016,
-             "The contrast suggests a contribution from large-error hours; it does not identify a market-stress mechanism.",
-             fontsize=9.5, color=GREY)
+            arrow(axis, y, value, RFD if value > 0 else PARENT, label=f"{value:+.1f}%")
+        axis.set_yticks(range(4), list(names.values()))
+        axis.set_ylim(3.6, -0.6)
+        axis.set_xlim(-10, 18)
+        axis.set_xticks([-5, 0, 5, 10, 15])
+        axis.set_title(name, loc="left", pad=10, fontsize=11.5)
+        grid(axis)
+    fig.supxlabel("← Parent lower loss      RFD lower loss →", fontsize=10.5, y=0.03)
+    fig.legend(handles=[Patch(color=RFD, label="RFD better"),
+                        Patch(color=PARENT, label="Parent RFM better")],
+               loc="upper right", bbox_to_anchor=(0.97, 0.965), frameon=False, ncol=2)
     finish(fig, "crypto_mean_median")
 
 
