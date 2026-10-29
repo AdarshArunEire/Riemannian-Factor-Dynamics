@@ -54,7 +54,9 @@ choice, set here by how smoothly the baseline is allowed to move.
 for every hour of 2025, with all modelling choices fixed on 2024 data. Losses
 are shown as the percentage above the best method on each measure. The last
 panel is the most practical one: build a minimum-variance portfolio from each
-forecast and measure how much it actually moved. RFD (teal) has lower average
+forecast and measure how much it actually moved. A 20 × 20 covariance matrix
+has 210 separate entries; both factor models describe their movement with 19
+common factors. RFD (teal) has lower average
 loss than the fixed-baseline model (purple) on all four measures, including
 7.7% less realised portfolio variance, but the difference is within
 statistical noise. Classical methods (grey) still lead every measure.
