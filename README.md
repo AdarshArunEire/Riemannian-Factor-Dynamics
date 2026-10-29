@@ -1,13 +1,13 @@
 # Riemannian Factor Dynamics
 
-A portfolio's risk depends less on how much each asset moves than on how the
-assets move together. That information sits in a covariance matrix, and every
+A portfolio's risk depends on how its assets move together, not just how each 
+one moves alone. That information sits in a covariance matrix, and every
 risk number built on it (portfolio variance, hedge ratios, the weights of a
 minimum-variance portfolio) is only as good as the forecast of that matrix.
 
-Covariance does not sit still. Markets spend long stretches in a calm regime
+We know covariance does not sit still: Markets spend long stretches in a calm regime
 and then shift into a stressed one, where volatilities rise and assets start
-moving as one. On top of that slow shift sit shorter shocks that many assets
+moving together. On top of that slow shift sit shorter shocks that many assets
 share. A risk model that confuses the two will misread both: it treats a
 regime change as a string of shocks, or a shock as a new normal.
 
@@ -31,7 +31,7 @@ This repository asks when that separation pays off.
 ![Signal error reduction of RFD versus parent RFM in six simulated settings.](results/figures/synthetic_boundary.png)
 
 *Simulated covariance series with a known answer. When the baseline drifts in
-a direction the common drivers cannot describe, RFD recovers the true signal
+a direction orthogonal to the common drivers, RFD recovers the true signal
 with 42 to 58% less error, and it wins all 288 paired runs across every sample
 size. When the baseline is
 fixed, or drifts along a direction the drivers already cover, the fixed-baseline
@@ -42,8 +42,8 @@ observations, with the true number of factors given to both models.
 The third row is the subtle case. There, RFD tracks the baseline 60% more
 accurately, yet reconstructs no better, because the fixed-baseline model
 absorbs the drift into its factors. Real markets may often look like this:
-in the parent paper's stock data, the main factor itself tracks the VIX. Which
-movement counts as "regime" and which as "shock" is partly a modelling
+in the parent paper's stock data, the main factor itself tracks the VIX. 
+The difference between "regime" and "shock" is a modelling
 choice, set here by how smoothly the baseline is allowed to move.
 
 ### On crypto markets, RFD lowers average risk-forecast error but does not beat simple methods
@@ -51,15 +51,10 @@ choice, set here by how smoothly the baseline is allowed to move.
 ![Next-hour forecast loss of each method relative to the best, on four measures.](results/figures/crypto_benchmarks.png)
 
 *Forecasts of the next hour's 20 × 20 covariance matrix for 20 crypto assets,
-for every hour of 2025, with all modelling choices fixed on 2024 data. Losses
-are shown as the percentage above the best method on each measure. The last
-panel is the most practical one: build a minimum-variance portfolio from each
-forecast and measure how much it actually moved. A 20 × 20 covariance matrix
-has 210 separate entries; both factor models describe their movement with 19
-common factors. RFD (teal) has lower average
+for every hour of 2025, with all parameters fit on 2024 data. Losses
+are shown as the percentage above the best method on each measure. RFD (teal) has lower average
 loss than the fixed-baseline model (purple) on all four measures, including
-7.7% less realised portfolio variance, but the difference is within
-statistical noise. Classical methods (grey) still lead every measure.
+7.7% less realised portfolio variance. Classical methods (grey) still lead.
 [Full report](results/crypto/report.md)*
 
 ![RFD versus parent RFM on average and typical hours.](results/figures/crypto_mean_median.png)
